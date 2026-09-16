@@ -1,41 +1,23 @@
 using UnityEngine;
-using System;
+using UnityEngine.InputSystem;
 
 public class TimingManager : MonoBehaviour
 {
-    public enum TimingResult
-    {
-        MISS,
-        GOOD,
-        GREAT,
-        PERFECT
-    }
-
     [Header("Timing Bar")]
     [SerializeField] private RectTransform timingBar;
     [SerializeField] private RectTransform cursor;
 
-    [Header("Cursor Movement")]
-    [SerializeField] private float cursorSpeed = 300f;
-
-    [Header("Timing Window")]
-    [SerializeField] private bool timingActive = false;
-
-    [Header("Timing Zones")]
-    [SerializeField] private float perfectMin = 0.45f;
-    [SerializeField] private float perfectMax = 0.55f;
-
-    [SerializeField] private float greatMin = 0.35f;
-    [SerializeField] private float greatMax = 0.65f;
-
-    [SerializeField] private float goodMin = 0.20f;
-    [SerializeField] private float goodMax = 0.80f;
-
-    // Event gửi kết quả Timing cho BattleManager
-    public event Action<TimingResult, float> OnTimingResult;
+    [Header("Cursor")]
+    [SerializeField] private float cursorSpeed = 1f;
 
     private float cursorPosition = 0f;
     private bool movingRight = true;
+    private bool timingActive = false;
+
+    private void Start()
+    {
+        StartTiming();
+    }
 
     private void Update()
     {
@@ -44,7 +26,7 @@ public class TimingManager : MonoBehaviour
 
         MoveCursor();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             CheckTiming();
         }
@@ -54,7 +36,7 @@ public class TimingManager : MonoBehaviour
     {
         float direction = movingRight ? 1f : -1f;
 
-        cursorPosition += direction * cursorSpeed * Time.deltaTime / timingBar.rect.width;
+        cursorPosition += direction * cursorSpeed * Time.deltaTime;
 
         if (cursorPosition >= 1f)
         {
@@ -88,39 +70,28 @@ public class TimingManager : MonoBehaviour
 
     private void CheckTiming()
     {
-        TimingResult result;
-        float multiplier;
+        string result;
 
-        if (cursorPosition >= perfectMin && cursorPosition <= perfectMax)
+        if (cursorPosition >= 0.45f && cursorPosition <= 0.55f)
         {
-            result = TimingResult.PERFECT;
-            multiplier = 1.5f;
+            result = "PERFECT";
         }
-        else if (cursorPosition >= greatMin && cursorPosition <= greatMax)
+        else if (cursorPosition >= 0.35f && cursorPosition <= 0.65f)
         {
-            result = TimingResult.GREAT;
-            multiplier = 1.25f;
+            result = "GREAT";
         }
-        else if (cursorPosition >= goodMin && cursorPosition <= goodMax)
+        else if (cursorPosition >= 0.20f && cursorPosition <= 0.80f)
         {
-            result = TimingResult.GOOD;
-            multiplier = 1.0f;
+            result = "GOOD";
         }
         else
         {
-            result = TimingResult.MISS;
-            multiplier = 0.5f;
+            result = "MISS";
         }
 
         Debug.Log(
-            $"Timing Result: {result} | " +
-            $"Cursor Position: {cursorPosition:F2} | " +
-            $"Multiplier: {multiplier}x"
+            $"Timing: {result} | Cursor Position: {cursorPosition:F2}"
         );
-
-        OnTimingResult?.Invoke(result, multiplier);
-
-        StopTiming();
     }
 
     public void StartTiming()
