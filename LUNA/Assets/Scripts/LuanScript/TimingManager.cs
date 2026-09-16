@@ -1,8 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class TimingManager : MonoBehaviour
 {
+
+    public enum TimingResult
+    {
+        MISS,
+        GOOD,
+        GREAT,
+        PERFECT
+    }
+
     [Header("Timing Bar")]
     [SerializeField] private RectTransform timingBar;
     [SerializeField] private RectTransform cursor;
@@ -13,6 +23,8 @@ public class TimingManager : MonoBehaviour
     private float cursorPosition = 0f;
     private bool movingRight = true;
     private bool timingActive = false;
+
+    public event Action<TimingResult, float> OnTimingResult;
 
     private void Start()
     {
@@ -70,28 +82,35 @@ public class TimingManager : MonoBehaviour
 
     private void CheckTiming()
     {
-        string result;
+        TimingResult result;
+        float multiplier;
 
         if (cursorPosition >= 0.45f && cursorPosition <= 0.55f)
         {
-            result = "PERFECT";
+            result = TimingResult.PERFECT;
+            multiplier = 1.5f;
         }
         else if (cursorPosition >= 0.35f && cursorPosition <= 0.65f)
         {
-            result = "GREAT";
+            result = TimingResult.GREAT;
+            multiplier = 1.25f;
         }
         else if (cursorPosition >= 0.20f && cursorPosition <= 0.80f)
         {
-            result = "GOOD";
+            result = TimingResult.GOOD;
+            multiplier = 1.0f;
         }
         else
         {
-            result = "MISS";
+            result = TimingResult.MISS;
+            multiplier = 0.5f;
         }
 
         Debug.Log(
-            $"Timing: {result} | Cursor Position: {cursorPosition:F2}"
+            $"Timing: {result} | Cursor Position: {cursorPosition:F2} | Multiplier: {multiplier:F2}x"
         );
+
+        OnTimingResult?.Invoke(result, multiplier);
     }
 
     public void StartTiming()
