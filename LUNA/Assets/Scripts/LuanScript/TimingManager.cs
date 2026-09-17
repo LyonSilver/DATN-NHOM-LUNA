@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class TimingManager : MonoBehaviour
 {
-
     public enum TimingResult
     {
         MISS,
@@ -21,7 +20,6 @@ public class TimingManager : MonoBehaviour
     [SerializeField] private float cursorSpeed = 1f;
 
     private float cursorPosition = 0f;
-    private bool movingRight = true;
     private bool timingActive = false;
 
     public event Action<TimingResult, float> OnTimingResult;
@@ -38,32 +36,25 @@ public class TimingManager : MonoBehaviour
 
         MoveCursor();
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current != null &&
+            Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             CheckTiming();
         }
     }
 
+    // Di chuyển Cursor qua lại bằng Mathf.PingPong
     private void MoveCursor()
     {
-        float direction = movingRight ? 1f : -1f;
-
-        cursorPosition += direction * cursorSpeed * Time.deltaTime;
-
-        if (cursorPosition >= 1f)
-        {
-            cursorPosition = 1f;
-            movingRight = false;
-        }
-        else if (cursorPosition <= 0f)
-        {
-            cursorPosition = 0f;
-            movingRight = true;
-        }
+        cursorPosition = Mathf.PingPong(
+            Time.time * cursorSpeed,
+            1f
+        );
 
         UpdateCursorPosition();
     }
 
+    // Cập nhật vị trí Cursor trên Timing Bar
     private void UpdateCursorPosition()
     {
         float barWidth = timingBar.rect.width;
@@ -80,22 +71,26 @@ public class TimingManager : MonoBehaviour
         );
     }
 
+    // Kiểm tra kết quả Timing và hệ số nhân
     private void CheckTiming()
     {
         TimingResult result;
         float multiplier;
 
-        if (cursorPosition >= 0.45f && cursorPosition <= 0.55f)
+        if (cursorPosition >= 0.45f &&
+            cursorPosition <= 0.55f)
         {
             result = TimingResult.PERFECT;
             multiplier = 1.5f;
         }
-        else if (cursorPosition >= 0.35f && cursorPosition <= 0.65f)
+        else if (cursorPosition >= 0.35f &&
+                 cursorPosition <= 0.65f)
         {
             result = TimingResult.GREAT;
             multiplier = 1.25f;
         }
-        else if (cursorPosition >= 0.20f && cursorPosition <= 0.80f)
+        else if (cursorPosition >= 0.20f &&
+                 cursorPosition <= 0.80f)
         {
             result = TimingResult.GOOD;
             multiplier = 1.0f;
@@ -107,24 +102,28 @@ public class TimingManager : MonoBehaviour
         }
 
         Debug.Log(
-            $"Timing: {result} | Cursor Position: {cursorPosition:F2} | Multiplier: {multiplier:F2}x"
+            $"Timing: {result} | " +
+            $"Cursor Position: {cursorPosition:F2} | " +
+            $"Multiplier: {multiplier:F2}x"
         );
 
+        // Phát Event gửi kết quả và hệ số sang BattleManager
         OnTimingResult?.Invoke(result, multiplier);
     }
 
+    // Bật Timing
     public void StartTiming()
     {
         timingActive = true;
 
         cursorPosition = 0f;
-        movingRight = true;
 
         UpdateCursorPosition();
 
         Debug.Log("Timing Started");
     }
 
+    // Tắt Timing
     public void StopTiming()
     {
         timingActive = false;
