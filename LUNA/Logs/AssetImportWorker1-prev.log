@@ -1,0 +1,243 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.3/staging' branch; Version is '6000.3.18f1 (5ebeb53e4c07) revision 6209205'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) Professional' Language: 'vi' Physical Memory: 8071 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-09-16T13:43:53Z
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-T480" at "2026-09-16T13:43:53.394712Z"
+
+COMMAND LINE ARGUMENTS:
+D:\GameUnity\6000.3.18f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+D:/GitHub/DATN-NHOM-LUNA/LUNA
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+62508
+-licensingIpc
+LicenseClient-T480
+-job-worker-count
+3
+-background-job-worker-count
+8
+-gc-helper-count
+1
+-name
+AssetImport
+Successfully changed project path to: D:/GitHub/DATN-NHOM-LUNA/LUNA
+D:/GitHub/DATN-NHOM-LUNA/LUNA
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+Player connection [20196]  Target information:
+
+Player connection [20196]  * "[IP] 192.168.1.25 [Port] 0 [Flags] 2 [Guid] 306344783 [EditorId] 306344783 [Version] 1048832 [Id] WindowsEditor(7,MT-Sereinyy) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [20196] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [20196] Host joined alternative multi-casting on [225.0.0.222:34997]...
+JobSystem: Creating JobQueue using job-worker-count value 3
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Refreshing native plugins compatible for Editor in 189.96 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.3.18f1 (5ebeb53e4c07)
+[Subsystems] Discovering subsystems at path D:/GameUnity/6000.3.18f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/GitHub/DATN-NHOM-LUNA/LUNA/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.1]
+    Renderer:        Intel(R) UHD Graphics 620 (ID=0x5917)
+    Vendor:          Intel
+    VRAM:            4035 MB
+    App VRAM Budget: 3632 MB
+    Driver:          31.0.101.2135
+    Unified Memory Architecture
+    Cache Coherent UMA
+Initialize mono
+Mono path[0] = 'D:/GameUnity/6000.3.18f1/Editor/Data/Managed'
+Mono path[1] = 'D:/GameUnity/6000.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/GameUnity/6000.3.18f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56100
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/GameUnity/6000.3.18f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.084262 seconds.
+- Loaded All Assemblies, in  7.441 seconds
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  5.865 seconds
+Domain Reload Profiling: 13306ms
+	BeginReloadAssembly (2161ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (14ms)
+	RebuildCommonClasses (1089ms)
+	RebuildNativeTypeToScriptingClass (240ms)
+	initialDomainReloadingComplete (911ms)
+	LoadAllAssembliesAndSetupDomain (3032ms)
+		LoadAssemblies (2137ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (2952ms)
+			TypeCache.Refresh (2917ms)
+				TypeCache.ScanAssembly (2683ms)
+			BuildScriptInfoCaches (7ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (5873ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (5371ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (945ms)
+			SetLoadedEditorAssemblies (53ms)
+			BeforeProcessingInitializeOnLoad (1272ms)
+			ProcessInitializeOnLoadAttributes (2118ms)
+			ProcessInitializeOnLoadMethodAttributes (982ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Import Worker Mode flag is 0x00
+Begin MonoManager ReloadAssembly
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.18.1'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-T480"
+[Licensing::IpcConnector] LicenseClient-T480 channel disconnected successfully.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-T480-6000.3.18" at "2026-09-16T13:44:34.277556Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 14904, path: "D:/GameUnity/6000.3.18f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              254f4875f1754c99ab5354dd00c8d6a7
+  Correlation Id:          d3934b007dbd6722321dabddda26c699
+  External correlation Id: 7617630997145792343
+  Machine Id:              ydBNRse9wT7Mlyqaw1EgalikaHI=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-T480-6000.3.18" (connect: 0.03s, validation: 0.01s, handshake: 0.10s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-T480-6000.3.18-notifications" at "2026-09-16T13:44:34.3904206Z"
+[Licensing::Module] Licensing Background thread has ended after 41.15s
+[Licensing::Module] Licensing is initialized (took 5.49s).
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 18968218238090-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in 12.986 seconds
+Refreshing native plugins compatible for Editor in 295.32 ms, found 4 plugins.
+Native extension for WindowsStandalone target not found
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Refreshing native plugins compatible for Editor in 49.57 ms, found 4 plugins.
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  8.862 seconds
+Domain Reload Profiling: 21846ms
+	BeginReloadAssembly (6803ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (68ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (136ms)
+	RebuildCommonClasses (196ms)
+	RebuildNativeTypeToScriptingClass (103ms)
+	initialDomainReloadingComplete (236ms)
+	LoadAllAssembliesAndSetupDomain (5643ms)
+		LoadAssemblies (4036ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (2370ms)
+			TypeCache.Refresh (1165ms)
+				TypeCache.ScanAssembly (1054ms)
+			BuildScriptInfoCaches (1063ms)
+			ResolveRequiredComponents (95ms)
+	FinalizeReload (8865ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (7309ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (26ms)
+			SetLoadedEditorAssemblies (47ms)
+			BeforeProcessingInitializeOnLoad (2363ms)
+			ProcessInitializeOnLoadAttributes (4449ms)
+			ProcessInitializeOnLoadMethodAttributes (411ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (2ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (26ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 42.21 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 4322 unused Assets / (1.7 MB). Loaded Objects now: 4851.
+Memory consumption went from 94.0 MB to 92.4 MB.
+Total: 41.573600 ms (FindLiveObjects: 1.909500 ms CreateObjectMapping: 2.852800 ms MarkObjects: 30.726200 ms  DeleteObjects: 6.082100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 863.452874 seconds.
+  path: Assets/Editor/QLDATNSceneTracker.cs
+  artifactKey: Guid(22517874d1c45d6428333fe2c5aa2df3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Editor/QLDATNSceneTracker.cs using Guid(22517874d1c45d6428333fe2c5aa2df3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fdb71261343606d33c23086eb91948aa') in 0.0413983 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+

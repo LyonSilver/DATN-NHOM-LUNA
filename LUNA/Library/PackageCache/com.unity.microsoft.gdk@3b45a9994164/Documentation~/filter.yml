@@ -1,0 +1,10 @@
+apiRules:
+  - exclude:
+      uidRegex: Unity\.Microsoft\.GDK
+      type: Namespace
+  - exclude:
+      uidRegex: XGamingRuntimeManager
+      type: Type
+  - exclude:
+      uidRegex: XGamingRuntime
+      type: Namespace
