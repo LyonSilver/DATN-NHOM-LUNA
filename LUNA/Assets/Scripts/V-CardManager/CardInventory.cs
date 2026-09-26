@@ -50,27 +50,46 @@ public class CardInventory : MonoBehaviour
         return currentQuantity < card.maxQuantity;
     }
 
-    public bool AddCard(CardData card)
+   public bool AddCard(CardData card)
+{
+    if (!CanAddCard(card))
     {
-        if (!CanAddCard(card))
-        {
-            return false;
-        }
+        Debug.LogWarning(
+            "Không thể thêm Card: " +
+            card.cardName
+        );
 
-        for (int i = 0; i < cards.Count; i++)
-        {
-            if (cards[i].card == card)
-            {
-                cards[i].quantity++;
-                return true;
-            }
-        }
-
-        CardInventoryEntry newEntry =
-            new CardInventoryEntry(card, 1);
-
-        cards.Add(newEntry);
-
-        return true;
+        return false;
     }
+
+    for (int i = 0; i < cards.Count; i++)
+    {
+        if (cards[i].card == card)
+        {
+            cards[i].quantity++;
+
+            Debug.Log(
+                "Đã thêm Card: " +
+                card.cardName +
+                " | Quantity: " +
+                cards[i].quantity
+            );
+
+            return true;
+        }
+    }
+
+    CardInventoryEntry newEntry =
+        new CardInventoryEntry(card, 1);
+
+    cards.Add(newEntry);
+
+    Debug.Log(
+        "Đã thêm Card mới: " +
+        card.cardName +
+        " | Quantity: 1"
+    );
+
+    return true;
+}   
 }

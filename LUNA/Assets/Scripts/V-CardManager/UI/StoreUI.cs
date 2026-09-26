@@ -18,6 +18,9 @@ public class StoreUI : MonoBehaviour
     [SerializeField] private TMP_Text moneyText;
     [SerializeField] private TMP_Text energyText;
 
+    [Header("Inventory")]
+    [SerializeField] private CardInventory cardInventory;
+
     private void Start()
     {
         RefreshStore();
@@ -72,7 +75,7 @@ public class StoreUI : MonoBehaviour
             case PurchaseResult.Success:
 
                 Debug.Log(
-                    "Mua thành công: " +
+                    "Mua thành công nhưng chưa thêm vào inventory: " +
                     card.cardName
                 );
 
