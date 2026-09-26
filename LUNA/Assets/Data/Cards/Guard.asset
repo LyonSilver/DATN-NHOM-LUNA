@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: CARD_003
   cardName: Guard
-  cost: 1
+  description: Creates a defensive shield that protects the player from damage.
   cardType: 1
-  baseValue: 10
-  description: "T\u1EA1o 10 \u0111i\u1EC3m Shield."
-  cardSprite: {fileID: 0}
+  rarity: 0
+  purchaseType: 1
+  moneyCost: 0
+  energyCost: 15
+  maxQuantity: 3
+  isStarterCard: 1
+  canAppearInStore: 1

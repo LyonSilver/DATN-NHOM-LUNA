@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eefc2133fe57bc843a1f569c76bdf0c7, type: 3}
-  m_Name: Focus
+  m_Name: Quick Heal
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardID: CARD_005
-  cardName: Focus
-  cost: 0
+  cardID: CARD_004
+  cardName: Quick Heal
+  description: Quickly restores a small amount of health.
   cardType: 3
-  baseValue: 1
-  description: "K\xEDch ho\u1EA1t hi\u1EC7u \u1EE9ng h\u1ED7 tr\u1EE3."
-  cardSprite: {fileID: 0}
+  rarity: 0
+  purchaseType: 0
+  moneyCost: 150
+  energyCost: 0
+  maxQuantity: 3
+  isStarterCard: 1
+  canAppearInStore: 1

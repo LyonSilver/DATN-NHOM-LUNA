@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eefc2133fe57bc843a1f569c76bdf0c7, type: 3}
-  m_Name: Heavy Hit
+  m_Name: Focus
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardID: CARD_002
-  cardName: Heavy Hit
-  cost: 2
-  cardType: 0
-  baseValue: 20
-  description: "G\xE2y 20 s\xE1t th\u01B0\u01A1ng l\xEAn k\u1EBB \u0111\u1ECBch."
-  cardSprite: {fileID: 0}
+  cardID: CARD_006
+  cardName: Focus
+  description: Improves the player's combat efficiency for a short period.
+  cardType: 3
+  rarity: 1
+  purchaseType: 1
+  moneyCost: 0
+  energyCost: 20
+  maxQuantity: 3
+  isStarterCard: 0
+  canAppearInStore: 1
