@@ -6,7 +6,7 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     GraphicsSettingsInspector_UserSettings:
-      value: 18134705175a055722080a3115371d4a0d55006876786860616b0471b8b16760b4a960bfb16c6d696055b969526c5422be481902e60e06021f0bdb1b1df3240a01c036c417cd5d46893b09c7c1099ccadb94c9
+      value: 18134705175a055722080a3115371d4a0d55006876786860616b0471b8b07a68ffab74f9ee2a3a30300cea1a11320d0beb1a0c25f7060f494b4cc80018eb09361fc211cb1f862d19c51d19dcc413d6ade0d8ddfcddf9f4d9d29195fcfde6ebeae6f0a9c9afa6f8c5b89ff7a1aacececac4eba4d7c9d28bda
       flags: 0
     QuickInstaller_com.unity.purchasing_installRecorded:
       value: 37434103
@@ -15,9 +15,18 @@ EditorUserSettings:
       value: 2550581500
       flags: 0
     RecentlyUsedSceneGuid-0:
-      value: 0057035101530b5a0e565c7212700c44154e19722a712562757b1e64b2b76161
+      value: 0207515307010c0b0f5e587515715944424f4c7b7c7e25672e2d4562b7b93039
       flags: 0
     RecentlyUsedSceneGuid-1:
+      value: 0155060507025a0b550d5520147306441515417a797f7e33792d4e61b2b23539
+      flags: 0
+    RecentlyUsedSceneGuid-2:
+      value: 06030d5106015d590c595975477606444e1540727f2c7f692c7d4567bbe26660
+      flags: 0
+    RecentlyUsedSceneGuid-3:
+      value: 0201010401045d0a54595524407a074413154d7e2a7d27687a2a1962e1b4376d
+      flags: 0
+    RecentlyUsedSceneGuid-4:
       value: 5a520c5157040b0d5f580a7512750e44144f48287f717e332e791b32b2e2653a
       flags: 0
     vcSharedLogLevel:
