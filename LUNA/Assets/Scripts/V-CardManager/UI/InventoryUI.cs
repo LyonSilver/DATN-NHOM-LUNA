@@ -9,6 +9,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private Transform inventoryCardGrid;
     [SerializeField] private GameObject inventoryCardPrefab;
+    [SerializeField] private GameObject storeUI;
 
     [Header("Store")]
     [SerializeField] private GameObject storePanel;
@@ -18,16 +19,16 @@ public class InventoryUI : MonoBehaviour
     public void OpenInventory()
     {
         // Tắt Store
-        if (storePanel != null)
+        if (storeUI != null)
         {
-            storePanel.SetActive(false);
+            storeUI.SetActive(false);
         }
 
         // Bật Inventory
-        if (inventoryPanel != null)
-        {
-            inventoryPanel.SetActive(true);
-        }
+        gameObject.SetActive(true);
+
+        // Bật panel Inventory
+        inventoryPanel.SetActive(true);
 
         // Cập nhật Card
         RefreshInventory();
@@ -39,15 +40,12 @@ public class InventoryUI : MonoBehaviour
     public void CloseInventory()
     {
         // Tắt Inventory
-        if (inventoryPanel != null)
-        {
-            inventoryPanel.SetActive(false);
-        }
+        gameObject.SetActive(false);
 
-        // Bật lại Store
-        if (storePanel != null)
+        // Bật Store
+        if (storeUI != null)
         {
-            storePanel.SetActive(true);
+            storeUI.SetActive(true);
         }
     }
 
@@ -59,39 +57,36 @@ public class InventoryUI : MonoBehaviour
 
         if (cardInventory == null)
         {
-            Debug.LogError(
-                "InventoryUI: CardInventory chưa được gán."
-            );
-
+            Debug.LogError("InventoryUI: CardInventory chưa được gán.");
             return;
         }
 
         if (inventoryCardGrid == null)
         {
-            Debug.LogError(
-                "InventoryUI: InventoryCardGrid chưa được gán."
-            );
-
+            Debug.LogError("InventoryUI: InventoryCardGrid chưa được gán.");
             return;
         }
 
         if (inventoryCardPrefab == null)
         {
-            Debug.LogError(
-                "InventoryUI: InventoryCardPrefab chưa được gán."
-            );
-
+            Debug.LogError("InventoryUI: InventoryCardPrefab chưa được gán.");
             return;
         }
 
-
         var cards = cardInventory.GetAllCards();
 
+        Debug.Log("InventoryUI: Số Card lấy được = " + cards.Count);
 
         for (int i = 0; i < cards.Count; i++)
         {
             CardInventoryEntry entry = cards[i];
 
+            Debug.Log(
+                "InventoryUI: Đang tạo UI cho Card = " +
+                entry.card.cardName +
+                " | Quantity = " +
+                entry.quantity
+            );
 
             GameObject cardObject =
                 Instantiate(
@@ -99,22 +94,31 @@ public class InventoryUI : MonoBehaviour
                     inventoryCardGrid
                 );
 
-
             InventoryCardUI cardUI =
                 cardObject.GetComponent<InventoryCardUI>();
-
 
             if (cardUI != null)
             {
                 cardUI.Setup(entry);
+
+                Debug.Log(
+                    "InventoryUI: Tạo UI thành công cho " +
+                    entry.card.cardName
+                );
+            }
+            else
+            {
+                Debug.LogError(
+                    "InventoryUI: Prefab KHÔNG có InventoryCardUI!"
+                );
             }
         }
     }
 
 
- 
+
     // CLEAR OLD CARDS
-   
+
 
     private void ClearInventoryCards()
     {

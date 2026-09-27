@@ -1481,9 +1481,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 523670180}
-        m_TargetAssemblyTypeName: StoreInventoryUI, Assembly-CSharp
-        m_MethodName: ShowInventory
+      - m_Target: {fileID: 1813712245}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: OpenInventory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1614,9 +1614,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 523670180}
-        m_TargetAssemblyTypeName: StoreInventoryUI, Assembly-CSharp
-        m_MethodName: ShowStore
+      - m_Target: {fileID: 1813712245}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: CloseInventory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1948,11 +1948,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0227b91c0734b2f4d974e6d7b31fb2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
-  cardInventory: {fileID: 0}
+  cardInventory: {fileID: 891679601}
   inventoryPanel: {fileID: 1173552588}
-  inventoryCardGrid: {fileID: 0}
+  inventoryCardGrid: {fileID: 1173552589}
   inventoryCardPrefab: {fileID: 3161654776697838061, guid: 872951466dd82d04fb69bc8f2248cbca, type: 3}
-  storePanel: {fileID: 0}
+  storePanel: {fileID: 1501021092}
 --- !u!1 &1907754510
 GameObject:
   m_ObjectHideFlags: 0
