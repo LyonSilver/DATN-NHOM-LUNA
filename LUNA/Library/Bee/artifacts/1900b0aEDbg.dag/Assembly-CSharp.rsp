@@ -450,11 +450,6 @@
 -analyzer:"D:/GameUnity/6000.3.18f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"D:/GameUnity/6000.3.18f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"D:/GameUnity/6000.3.18f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
-"Assets/Scripts/Battle/HandManager.cs"
-"Assets/Scripts/Cards/CardData.cs"
-"Assets/Scripts/Cards/CardType.cs"
-"Assets/Scripts/Manager/DeckManager.cs"
-"Assets/Scripts/UI/CardUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"
@@ -489,6 +484,12 @@
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+"Assets/_Project/Scripts/Battle/HandManager.cs"
+"Assets/_Project/Scripts/Cards/CardData.cs"
+"Assets/_Project/Scripts/Cards/CardType.cs"
+"Assets/_Project/Scripts/Managers/DeckManager.cs"
+"Assets/_Project/Scripts/Managers/TurnManager.cs"
+"Assets/_Project/Scripts/UI/CardUI.cs"
 -langversion:9.0
 /deterministic
 /optimize-
