@@ -4,7 +4,7 @@ using TMPro;
 
 public class CardUI : MonoBehaviour
 {
-    [Header("Dữ liệu Card hiện tại (Chỉ để xem, không tự sửa)")]
+    [Header("Dữ liệu Card hiện tại (Chỉ để xem, không chỉnh sửa trực tiếp)")]
     public CardData cardData;
 
     [Header("Frame / Background")]
@@ -32,10 +32,12 @@ public class CardUI : MonoBehaviour
     public CardData testDataOnStart;
 
     private Image rootImage;
+    private CanvasGroup canvasGroup;
 
     private void Awake()
     {
         rootImage = GetComponent<Image>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void Start()
@@ -50,7 +52,7 @@ public class CardUI : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.LogWarning("CardUI.Setup: CardData đang null, không thể hiển thị Card.");
+            Debug.LogWarning("CardUI.Setup: CardData đang null, không thể hiện thị Card.");
             return;
         }
 
@@ -78,6 +80,7 @@ public class CardUI : MonoBehaviour
         SetSelected(false);
         SetDisabled(false);
         SetInteractable(true);
+        SetDimmed(false);
     }
 
     private void ApplyTypeColor(CardType type)
@@ -126,5 +129,10 @@ public class CardUI : MonoBehaviour
     public void SetInteractable(bool isOn)
     {
         if (rootImage != null) rootImage.raycastTarget = isOn;
+    }
+
+    public void SetDimmed(bool isOn)
+    {
+        if (canvasGroup != null) canvasGroup.alpha = isOn ? 0.55f : 1f;
     }
 }

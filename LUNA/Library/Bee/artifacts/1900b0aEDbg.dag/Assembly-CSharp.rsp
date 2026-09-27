@@ -484,11 +484,13 @@
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+"Assets/_Project/Scripts/Battle/CardManager.cs"
 "Assets/_Project/Scripts/Battle/HandManager.cs"
 "Assets/_Project/Scripts/Cards/CardData.cs"
 "Assets/_Project/Scripts/Cards/CardType.cs"
 "Assets/_Project/Scripts/Managers/DeckManager.cs"
 "Assets/_Project/Scripts/Managers/TurnManager.cs"
+"Assets/_Project/Scripts/UI/CardInputHandler.cs"
 "Assets/_Project/Scripts/UI/CardUI.cs"
 "Assets/_Project/Scripts/UI/EnergyDisplay.cs"
 -langversion:9.0

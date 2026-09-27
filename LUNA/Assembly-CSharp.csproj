@@ -53,6 +53,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\_Project\Scripts\Managers\TurnManager.cs" />
+    <Compile Include="Assets\_Project\Scripts\Battle\CardManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Assets\_Project\Scripts\UI\EnergyDisplay.cs" />
     <Compile Include="Assets\_Project\Scripts\UI\CardUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\_Project\Scripts\UI\CardInputHandler.cs" />
     <Compile Include="Assets\_Project\Scripts\Cards\CardData.cs" />
     <Compile Include="Assets\_Project\Scripts\Cards\CardType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />

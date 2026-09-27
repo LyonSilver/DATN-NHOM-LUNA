@@ -314,6 +314,8 @@ GameObject:
   - component: {fileID: 354471999417675982}
   - component: {fileID: 6239382686552589522}
   - component: {fileID: -117109847166238510}
+  - component: {fileID: 8085103637193569656}
+  - component: {fileID: 2016009220808969566}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -417,6 +419,30 @@ MonoBehaviour:
   selectionHighlight: {fileID: 5277646278186081886}
   disabledOverlay: {fileID: 7739307824165983541}
   testDataOnStart: {fileID: 0}
+--- !u!225 &8085103637193569656
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997509876283000121}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &2016009220808969566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997509876283000121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37fbcd2df647584394e91fc6296277c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardInputHandler
 --- !u!1 &3582321852745082869
 GameObject:
   m_ObjectHideFlags: 0

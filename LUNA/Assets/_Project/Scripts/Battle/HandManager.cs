@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class HandManager : MonoBehaviour
 {
-    [Header("Tham chieu")]
+    [Header("Tham chiếu")]
     public DeckManager deckManager;
     public TurnManager turnManager;
+    public CardManager cardManager;
     public RectTransform handContainer;
     public GameObject cardPrefab;
 
-    [Header("Bố cục Hand (Đơn vị Pixel, màn hình 1920x1080)")]
+    [Header("Bố cục Hand (Đơn vị pixel, màn hình 1920x1080)")]
     public float cardSpacing = 300f;
     public float cardPositionY = 0f;
 
@@ -69,6 +70,12 @@ public class HandManager : MonoBehaviour
 
             cardUI.Setup(hand[i]);
 
+            CardInputHandler inputHandler = cardGO.GetComponent<CardInputHandler>();
+            if (inputHandler != null)
+            {
+                inputHandler.Init(cardManager);
+            }
+
             RectTransform rt = cardGO.GetComponent<RectTransform>();
             float xPos = GetXPositionForIndex(i, count);
             rt.anchoredPosition = new Vector2(xPos, cardPositionY);
@@ -90,6 +97,24 @@ public class HandManager : MonoBehaviour
             bool affordable = turnManager.CanAfford(card.cardData);
             card.SetDisabled(!affordable);
             card.SetInteractable(affordable);
+        }
+    }
+
+    public void SetSelectedCard(CardUI selected)
+    {
+        foreach (CardUI card in spawnedCards)
+        {
+            if (card == null) continue;
+
+            CardInputHandler inputHandler = card.GetComponent<CardInputHandler>();
+            bool isSelected = card == selected;
+
+            if (inputHandler != null)
+            {
+                inputHandler.SetSelectedVisual(isSelected);
+            }
+
+            card.SetDimmed(selected != null && !isSelected);
         }
     }
 
