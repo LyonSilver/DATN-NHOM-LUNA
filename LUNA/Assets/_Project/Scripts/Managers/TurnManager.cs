@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    [Header("Cấu hình Energy (Theo GDD: Mỗi lượt bắt đầu với 3 Energy)")]
+    [Header("Cấu hình Energy (Mỗi lượt bắt đầu với 3 Energy)")]
     public int maxEnergy = 3;
 
-    [Header("Runtime State (Chỉ để xem, không tự sửa)")]
+    [Header("Runtime State (chỉ để xem, không tự sửa tay)")]
     public int currentEnergy;
 
     public event System.Action OnEnergyChanged;

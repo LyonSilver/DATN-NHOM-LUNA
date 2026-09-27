@@ -4,7 +4,7 @@ using TMPro;
 
 public class CardUI : MonoBehaviour
 {
-    [Header("Dữ liệu Card hiện tại (Chỉ xem, không tự sửa)")]
+    [Header("Dữ liệu Card hiện tại (Chỉ để xem, không tự sửa)")]
     public CardData cardData;
 
     [Header("Frame / Background")]
@@ -28,8 +28,15 @@ public class CardUI : MonoBehaviour
     public GameObject selectionHighlight;
     public GameObject disabledOverlay;
 
-    [Header("TEST ONLY - Xóa hoặc để trống khi build")]
+    [Header("TEST ONLY")]
     public CardData testDataOnStart;
+
+    private Image rootImage;
+
+    private void Awake()
+    {
+        rootImage = GetComponent<Image>();
+    }
 
     private void Start()
     {
@@ -70,6 +77,7 @@ public class CardUI : MonoBehaviour
         SetHover(false);
         SetSelected(false);
         SetDisabled(false);
+        SetInteractable(true);
     }
 
     private void ApplyTypeColor(CardType type)
@@ -113,5 +121,10 @@ public class CardUI : MonoBehaviour
     public void SetDisabled(bool isOn)
     {
         if (disabledOverlay != null) disabledOverlay.SetActive(isOn);
+    }
+
+    public void SetInteractable(bool isOn)
+    {
+        if (rootImage != null) rootImage.raycastTarget = isOn;
     }
 }

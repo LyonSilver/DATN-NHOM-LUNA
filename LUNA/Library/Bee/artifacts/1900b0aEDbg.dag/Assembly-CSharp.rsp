@@ -490,6 +490,7 @@
 "Assets/_Project/Scripts/Managers/DeckManager.cs"
 "Assets/_Project/Scripts/Managers/TurnManager.cs"
 "Assets/_Project/Scripts/UI/CardUI.cs"
+"Assets/_Project/Scripts/UI/EnergyDisplay.cs"
 -langversion:9.0
 /deterministic
 /optimize-

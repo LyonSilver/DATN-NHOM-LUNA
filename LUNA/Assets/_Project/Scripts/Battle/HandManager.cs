@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class HandManager : MonoBehaviour
 {
-    [Header("Tham chiếu")]
+    [Header("Tham chieu")]
     public DeckManager deckManager;
+    public TurnManager turnManager;
     public RectTransform handContainer;
     public GameObject cardPrefab;
 
@@ -20,6 +21,11 @@ public class HandManager : MonoBehaviour
         {
             deckManager.OnHandChanged += RefreshHand;
         }
+
+        if (turnManager != null)
+        {
+            turnManager.OnEnergyChanged += UpdateCardAffordability;
+        }
     }
 
     private void OnDisable()
@@ -27,6 +33,11 @@ public class HandManager : MonoBehaviour
         if (deckManager != null)
         {
             deckManager.OnHandChanged -= RefreshHand;
+        }
+
+        if (turnManager != null)
+        {
+            turnManager.OnEnergyChanged -= UpdateCardAffordability;
         }
     }
 
@@ -64,6 +75,22 @@ public class HandManager : MonoBehaviour
 
             spawnedCards.Add(cardUI);
         }
+
+        UpdateCardAffordability();
+    }
+
+    public void UpdateCardAffordability()
+    {
+        if (turnManager == null) return;
+
+        foreach (CardUI card in spawnedCards)
+        {
+            if (card == null || card.cardData == null) continue;
+
+            bool affordable = turnManager.CanAfford(card.cardData);
+            card.SetDisabled(!affordable);
+            card.SetInteractable(affordable);
+        }
     }
 
     private float GetXPositionForIndex(int index, int count)
@@ -82,5 +109,39 @@ public class HandManager : MonoBehaviour
             }
         }
         spawnedCards.Clear();
+    }
+
+    [ContextMenu("TEST - Play First Affordable Card In Hand")]
+    private void TestPlayFirstAffordableCard()
+    {
+        if (deckManager == null || turnManager == null)
+        {
+            Debug.LogWarning("HandManager TEST: Thiếu tham chiếu DeckManager hoặc TurnManager.");
+            return;
+        }
+
+        CardData cardToPlay = null;
+
+        foreach (CardData card in deckManager.hand)
+        {
+            if (turnManager.CanAfford(card))
+            {
+                cardToPlay = card;
+                break;
+            }
+        }
+
+        if (cardToPlay == null)
+        {
+            Debug.Log("HandManager TEST: Không có Card nào đủ Energy để chơi lúc này.");
+            return;
+        }
+
+        turnManager.SpendEnergy(cardToPlay.cost);
+        deckManager.PlayCard(cardToPlay);
+        deckManager.DiscardCard(cardToPlay);
+
+        Debug.Log("HandManager TEST: Đã chơi và discard Card '" + cardToPlay.cardName +
+                   "' (Cost " + cardToPlay.cost + "). Energy còn lại: " + turnManager.currentEnergy + "/" + turnManager.maxEnergy);
     }
 }
