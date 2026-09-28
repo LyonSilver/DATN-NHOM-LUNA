@@ -20,7 +20,7 @@ public class BattleDemoController : MonoBehaviour
 
     public void EndBattleDemo()
     {
-        // 1. LẤY DỮ LIỆU INPUT
+        // 1. LẤY DỮ LIỆU TỪ INPUT FIELD
 
         int damageDealt = GetInputValue(damageDealtInput);
         int damageReceived = GetInputValue(damageReceivedInput);
@@ -28,7 +28,7 @@ public class BattleDemoController : MonoBehaviour
         int goldEarned = GetInputValue(goldEarnedInput);
 
 
-        // 2. TÍNH KẾT QUẢ
+        // 2. GỬI DỮ LIỆU CHO RESULT SYSTEM
 
         resultSystem.CalculateResult(
             damageDealt,
@@ -38,13 +38,17 @@ public class BattleDemoController : MonoBehaviour
         );
 
 
-        // 3. ĐỔI PANEL
+        // 3. ĐÓNG DEMO PANEL
 
         demoPanel.SetActive(false);
+
+
+        // 4. MỞ RESULT PANEL
+
         resultPanel.SetActive(true);
 
 
-        // 4. HIỂN THỊ RESULT
+        // 5. HIỂN THỊ KẾT QUẢ
 
         resultUI.ShowResult(
             resultSystem.CurrentResult
@@ -58,9 +62,12 @@ public class BattleDemoController : MonoBehaviour
 
         if (int.TryParse(input.text, out value))
         {
+            // Không cho phép số âm từ InputField
             return Mathf.Max(0, value);
         }
 
+        // Nếu InputField trống hoặc nhập sai
+        // thì mặc định = 0
         return 0;
     }
 }

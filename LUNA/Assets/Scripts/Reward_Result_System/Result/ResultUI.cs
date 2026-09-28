@@ -20,14 +20,16 @@ public class ResultUI : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private GameObject nextButton;
     [SerializeField] private GameObject againButton;
+    [SerializeField] private GameObject mainMenuButton;
 
     [Header("Star Colors")]
     [SerializeField] private Color emptyStarColor = Color.white;
     [SerializeField] private Color activeStarColor = Color.yellow;
 
+
     public void ShowResult(BattleResultData result)
     {
-        // HIỂN THỊ CHỈ SỐ
+        // 1. HIỂN THỊ CÁC CHỈ SỐ
 
         damageDealtText.text =
             "Damage gây ra: " + result.damageDealt;
@@ -45,8 +47,7 @@ public class ResultUI : MonoBehaviour
             "Score: " + result.score;
 
 
-        // HIỂN THỊ VICTORY / DEFEAT
-
+        // 2. HIỂN THỊ VICTORY / DEFEAT
         if (result.victory)
         {
             resultTitleText.text = "VICTORY";
@@ -57,22 +58,30 @@ public class ResultUI : MonoBehaviour
         }
 
 
-        // HIỂN THỊ SỐ SAO
+        // 3. HIỂN THỊ SỐ SAO
 
         ShowStars(result.star);
 
 
-        // HIỂN THỊ BUTTON
+        // 4. XỬ LÝ BUTTON
 
-        if (result.star >= 2)
+        if (result.star == 1)
         {
-            nextButton.SetActive(true);
-            againButton.SetActive(false);
+            // 1 SAO
+            // Không qua màn
+            // Cho phép chơi lại
+            nextButton.SetActive(false);
+            againButton.SetActive(true);
+            mainMenuButton.SetActive(true);
         }
         else
         {
-            nextButton.SetActive(false);
-            againButton.SetActive(true);
+            // 2 hoặc 3 SAO
+            // Được qua màn
+
+            nextButton.SetActive(true);
+            againButton.SetActive(false);
+            mainMenuButton.SetActive(true);
         }
     }
 

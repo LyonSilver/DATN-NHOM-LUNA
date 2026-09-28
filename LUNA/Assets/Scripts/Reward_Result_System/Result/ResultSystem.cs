@@ -2,12 +2,20 @@ using UnityEngine;
 
 public class ResultSystem : MonoBehaviour
 {
+    [Header("Score Settings")]
+
+    [SerializeField] private int minScore = 100;
+    [SerializeField] private int maxScore = 600;
+
+
     [Header("Star Conditions")]
-    [SerializeField] private int oneStarScore = 300;
-    [SerializeField] private int twoStarScore = 600;
-    [SerializeField] private int threeStarScore = 1000;
+
+    [SerializeField] private int twoStarScore = 200;
+    [SerializeField] private int threeStarScore = 400;
+
 
     public BattleResultData CurrentResult { get; private set; }
+
 
     public void CalculateResult(
         int damageDealt,
@@ -15,44 +23,60 @@ public class ResultSystem : MonoBehaviour
         int killCount,
         int goldEarned)
     {
-        // Tạo dữ liệu kết quả
+        // 1. TẠO DATA KẾT QUẢ
+
         BattleResultData result = new BattleResultData();
 
-        // Lưu dữ liệu trận
+
+        // 2. LƯU DỮ LIỆU TRẬN ĐẤU
+
         result.damageDealt = damageDealt;
+
         result.damageReceived = damageReceived;
+
         result.killCount = killCount;
+
         result.goldEarned = goldEarned;
 
-        // 1. TÍNH SCORE
 
-        result.score =
+        // 3. TÍNH SCORE
+
+        int rawScore =
             damageDealt
-            + (killCount * 100)
-            + (goldEarned * 10)
+            + (killCount * 20)
+            + (goldEarned * 2)
             - damageReceived;
 
-        // 2. TÍNH SỐ SAO
+
+        // 4. GIỚI HẠN SCORE
+
+        result.score = Mathf.Clamp(
+            rawScore,
+            minScore,
+            maxScore
+        );
+
+
+        // 5. TÍNH SỐ SAO
 
         if (result.score >= threeStarScore)
         {
+            // 400 - 600
             result.star = 3;
         }
         else if (result.score >= twoStarScore)
         {
+            // 200 - 399
             result.star = 2;
-        }
-        else if (result.score >= oneStarScore)
-        {
-            result.star = 1;
         }
         else
         {
-            result.star = 0;
+            // 100 - 199
+            result.star = 1;
         }
 
-        
-        // 3. XÁC ĐỊNH THẮNG / THUA
+
+        // 6. XÁC ĐỊNH THẮNG / THUA
 
         if (result.star >= 2)
         {
@@ -63,12 +87,20 @@ public class ResultSystem : MonoBehaviour
             result.victory = false;
         }
 
-        // Lưu kết quả hiện tại
+
+        // 7. LƯU KẾT QUẢ HIỆN TẠI
+
         CurrentResult = result;
 
-        // Debug để kiểm tra
+
+        // 8. DEBUG
+
         Debug.Log(
-            "Score: " + result.score +
+            "Damage Dealt: " + result.damageDealt +
+            " | Damage Received: " + result.damageReceived +
+            " | Kill: " + result.killCount +
+            " | Gold: " + result.goldEarned +
+            " | Score: " + result.score +
             " | Star: " + result.star +
             " | Victory: " + result.victory
         );
