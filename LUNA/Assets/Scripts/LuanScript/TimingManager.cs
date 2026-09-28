@@ -24,10 +24,13 @@ public class TimingManager : MonoBehaviour
 
     public event Action<TimingResult, float> OnTimingResult;
 
+
     private void Start()
     {
-        StartTiming();
+        // Không tự Start Timing khi vào game
+        StopTiming();
     }
+
 
     private void Update()
     {
@@ -43,7 +46,7 @@ public class TimingManager : MonoBehaviour
         }
     }
 
-    // Di chuyển Cursor qua lại bằng Mathf.PingPong
+
     private void MoveCursor()
     {
         cursorPosition = Mathf.PingPong(
@@ -54,9 +57,12 @@ public class TimingManager : MonoBehaviour
         UpdateCursorPosition();
     }
 
-    // Cập nhật vị trí Cursor trên Timing Bar
+
     private void UpdateCursorPosition()
     {
+        if (timingBar == null || cursor == null)
+            return;
+
         float barWidth = timingBar.rect.width;
 
         float xPosition = Mathf.Lerp(
@@ -71,7 +77,7 @@ public class TimingManager : MonoBehaviour
         );
     }
 
-    // Kiểm tra kết quả Timing và hệ số nhân
+
     private void CheckTiming()
     {
         TimingResult result;
@@ -81,13 +87,13 @@ public class TimingManager : MonoBehaviour
             cursorPosition <= 0.55f)
         {
             result = TimingResult.PERFECT;
-            multiplier = 1.5f;
+            multiplier = 0.5f;
         }
         else if (cursorPosition >= 0.35f &&
                  cursorPosition <= 0.65f)
         {
             result = TimingResult.GREAT;
-            multiplier = 1.25f;
+            multiplier = 0.75f;
         }
         else if (cursorPosition >= 0.20f &&
                  cursorPosition <= 0.80f)
@@ -98,22 +104,30 @@ public class TimingManager : MonoBehaviour
         else
         {
             result = TimingResult.MISS;
-            multiplier = 0.5f;
+            multiplier = 1.5f;
         }
 
         Debug.Log(
             $"Timing: {result} | " +
             $"Cursor Position: {cursorPosition:F2} | " +
-            $"Multiplier: {multiplier:F2}x"
+            $"Damage Multiplier: {multiplier:F2}x"
         );
 
-        // Phát Event gửi kết quả và hệ số sang BattleManager
+        // Tắt Timing trước
+        StopTiming();
+
+        // Gửi kết quả
         OnTimingResult?.Invoke(result, multiplier);
     }
 
-    // Bật Timing
+
     public void StartTiming()
     {
+        if (timingBar != null)
+        {
+            timingBar.gameObject.SetActive(true);
+        }
+
         timingActive = true;
 
         cursorPosition = 0f;
@@ -123,10 +137,15 @@ public class TimingManager : MonoBehaviour
         Debug.Log("Timing Started");
     }
 
-    // Tắt Timing
+
     public void StopTiming()
     {
         timingActive = false;
+
+        if (timingBar != null)
+        {
+            timingBar.gameObject.SetActive(false);
+        }
 
         Debug.Log("Timing Stopped");
     }
