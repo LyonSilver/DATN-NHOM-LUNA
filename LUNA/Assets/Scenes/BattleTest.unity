@@ -376,13 +376,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03b6c95c0b670f479358acce4036bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UseCardButton
+  cardManager: {fileID: 993303427}
+  cardEffectManager: {fileID: 114245655}
+  turnManager: {fileID: 632329228}
+--- !u!1 &114245653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 114245654}
+  - component: {fileID: 114245655}
+  m_Layer: 0
+  m_Name: EffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &114245654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114245653}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 767957000}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114245655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114245653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba542642569c6fa4ea628ce26f2f8b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardEffectManager
+  playerHP: 100
+  maxPlayerHP: 100
+  playerShield: 0
   enemyHP: 50
   maxEnemyHP: 50
-  playerShield: 0
-  enemyHPText: {fileID: 1550515634}
+  playerHPText: {fileID: 929426768}
   shieldText: {fileID: 1782870346}
-  cardManager: {fileID: 993303427}
-  turnManager: {fileID: 632329228}
+  enemyHPText: {fileID: 1550515634}
 --- !u!1 &249717575
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   damage: 20
-  endButton: {fileID: 1977612267}
+  cardEffectManager: {fileID: 114245655}
 --- !u!1 &321281750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,6 +1276,7 @@ Transform:
   - {fileID: 632329229}
   - {fileID: 993303426}
   - {fileID: 1991072696}
+  - {fileID: 114245654}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &821180541
@@ -3194,12 +3243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3c892af0b171148b503f49fc176e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndButton
-  playerHP: 100
-  maxPlayerHP: 100
   enemyAttack: {fileID: 249717579}
   timingManager: {fileID: 1991072695}
   timingChance: 50
-  playerHPText: {fileID: 929426768}
   deckManager: {fileID: 821180542}
   turnManager: {fileID: 632329228}
 --- !u!114 &1977612268

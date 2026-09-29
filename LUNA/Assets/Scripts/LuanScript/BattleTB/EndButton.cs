@@ -57,10 +57,14 @@ public class EndButton : MonoBehaviour
             if (enemyAttack != null)
             {
                 enemyAttack.AttackWithoutTiming();
+
+                // Enemy đánh xong → kết thúc lượt
+                FinishTurn();
             }
             else
             {
                 Debug.LogWarning("EndButton: Chưa gán EnemyAttack.");
+
                 FinishTurn();
             }
         }
@@ -81,10 +85,14 @@ public class EndButton : MonoBehaviour
         if (enemyAttack != null)
         {
             enemyAttack.ApplyTimingDamage(multiplier);
+
+            // Enemy đánh xong → kết thúc lượt
+            FinishTurn();
         }
         else
         {
             Debug.LogWarning("EndButton: Chưa gán EnemyAttack.");
+
             FinishTurn();
         }
     }
