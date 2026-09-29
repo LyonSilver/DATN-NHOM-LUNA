@@ -39,6 +39,7 @@ public class CardInputHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (isSelected) return;
+        if (cardManager != null && cardManager.IsBusy) return;
 
         rectTransform.SetAsLastSibling();
         rectTransform.anchoredPosition = basePosition + new Vector2(0f, hoverMoveY);

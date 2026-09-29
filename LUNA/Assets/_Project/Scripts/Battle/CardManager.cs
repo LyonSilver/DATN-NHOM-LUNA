@@ -1,14 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    [Header("Tham chieu")]
+    [Header("Tham chiếu")]
     public TurnManager turnManager;
     public HandManager handManager;
     public DeckManager deckManager;
+    public CardEffectManager cardEffectManager;
+    public TimingManager timingManager;
 
-    [Header("Runtime State (Chỉ để xem, không chỉnh sửa)")]
+    [Header("Runtime State (Chỉ để xem, không tự sửa)")]
     public CardUI selectedCard;
+
+    public bool IsBusy { get; private set; }
 
     private void OnEnable()
     {
@@ -28,6 +33,8 @@ public class CardManager : MonoBehaviour
 
     public void OnCardClicked(CardInputHandler clickedCard)
     {
+        if (IsBusy) return;
+
         CardUI clickedUI = clickedCard.GetCardUI();
 
         if (clickedUI == null || clickedUI.cardData == null)
@@ -35,35 +42,87 @@ public class CardManager : MonoBehaviour
             return;
         }
 
-        if (selectedCard == clickedUI)
+        if (!turnManager.CanAfford(clickedUI.cardData))
         {
-            Deselect();
+            Debug.Log("CardManager: Không đủ Energy để dùng Card '" + clickedUI.cardData.cardName + "'.");
             return;
         }
 
-        if (!turnManager.CanAfford(clickedUI.cardData))
+        if (timingManager == null || cardEffectManager == null)
         {
-            Debug.Log("CardManager: Không đủ Energy để chọn Card '" + clickedUI.cardData.cardName + "'.");
+            Debug.LogError("CardManager: Thiếu tham chiếu TimingManager hoặc CardEffectManager trong Inspector.");
             return;
         }
 
         selectedCard = clickedUI;
         handManager.SetSelectedCard(clickedUI);
 
-        Debug.Log("CardManager: Đã chọn Card '" + clickedUI.cardData.cardName +
-                   "'. Cho kết nối Timing/Effect.");
-
-        // TO-DO List:
-        // 1. turnManager.SpendEnergy(clickedUI.cardData.cost);
-        // 2. TimingManager.StartTiming(clickedUI.cardData);
-        // 3. Sau khi co Timing Result -> CardEffectManager.ResolveCard(...)
-        // 4. deckManager.PlayCard(...) + deckManager.DiscardCard(...)
+        StartCoroutine(PlayCardRoutine(clickedUI.cardData));
     }
 
-    public void Deselect()
+    private IEnumerator PlayCardRoutine(CardData card)
     {
+        IsBusy = true;
+
+        Debug.Log("CardManager: Bắt đầu dùng Card '" + card.cardName + "'.");
+
+        turnManager.SpendEnergy(card.cost);
+
+        int timingCount = GetTimingCount(card);
+        TimingResult[] results = new TimingResult[Mathf.Max(1, timingCount)];
+
+        for (int i = 0; i < results.Length; i++)
+        {
+            results[i] = TimingResult.Good;
+        }
+
+        float bonusPercent = 0f;
+        if (timingCount > 0)
+        {
+            bonusPercent = cardEffectManager.pendingTimingWindowBonusPercent;
+            cardEffectManager.pendingTimingWindowBonusPercent = 0f;
+        }
+
+        for (int i = 0; i < timingCount; i++)
+        {
+            bool finished = false;
+            TimingResult hitResult = TimingResult.Miss;
+
+            string hitLabel = timingCount > 1 ? " (Hit " + (i + 1) + "/" + timingCount + ")" : "";
+
+            timingManager.StartTiming(card, bonusPercent, hitLabel, (r) =>
+            {
+                hitResult = r;
+                finished = true;
+            });
+
+            yield return new WaitUntil(() => finished);
+
+            results[i] = hitResult;
+        }
+
+        deckManager.PlayCard(card);
+        cardEffectManager.ResolveCard(card, results);
+        deckManager.DiscardCard(card);
+
         selectedCard = null;
-        handManager.SetSelectedCard(null);
+        IsBusy = false;
+    }
+
+    private int GetTimingCount(CardData card)
+    {
+        switch (card.effectType)
+        {
+            case CardEffectType.Damage:
+            case CardEffectType.Poison:
+                return 1;
+
+            case CardEffectType.DoubleHit:
+                return Mathf.Max(1, card.extraValue);
+
+            default:
+                return 0;
+        }
     }
 
     private void HandleHandChanged()

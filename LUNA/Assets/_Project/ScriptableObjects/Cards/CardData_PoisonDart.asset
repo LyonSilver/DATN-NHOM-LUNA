@@ -17,8 +17,8 @@ MonoBehaviour:
   cardType: 2
   cost: 2
   description: Deal 5 Damage and apply Poison for 3 turns.
-  artwork: {fileID: 0}
-  typeIcon: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 6ffd49ee48336c14d815b46a0465d44d, type: 3}
+  typeIcon: {fileID: 21300000, guid: 645197b98e8d4c040a13c68abeddfeb8, type: 3}
   effectType: 3
   baseDamage: 5
   shieldValue: 0

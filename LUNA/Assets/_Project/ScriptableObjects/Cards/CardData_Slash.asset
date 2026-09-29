@@ -19,8 +19,8 @@ MonoBehaviour:
   description: 'Deal 8 Damage.
 
     GOOD+ Timing: +2 Damage.'
-  artwork: {fileID: 0}
-  typeIcon: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 02ea5b22c2efd344a8dcc84cdf6e4c4d, type: 3}
+  typeIcon: {fileID: 21300000, guid: 259872b4eeacb9746ada4cd7d3c92793, type: 3}
   effectType: 0
   baseDamage: 8
   shieldValue: 0

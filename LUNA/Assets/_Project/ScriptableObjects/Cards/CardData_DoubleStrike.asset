@@ -19,8 +19,8 @@ MonoBehaviour:
   description: 'Deal 6 Damage, twice.
 
     Each hit has its own Timing.'
-  artwork: {fileID: 0}
-  typeIcon: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 02ea5b22c2efd344a8dcc84cdf6e4c4d, type: 3}
+  typeIcon: {fileID: 21300000, guid: f67e1040c54c3074f927d8ce23b52c21, type: 3}
   effectType: 5
   baseDamage: 6
   shieldValue: 0

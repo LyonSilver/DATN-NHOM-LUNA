@@ -10,11 +10,12 @@ public class HandManager : MonoBehaviour
     public RectTransform handContainer;
     public GameObject cardPrefab;
 
-    [Header("Bố cục Hand (Đơn vị pixel, màn hình 1920x1080)")]
+    [Header("Bố cục Hand (Đơn vị Pixel, màn hình 1920x1080)")]
     public float cardSpacing = 300f;
     public float cardPositionY = 0f;
 
     private List<CardUI> spawnedCards = new List<CardUI>();
+    private CardUI currentSelected;
 
     private void OnEnable()
     {
@@ -93,6 +94,7 @@ public class HandManager : MonoBehaviour
         foreach (CardUI card in spawnedCards)
         {
             if (card == null || card.cardData == null) continue;
+            if (card == currentSelected) continue;
 
             bool affordable = turnManager.CanAfford(card.cardData);
             card.SetDisabled(!affordable);
@@ -102,6 +104,8 @@ public class HandManager : MonoBehaviour
 
     public void SetSelectedCard(CardUI selected)
     {
+        currentSelected = selected;
+
         foreach (CardUI card in spawnedCards)
         {
             if (card == null) continue;
@@ -134,6 +138,7 @@ public class HandManager : MonoBehaviour
             }
         }
         spawnedCards.Clear();
+        currentSelected = null;
     }
 
     [ContextMenu("TEST - Play First Affordable Card In Hand")]
