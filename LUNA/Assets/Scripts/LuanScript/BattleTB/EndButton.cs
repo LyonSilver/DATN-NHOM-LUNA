@@ -1,12 +1,7 @@
 using UnityEngine;
-using TMPro;
 
 public class EndButton : MonoBehaviour
 {
-    [Header("Player HP")]
-    [SerializeField] private int playerHP = 100;
-    [SerializeField] private int maxPlayerHP = 100;
-
     [Header("Enemy Attack")]
     [SerializeField] private EnemyAttack enemyAttack;
 
@@ -15,9 +10,6 @@ public class EndButton : MonoBehaviour
 
     [Range(0f, 100f)]
     [SerializeField] private float timingChance = 100f;
-
-    [Header("HP Text")]
-    [SerializeField] private TMP_Text playerHPText;
 
     [Header("Card")]
     [SerializeField] private DeckManager deckManager;
@@ -28,8 +20,6 @@ public class EndButton : MonoBehaviour
 
     private void Start()
     {
-        UpdateHPUI();
-
         if (timingManager != null)
         {
             timingManager.OnTimingResult += HandleTimingResult;
@@ -100,37 +90,6 @@ public class EndButton : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
-    {
-        playerHP -= damage;
-        playerHP = Mathf.Max(playerHP, 0);
-
-        UpdateHPUI();
-
-        Debug.Log(
-            "Player nhận " +
-            damage +
-            " Damage. HP: " +
-            playerHP +
-            "/" +
-            maxPlayerHP
-        );
-    }
-
-
-    private void UpdateHPUI()
-    {
-        if (playerHPText != null)
-        {
-            playerHPText.text =
-                "HP: " +
-                playerHP +
-                "/" +
-                maxPlayerHP;
-        }
-    }
-
-
     public void FinishTurn()
     {
         if (deckManager != null)
@@ -144,11 +103,5 @@ public class EndButton : MonoBehaviour
         }
 
         Debug.Log("End: Đã bắt đầu lượt mới.");
-    }
-
-
-    public int GetPlayerHP()
-    {
-        return playerHP;
     }
 }

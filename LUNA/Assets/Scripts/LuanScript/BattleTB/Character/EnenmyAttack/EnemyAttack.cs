@@ -6,13 +6,16 @@ public class EnemyAttack : MonoBehaviour
     [Header("Damage")]
     [SerializeField] private int damage = 10;
 
-    [Header("End Button")]
-    [SerializeField] private EndButton endButton;
+    [Header("Card Effect Manager")]
+    [SerializeField] private CardEffectManager cardEffectManager;
 
     public event Action<int> OnDamageCalculated;
 
 
-    // Có Timing
+    // =========================================================
+    // CÓ TIMING
+    // =========================================================
+
     public void ApplyTimingDamage(float multiplier)
     {
         int finalDamage = Mathf.RoundToInt(
@@ -32,7 +35,10 @@ public class EnemyAttack : MonoBehaviour
     }
 
 
-    // Không có Timing
+    // =========================================================
+    // KHÔNG CÓ TIMING
+    // =========================================================
+
     public void AttackWithoutTiming()
     {
         Debug.Log(
@@ -44,22 +50,30 @@ public class EnemyAttack : MonoBehaviour
     }
 
 
+    // =========================================================
+    // DEAL DAMAGE
+    // =========================================================
+
     private void DealDamage(int finalDamage)
     {
-        if (endButton != null)
+        if (cardEffectManager != null)
         {
-            endButton.TakeDamage(finalDamage);
+            cardEffectManager.TakeDamage(finalDamage);
         }
         else
         {
             Debug.LogWarning(
-                "EnemyAttack: Chưa gán EndButton."
+                "EnemyAttack: Chưa gán CardEffectManager."
             );
         }
 
         OnDamageCalculated?.Invoke(finalDamage);
     }
 
+
+    // =========================================================
+    // GET DAMAGE
+    // =========================================================
 
     public int GetDamage()
     {

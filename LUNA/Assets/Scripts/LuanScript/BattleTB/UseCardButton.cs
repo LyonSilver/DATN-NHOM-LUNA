@@ -1,21 +1,12 @@
 using UnityEngine;
-using TMPro;
 
 public class UseCardButton : MonoBehaviour
 {
-    [Header("Enemy HP")]
-    [SerializeField] private int enemyHP = 50;
-    [SerializeField] private int maxEnemyHP = 50;
-
-    [Header("Player Shield")]
-    [SerializeField] private int playerShield = 0;
-
-    [Header("UI")]
-    [SerializeField] private TMP_Text enemyHPText;
-    [SerializeField] private TMP_Text shieldText;
-
     [Header("Card Manager")]
     [SerializeField] private CardManager cardManager;
+
+    [Header("Card Effect Manager")]
+    [SerializeField] private CardEffectManager cardEffectManager;
 
     [Header("Turn Manager")]
     [SerializeField] private TurnManager turnManager;
@@ -23,149 +14,106 @@ public class UseCardButton : MonoBehaviour
 
     public void UseCard()
     {
-        if (cardManager == null || cardManager.selectedCard == null)
+        // =====================================================
+        // KIỂM TRA CARD
+        // =====================================================
+
+        if (cardManager == null)
         {
-            Debug.Log("UseCard: Chưa chọn Card.");
+            Debug.LogWarning(
+                "UseCard: Chưa gán CardManager."
+            );
+
             return;
         }
+
+
+        if (cardManager.selectedCard == null)
+        {
+            Debug.Log(
+                "UseCard: Chưa chọn Card."
+            );
+
+            return;
+        }
+
 
         CardUI usedCard = cardManager.selectedCard;
 
+
         if (usedCard.cardData == null)
         {
-            Debug.LogWarning("UseCard: CardData đang null.");
+            Debug.LogWarning(
+                "UseCard: CardData đang null."
+            );
+
             return;
         }
+
 
         CardData card = usedCard.cardData;
 
+
+        // =====================================================
+        // KIỂM TRA TURN MANAGER
+        // =====================================================
+
         if (turnManager == null)
         {
-            Debug.LogWarning("UseCard: Chưa gán TurnManager.");
+            Debug.LogWarning(
+                "UseCard: Chưa gán TurnManager."
+            );
+
             return;
         }
 
-        // Kiểm tra và trừ Energy
+
+        // =====================================================
+        // KIỂM TRA CARD EFFECT MANAGER
+        // =====================================================
+
+        if (cardEffectManager == null)
+        {
+            Debug.LogWarning(
+                "UseCard: Chưa gán CardEffectManager."
+            );
+
+            return;
+        }
+
+
+        // =====================================================
+        // TRỪ ENERGY
+        // =====================================================
+
         if (!turnManager.SpendEnergy(card.cost))
         {
-            Debug.Log("UseCard: Không đủ Energy.");
+            Debug.Log(
+                "UseCard: Không đủ Energy."
+            );
+
             return;
         }
 
-        // =========================
-        // CARD EFFECT
-        // =========================
 
-        switch (card.effectType)
-        {
-            case CardEffectType.Damage:
+        // =====================================================
+        // THỰC HIỆN EFFECT
+        // =====================================================
 
-                enemyHP -= card.baseDamage;
-                enemyHP = Mathf.Max(enemyHP, 0);
-
-                Debug.Log(
-                    "Damage: Enemy mất " +
-                    card.baseDamage +
-                    " HP."
-                );
-
-                break;
+        cardEffectManager.ExecuteCardEffect(card);
 
 
-            case CardEffectType.Shield:
+        // =====================================================
+        // BỎ CHỌN CARD
+        // =====================================================
 
-                playerShield += card.shieldValue;
-
-                Debug.Log(
-                    "Shield: Player nhận " +
-                    card.shieldValue +
-                    " Shield."
-                );
-
-                break;
-
-
-            case CardEffectType.Heal:
-
-                Debug.Log(
-                    "Heal: Player hồi " +
-                    card.healValue +
-                    " HP."
-                );
-
-                // Phần Heal Player HP
-                // xử lý ở Player HP script riêng.
-
-                break;
-
-
-            case CardEffectType.Poison:
-
-                Debug.Log(
-                    "Poison: Áp Poison trong " +
-                    card.statusDuration +
-                    " lượt."
-                );
-
-                break;
-
-
-            case CardEffectType.FocusTiming:
-
-                Debug.Log(
-                    "FocusTiming: +" +
-                    card.extraValue +
-                    "% Timing."
-                );
-
-                break;
-
-
-            case CardEffectType.DoubleHit:
-
-                Debug.Log(
-                    "DoubleHit: Đánh " +
-                    card.extraValue +
-                    " lần."
-                );
-
-                break;
-
-
-            case CardEffectType.ChaosDraw:
-
-                Debug.Log(
-                    "ChaosDraw: Rút thêm " +
-                    card.extraValue +
-                    " Card."
-                );
-
-                break;
-        }
-
-        // Chỉ cập nhật UI mà UseCardButton thực sự quản lý
-        UpdateUI();
-
-        // Bỏ chọn Card
         cardManager.Deselect();
 
-        // Xóa Card đã dùng
+
+        // =====================================================
+        // XÓA CARD
+        // =====================================================
+
         Destroy(usedCard.gameObject);
-    }
-
-
-    private void UpdateUI()
-    {
-        if (enemyHPText != null)
-        {
-            enemyHPText.text =
-                "HP: " + enemyHP + "/" + maxEnemyHP;
-        }
-
-        if (shieldText != null)
-        {
-            shieldText.text =
-                "Shield: " + playerShield;
-        }
     }
 }
