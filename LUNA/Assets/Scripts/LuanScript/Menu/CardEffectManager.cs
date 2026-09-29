@@ -14,6 +14,9 @@ public class CardEffectManager : MonoBehaviour
     [SerializeField] private int enemyHP = 50;
     [SerializeField] private int maxEnemyHP = 50;
 
+    [Header("Round")]
+    [SerializeField] private RoundManager roundManager;
+
     [Header("UI")]
     [SerializeField] private TMP_Text playerHPText;
     [SerializeField] private TMP_Text shieldText;
@@ -45,6 +48,27 @@ public class CardEffectManager : MonoBehaviour
             "/" +
             maxEnemyHP
         );
+
+        CheckEnemyDead();
+    }
+
+    private void CheckEnemyDead()
+    {
+        if (enemyHP > 0)
+            return;
+
+        Debug.Log("CardEffectManager: Enemy HP = 0!");
+
+        if (roundManager != null)
+        {
+            roundManager.EnemyDefeated();
+        }
+        else
+        {
+            Debug.LogError(
+                "CardEffectManager: Chưa gán RoundManager!"
+            );
+        }
     }
 
 
@@ -240,5 +264,21 @@ public class CardEffectManager : MonoBehaviour
     public int GetEnemyHP()
     {
         return enemyHP;
+    }
+
+    public void NextRoundEnemyHP()
+    {
+        maxEnemyHP *= 2;
+
+        enemyHP = maxEnemyHP;
+
+        UpdateUI();
+
+        Debug.Log(
+            "Enemy sang Round mới: HP = " +
+            enemyHP +
+            "/" +
+            maxEnemyHP
+        );
     }
 }
