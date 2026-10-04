@@ -1117,8 +1117,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 280, y: 268}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 308.875, y: 268}
+  m_SizeDelta: {x: 257.75, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &246541047
 MonoBehaviour:
@@ -1206,7 +1206,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 30.905273, y: 0, z: 0, w: 0}
+  m_margin: {x: 2.27063, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3295,6 +3295,8 @@ GameObject:
   - component: {fileID: 1096848050}
   - component: {fileID: 1096848052}
   - component: {fileID: 1096848051}
+  - component: {fileID: 1096848054}
+  - component: {fileID: 1096848053}
   m_Layer: 5
   m_Name: RewardResultManager
   m_TagString: Untagged
@@ -3357,6 +3359,37 @@ MonoBehaviour:
   resultPanel: {fileID: 1697517957}
   resultSystem: {fileID: 1096848051}
   resultUI: {fileID: 1697517961}
+--- !u!114 &1096848053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096848049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15edcf9ff3d63b40abc79246b01e4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardSystem
+  baseExp: 100
+  baseGold: 50
+--- !u!114 &1096848054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096848049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e983619879c1f74f959b4d68fd26b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardResultManager
+  resultPanel: {fileID: 1697517957}
+  rewardPanel: {fileID: 2092321035}
+  resultSystem: {fileID: 1096848051}
+  rewardSystem: {fileID: 1096848053}
+  rewardUI: {fileID: 2092321039}
 --- !u!1 &1173296190
 GameObject:
   m_ObjectHideFlags: 0
@@ -6653,7 +6686,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2084492997}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1096848054}
+        m_TargetAssemblyTypeName: RewardResultManager, Assembly-CSharp
+        m_MethodName: OpenReward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2084492997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6723,13 +6768,14 @@ GameObject:
   - component: {fileID: 2092321036}
   - component: {fileID: 2092321038}
   - component: {fileID: 2092321037}
+  - component: {fileID: 2092321039}
   m_Layer: 5
   m_Name: RewardPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2092321036
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6791,6 +6837,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092321035}
   m_CullTransparentMesh: 1
+--- !u!114 &2092321039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092321035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e3de3f3505ac8e4aaa77231c2652590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardUI
+  expText: {fileID: 1364621287}
+  goldText: {fileID: 246541047}
+  cardImages:
+  - {fileID: 1658910234}
+  - {fileID: 15417537}
+  - {fileID: 17622059}
+  cardPool: []
 --- !u!1 &2144757880
 GameObject:
   m_ObjectHideFlags: 0

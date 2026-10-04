@@ -10,18 +10,52 @@ public class RewardSystem : MonoBehaviour
     public int RewardGold { get; private set; }
     public int RewardCardCount { get; private set; }
 
+
     public void CalculateReward(BattleResultData result)
     {
         int star = result.star;
 
-        // EXP
-        RewardExp = baseExp * star;
+        // RESET PHẦN THƯỞNG
 
-        // Gold
-        RewardGold = baseGold * star;
+        RewardExp = 0;
+        RewardGold = 0;
+        RewardCardCount = 0;
 
-        // Card
-        RewardCardCount = star;
+
+        // 1 SAO
+        // Chỉ nhận EXP
+
+        if (star == 1)
+        {
+            RewardExp = baseExp;
+            RewardGold = 0;
+            RewardCardCount = 0;
+        }
+
+
+        // 2 SAO
+        // EXP + GOLD + 2 CARD
+
+        else if (star == 2)
+        {
+            RewardExp = baseExp * 2;
+            RewardGold = baseGold * 2;
+            RewardCardCount = 2;
+        }
+
+
+        // 3 SAO
+        // EXP + GOLD + 3 CARD
+
+        else if (star == 3)
+        {
+            RewardExp = baseExp * 3;
+            RewardGold = baseGold * 3;
+            RewardCardCount = 3;
+        }
+
+
+        // DEBUG
 
         Debug.Log(
             "Reward -> EXP: " + RewardExp +

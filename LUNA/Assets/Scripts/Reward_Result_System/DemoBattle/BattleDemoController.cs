@@ -39,7 +39,6 @@ public class BattleDemoController : MonoBehaviour
 
 
         // 3. ĐÓNG DEMO PANEL
-
         demoPanel.SetActive(false);
 
 
