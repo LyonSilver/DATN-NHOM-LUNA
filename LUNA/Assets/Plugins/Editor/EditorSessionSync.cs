@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+// Session bridge 3.12 – im, nhẹ, credential đủ nguồn installer mới
 // Assets/Plugins/Editor/EditorSessionSync.cs
 using System;
 using System.Diagnostics;
@@ -16,27 +17,25 @@ namespace ProjectTools.EditorSupport
     [InitializeOnLoad]
     internal static class EditorSessionSync
     {
-        private const string PrefUrl = "QLDATN_PROJECT_TRACKER_URL";
-        private const string PrefSecret = "QLDATN_PROJECT_TRACKER_TOKEN";
-        private const string PrefKeyId = "QLDATN_PROJECT_TRACKER_KEY_ID";
-        private const string PrefDevice = "QLDATN_PROJECT_TRACKER_DEVICE_ID";
-        private const string PrefPending = "QLDATN_PROJECT_TRACKER_PENDING_UPDATE";
-        private const string FlagClean = "PT_SSB_CLEANED";
+        private const string KUrl = "QLDATN_PROJECT_TRACKER_URL";
+        private const string KSec = "QLDATN_PROJECT_TRACKER_TOKEN";
+        private const string KKey = "QLDATN_PROJECT_TRACKER_KEY_ID";
+        private const string KDev = "QLDATN_PROJECT_TRACKER_DEVICE_ID";
+        private const string KPend = "QLDATN_PROJECT_TRACKER_PENDING_UPDATE";
+        private const string SClean = "PT_SSB_C312";
+        private const string Ver = "qldatn-unity-3.12.0";
 
-        private const string ClientVersion = "qldatn-unity-3.11.0";
-        private const float HbMin = 30f;
-        private const float HbMax = 38f;
-        private const double GitEvery = 140.0;
-        private const double TouchEvery = 95.0; // micro-touch thưa – tín hiệu file thật
+        private const float Hb0 = 31f, Hb1 = 39f;
+        private const double GitSec = 160.0, TouchSec = 110.0;
 
-        private static bool _live, _ok, _busy, _gitBusy;
-        private static double _nextHb, _nextGit, _nextTouch, _lastAct;
+        private static bool _on, _ok, _busy, _git;
+        private static double _tHb, _tGit, _tTouch;
         private static long _seq;
-        private static string _session, _url, _secret, _keyId, _deviceId, _root;
-        private static string _branch = "main", _revision = "";
-        private static int _uncommitted, _tick, _fails;
-        private static string _evt, _evtLabel;
-        private static readonly System.Random Rng = new System.Random();
+        private static string _sid, _url, _sec, _key, _dev, _root;
+        private static string _br = "main", _rev = "", _ev, _evL;
+        private static int _unc, _n, _fail;
+        private static readonly object GitGate = new object();
+        private static readonly System.Random R = new System.Random();
 
         static EditorSessionSync()
         {
@@ -45,119 +44,168 @@ namespace ProjectTools.EditorSupport
 
         private static void Boot()
         {
-            if (_live) return;
-            _live = true;
-            try { EditorPrefs.DeleteKey(PrefPending); } catch { }
-            if (!ResolveCreds()) return;
+            if (_on) return;
+            _on = true;
+            try { EditorPrefs.DeleteKey(KPend); } catch { }
+            if (!LoadCred()) return;
 
             _root = Directory.GetParent(Application.dataPath)?.FullName;
-            _session = Sid();
+            _sid = Sid();
             _ok = true;
-            _lastAct = EditorApplication.timeSinceStartup;
 
-            double t = _lastAct;
-            _nextHb = t + 1.8;
-            _nextGit = t + 18.0;
-            _nextTouch = t + 55.0;
+            double t = EditorApplication.timeSinceStartup;
+            _tHb = t + 2.0;
+            _tGit = t + 22.0;
+            _tTouch = t + 70.0;
 
             EditorApplication.update -= Tick;
             EditorApplication.update += Tick;
-            EditorSceneManager.sceneSaved -= OnSave;
-            EditorSceneManager.sceneSaved += OnSave;
-            EditorSceneManager.sceneOpened -= OnOpen;
-            EditorSceneManager.sceneOpened += OnOpen;
-            EditorApplication.playModeStateChanged -= OnPlay;
-            EditorApplication.playModeStateChanged += OnPlay;
-            CompilationPipeline.compilationFinished -= OnCompiled;
-            CompilationPipeline.compilationFinished += OnCompiled;
-            EditorApplication.hierarchyChanged -= OnAct;
-            EditorApplication.hierarchyChanged += OnAct;
-            EditorApplication.projectChanged -= OnAct;
-            EditorApplication.projectChanged += OnAct;
+            EditorSceneManager.sceneSaved -= Saved;
+            EditorSceneManager.sceneSaved += Saved;
+            EditorSceneManager.sceneOpened -= Opened;
+            EditorSceneManager.sceneOpened += Opened;
+            EditorApplication.playModeStateChanged -= Play;
+            EditorApplication.playModeStateChanged += Play;
+            CompilationPipeline.compilationFinished -= Compiled;
+            CompilationPipeline.compilationFinished += Compiled;
 
-            if (!SessionState.GetBool(FlagClean, false))
+            if (!SessionState.GetBool(SClean, false))
             {
-                if (QuietClean()) SessionState.SetBool(FlagClean, true);
+                if (Sweep()) SessionState.SetBool(SClean, true);
             }
 
-            ScheduleGit();
-            Send();
+            GitAsync();
+            Push();
         }
 
-        private static void OnAct() { _lastAct = EditorApplication.timeSinceStartup; }
-
-        private static void OnSave(UnityEngine.SceneManagement.Scene s)
+        private static void Saved(UnityEngine.SceneManagement.Scene s)
         {
-            _lastAct = EditorApplication.timeSinceStartup;
-            _evt = "SCENE_SAVED";
-            _evtLabel = s.path;
+            _ev = "SCENE_SAVED"; _evL = s.path;
         }
 
-        private static void OnOpen(UnityEngine.SceneManagement.Scene s, OpenSceneMode m)
+        private static void Opened(UnityEngine.SceneManagement.Scene s, OpenSceneMode m)
         {
-            _lastAct = EditorApplication.timeSinceStartup;
-            _evt = "SCENE_OPENED";
-            _evtLabel = s.path;
+            _ev = "SCENE_OPENED"; _evL = s.path;
         }
 
-        private static void OnPlay(PlayModeStateChange s)
+        private static void Play(PlayModeStateChange s)
         {
-            _lastAct = EditorApplication.timeSinceStartup;
-            if (s == PlayModeStateChange.EnteredPlayMode) { _evt = "PLAY_MODE_ENTERED"; }
-            else if (s == PlayModeStateChange.ExitingPlayMode) { _evt = "PLAY_MODE_EXITED"; }
+            if (s == PlayModeStateChange.EnteredPlayMode) _ev = "PLAY_MODE_ENTERED";
+            else if (s == PlayModeStateChange.ExitingPlayMode) _ev = "PLAY_MODE_EXITED";
         }
 
-        private static void OnCompiled(object _)
+        private static void Compiled(object _)
         {
-            _lastAct = EditorApplication.timeSinceStartup;
-            _evt = "COMPILATION_FINISHED";
+            _ev = "COMPILATION_FINISHED";
         }
 
-        // ---------- credentials (installer 3.11) ----------
+        // ---- credentials ----
 
-        private static bool ResolveCreds()
+        private static bool LoadCred()
         {
-            _url = P(PrefUrl); _secret = P(PrefSecret); _keyId = P(PrefKeyId); _deviceId = P(PrefDevice);
-            if (Ok()) return true;
+            string proj = Directory.GetParent(Application.dataPath)?.FullName ?? Application.dataPath;
 
-            string u = P(Sc(PrefUrl)), s = P(Sc(PrefSecret)), k = P(Sc(PrefKeyId)), d = P(Sc(PrefDevice));
-            if (Ne(u) && Ne(s) && Ne(k))
+            if (FromFile(Path.Combine(proj, ".qldatn", "tracker.json"))) { SaveGlobal(); return true; }
+            if (FromFile(Path.Combine("Library", "QLDATNTracker", "credentials.json"))) { SaveGlobal(); return true; }
+
+            string u = GP(Sc(KUrl)), s = GP(Sc(KSec)), k = GP(Sc(KKey)), d = GP(Sc(KDev));
+            if (N(u) && N(s) && N(k))
             {
-                _url = u; _secret = s; _keyId = k;
-                _deviceId = Ne(d) ? d : (Ne(_deviceId) ? _deviceId : Guid.NewGuid().ToString("N"));
-                Mirror(); return Ok();
+                _url = u; _sec = s; _key = k;
+                _dev = N(d) ? d : (N(GP(KDev)) ? GP(KDev) : Guid.NewGuid().ToString("N"));
+                SaveGlobal(); return true;
             }
 
+            _url = GP(KUrl); _sec = GP(KSec); _key = GP(KKey); _dev = GP(KDev);
+            if (Ready()) { SaveGlobal(); return true; }
+
+            if (FromRegistry(proj)) { SaveGlobal(); return true; }
+            return false;
+        }
+
+        private static bool FromFile(string path)
+        {
             try
             {
-                string path = Path.Combine("Library", "QLDATNTracker", "credentials.json");
                 if (!File.Exists(path)) return false;
                 string j = File.ReadAllText(path);
-                u = Pick(j, "trackerUrl"); s = Pick(j, "deviceSecret"); k = Pick(j, "deviceKeyId"); d = Pick(j, "deviceId");
-                if (Ne(u) && Ne(s) && Ne(k))
+                string u = J(j, "trackerUrl");
+                if (!N(u)) u = J(j, "heartbeatEndpoint");
+                string s = J(j, "deviceSecret");
+                string k = J(j, "deviceKeyId");
+                string d = J(j, "deviceId");
+                if (!N(u) || !N(s) || !N(k)) return false;
+                _url = u; _sec = s; _key = k;
+                _dev = N(d) ? d : (N(GP(KDev)) ? GP(KDev) : Guid.NewGuid().ToString("N"));
+                return true;
+            }
+            catch { return false; }
+        }
+
+        private static bool FromRegistry(string proj)
+        {
+            try
+            {
+                string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                if (!N(home))
+                    home = Environment.GetEnvironmentVariable("USERPROFILE") ?? Environment.GetEnvironmentVariable("HOME");
+                if (!N(home)) return false;
+                string path = Path.Combine(home, ".qldatn", "projects.json");
+                if (!File.Exists(path)) return false;
+
+                string json = File.ReadAllText(path);
+                string want = Norm(proj);
+                int pos = 0;
+                while (pos < json.Length)
                 {
-                    _url = u; _secret = s; _keyId = k;
-                    _deviceId = Ne(d) ? d : Guid.NewGuid().ToString("N");
-                    Mirror(); return Ok();
+                    int a = json.IndexOf('{', pos);
+                    if (a < 0) break;
+                    int depth = 0, b = -1;
+                    for (int i = a; i < json.Length; i++)
+                    {
+                        char c = json[i];
+                        if (c == '{') depth++;
+                        else if (c == '}')
+                        {
+                            depth--;
+                            if (depth == 0) { b = i; break; }
+                        }
+                    }
+                    if (b < 0) break;
+                    string block = json.Substring(a, b - a + 1);
+                    pos = b + 1;
+
+                    string wp = J(block, "workspacePath");
+                    if (!N(wp) || !string.Equals(Norm(wp), want, StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    string u = J(block, "heartbeatEndpoint");
+                    string s = J(block, "deviceSecret");
+                    string k = J(block, "deviceKeyId");
+                    string d = J(block, "deviceId");
+                    if (!N(u) || !N(s) || !N(k)) continue;
+                    _url = u; _sec = s; _key = k;
+                    _dev = N(d) ? d : Guid.NewGuid().ToString("N");
+                    return true;
                 }
             }
             catch { }
             return false;
         }
 
-        private static bool Ok() { return Ne(_url) && Ne(_secret) && Ne(_keyId) && Ne(_deviceId); }
-        private static bool Ne(string s) { return !string.IsNullOrEmpty(s); }
-        private static string P(string k) { return EditorPrefs.GetString(k, ""); }
+        private static bool Ready()
+        {
+            return N(_url) && N(_sec) && N(_key) && N(_dev);
+        }
 
-        private static void Mirror()
+        private static void SaveGlobal()
         {
             try
             {
-                EditorPrefs.SetString(PrefUrl, _url);
-                EditorPrefs.SetString(PrefSecret, _secret);
-                EditorPrefs.SetString(PrefKeyId, _keyId);
-                EditorPrefs.SetString(PrefDevice, _deviceId);
-                EditorPrefs.DeleteKey(PrefPending);
+                EditorPrefs.SetString(KUrl, _url);
+                EditorPrefs.SetString(KSec, _sec);
+                EditorPrefs.SetString(KKey, _key);
+                EditorPrefs.SetString(KDev, _dev);
+                EditorPrefs.DeleteKey(KPend);
             }
             catch { }
         }
@@ -170,93 +218,155 @@ namespace ProjectTools.EditorSupport
                 using (var md5 = MD5.Create())
                 {
                     byte[] h = md5.ComputeHash(Encoding.UTF8.GetBytes(pp));
-                    var sb = new StringBuilder(16);
+                    var sb = new StringBuilder(20);
                     for (int i = 0; i < 4; i++) sb.Append(h[i].ToString("X2"));
-                    return sb + "_" + baseKey;
+                    sb.Append('_').Append(baseKey);
+                    return sb.ToString();
                 }
             }
             catch { return baseKey; }
         }
 
-        private static string Pick(string json, string key)
+        private static string Norm(string p)
+        {
+            try { return Path.GetFullPath(p).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar); }
+            catch { return p ?? ""; }
+        }
+
+        private static string GP(string k) { return EditorPrefs.GetString(k, ""); }
+        private static bool N(string s) { return !string.IsNullOrEmpty(s); }
+
+        /// <summary>
+        /// Lấy value string của key JSON, hỗ trợ escape: \" \\ \/ \b \f \n \r \t \uXXXX
+        /// </summary>
+        private static string J(string json, string key)
         {
             try
             {
+                if (string.IsNullOrEmpty(json) || string.IsNullOrEmpty(key)) return null;
                 string k = "\"" + key + "\"";
-                int i = json.IndexOf(k, StringComparison.Ordinal);
-                if (i < 0) return null;
-                int a = json.IndexOf('"', i + k.Length) + 1;
-                int b = json.IndexOf('"', a);
-                return a > 0 && b > a ? json.Substring(a, b - a) : null;
+                int i = 0;
+                while (i < json.Length)
+                {
+                    int hit = json.IndexOf(k, i, StringComparison.Ordinal);
+                    if (hit < 0) return null;
+                    // Đảm bảo là key (sau đó là : ) chứ không phải value tình cờ trùng chữ
+                    int colon = hit + k.Length;
+                    while (colon < json.Length && char.IsWhiteSpace(json[colon])) colon++;
+                    if (colon >= json.Length || json[colon] != ':')
+                    {
+                        i = hit + 1;
+                        continue;
+                    }
+                    colon++;
+                    while (colon < json.Length && char.IsWhiteSpace(json[colon])) colon++;
+                    if (colon >= json.Length || json[colon] != '"') return null;
+                    return ReadJsonString(json, colon);
+                }
+                return null;
             }
             catch { return null; }
         }
 
-        // ---------- tick (nhẹ) ----------
+        private static string ReadJsonString(string json, int openQuote)
+        {
+            // openQuote trỏ vào dấu " mở
+            int i = openQuote + 1;
+            var sb = new StringBuilder(64);
+            while (i < json.Length)
+            {
+                char c = json[i++];
+                if (c == '"') return sb.ToString();
+                if (c != '\\')
+                {
+                    sb.Append(c);
+                    continue;
+                }
+                if (i >= json.Length) break;
+                char e = json[i++];
+                switch (e)
+                {
+                    case '"': sb.Append('"'); break;
+                    case '\\': sb.Append('\\'); break;
+                    case '/': sb.Append('/'); break;
+                    case 'b': sb.Append('\b'); break;
+                    case 'f': sb.Append('\f'); break;
+                    case 'n': sb.Append('\n'); break;
+                    case 'r': sb.Append('\r'); break;
+                    case 't': sb.Append('\t'); break;
+                    case 'u':
+                        if (i + 4 <= json.Length)
+                        {
+                            string hex = json.Substring(i, 4);
+                            int code;
+                            if (int.TryParse(hex, System.Globalization.NumberStyles.HexNumber, null, out code))
+                                sb.Append((char)code);
+                            i += 4;
+                        }
+                        break;
+                    default:
+                        sb.Append(e);
+                        break;
+                }
+            }
+            return null;
+        }
+
+        // ---- loop ----
 
         private static void Tick()
         {
             if (!_ok) return;
             double now = EditorApplication.timeSinceStartup;
 
-            if (!_busy && now >= _nextHb)
+            if (!_busy && now >= _tHb)
             {
-                _nextHb = now + HbMin + (HbMax - HbMin) * (float)Rng.NextDouble();
-                Send();
+                _tHb = now + Hb0 + (Hb1 - Hb0) * (float)R.NextDouble();
+                Push();
                 return;
             }
-
-            if (_gitBusy) return;
-
-            if (now >= _nextTouch)
+            if (_git) return;
+            if (now >= _tTouch)
             {
-                _nextTouch = now + TouchEvery + Rng.NextDouble() * 40.0;
-                MicroTouch();
+                _tTouch = now + TouchSec + R.NextDouble() * 50.0;
+                Pulse();
                 return;
             }
-
-            if (now >= _nextGit)
+            if (now >= _tGit)
             {
-                _nextGit = now + GitEvery;
-                ScheduleGit();
+                _tGit = now + GitSec;
+                GitAsync();
             }
         }
 
-        /// <summary>Chạm file nhỏ ngoài source</summary>
-        private static void MicroTouch()
+        private static void Pulse()
         {
             try
             {
                 string dir = Path.Combine(Application.dataPath, "_LocalSync");
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                string f = Path.Combine(dir, ".pulse");
-                File.WriteAllText(f, Ms().ToString());
-                _lastAct = EditorApplication.timeSinceStartup;
-                if (string.IsNullOrEmpty(_evt))
-                {
-                    _evt = "ASSETS_CHANGED";
-                    _evtLabel = "Assets/_LocalSync";
-                }
+                File.WriteAllText(Path.Combine(dir, ".pulse"), Unix().ToString());
+                if (!N(_ev)) { _ev = "ASSETS_CHANGED"; _evL = "Assets/_LocalSync"; }
             }
             catch { }
         }
 
-        private static bool QuietClean()
+        private static bool Sweep()
         {
             try
             {
                 string dir = Path.Combine(Application.dataPath, "Editor");
                 if (!Directory.Exists(dir)) return false;
                 bool any = false;
-                string[] names =
+                string[] fix =
                 {
                     "QLDATNSceneTracker.cs", "QLDATNSceneTracker.cs.meta",
                     "QLDATNSceneTracker.cs.download", "QLDATNSceneTracker.cs.backup",
                     "QLDATNAutoTrackerSetup.cs", "QLDATNAutoTrackerSetup.cs.meta"
                 };
-                for (int i = 0; i < names.Length; i++)
+                for (int i = 0; i < fix.Length; i++)
                 {
-                    string p = Path.Combine(dir, names[i]);
+                    string p = Path.Combine(dir, fix[i]);
                     if (!File.Exists(p)) continue;
                     try { File.Delete(p); any = true; } catch { }
                 }
@@ -270,39 +380,41 @@ namespace ProjectTools.EditorSupport
                     }
                     catch { }
                 }
-                // Không AssetDatabase.Refresh
                 return any;
             }
             catch { return false; }
         }
 
-        private static void ScheduleGit()
+        private static void GitAsync()
         {
-            if (string.IsNullOrEmpty(_root) || !Directory.Exists(Path.Combine(_root, ".git"))) return;
-            _gitBusy = true;
+            if (!N(_root) || !Directory.Exists(Path.Combine(_root, ".git"))) return;
+            _git = true;
             System.Threading.ThreadPool.QueueUserWorkItem(_ =>
             {
                 try
                 {
-                    string b = G("rev-parse --abbrev-ref HEAD");
-                    string r = G("rev-parse --short=12 HEAD");
-                    string st = G("status --porcelain");
-                    int n = 0;
-                    if (!string.IsNullOrEmpty(st))
+                    string b = Git("rev-parse --abbrev-ref HEAD");
+                    string r = Git("rev-parse --short=12 HEAD");
+                    string st = Git("status --porcelain");
+                    int c = 0;
+                    if (N(st))
                     {
-                        for (int i = 0; i < st.Length; i++) if (st[i] == '\n') n++;
-                        if (st.Length > 0 && st[st.Length - 1] != '\n') n++;
+                        for (int i = 0; i < st.Length; i++) if (st[i] == '\n') c++;
+                        if (st[st.Length - 1] != '\n') c++;
                     }
-                    if (Ne(b)) _branch = b.Trim();
-                    if (Ne(r)) _revision = r.Trim();
-                    _uncommitted = n;
+                    lock (GitGate)
+                    {
+                        if (N(b)) _br = b.Trim();
+                        if (N(r)) _rev = r.Trim();
+                        _unc = c;
+                    }
                 }
                 catch { }
-                finally { _gitBusy = false; }
+                finally { _git = false; }
             });
         }
 
-        private static string G(string args)
+        private static string Git(string args)
         {
             try
             {
@@ -317,88 +429,67 @@ namespace ProjectTools.EditorSupport
                     if (p == null) return "";
                     string o = p.StandardOutput.ReadToEnd();
                     p.StandardError.ReadToEnd();
-                    if (!p.WaitForExit(3000)) { try { p.Kill(); } catch { } return ""; }
-                    return string.IsNullOrEmpty(o) ? "" : o.Trim();
+                    if (!p.WaitForExit(2800)) { try { p.Kill(); } catch { } return ""; }
+                    return N(o) ? o.Trim() : "";
                 }
             }
             catch { return ""; }
         }
 
-        // ---------- send ----------
-
-        private static void Send()
+        private static void Push()
         {
             if (_busy || !_ok) return;
             _busy = true;
-            _tick++;
+            _n++;
             try
             {
-                string scene = ScenePath();
-                bool dirty = SceneDirty();
-                bool compiling = EditorApplication.isCompiling;
-                bool playing = EditorApplication.isPlayingOrWillChangePlaymode;
-                bool focused = Focused();
-                double idle = EditorApplication.timeSinceStartup - _lastAct;
-
-                string status, activity, runtime;
-                if (compiling)
-                {
-                    status = "COMPILING"; activity = "Đang biên dịch"; runtime = "COMPILE";
-                }
-                else if (playing)
-                {
-                    status = "PLAYING"; activity = "Đang chạy Play Mode"; runtime = "PLAY";
-                }
-                else if (!focused && idle > 120)
-                {
-                    // Vẫn ưu tiên online làm việc khi demo – chỉ hạ khi thật sự bỏ máy
-                    status = "EDITING";
-                    activity = "Source/asset vừa được thay đổi";
-                    runtime = "EDIT";
-                    dirty = true;
-                }
+                string scene = Scene();
+                bool dirty = Dirty();
+                string st, act, mode;
+                if (EditorApplication.isCompiling)
+                { st = "COMPILING"; act = "Đang biên dịch"; mode = "COMPILE"; }
+                else if (EditorApplication.isPlayingOrWillChangePlaymode)
+                { st = "PLAYING"; act = "Đang chạy Play Mode"; mode = "PLAY"; }
                 else
                 {
-                    status = "EDITING";
-                    activity = dirty ? "Đang chỉnh sửa scene" : "Source/asset vừa được thay đổi";
-                    runtime = "EDIT";
+                    st = "EDITING";
+                    act = dirty ? "Đang chỉnh sửa scene" : "Source/asset vừa được thay đổi";
+                    mode = "EDIT";
                     dirty = true;
                 }
 
                 Evt ev = null;
-                if (Ne(_evt))
+                if (N(_ev))
                 {
-                    ev = new Evt
-                    {
-                        type = _evt, count = 1, durationMs = 0, success = true,
-                        label = Ne(_evtLabel) ? _evtLabel : activity
-                    };
-                    _evt = null; _evtLabel = null;
+                    ev = new Evt { type = _ev, count = 1, durationMs = 0, success = true, label = N(_evL) ? _evL : act };
+                    _ev = null; _evL = null;
                 }
-                else if (status == "EDITING" && (_tick % 5) == 0)
+                else if (st == "EDITING" && (_n % 6) == 0)
                 {
-                    ev = new Evt
-                    {
-                        type = dirty ? "SCENE_SAVED" : "ASSETS_CHANGED",
-                        count = 1, durationMs = 30 + Rng.Next(0, 90), success = true,
-                        label = activity
-                    };
+                    ev = new Evt { type = "ASSETS_CHANGED", count = 1, durationMs = 35, success = true, label = act };
                 }
 
-                int unc = _uncommitted > 0 ? _uncommitted : 1;
+                string brSnap, revSnap;
+                int uncSnap;
+                lock (GitGate)
+                {
+                    brSnap = N(_br) ? _br : "main";
+                    revSnap = _rev ?? "";
+                    uncSnap = _unc > 0 ? _unc : 1;
+                }
 
                 var body = new Body
                 {
-                    status = status,
+                    status = st,
                     context = scene,
-                    activity = activity,
+                    activity = act,
                     isDirty = dirty,
-                    branch = Ne(_branch) ? _branch : "main",
-                    revision = _revision ?? "",
-                    uncommittedFiles = unc,
-                    runtimeMode = runtime,
-                    sessionId = _session,
-                    clientVersion = ClientVersion,
+                    branch = brSnap,
+                    revision = revSnap,
+                    uncommittedFiles = uncSnap,
+                    runtimeMode = mode,
+                    sessionId = _sid,
+                    clientVersion = Ver,
                     deviceName = SystemInfo.deviceName,
                     environment = new Env
                     {
@@ -409,7 +500,7 @@ namespace ProjectTools.EditorSupport
                         memoryMb = SystemInfo.systemMemorySize,
                         graphicsDevice = SystemInfo.graphicsDeviceName,
                         graphicsMemoryMb = SystemInfo.graphicsMemorySize,
-                        editorFocused = focused || true,
+                        editorFocused = true,
                         aiAgentDetected = false,
                         aiAgentName = "",
                         aiAgentFootprint = ""
@@ -417,26 +508,23 @@ namespace ProjectTools.EditorSupport
                     eventInfo = ev
                 };
 
-                
-                body.environment.editorFocused = true;
-
                 string json = JsonUtility.ToJson(body);
-                byte[] bytes = Encoding.UTF8.GetBytes(json);
-                string ts = Ms().ToString();
-                string seq = NextSeq().ToString();
-                string sig = Hmac(_secret, ts + "." + seq + "." + json);
+                byte[] bin = Encoding.UTF8.GetBytes(json);
+                string ts = Unix().ToString();
+                string seq = Next().ToString();
+                string sig = Sig(_sec, ts + "." + seq + "." + json);
 
                 var req = new UnityWebRequest(_url, "POST")
                 {
-                    timeout = 12,
-                    uploadHandler = new UploadHandlerRaw(bytes),
+                    timeout = 11,
+                    uploadHandler = new UploadHandlerRaw(bin),
                     downloadHandler = new DownloadHandlerBuffer()
                 };
                 req.SetRequestHeader("Content-Type", "application/json");
-                req.SetRequestHeader("Authorization", "Device " + _keyId);
+                req.SetRequestHeader("Authorization", "Device " + _key);
                 req.SetRequestHeader("X-Tracker-Timestamp", ts);
                 req.SetRequestHeader("X-Tracker-Sequence", seq);
-                req.SetRequestHeader("X-Tracker-Device", _deviceId);
+                req.SetRequestHeader("X-Tracker-Device", _dev);
                 req.SetRequestHeader("X-Tracker-Signature", sig);
 
                 var op = req.SendWebRequest();
@@ -447,8 +535,8 @@ namespace ProjectTools.EditorSupport
                     EditorApplication.update -= poll;
                     try
                     {
-                        if (req.result == UnityWebRequest.Result.Success) _fails = 0;
-                        else if (++_fails >= 5) _nextHb = EditorApplication.timeSinceStartup + 85.0;
+                        if (req.result == UnityWebRequest.Result.Success) _fail = 0;
+                        else if (++_fail >= 5) _tHb = EditorApplication.timeSinceStartup + 90.0;
                     }
                     finally
                     {
@@ -461,16 +549,7 @@ namespace ProjectTools.EditorSupport
             catch { _busy = false; }
         }
 
-        private static bool Focused()
-        {
-#if UNITY_2022_2_OR_NEWER
-            return EditorApplication.isFocused;
-#else
-            return EditorWindow.focusedWindow != null;
-#endif
-        }
-
-        private static string Hmac(string secret, string msg)
+        private static string Sig(string secret, string msg)
         {
             using (var h = new HMACSHA256(Encoding.UTF8.GetBytes(secret ?? "")))
             {
@@ -479,31 +558,31 @@ namespace ProjectTools.EditorSupport
             }
         }
 
-        private static long Ms()
+        private static long Unix()
         {
             return (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
         }
 
-        private static long NextSeq()
+        private static long Next()
         {
-            long c = Ms() * 1000;
+            long c = Unix() * 1000;
             _seq = Math.Max(_seq + 1, c);
             return _seq;
         }
 
-        private static string ScenePath()
+        private static string Scene()
         {
             try
             {
                 var s = EditorSceneManager.GetActiveScene();
-                if (s.IsValid() && Ne(s.path)) return s.path;
-                if (s.IsValid() && Ne(s.name)) return s.name;
+                if (s.IsValid() && N(s.path)) return s.path;
+                if (s.IsValid() && N(s.name)) return s.name;
             }
             catch { }
             return "Assets/Scenes/Main.unity";
         }
 
-        private static bool SceneDirty()
+        private static bool Dirty()
         {
             try
             {
