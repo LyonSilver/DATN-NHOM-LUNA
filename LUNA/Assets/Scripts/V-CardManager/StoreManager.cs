@@ -27,6 +27,7 @@ public class StoreManager : MonoBehaviour
         {
             return PurchaseResult.InventoryFull;
         }
+    
 
         switch (card.purchaseType)
         {
