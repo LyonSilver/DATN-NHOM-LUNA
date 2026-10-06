@@ -137,6 +137,6 @@ public class StoreUI : MonoBehaviour
             "Money: " + currencyManager.GetMoney();
 
         energyText.text =
-            "Energy: " + currencyManager.GetEnergy();
+            "Gem: " + currencyManager.GetEnergy();
     }
 }

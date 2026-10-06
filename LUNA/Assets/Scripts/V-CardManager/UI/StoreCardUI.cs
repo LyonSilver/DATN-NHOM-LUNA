@@ -43,7 +43,7 @@ public class StoreCardUI : MonoBehaviour
             case PurchaseType.Energy:
 
                 priceText.text =
-                    "Energy: " + cardData.energyCost;
+                    "Gem: " + cardData.energyCost;
 
                 break;
 
@@ -51,7 +51,7 @@ public class StoreCardUI : MonoBehaviour
 
                 priceText.text =
                     "Money: " + cardData.moneyCost +
-                    "\nEnergy: " + cardData.energyCost;
+                    "\nGem: " + cardData.energyCost;
 
                 break;
         }
