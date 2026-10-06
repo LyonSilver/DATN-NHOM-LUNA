@@ -14,6 +14,9 @@ public class CardEffectManager : MonoBehaviour
     [SerializeField] private int enemyHP = 50;
     [SerializeField] private int maxEnemyHP = 50;
 
+    [Header("Enemy Shield")]
+    [SerializeField] private int enemyShield = 0;
+
     [Header("Round")]
     [SerializeField] private RoundManager roundManager;
 
@@ -21,6 +24,7 @@ public class CardEffectManager : MonoBehaviour
     [SerializeField] private TMP_Text playerHPText;
     [SerializeField] private TMP_Text shieldText;
     [SerializeField] private TMP_Text enemyHPText;
+    [SerializeField] private TMP_Text enemyShieldText;
 
 
     // =========================================================
@@ -34,19 +38,45 @@ public class CardEffectManager : MonoBehaviour
             return;
 
         int damage = card.baseDamage;
+        int originalDamage = damage;
 
-        enemyHP -= damage;
+        // =========================
+        // Shield của Enemy nhận damage trước
+        // =========================
+        if (enemyShield > 0)
+        {
+            int damageToShield = Mathf.Min(
+                damage,
+                enemyShield
+            );
+
+            enemyShield -= damageToShield;
+            damage -= damageToShield;
+        }
+
+        // =========================
+        // Damage còn dư mới vào HP
+        // =========================
+        if (damage > 0)
+        {
+            enemyHP -= damage;
+        }
+
+        // Không cho âm
         enemyHP = Mathf.Max(enemyHP, 0);
+        enemyShield = Mathf.Max(enemyShield, 0);
 
         UpdateUI();
 
         Debug.Log(
-            "Card Damage: Enemy mất " +
-            damage +
-            " HP. Enemy HP: " +
+            "Card Damage: " +
+            originalDamage +
+            " | Enemy HP: " +
             enemyHP +
             "/" +
-            maxEnemyHP
+            maxEnemyHP +
+            " | Enemy Shield: " +
+            enemyShield
         );
 
         CheckEnemyDead();
@@ -95,6 +125,29 @@ public class CardEffectManager : MonoBehaviour
             shield +
             " Shield. Shield hiện tại: " +
             playerShield
+        );
+    }
+
+    // =========================================================
+    // ENEMY SHIELD
+    // Enemy tạo Shield
+    // =========================================================
+
+    public void ApplyEnemyShield(int shieldAmount)
+    {
+        if (shieldAmount <= 0)
+            return;
+
+        enemyShield += shieldAmount;
+        enemyShield = Mathf.Max(enemyShield, 0);
+
+        UpdateUI();
+
+        Debug.Log(
+            "Enemy Shield: +" +
+            shieldAmount +
+            " | Enemy Shield hiện tại: " +
+            enemyShield
         );
     }
 
@@ -244,6 +297,13 @@ public class CardEffectManager : MonoBehaviour
                 "/" +
                 maxEnemyHP;
         }
+
+        if (enemyShieldText != null)
+        {
+            enemyShieldText.text =
+                "Shield: " +
+                enemyShield;
+        }
     }
 
 
@@ -264,6 +324,11 @@ public class CardEffectManager : MonoBehaviour
     public int GetEnemyHP()
     {
         return enemyHP;
+    }
+
+    public int GetEnemyShield()
+    {
+        return enemyShield;
     }
 
     public void NextRoundEnemyHP()

@@ -17,6 +17,9 @@ public class EndButton : MonoBehaviour
     [Header("Turn")]
     [SerializeField] private TurnManager turnManager;
 
+    [Header("Animator")]
+    [SerializeField] private Animator animator;
+
 
     private void Start()
     {
@@ -41,39 +44,69 @@ public class EndButton : MonoBehaviour
     {
         Debug.Log("========== END TURN ==========");
 
+        if (enemyAttack == null)
+        {
+            Debug.LogWarning("EndButton: Chưa gán EnemyAttack.");
+            FinishTurn();
+            return;
+        }
+
+        // Random Enemy Action
+        bool isAttack = enemyAttack.RandomAction();
+
+        // =========================
+        // ENEMY SHIELD
+        // =========================
+        if (!isAttack)
+        {
+            Debug.Log("Enemy chọn SHIELD.");
+
+            FinishTurn();
+            return;
+        }
+
+        // =========================
+        // ENEMY ATTACK
+        // =========================
+
+        Debug.Log("Enemy chọn ATTACK.");
+
         float randomValue = Random.Range(0f, 100f);
 
         if (randomValue <= timingChance &&
             timingManager != null)
         {
-            Debug.Log("End: Timing xuất hiện!");
+            Debug.Log(
+                "Enemy Attack: Timing xuất hiện!"
+            );
 
             timingManager.StartTiming();
         }
         else
         {
-            Debug.Log("End: Không có Timing.");
+            Debug.Log(
+                "Enemy Attack: Không có Timing."
+            );
 
-            if (enemyAttack != null)
-            {
-                enemyAttack.AttackWithoutTiming();
+            enemyAttack.PlayAttackAnimation();
+            enemyAttack.AttackWithoutTiming();
 
-                // Enemy đánh xong → kết thúc lượt
-                FinishTurn();
-            }
-            else
-            {
-                Debug.LogWarning("EndButton: Chưa gán EnemyAttack.");
+            FinishTurn();
+        }
+    }
 
-                FinishTurn();
-            }
+    public void PlayAttackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
         }
     }
 
 
     private void HandleTimingResult(
-        TimingManager.TimingResult result,
-        float multiplier)
+     TimingManager.TimingResult result,
+     float multiplier)
     {
         Debug.Log(
             "End: Timing Result = " +
@@ -84,14 +117,15 @@ public class EndButton : MonoBehaviour
 
         if (enemyAttack != null)
         {
+            enemyAttack.PlayAttackAnimation();
             enemyAttack.ApplyTimingDamage(multiplier);
-
-            // Enemy đánh xong → kết thúc lượt
             FinishTurn();
         }
         else
         {
-            Debug.LogWarning("EndButton: Chưa gán EnemyAttack.");
+            Debug.LogWarning(
+                "EndButton: Chưa gán EnemyAttack."
+            );
 
             FinishTurn();
         }

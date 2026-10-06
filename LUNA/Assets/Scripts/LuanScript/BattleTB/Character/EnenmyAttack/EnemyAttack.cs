@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    [Header("Animator")]
+    [SerializeField] private Animator animator;
+
     [Header("Damage")]
     [SerializeField] private int damage = 10;
 
@@ -11,9 +14,69 @@ public class EnemyAttack : MonoBehaviour
 
     public event Action<int> OnDamageCalculated;
 
+    // =========================================================
+    // RANDOM ENEMY ACTION
+    // =========================================================
+
+    public bool RandomAction()
+    {
+        int randomAction = UnityEngine.Random.Range(0, 2);
+
+        if (randomAction == 0)
+        {
+            // Enemy Attack
+            return true;
+        }
+        else
+        {
+            // Enemy Shield
+            UseShield();
+            return false;
+        }
+    }
 
     // =========================================================
-    // CÓ TIMING
+    // SHIELD
+    // =========================================================
+
+    public void UseShield()
+    {
+        if (cardEffectManager != null)
+        {
+            cardEffectManager.ApplyEnemyShield(10);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "EnemyAttack: Chưa gán CardEffectManager."
+            );
+        }
+    }
+
+    // =========================================================
+    // ATTACK
+    // =========================================================
+
+    public void PlayAttackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+    }
+
+    public void AttackWithoutTiming()
+    {
+        Debug.Log(
+            "Enemy Attack | Không có Timing | Damage: " +
+            damage
+        );
+
+        DealDamage(damage);
+    }
+
+    // =========================================================
+    // TIMING DAMAGE
     // =========================================================
 
     public void ApplyTimingDamage(float multiplier)
@@ -34,22 +97,6 @@ public class EnemyAttack : MonoBehaviour
         DealDamage(finalDamage);
     }
 
-
-    // =========================================================
-    // KHÔNG CÓ TIMING
-    // =========================================================
-
-    public void AttackWithoutTiming()
-    {
-        Debug.Log(
-            "Enemy Attack | Không có Timing | Damage: " +
-            damage
-        );
-
-        DealDamage(damage);
-    }
-
-
     // =========================================================
     // DEAL DAMAGE
     // =========================================================
@@ -69,7 +116,6 @@ public class EnemyAttack : MonoBehaviour
 
         OnDamageCalculated?.Invoke(finalDamage);
     }
-
 
     // =========================================================
     // GET DAMAGE
