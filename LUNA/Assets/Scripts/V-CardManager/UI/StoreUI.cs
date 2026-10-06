@@ -75,7 +75,7 @@ public class StoreUI : MonoBehaviour
             case PurchaseResult.Success:
 
                 Debug.Log(
-                    "Mua thành công nhưng chưa thêm vào inventory: " +
+                    "Mua thành công và đã thêm vào inventory: " +
                     card.cardName
                 );
 
@@ -111,7 +111,7 @@ public class StoreUI : MonoBehaviour
             case PurchaseResult.NotEnoughEnergy:
 
                 Debug.Log(
-                    "Không đủ Energy."
+                    "Không đủ Gem."
                 );
 
                 break;
@@ -119,7 +119,7 @@ public class StoreUI : MonoBehaviour
             case PurchaseResult.NotEnoughMoneyAndEnergy:
 
                 Debug.Log(
-                    "Không đủ Money và Energy."
+                    "Không đủ Money và Gem."
                 );
 
                 break;
