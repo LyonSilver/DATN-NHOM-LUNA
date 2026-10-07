@@ -1,110 +1,46 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UnlockDemoController : MonoBehaviour
+public class UnlockSystemDemo : MonoBehaviour
 {
-    [Header("Demo Data")]
-    public int playerLevel = 1;
-
-    [Header("UI References")]
-    public Text statusText;
-    public Text levelText;
-    public UnlockableItem cardItem;
-    public UnlockableItem stageItem;
-    public UnlockableItem bossItem;
-    public UnlockableItem levelItem;
-    public UnlockableItem rewardItem;
-
-    private void Start()
+    private void OnGUI()
     {
-        UpdateLevelUI();
-        UpdateStatus("Demo System Ready.");
-    }
+        GUI.Box(new Rect(10, 10, 340, 280), "AI UNLOCK SYSTEM DEMO");
 
-    public void DemoUnlockCard()
-    {
-        bool result = UnlockManager.Instance.Unlock(UnlockType.Card, "Card_FireDragon");
-        UpdateStatus(result ? "Unlocked Card_FireDragon" : "Card_FireDragon is already unlocked");
-    }
-
-    public void DemoUnlockStage()
-    {
-        bool result = UnlockManager.Instance.Unlock(UnlockType.Stage, "Stage_Forest_01");
-        UpdateStatus(result ? "Unlocked Stage_Forest_01" : "Stage_Forest_01 is already unlocked");
-    }
-
-    public void DemoUnlockBoss()
-    {
-        bool result = UnlockManager.Instance.Unlock(UnlockType.Boss, "Boss_DemonKing");
-        UpdateStatus(result ? "Unlocked Boss_DemonKing" : "Boss_DemonKing is already unlocked");
-    }
-
-    public void DemoLevelUp()
-    {
-        playerLevel += 3;
-        UpdateLevelUI();
-
-        if (levelItem != null)
+        if (GUI.Button(new Rect(20, 40, 320, 30), "1. Unlock Card (Card_Dragon)"))
         {
-            levelItem.EvaluateLevelCondition(playerLevel);
+            UnlockManager.Instance.Unlock(UnlockType.Card, "Card_Dragon");
         }
 
-        UpdateStatus("Player Level Up -> " + playerLevel);
-    }
-
-    public void DemoUnlockReward()
-    {
-        bool result = UnlockManager.Instance.Unlock(UnlockType.Reward, "Reward_GoldChest");
-        UpdateStatus(result ? "Unlocked Reward_GoldChest" : "Reward_GoldChest is already unlocked");
-    }
-
-    public void DemoResetData()
-    {
-        if (UnlockManager.Instance == null) return;
-        UnlockManager.Instance.ResetAllData();
-
-        if (cardItem != null) cardItem.RefreshUI();
-        if (stageItem != null) stageItem.RefreshUI();
-        if (bossItem != null) bossItem.RefreshUI();
-        if (levelItem != null) levelItem.RefreshUI();
-        if (rewardItem != null) rewardItem.RefreshUI();
-
-        playerLevel = 1;
-        UpdateLevelUI();
-        UpdateStatus("Reset all data successfully");
-    }
-
-    private void UpdateLevelUI()
-    {
-        if (levelText != null)
+        if (GUI.Button(new Rect(20, 80, 320, 30), "2. Unlock Stage (Stage_DarkForest)"))
         {
-            levelText.text = "Current Level: " + playerLevel;
+            UnlockManager.Instance.Unlock(UnlockType.Stage, "Stage_DarkForest");
         }
-    }
 
-    private void UpdateStatus(string message)
-    {
-        if (statusText != null)
+        if (GUI.Button(new Rect(20, 120, 320, 30), "3. Unlock Boss (Boss_DemonKing)"))
         {
-            statusText.text = "Status: " + message;
+            UnlockManager.Instance.Unlock(UnlockType.Boss, "Boss_DemonKing");
         }
-    }
-}
 
-public class UnlockableItem
-{
-    public UnlockableItem()
-    {
-    }
+        if (GUI.Button(new Rect(20, 160, 320, 30), "4. Level Up Player to Level 10"))
+        {
+            if (AIScannerUnlockOverlay.Instance != null)
+            {
+                AIScannerUnlockOverlay.Instance.SetPlayerLevel(10);
+            }
+        }
 
-    internal void EvaluateLevelCondition(int playerLevel)
-    {
-        throw new NotImplementedException();
-    }
+        if (GUI.Button(new Rect(20, 200, 320, 30), "5. Unlock Reward (Reward_Chest)"))
+        {
+            UnlockManager.Instance.Unlock(UnlockType.Reward, "Reward_Chest");
+        }
 
-    internal void RefreshUI()
-    {
-        throw new NotImplementedException();
+        if (GUI.Button(new Rect(20, 240, 320, 30), "RESET ALL DATA"))
+        {
+            UnlockManager.Instance.ClearAll();
+            if (AIScannerUnlockOverlay.Instance != null)
+            {
+                AIScannerUnlockOverlay.Instance.SetPlayerLevel(1);
+            }
+        }
     }
 }
