@@ -36,72 +36,112 @@ public class AIScannerUnlockOverlay : MonoBehaviour
     {
         scannedTags.Clear();
         UnlockTag[] tags = FindObjectsOfType<UnlockTag>(true);
-        scannedTags.AddRange(tags);
-
-        foreach (var tag in scannedTags)
+        foreach (var tag in tags)
         {
-            EnsureOverlayCreated(tag);
+            RegisterAndEvaluate(tag);
         }
+    }
+
+    public void RegisterAndEvaluate(UnlockTag tag)
+    {
+        if (tag == null) return;
+
+        if (!scannedTags.Contains(tag))
+        {
+            scannedTags.Add(tag);
+        }
+
+        EnsureOverlayCreated(tag);
+        ApplyTagState(tag);
     }
 
     private void EnsureOverlayCreated(UnlockTag tag)
     {
         if (tag.lockedOverlay != null) return;
 
+        Transform existingOverlay = tag.transform.Find("AI_Locked_Overlay");
+        if (existingOverlay != null)
+        {
+            tag.lockedOverlay = existingOverlay.gameObject;
+            return;
+        }
+
         GameObject overlay = new GameObject("AI_Locked_Overlay");
         overlay.transform.SetParent(tag.transform, false);
+        overlay.transform.SetAsLastSibling();
 
         RectTransform rect = overlay.AddComponent<RectTransform>();
         rect.anchorMin = Vector2.zero;
         rect.anchorMax = Vector2.one;
         rect.sizeDelta = Vector2.zero;
+        rect.anchoredPosition = Vector2.zero;
 
         Image img = overlay.AddComponent<Image>();
-        img.color = new Color(0.1f, 0.1f, 0.1f, 0.85f);
+        img.color = new Color(0f, 0f, 0f, 0.8f);
+        img.raycastTarget = true;
 
-        GameObject textObj = new GameObject("Text");
+        GameObject textObj = new GameObject("LockText");
         textObj.transform.SetParent(overlay.transform, false);
         RectTransform textRect = textObj.AddComponent<RectTransform>();
         textRect.anchorMin = Vector2.zero;
         textRect.anchorMax = Vector2.one;
+        textRect.sizeDelta = Vector2.zero;
 
         Text txt = textObj.AddComponent<Text>();
         txt.text = "LOCKED";
         txt.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         txt.alignment = TextAnchor.MiddleCenter;
-        txt.color = Color.red;
-        txt.fontSize = 20;
+        txt.color = Color.yellow;
+        txt.fontSize = 16;
 
         tag.lockedOverlay = overlay;
     }
 
     public void EvaluateAndApply()
     {
-        foreach (var tag in scannedTags)
+        for (int i = scannedTags.Count - 1; i >= 0; i--)
         {
-            if (tag == null) continue;
-
-            bool isUnlocked = false;
-
-            if (tag.unlockType == UnlockType.LevelRequirement)
+            if (scannedTags[i] == null)
             {
-                isUnlocked = playerCurrentLevel >= tag.requiredLevel || UnlockManager.Instance.IsUnlocked(tag.unlockType, tag.itemId);
+                scannedTags.RemoveAt(i);
+                continue;
             }
-            else
-            {
-                isUnlocked = UnlockManager.Instance.IsUnlocked(tag.unlockType, tag.itemId);
-            }
+            ApplyTagState(scannedTags[i]);
+        }
+    }
 
-            if (tag.lockedOverlay != null)
-            {
-                tag.lockedOverlay.SetActive(!isUnlocked);
-            }
+    private void ApplyTagState(UnlockTag tag)
+    {
+        if (string.IsNullOrEmpty(tag.itemId))
+        {
+            tag.AutoDetectItemId();
+        }
 
-            Button btn = tag.GetComponent<Button>();
-            if (btn != null)
-            {
-                btn.interactable = isUnlocked;
-            }
+        bool isUnlocked = false;
+
+        if (tag.unlockType == UnlockType.LevelRequirement)
+        {
+            isUnlocked = playerCurrentLevel >= tag.requiredLevel || UnlockManager.Instance.IsUnlocked(tag.unlockType, tag.itemId);
+        }
+        else
+        {
+            isUnlocked = UnlockManager.Instance.IsUnlocked(tag.unlockType, tag.itemId);
+        }
+
+        if (tag.lockedOverlay != null)
+        {
+            tag.lockedOverlay.SetActive(!isUnlocked);
+        }
+
+        Button btn = tag.GetComponent<Button>();
+        if (btn == null)
+        {
+            btn = tag.GetComponentInChildren<Button>();
+        }
+
+        if (btn != null)
+        {
+            btn.interactable = isUnlocked;
         }
     }
 
