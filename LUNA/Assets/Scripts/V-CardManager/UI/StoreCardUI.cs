@@ -9,6 +9,7 @@ public class StoreCardUI : MonoBehaviour
     [SerializeField] private TMP_Text cardTypeText;
     [SerializeField] private TMP_Text rarityText;
     [SerializeField] private TMP_Text priceText;
+    [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Button buyButton;
 
     private CardData cardData;
@@ -55,6 +56,12 @@ public class StoreCardUI : MonoBehaviour
 
                 break;
         }
+    }
+    public void UpdateQuantity(CardData card, CardInventory inventory)
+    {
+        int currentQuantity = inventory.GetCardQuantity(card);
+
+        quantityText.text = "Owned: " + currentQuantity + " / " + card.maxQuantity;
     }
 
     private void BuyCard()

@@ -21,6 +21,9 @@ public class StoreUI : MonoBehaviour
     [Header("Inventory")]
     [SerializeField] private CardInventory cardInventory;
 
+    [Header("Popup")]
+    [SerializeField] private PurchasePopup purchasePopup;
+
     private void Start()
     {
         RefreshStore();
@@ -49,6 +52,11 @@ public class StoreUI : MonoBehaviour
                 cardObject.GetComponent<StoreCardUI>();
 
             cardUI.Setup(card, this);
+
+            cardUI.UpdateQuantity(
+                card,
+                cardInventory
+            );
         }
     }
 
@@ -74,58 +82,86 @@ public class StoreUI : MonoBehaviour
         {
             case PurchaseResult.Success:
 
-                Debug.Log(
-                    "Mua thành công và đã thêm vào inventory: " +
-                    card.cardName
+                int currentQuantity =
+                    cardInventory.GetCardQuantity(card);
+
+                purchasePopup.Show(
+                    "MUA THÀNH CÔNG",
+                    "Đã mua: " + card.cardName +
+                    "\nSố lượng: " +
+                    currentQuantity +
+                    " / " +
+                    card.maxQuantity
                 );
 
                 UpdateCurrencyUI();
 
+                RefreshStore();
+
                 break;
+
 
             case PurchaseResult.InvalidCard:
 
-                Debug.Log(
+                purchasePopup.Show(
+                    "LỖI",
                     "Card không hợp lệ."
                 );
 
                 break;
 
+
             case PurchaseResult.InventoryFull:
 
-                Debug.Log(
-                    "Đã đạt giới hạn Card: " +
+                currentQuantity =
+                    cardInventory.GetCardQuantity(card);
+
+                purchasePopup.Show(
+                    "KHÔNG THỂ MUA",
+                    card.cardName +
+                    " đã đạt giới hạn." +
+                    "\nSố lượng: " +
+                    currentQuantity +
+                    " / " +
+                    card.maxQuantity
+                );
+
+                break;
+
+
+            case PurchaseResult.NotEnoughMoney:
+
+                purchasePopup.Show(
+                    "KHÔNG ĐỦ MONEY",
+                    "Bạn không đủ Money để mua " +
                     card.cardName
                 );
 
                 break;
 
-            case PurchaseResult.NotEnoughMoney:
-
-                Debug.Log(
-                    "Không đủ Money."
-                );
-
-                break;
 
             case PurchaseResult.NotEnoughEnergy:
 
-                Debug.Log(
-                    "Không đủ Gem."
+                purchasePopup.Show(
+                    "KHÔNG ĐỦ GEM",
+                    "Bạn không đủ Gem để mua " +
+                    card.cardName
                 );
 
                 break;
 
+
             case PurchaseResult.NotEnoughMoneyAndEnergy:
 
-                Debug.Log(
-                    "Không đủ Money và Gem."
+                purchasePopup.Show(
+                    "KHÔNG ĐỦ TÀI NGUYÊN",
+                    "Bạn không đủ Money và Gem để mua " +
+                    card.cardName
                 );
 
                 break;
         }
     }
-
     public void UpdateCurrencyUI()
     {
         if (currencyManager == null)
