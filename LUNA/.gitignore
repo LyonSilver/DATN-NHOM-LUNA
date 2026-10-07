@@ -12,3 +12,4 @@ qldatn-vscode-install_*.ps1
 [Mm]emoryCaptures/
 [Bb]uild/
 [Bb]uilds/
+.qldatn/
