@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class RewardUI : MonoBehaviour
 {
+    [Header("Round Manager")]
+    [SerializeField] private RoundManager roundManager;
+
     [Header("Texts")]
     [SerializeField] private TMP_Text expText;
     [SerializeField] private TMP_Text goldText;
@@ -15,22 +18,64 @@ public class RewardUI : MonoBehaviour
     [SerializeField] private Sprite[] cardPool;
 
 
-    public void ShowReward(
-        int exp,
-        int gold,
-        int cardCount)
+    // =========================================================
+    // SHOW REWARD
+    // Lấy tổng Coin và EXP từ RoundManager
+    // =========================================================
+
+    public void ShowReward(int cardCount)
     {
-        // 1. HIỂN THỊ EXP
+        if (roundManager == null)
+        {
+            Debug.LogError(
+                "RewardUI: Chưa gán RoundManager!"
+            );
 
-        expText.text = "EXP: " + exp;
+            return;
+        }
 
 
-        // 2. HIỂN THỊ GOLD
+        // =====================================================
+        // LẤY TỔNG EXP
+        // =====================================================
 
-        goldText.text = "Gold: " + gold;
+        int totalExp = roundManager.GetCurrentExp();
 
 
-        // 3. HIỂN THỊ CARD
+        // =====================================================
+        // LẤY TỔNG COIN
+        // =====================================================
+
+        int totalCoin = roundManager.GetCurrentCoin();
+
+
+        // =====================================================
+        // HIỂN THỊ EXP
+        // =====================================================
+
+        if (expText != null)
+        {
+            expText.text =
+                "EXP: " +
+                totalExp;
+        }
+
+
+        // =====================================================
+        // HIỂN THỊ COIN
+        // =====================================================
+
+        if (goldText != null)
+        {
+            goldText.text =
+                "Coin: " +
+                totalCoin;
+        }
+
+
+        // =====================================================
+        // HIỂN THỊ CARD
+        // =====================================================
 
         for (int i = 0; i < cardImages.Length; i++)
         {
@@ -51,20 +96,39 @@ public class RewardUI : MonoBehaviour
                 cardImages[i].gameObject.SetActive(false);
             }
         }
+
+
+        Debug.Log(
+            "RewardUI: Tổng Reward = " +
+            totalCoin +
+            " Coin / " +
+            totalExp +
+            " EXP"
+        );
     }
 
+
+    // =========================================================
+    // RANDOM CARD
+    // =========================================================
 
     private Sprite GetRandomCard()
     {
         // Nếu chưa có card nào trong pool
         if (cardPool == null || cardPool.Length == 0)
         {
-            Debug.LogWarning("Card Pool đang trống!");
+            Debug.LogWarning(
+                "RewardUI: Card Pool đang trống!"
+            );
+
             return null;
         }
 
+
         // Random vị trí card
-        int randomIndex = Random.Range(0, cardPool.Length);
+        int randomIndex =
+            Random.Range(0, cardPool.Length);
+
 
         return cardPool[randomIndex];
     }

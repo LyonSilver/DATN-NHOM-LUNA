@@ -16,13 +16,17 @@ public class RewardResultManager : MonoBehaviour
 
     public void OpenReward()
     {
+        // =====================================================
         // 1. LẤY KẾT QUẢ TRẬN
+        // =====================================================
 
         BattleResultData result =
             resultSystem.CurrentResult;
 
 
+        // =====================================================
         // 2. KIỂM TRA KẾT QUẢ
+        // =====================================================
 
         if (result == null)
         {
@@ -34,27 +38,48 @@ public class RewardResultManager : MonoBehaviour
         }
 
 
+        // =====================================================
         // 3. TÍNH PHẦN THƯỞNG
+        // =====================================================
 
         rewardSystem.CalculateReward(result);
 
 
+        // =====================================================
         // 4. HIỂN THỊ REWARD UI
+        // =====================================================
 
-        rewardUI.ShowReward(
-            rewardSystem.RewardExp,
-            rewardSystem.RewardGold,
-            rewardSystem.RewardCardCount
-        );
+        if (rewardUI != null)
+        {
+            rewardUI.ShowReward(
+                rewardSystem.RewardCardCount
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "RewardResultManager: Chưa gán RewardUI!"
+            );
+        }
 
 
-        // 5. TẮT RESULT
+        // =====================================================
+        // 5. TẮT RESULT PANEL
+        // =====================================================
 
-        resultPanel.SetActive(false);
+        if (resultPanel != null)
+        {
+            resultPanel.SetActive(false);
+        }
 
 
-        // 6. BẬT REWARD
+        // =====================================================
+        // 6. BẬT REWARD PANEL
+        // =====================================================
 
-        rewardPanel.SetActive(true);
+        if (rewardPanel != null)
+        {
+            rewardPanel.SetActive(true);
+        }
     }
 }
