@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum PurchaseResult
@@ -7,7 +8,8 @@ public enum PurchaseResult
     InventoryFull,
     NotEnoughMoney,
     NotEnoughEnergy,
-    NotEnoughMoneyAndEnergy
+    NotEnoughMoneyAndEnergy,
+    CardPurchaseLimitReached
 }
 
 public class StoreManager : MonoBehaviour
@@ -16,6 +18,35 @@ public class StoreManager : MonoBehaviour
     [SerializeField] private CurrencyManager currencyManager;
     [SerializeField] private CardInventory cardInventory;
 
+    // Lưu số lần đã mua mỗi card trong trận hiện tại.
+    private Dictionary<CardData, int> purchasedCards =
+        new Dictionary<CardData, int>();
+
+    public int GetPurchasedCount(CardData card)
+    {
+        if (card == null)
+        {
+            return 0;
+        }
+
+        if (purchasedCards.ContainsKey(card))
+        {
+            return purchasedCards[card];
+        }
+
+        return 0;
+    }
+
+    public bool CanBuyMoreInMatch(CardData card)
+    {
+        if (card == null)
+        {
+            return false;
+        }
+
+        return GetPurchasedCount(card) < card.maxQuantity;
+    }
+
     public PurchaseResult BuyCard(CardData card)
     {
         if (card == null)
@@ -23,11 +54,17 @@ public class StoreManager : MonoBehaviour
             return PurchaseResult.InvalidCard;
         }
 
+        // Kiểm tra giới hạn mua trong cả trận.
+        if (!CanBuyMoreInMatch(card))
+        {
+            return PurchaseResult.CardPurchaseLimitReached;
+        }
+
+        // Kiểm tra giới hạn sở hữu trong Inventory.
         if (!cardInventory.CanAddCard(card))
         {
             return PurchaseResult.InventoryFull;
         }
-    
 
         switch (card.purchaseType)
         {
@@ -38,10 +75,7 @@ public class StoreManager : MonoBehaviour
                     return PurchaseResult.NotEnoughMoney;
                 }
 
-                currencyManager.SpendMoney(card.moneyCost);
-
                 break;
-
 
             case PurchaseType.Energy:
 
@@ -50,10 +84,7 @@ public class StoreManager : MonoBehaviour
                     return PurchaseResult.NotEnoughEnergy;
                 }
 
-                currencyManager.SpendEnergy(card.energyCost);
-
                 break;
-
 
             case PurchaseType.MoneyAndEnergy:
 
@@ -78,12 +109,10 @@ public class StoreManager : MonoBehaviour
                     return PurchaseResult.NotEnoughEnergy;
                 }
 
-                currencyManager.SpendMoney(card.moneyCost);
-                currencyManager.SpendEnergy(card.energyCost);
-
                 break;
         }
 
+        // Thêm card vào Inventory trước khi trừ tài nguyên.
         bool added = cardInventory.AddCard(card);
 
         if (!added)
@@ -91,6 +120,31 @@ public class StoreManager : MonoBehaviour
             return PurchaseResult.InventoryFull;
         }
 
+        // Trừ tài nguyên sau khi thêm card thành công.
+        switch (card.purchaseType)
+        {
+            case PurchaseType.Money:
+                currencyManager.SpendMoney(card.moneyCost);
+                break;
+
+            case PurchaseType.Energy:
+                currencyManager.SpendEnergy(card.energyCost);
+                break;
+
+            case PurchaseType.MoneyAndEnergy:
+                currencyManager.SpendMoney(card.moneyCost);
+                currencyManager.SpendEnergy(card.energyCost);
+                break;
+        }
+
+        // Chỉ ghi nhận lượt mua sau khi giao dịch thành công.
+        int purchasedCount = GetPurchasedCount(card);
+        purchasedCards[card] = purchasedCount + 1;
+
         return PurchaseResult.Success;
+    }
+    public void ResetPurchaseLimits()
+    {
+        purchasedCards.Clear();
     }
 }

@@ -12,22 +12,45 @@ public class StoreCardUI : MonoBehaviour
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Button buyButton;
 
+    [Header("Trạng thái card")]
+    [SerializeField] private CanvasGroup cardCanvasGroup;
+
     private CardData cardData;
     private StoreUI storeUI;
+    private StoreManager storeManager;
+    private CardInventory cardInventory;
 
-    public void Setup(CardData card, StoreUI store)
+    public void Setup(
+        CardData card,
+        StoreUI store,
+        StoreManager manager,
+        CardInventory inventory)
     {
         cardData = card;
         storeUI = store;
+        storeManager = manager;
+        cardInventory = inventory;
 
         cardNameText.text = card.cardName;
         cardTypeText.text = card.cardType.ToString();
         rarityText.text = card.rarity.ToString();
 
+        if (cardCanvasGroup == null)
+        {
+            cardCanvasGroup = GetComponent<CanvasGroup>();
+
+            if (cardCanvasGroup == null)
+            {
+                cardCanvasGroup = gameObject.AddComponent<CanvasGroup>();
+            }
+        }
+
         UpdatePrice();
 
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(BuyCard);
+
+        UpdateCardState();
     }
 
     private void UpdatePrice()
@@ -36,16 +59,12 @@ public class StoreCardUI : MonoBehaviour
         {
             case PurchaseType.Money:
 
-                priceText.text =
-                    "Money: " + cardData.moneyCost;
-
+                priceText.text = "Money: " + cardData.moneyCost;
                 break;
 
             case PurchaseType.Energy:
 
-                priceText.text =
-                    "Gem: " + cardData.energyCost;
-
+                priceText.text = "Gem: " + cardData.energyCost;
                 break;
 
             case PurchaseType.MoneyAndEnergy:
@@ -53,19 +72,47 @@ public class StoreCardUI : MonoBehaviour
                 priceText.text =
                     "Money: " + cardData.moneyCost +
                     "\nGem: " + cardData.energyCost;
-
                 break;
         }
     }
-    public void UpdateQuantity(CardData card, CardInventory inventory)
-    {
-        int currentQuantity = inventory.GetCardQuantity(card);
 
-        quantityText.text = "Owned: " + currentQuantity + " / " + card.maxQuantity;
+    public void UpdateCardState()
+    {
+        if (cardData == null ||
+            storeManager == null ||
+            cardInventory == null)
+        {
+            return;
+        }
+
+        int purchasedCount = storeManager.GetPurchasedCount(cardData);
+
+        int ownedCount = cardInventory.GetCardQuantity(cardData);
+
+        quantityText.text =
+            "Bought: " + purchasedCount +
+            " / " + cardData.maxQuantity +
+            "\nOwned: " + ownedCount;
+
+           bool canBuy = storeManager.CanBuyMoreInMatch(cardData);
+        // bool canBuy =
+        // storeManager.CanBuyMoreInMatch(cardData) &&
+        // cardInventory.CanAddCard(cardData);
+
+        // Card mờ khi hết giới hạn mua hoặc Inventory đã đầy.
+        cardCanvasGroup.alpha = canBuy ? 1f : 0.4f;
+
+        // Chặn người chơi nhấn nút Buy.
+        buyButton.interactable = canBuy;
     }
 
     private void BuyCard()
     {
+        if (cardData == null || storeUI == null)
+        {
+            return;
+        }
+
         storeUI.BuyCard(cardData);
     }
 }

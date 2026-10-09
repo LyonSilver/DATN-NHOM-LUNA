@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ public class StoreUI : MonoBehaviour
     [SerializeField] private Transform storePanel;
     [SerializeField] private GameObject storeCardPrefab;
 
+    [Header("Settings")]
+    [SerializeField] private int cardsPerRefresh = 4;
+
     [Header("Currency UI")]
     [SerializeField] private TMP_Text moneyText;
     [SerializeField] private TMP_Text energyText;
@@ -24,26 +28,72 @@ public class StoreUI : MonoBehaviour
     [Header("Popup")]
     [SerializeField] private PurchasePopup purchasePopup;
 
+    // Danh sách card đang hiển thị trong Shop.
+    private List<CardData> currentStoreCards =
+        new List<CardData>();
+
     private void Start()
     {
         RefreshStore();
         UpdateCurrencyUI();
     }
 
+    // Chọn ngẫu nhiên các card mới.
+    // Hàm này được gọi lúc mở Shop và khi nhấn Reset.
     public void RefreshStore()
     {
-        ClearStore();
-
         if (cardDatabase == null)
         {
             Debug.LogError("StoreUI: CardDatabase chưa được gán.");
             return;
         }
 
-        for (int i = 0; i < cardDatabase.GetStoreCards().Count; i++)
+        if (storePanel == null || storeCardPrefab == null)
         {
-            CardData card =
-                cardDatabase.GetStoreCards()[i];
+            Debug.LogError("StoreUI: Chưa gán Store Panel hoặc Card Prefab.");
+            return;
+        }
+
+        List<CardData> availableCards =
+            new List<CardData>();
+
+        List<CardData> databaseCards =
+            cardDatabase.GetStoreCards();
+
+        for (int i = 0; i < databaseCards.Count; i++)
+        {
+            CardData card = databaseCards[i];
+
+            if (card != null && !availableCards.Contains(card))
+            {
+                availableCards.Add(card);
+            }
+        }
+
+        // Xóa danh sách card đang hiển thị cũ.
+        ClearStore();
+        currentStoreCards.Clear();
+
+        int targetCount =
+            Mathf.Min(cardsPerRefresh, availableCards.Count);
+
+        // Chọn ngẫu nhiên, không chọn trùng card.
+        for (int i = 0; i < targetCount; i++)
+        {
+            int randomIndex =
+                Random.Range(0, availableCards.Count);
+
+            CardData selectedCard =
+                availableCards[randomIndex];
+
+            currentStoreCards.Add(selectedCard);
+            availableCards.RemoveAt(randomIndex);
+        }
+
+        // Tạo UI cho các card được chọn.
+        for (int i = 0; i < currentStoreCards.Count; i++)
+        {
+            CardData card = currentStoreCards[i];
 
             GameObject cardObject =
                 Instantiate(storeCardPrefab, storePanel);
@@ -51,15 +101,28 @@ public class StoreUI : MonoBehaviour
             StoreCardUI cardUI =
                 cardObject.GetComponent<StoreCardUI>();
 
-            cardUI.Setup(card, this);
+            if (cardUI == null)
+            {
+                Debug.LogError(
+                    "StoreUI: Prefab thiếu StoreCardUI."
+                );
 
-            cardUI.UpdateQuantity(
+                Destroy(cardObject);
+                continue;
+            }
+
+            cardUI.Setup(
                 card,
+                this,
+                storeManager,
                 cardInventory
             );
         }
+
+        UpdateVisibleCardStates();
     }
 
+    // Xóa các card UI cũ nhưng không xóa dữ liệu mua trong trận.
     private void ClearStore()
     {
         if (storePanel == null)
@@ -70,6 +133,26 @@ public class StoreUI : MonoBehaviour
         for (int i = storePanel.childCount - 1; i >= 0; i--)
         {
             Destroy(storePanel.GetChild(i).gameObject);
+        }
+    }
+
+    // Cập nhật trạng thái card mà không chọn lại card.
+    private void UpdateVisibleCardStates()
+    {
+        if (storePanel == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < storePanel.childCount; i++)
+        {
+            StoreCardUI cardUI =
+                storePanel.GetChild(i).GetComponent<StoreCardUI>();
+
+            if (cardUI != null)
+            {
+                cardUI.UpdateCardState();
+            }
         }
     }
 
@@ -85,21 +168,25 @@ public class StoreUI : MonoBehaviour
                 int currentQuantity =
                     cardInventory.GetCardQuantity(card);
 
+                int purchasedCount =
+                    storeManager.GetPurchasedCount(card);
+
                 purchasePopup.Show(
                     "MUA THÀNH CÔNG",
                     "Đã mua: " + card.cardName +
-                    "\nSố lượng: " +
-                    currentQuantity +
-                    " / " +
-                    card.maxQuantity
+                    "\nĐã mua trong trận: " +
+                    purchasedCount + " / " +
+                    card.maxQuantity +
+                    "\nSở hữu: " + currentQuantity
                 );
 
                 UpdateCurrencyUI();
 
-                RefreshStore();
+                // Không gọi RefreshStore ở đây.
+                // Giữ nguyên 4 card hiện tại.
+                UpdateVisibleCardStates();
 
                 break;
-
 
             case PurchaseResult.InvalidCard:
 
@@ -110,24 +197,29 @@ public class StoreUI : MonoBehaviour
 
                 break;
 
-
             case PurchaseResult.InventoryFull:
 
-                currentQuantity =
-                    cardInventory.GetCardQuantity(card);
-
                 purchasePopup.Show(
-                    "KHÔNG THỂ MUA",
+                    "INVENTORY ĐẦY",
                     card.cardName +
-                    " đã đạt giới hạn." +
-                    "\nSố lượng: " +
-                    currentQuantity +
-                    " / " +
-                    card.maxQuantity
+                    " đã đạt giới hạn sở hữu."
                 );
+
+                UpdateVisibleCardStates();
 
                 break;
 
+            case PurchaseResult.CardPurchaseLimitReached:
+
+                purchasePopup.Show(
+                    "ĐÃ HẾT LƯỢT MUA",
+                    card.cardName +
+                    " đã đạt giới hạn mua trong trận."
+                );
+
+                UpdateVisibleCardStates();
+
+                break;
 
             case PurchaseResult.NotEnoughMoney:
 
@@ -139,7 +231,6 @@ public class StoreUI : MonoBehaviour
 
                 break;
 
-
             case PurchaseResult.NotEnoughEnergy:
 
                 purchasePopup.Show(
@@ -149,7 +240,6 @@ public class StoreUI : MonoBehaviour
                 );
 
                 break;
-
 
             case PurchaseResult.NotEnoughMoneyAndEnergy:
 
@@ -162,6 +252,7 @@ public class StoreUI : MonoBehaviour
                 break;
         }
     }
+
     public void UpdateCurrencyUI()
     {
         if (currencyManager == null)
@@ -169,10 +260,24 @@ public class StoreUI : MonoBehaviour
             return;
         }
 
-        moneyText.text =
-            "Money: " + currencyManager.GetMoney();
+        if (moneyText != null)
+        {
+            moneyText.text =
+                "Money: " + currencyManager.GetMoney();
+        }
 
-        energyText.text =
-            "Gem: " + currencyManager.GetEnergy();
+        if (energyText != null)
+        {
+            energyText.text =
+                "Gem: " + currencyManager.GetEnergy();
+        }
+    }
+    public void ResetShop()
+    {
+        // Reset giới hạn mua của tất cả card
+        storeManager.ResetPurchaseLimits();
+
+        // Chọn và hiển thị lại 4 card ngẫu nhiên
+        RefreshStore();
     }
 }
