@@ -263,13 +263,13 @@ public class StoreUI : MonoBehaviour
         if (moneyText != null)
         {
             moneyText.text =
-                "Money: " + currencyManager.GetMoney();
+                "" + currencyManager.GetMoney();
         }
 
         if (energyText != null)
         {
             energyText.text =
-                "Gem: " + currencyManager.GetEnergy();
+                "" + currencyManager.GetEnergy();
         }
     }
     public void ResetShop()
