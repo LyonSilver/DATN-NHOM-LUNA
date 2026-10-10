@@ -1822,7 +1822,17 @@ MonoBehaviour:
   maxRound: 2
   cardEffectManager: {fileID: 114245655}
   roundText: {fileID: 1153902264}
+  roundUI: {fileID: 0}
+  cardUI: {fileID: 0}
+  playerUI: {fileID: 0}
+  enemyUI: {fileID: 0}
   finishPanel: {fileID: 1525941121}
+  coinText: {fileID: 0}
+  expText: {fileID: 0}
+  currentCoin: 0
+  currentExp: 0
+  coinPerRound: 50
+  expPerRound: 100
 --- !u!1 &850486595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2516,7 +2526,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1648061046}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
