@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu (Luan).unity
     guid: e297c44ba75775948b883d99a4849b28
   - enabled: 1
+    path: Assets/Scenes/IntroScene.unity
+    guid: 72b2fc623cc282f49a568fd6531c2fa4
+  - enabled: 0
     path: Assets/Scenes/BattleTest.unity
     guid: a05bd141979f0984eb54f5a87cd1c4c5
   - enabled: 0
