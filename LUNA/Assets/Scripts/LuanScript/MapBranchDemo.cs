@@ -13,12 +13,9 @@ public class MapBranchDemo : MonoBehaviour
     [SerializeField] private Vector2 nodeSize = new Vector2(76, 58);
     [SerializeField] private float lineThickness = 5f;
 
-    [Header("Battle Scene")]
+    [Header("Scene Settings")]
     [SerializeField] private string battleSceneName = "Battle";
-    [SerializeField] private string mapSceneName = "LevelStageCanvas";
-
-    [Header("Progress Settings")]
-    [SerializeField] private bool loadSavedProgress = true;
+    [SerializeField] private string mapSceneName = "LevelStage";
 
     private readonly List<Button> buttons = new();
     private readonly List<Image> nodeImages = new();
@@ -27,18 +24,21 @@ public class MapBranchDemo : MonoBehaviour
     private RectTransform pathContainer;
     private RectTransform nodeContainer;
 
-    private int currentNode = -1;
+    // Tiến trình chỉ tồn tại trong phiên chơi hiện tại.
+    // Static giúp giữ dữ liệu khi chuyển Scene.
+    private static int currentNode = -1;
+    private static readonly HashSet<int> visitedNodes = new();
+    private static readonly HashSet<int> lockedNodes = new();
 
-    // Các node đã đi qua.
-    private readonly HashSet<int> visitedNodes = new();
-
-    // Các node bị khóa.
-    private readonly HashSet<int> lockedNodes = new();
-
-    private const string CurrentNodeKey = "Map_CurrentNode";
-    private const string VisitedNodesKey = "Map_VisitedNodes";
-    private const string LockedNodesKey = "Map_LockedNodes";
-    private const string ProgressExistsKey = "Map_ProgressExists";
+    // Tự động xóa tiến trình khi bắt đầu một phiên Play mới.
+    [RuntimeInitializeOnLoadMethod(
+        RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetSessionProgress()
+    {
+        currentNode = -1;
+        visitedNodes.Clear();
+        lockedNodes.Clear();
+    }
 
     private readonly string[] nodeNames =
     {
@@ -47,7 +47,7 @@ public class MapBranchDemo : MonoBehaviour
         "BATTLE", "ELITE", "BOSS"
     };
 
-    // Vị trí tương đối trên bản đồ.
+    // Vị trí tương đối của từng node trên bản đồ.
     private readonly Vector2[] positions =
     {
         new Vector2(0.08f, 0.48f),
@@ -87,7 +87,9 @@ public class MapBranchDemo : MonoBehaviour
             return;
         }
 
-        // Tạo danh sách các node tiếp theo.
+        // Xây dựng lại danh sách kết nối cho Scene bản đồ mới.
+        nextNodes.Clear();
+
         for (int i = 0; i < nodeNames.Length; i++)
             nextNodes.Add(new List<int>());
 
@@ -103,15 +105,14 @@ public class MapBranchDemo : MonoBehaviour
         CreatePaths();
         CreateNodes();
 
-        if (loadSavedProgress &&
-            PlayerPrefs.GetInt(ProgressExistsKey, 0) == 1)
+        // Có tiến trình trong phiên chơi thì khôi phục.
+        // Nếu chưa đi node nào thì chỉ mở START.
+        if (visitedNodes.Count > 0)
         {
-            LoadProgress();
             RestoreNodeStates();
         }
         else
         {
-            // Lần đầu chơi: chỉ mở START.
             currentNode = -1;
             SetNodeAvailable(0, true);
         }
@@ -124,7 +125,7 @@ public class MapBranchDemo : MonoBehaviour
         pathContainer = CreateRect("PathContainer", mapArea);
         nodeContainer = CreateRect("NodeContainer", mapArea);
 
-        // Đường nằm sau các nút.
+        // Đường nằm phía sau các node.
         pathContainer.SetAsLastSibling();
         nodeContainer.SetAsLastSibling();
     }
@@ -181,9 +182,7 @@ public class MapBranchDemo : MonoBehaviour
             Vector2 b = GetPosition(to);
             Vector2 delta = b - a;
 
-            rect.anchorMin = rect.anchorMax =
-                new Vector2(0.5f, 0.5f);
-
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = (a + b) / 2f;
 
@@ -193,8 +192,8 @@ public class MapBranchDemo : MonoBehaviour
             );
 
             rect.localRotation = Quaternion.Euler(
-                0,
-                0,
+                0f,
+                0f,
                 Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg
             );
 
@@ -220,9 +219,7 @@ public class MapBranchDemo : MonoBehaviour
 
             RectTransform rect = obj.GetComponent<RectTransform>();
 
-            rect.anchorMin = rect.anchorMax =
-                new Vector2(0.5f, 0.5f);
-
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = GetPosition(i);
             rect.sizeDelta = nodeSize;
@@ -253,10 +250,7 @@ public class MapBranchDemo : MonoBehaviour
 
             Text label = labelObj.GetComponent<Text>();
             label.text = nodeNames[i];
-            label.font = Resources.GetBuiltinResource<Font>(
-                "LegacyRuntime.ttf"
-            );
-
+            label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             label.fontSize = 13;
             label.fontStyle = FontStyle.Bold;
             label.alignment = TextAnchor.MiddleCenter;
@@ -270,8 +264,10 @@ public class MapBranchDemo : MonoBehaviour
 
     private void SelectNode(int index)
     {
-        if (visitedNodes.Contains(index) ||
-            lockedNodes.Contains(index))
+        if (index < 0 || index >= buttons.Count)
+            return;
+
+        if (visitedNodes.Contains(index) || lockedNodes.Contains(index))
             return;
 
         if (!buttons[index].interactable)
@@ -296,18 +292,15 @@ public class MapBranchDemo : MonoBehaviour
             }
         }
 
-        // Khóa nhánh thay thế.
+        // Khóa các nhánh thay thế cùng node cha.
         LockAlternativeBranches(index);
-
-        // Lưu tiến trình trước khi chuyển Scene.
-        SaveProgress();
 
         Debug.Log(
             "Đã chọn node: " + nodeNames[index] +
             " (ID " + index + ")"
         );
 
-        // Chọn BATTLE thì vào Scene chiến đấu.
+        // Chọn BATTLE thì chuyển sang Scene chiến đấu.
         if (nodeNames[index] == "BATTLE")
         {
             SceneManager.LoadScene(battleSceneName);
@@ -320,7 +313,7 @@ public class MapBranchDemo : MonoBehaviour
 
     private void LockAlternativeBranches(int selectedIndex)
     {
-        // Tìm các node có cùng node cha.
+        // Tìm các node có cùng node cha với node được chọn.
         for (int parent = 0; parent < nextNodes.Count; parent++)
         {
             if (!nextNodes[parent].Contains(selectedIndex))
@@ -351,8 +344,10 @@ public class MapBranchDemo : MonoBehaviour
 
     private void SetNodeAvailable(int index, bool available)
     {
-        if (visitedNodes.Contains(index) ||
-            lockedNodes.Contains(index))
+        if (index < 0 || index >= buttons.Count)
+            return;
+
+        if (visitedNodes.Contains(index) || lockedNodes.Contains(index))
         {
             buttons[index].interactable = false;
             return;
@@ -372,59 +367,9 @@ public class MapBranchDemo : MonoBehaviour
         }
     }
 
-    private void SaveProgress()
-    {
-        PlayerPrefs.SetInt(CurrentNodeKey, currentNode);
-
-        PlayerPrefs.SetString(
-            VisitedNodesKey,
-            string.Join(",", visitedNodes)
-        );
-
-        PlayerPrefs.SetString(
-            LockedNodesKey,
-            string.Join(",", lockedNodes)
-        );
-
-        PlayerPrefs.SetInt(ProgressExistsKey, 1);
-        PlayerPrefs.Save();
-
-        Debug.Log("Đã lưu tiến trình bản đồ!");
-    }
-
-    private void LoadProgress()
-    {
-        currentNode = PlayerPrefs.GetInt(CurrentNodeKey, -1);
-
-        visitedNodes.Clear();
-        lockedNodes.Clear();
-
-        LoadNodeSet(VisitedNodesKey, visitedNodes);
-        LoadNodeSet(LockedNodesKey, lockedNodes);
-    }
-
-    private void LoadNodeSet(string key, HashSet<int> target)
-    {
-        string savedData = PlayerPrefs.GetString(key, "");
-
-        if (string.IsNullOrEmpty(savedData))
-            return;
-
-        string[] values = savedData.Split(',');
-
-        foreach (string value in values)
-        {
-            if (int.TryParse(value, out int index))
-            {
-                if (index >= 0 && index < nodeNames.Length)
-                    target.Add(index);
-            }
-        }
-    }
-
     private void RestoreNodeStates()
     {
-        // Đặt lại toàn bộ node.
+        // Đặt tất cả node về trạng thái mặc định trước.
         for (int i = 0; i < buttons.Count; i++)
         {
             buttons[i].interactable = false;
@@ -436,44 +381,62 @@ public class MapBranchDemo : MonoBehaviour
         // Khôi phục node đã đi qua.
         foreach (int index in visitedNodes)
         {
+            if (index < 0 || index >= buttons.Count)
+                continue;
+
             nodeImages[index].color =
                 new Color(0.15f, 0.65f, 0.35f, 1f);
+
+            buttons[index].interactable = false;
         }
 
         // Khôi phục node bị khóa.
         foreach (int index in lockedNodes)
         {
+            if (index < 0 || index >= buttons.Count)
+                continue;
+
             if (visitedNodes.Contains(index))
                 continue;
 
             nodeImages[index].color =
                 new Color(0.10f, 0.10f, 0.10f, 1f);
+
+            buttons[index].interactable = false;
         }
 
-        // Mở các node tiếp theo hợp lệ.
+        // Mở các node tiếp theo chưa đi và chưa bị khóa.
         foreach (int visited in visitedNodes)
         {
+            if (visited < 0 || visited >= nextNodes.Count)
+                continue;
+
             foreach (int next in nextNodes[visited])
             {
                 if (visitedNodes.Contains(next) ||
                     lockedNodes.Contains(next))
+                {
                     continue;
+                }
 
                 SetNodeAvailable(next, true);
             }
         }
     }
 
-    // Gọi hàm này nếu muốn xóa tiến trình bản đồ
-    // và bắt đầu lại từ đầu.
+    // Có thể gọi hàm này từ nút quay về bản đồ nếu cần.
+    public void ReturnToMap()
+    {
+        SceneManager.LoadScene(mapSceneName);
+    }
+
+    // Dùng khi muốn chủ động bắt đầu lại bản đồ trong phiên chơi.
     public void ResetMapProgress()
     {
-        PlayerPrefs.DeleteKey(CurrentNodeKey);
-        PlayerPrefs.DeleteKey(VisitedNodesKey);
-        PlayerPrefs.DeleteKey(LockedNodesKey);
-        PlayerPrefs.DeleteKey(ProgressExistsKey);
-        PlayerPrefs.Save();
+        currentNode = -1;
+        visitedNodes.Clear();
+        lockedNodes.Clear();
 
-        Debug.Log("Đã xóa tiến trình bản đồ.");
+        SceneManager.LoadScene(mapSceneName);
     }
 }

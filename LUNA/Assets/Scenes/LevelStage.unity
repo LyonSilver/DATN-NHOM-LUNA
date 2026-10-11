@@ -319,6 +319,7 @@ MonoBehaviour:
   nodeSize: {x: 76, y: 58}
   lineThickness: 5
   battleSceneName: BattleTest
+  mapSceneName: LevelStage
 --- !u!1 &1318641425
 GameObject:
   m_ObjectHideFlags: 0
