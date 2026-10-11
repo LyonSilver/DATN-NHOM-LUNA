@@ -164,91 +164,69 @@ public class StoreUI : MonoBehaviour
         switch (result)
         {
             case PurchaseResult.Success:
+                {
+                    int currentQuantity =
+                        cardInventory.GetCardQuantity(card);
 
-                int currentQuantity =
-                    cardInventory.GetCardQuantity(card);
+                    int purchasedCount =
+                        storeManager.GetPurchasedCount(card);
 
-                int purchasedCount =
-                    storeManager.GetPurchasedCount(card);
+                    purchasePopup.ShowSuccess(
+                        card.cardName,
+                        card.description,     // Se gan mo ta sau khi kiem tra CardData
+                        null,   // Se gan anh sau khi kiem tra CardData
+                        purchasedCount,
+                        card.maxQuantity,
+                        currentQuantity
+                    );
 
-                purchasePopup.Show(
-                    "MUA THÀNH CÔNG",
-                    "Đã mua: " + card.cardName +
-                    "\nĐã mua trong trận: " +
-                    purchasedCount + " / " +
-                    card.maxQuantity +
-                    "\nSở hữu: " + currentQuantity
-                );
-
-                UpdateCurrencyUI();
-
-                // Không gọi RefreshStore ở đây.
-                // Giữ nguyên 4 card hiện tại.
-                UpdateVisibleCardStates();
-
-                break;
+                    UpdateCurrencyUI();
+                    UpdateVisibleCardStates();
+                    break;
+                }
 
             case PurchaseResult.InvalidCard:
-
-                purchasePopup.Show(
-                    "LỖI",
-                    "Card không hợp lệ."
+                purchasePopup.ShowFailure(
+                    "THẺ BÀI KHÔNG HỢP LỆ: " + card.cardName
                 );
-
                 break;
 
             case PurchaseResult.InventoryFull:
-
-                purchasePopup.Show(
-                    "INVENTORY ĐẦY",
+                purchasePopup.ShowFailure(
                     card.cardName +
-                    " đã đạt giới hạn sở hữu."
+                    " ĐÃ ĐẠT SỐ LƯỢNG TỐI ĐA TRONG KHO!"
                 );
 
                 UpdateVisibleCardStates();
-
                 break;
 
             case PurchaseResult.CardPurchaseLimitReached:
-
-                purchasePopup.Show(
-                    "ĐÃ HẾT LƯỢT MUA",
-                    card.cardName +
-                    " đã đạt giới hạn mua trong trận."
+                purchasePopup.ShowFailure(
+                    "ĐÃ ĐẠT GIỚI HẠN MUA CỦA THẺ " + card.cardName
                 );
 
                 UpdateVisibleCardStates();
-
                 break;
 
             case PurchaseResult.NotEnoughMoney:
-
-                purchasePopup.Show(
-                    "KHÔNG ĐỦ MONEY",
-                    "Bạn không đủ Money để mua " +
-                    card.cardName
+                purchasePopup.ShowFailure(
+                    "BẠN KHÔNG TIỀN ĐỂ MUA " +
+                    card.cardName + "!"
                 );
-
                 break;
 
             case PurchaseResult.NotEnoughEnergy:
-
-                purchasePopup.Show(
-                    "KHÔNG ĐỦ GEM",
-                    "Bạn không đủ Gem để mua " +
-                    card.cardName
+                purchasePopup.ShowFailure(
+                    "BẠN KHÔNG CÓ ĐỦ GEM ĐỂ MUA " +
+                    card.cardName + "!"
                 );
-
                 break;
 
             case PurchaseResult.NotEnoughMoneyAndEnergy:
-
-                purchasePopup.Show(
-                    "KHÔNG ĐỦ TÀI NGUYÊN",
-                    "Bạn không đủ Money và Gem để mua " +
-                    card.cardName
+                purchasePopup.ShowFailure(
+                    "BẠN KHÔNG CÓ ĐỦ TIỀN VÀ GEM ĐỂ MUA " +
+                    card.cardName + "!"
                 );
-
                 break;
         }
     }
@@ -280,4 +258,6 @@ public class StoreUI : MonoBehaviour
         // Chọn và hiển thị lại 4 card ngẫu nhiên
         RefreshStore();
     }
+
+    
 }
