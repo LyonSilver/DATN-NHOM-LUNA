@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 113670099}
   - component: {fileID: 113670098}
   - component: {fileID: 113670097}
+  - component: {fileID: 113670102}
   m_Layer: 5
   m_Name: Island_Dong_bang
   m_TagString: Untagged
@@ -459,7 +460,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 113670100}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 113670102}
+        m_TargetAssemblyTypeName: IslandSceneLoader, Assembly-CSharp
+        m_MethodName: GoToScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &113670100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,6 +511,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113670095}
   m_CullTransparentMesh: 1
+--- !u!114 &113670102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113670095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250095b5e8c835943a08a790bfff8439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IslandSceneLoader
+  sceneName: LevelStage
 --- !u!1 &245341562
 GameObject:
   m_ObjectHideFlags: 0
