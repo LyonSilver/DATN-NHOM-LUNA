@@ -10,57 +10,55 @@ public class RewardSystem : MonoBehaviour
     public int RewardGold { get; private set; }
     public int RewardCardCount { get; private set; }
 
-
     public void CalculateReward(BattleResultData result)
     {
-        int star = result.star;
-
-        // RESET PHẦN THƯỞNG
-
+        // Reset phan thuong
         RewardExp = 0;
         RewardGold = 0;
         RewardCardCount = 0;
 
-
-        // 1 SAO
-        // Chỉ nhận EXP
-
-        if (star == 1)
+        if (result == null)
         {
-            RewardExp = baseExp;
-            RewardGold = 0;
-            RewardCardCount = 0;
+            Debug.LogWarning("BattleResultData dang null!");
+            return;
         }
 
+        // 0 sao: khong co phan thuong
 
-        // 2 SAO
-        // EXP + GOLD + 2 CARD
+        if (result.star == 0)
+        {
+            return;
+        }
 
-        else if (star == 2)
+        // 1 sao: chi nhan EXP
+
+        if (result.star == 1)
+        {
+            RewardExp = baseExp;
+        }
+
+        // 2 sao: EXP + Gold + 1 Card
+
+        else if (result.star == 2)
         {
             RewardExp = baseExp * 2;
             RewardGold = baseGold * 2;
-            RewardCardCount = 2;
+            RewardCardCount = 1;
         }
 
+        // 3 sao: EXP + Gold + 3 Card
 
-        // 3 SAO
-        // EXP + GOLD + 3 CARD
-
-        else if (star == 3)
+        else if (result.star == 3)
         {
             RewardExp = baseExp * 3;
             RewardGold = baseGold * 3;
             RewardCardCount = 3;
         }
 
-
-        // DEBUG
-
         Debug.Log(
-            "Reward -> EXP: " + RewardExp +
-            " | Gold: " + RewardGold +
-            " | Cards: " + RewardCardCount
+            "EXP: " + RewardExp
+            + " | Gold: " + RewardGold
+            + " | Cards: " + RewardCardCount
         );
     }
 }

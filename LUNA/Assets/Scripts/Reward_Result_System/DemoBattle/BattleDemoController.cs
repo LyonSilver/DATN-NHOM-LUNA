@@ -15,20 +15,18 @@ public class BattleDemoController : MonoBehaviour
 
     [Header("Systems")]
     [SerializeField] private ResultSystem resultSystem;
-    [SerializeField] private ResultUI resultUI;
-
+    [SerializeField] private ResultRewardUI resultRewardUI;
 
     public void EndBattleDemo()
     {
-        // 1. LẤY DỮ LIỆU TỪ INPUT FIELD
+        // 1. LẤY DỮ LIỆU GIẢ LẬP
 
         int damageDealt = GetInputValue(damageDealtInput);
         int damageReceived = GetInputValue(damageReceivedInput);
         int killCount = GetInputValue(killCountInput);
         int goldEarned = GetInputValue(goldEarnedInput);
 
-
-        // 2. GỬI DỮ LIỆU CHO RESULT SYSTEM
+        // 2. TÍNH KẾT QUẢ
 
         resultSystem.CalculateResult(
             damageDealt,
@@ -37,36 +35,26 @@ public class BattleDemoController : MonoBehaviour
             goldEarned
         );
 
+        // 3. HIỂN THỊ RESULT + REWARD TRÊN CÙNG PANEL
 
-        // 3. ĐÓNG DEMO PANEL
-        demoPanel.SetActive(false);
-
-
-        // 4. MỞ RESULT PANEL
-
-        resultPanel.SetActive(true);
-
-
-        // 5. HIỂN THỊ KẾT QUẢ
-
-        resultUI.ShowResult(
+        resultRewardUI.ShowResultAndReward(
             resultSystem.CurrentResult
         );
-    }
 
+        demoPanel.SetActive(false);
+        resultPanel.SetActive(true);
+    }
 
     private int GetInputValue(TMP_InputField input)
     {
         int value;
 
-        if (int.TryParse(input.text, out value))
+        if (input != null &&
+            int.TryParse(input.text, out value))
         {
-            // Không cho phép số âm từ InputField
             return Mathf.Max(0, value);
         }
 
-        // Nếu InputField trống hoặc nhập sai
-        // thì mặc định = 0
         return 0;
     }
 }
