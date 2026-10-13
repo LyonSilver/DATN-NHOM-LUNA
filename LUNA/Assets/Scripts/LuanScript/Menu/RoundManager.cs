@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class RoundManager : MonoBehaviour
 {
@@ -32,6 +34,12 @@ public class RoundManager : MonoBehaviour
 
     [SerializeField] private int coinPerRound = 50;
     [SerializeField] private int expPerRound = 100;
+
+    [Header("Scene Transition")]
+    [SerializeField] private string nextSceneName;
+    [SerializeField] private float transitionDelay = 0.5f;
+
+    private bool isTransitioning = false;
 
     private bool battleFinished = false;
     private bool currentEnemyRewardClaimed = false;
@@ -149,10 +157,11 @@ public class RoundManager : MonoBehaviour
 
     private void WinBattle()
     {
-        if (battleFinished)
+        if (battleFinished || isTransitioning)
             return;
 
         battleFinished = true;
+        isTransitioning = true;
 
         Debug.Log("RoundManager: VICTORY!");
         Debug.Log(
@@ -168,7 +177,31 @@ public class RoundManager : MonoBehaviour
             );
         }
 
-        ShowFinishPanel();
+        StartCoroutine(LoadNextSceneAfterDelay());
+    }
+
+    private IEnumerator LoadNextSceneAfterDelay()
+    {
+        // Khóa thao tác trong lúc chuyển Scene.
+        SetGameplayUI(false);
+
+        // Đợi một khoảng thời gian như khi dùng card.
+        yield return new WaitForSecondsRealtime(transitionDelay);
+
+        if (string.IsNullOrEmpty(nextSceneName))
+        {
+            Debug.LogError(
+                "RoundManager: Chưa nhập tên Scene tiếp theo!"
+            );
+
+            isTransitioning = false;
+            yield break;
+        }
+
+        // Đảm bảo Scene tiếp theo không bị đóng băng.
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(nextSceneName);
     }
 
     private void ShowFinishPanel()

@@ -1777,7 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355277d3b197f3f429aa25e3bc68de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
-  maxEnergy: 3
+  maxEnergy: 50
   currentEnergy: 0
 --- !u!4 &632329229
 Transform:
@@ -2532,6 +2532,8 @@ MonoBehaviour:
   currentExp: 0
   coinPerRound: 50
   expPerRound: 100
+  nextSceneName: LevelStage
+  transitionDelay: 0.5
 --- !u!1 &850486595
 GameObject:
   m_ObjectHideFlags: 0
