@@ -1777,7 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355277d3b197f3f429aa25e3bc68de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
-  maxEnergy: 10
+  maxEnergy: 3
   currentEnergy: 0
 --- !u!4 &632329229
 Transform:
