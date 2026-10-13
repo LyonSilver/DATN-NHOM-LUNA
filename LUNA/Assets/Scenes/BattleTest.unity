@@ -863,7 +863,7 @@ MonoBehaviour:
   turnManager: {fileID: 632329228}
   cardManager: {fileID: 993303427}
   handContainer: {fileID: 321281751}
-  cardPrefab: {fileID: 2997509876283000121, guid: 4b25b7b0c273ef141ac4c3110c484aa5, type: 3}
+  cardPrefab: {fileID: 2997509876283000121, guid: f665a03cfe4981c44b69001a5532adac, type: 3}
   cardSpacing: 300
   cardPositionY: 0
 --- !u!4 &327203830
@@ -2150,7 +2150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &799757943
 RectTransform:
   m_ObjectHideFlags: 0
