@@ -13,7 +13,7 @@ public class BattleStateMachine : MonoBehaviour
     }
 
     [Header("Current State")]
-    [SerializeField] private BattleState currentState;
+    [SerializeField] private BattleState currentState = BattleState.PlayerTurn;
 
     public BattleState CurrentState => currentState;
 
@@ -24,11 +24,9 @@ public class BattleStateMachine : MonoBehaviour
 
     public void ChangeState(BattleState newState)
     {
-        if (currentState == BattleState.Victory ||
-            currentState == BattleState.Defeat)
-        {
+        // Không cho thay đổi trạng thái sau khi trận đấu kết thúc.
+        if (IsBattleFinished())
             return;
-        }
 
         currentState = newState;
 
@@ -40,9 +38,30 @@ public class BattleStateMachine : MonoBehaviour
         return currentState == BattleState.PlayerTurn;
     }
 
+    public bool IsEnemyTurn()
+    {
+        return currentState == BattleState.EnemyTurn;
+    }
+
     public bool IsBattleFinished()
     {
         return currentState == BattleState.Victory ||
                currentState == BattleState.Defeat;
+    }
+
+    public void StartPlayerTurn()
+    {
+        if (IsBattleFinished())
+            return;
+
+        ChangeState(BattleState.PlayerTurn);
+    }
+
+    public void StartEnemyTurn()
+    {
+        if (IsBattleFinished())
+            return;
+
+        ChangeState(BattleState.EnemyTurn);
     }
 }
