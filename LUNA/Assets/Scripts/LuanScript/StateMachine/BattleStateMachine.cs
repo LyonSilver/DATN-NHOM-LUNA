@@ -4,105 +4,45 @@ public class BattleStateMachine : MonoBehaviour
 {
     public enum BattleState
     {
-        Start,
         PlayerTurn,
-        PlayerAction,
         EnemyTurn,
-        EnemyAction,
-        GameOver
+        CheckingBattle,
+        NextRound,
+        Victory,
+        Defeat
     }
 
-    public BattleState currentState;
+    [Header("Current State")]
+    [SerializeField] private BattleState currentState;
+
+    public BattleState CurrentState => currentState;
 
     private void Start()
     {
-        ChangeState(BattleState.Start);
+        ChangeState(BattleState.PlayerTurn);
     }
 
-    private void Update()
+    public void ChangeState(BattleState newState)
     {
-        switch (currentState)
+        if (currentState == BattleState.Victory ||
+            currentState == BattleState.Defeat)
         {
-            case BattleState.Start:
-                StartBattle();
-                break;
-
-            case BattleState.PlayerTurn:
-                PlayerTurn();
-                break;
-
-            case BattleState.PlayerAction:
-                PlayerAction();
-                break;
-
-            case BattleState.EnemyTurn:
-                EnemyTurn();
-                break;
-
-            case BattleState.EnemyAction:
-                EnemyAction();
-                break;
-
-            case BattleState.GameOver:
-                GameOver();
-                break;
+            return;
         }
-    }
 
-    private void ChangeState(BattleState newState)
-    {
         currentState = newState;
 
-        Debug.Log("Current State: " + currentState);
+        Debug.Log("Battle State: " + currentState);
     }
 
-    private void StartBattle()
+    public bool IsPlayerTurn()
     {
-        Debug.Log("Battle Start!");
-
-        ChangeState(BattleState.PlayerTurn);
+        return currentState == BattleState.PlayerTurn;
     }
 
-    private void PlayerTurn()
+    public bool IsBattleFinished()
     {
-        Debug.Log("Player Turn");
-
-        // Sau này:
-        // Hiện UI Attack
-        // Hiện UI Skill
-        // Hiện UI Item
-        // Chờ Player chọn
-
-        ChangeState(BattleState.PlayerAction);
-    }
-
-    private void PlayerAction()
-    {
-        Debug.Log("Player Action");
-
-        // Sau này thực hiện Attack / Skill...
-
-        ChangeState(BattleState.EnemyTurn);
-    }
-
-    private void EnemyTurn()
-    {
-        Debug.Log("Enemy Turn");
-
-        ChangeState(BattleState.EnemyAction);
-    }
-
-    private void EnemyAction()
-    {
-        Debug.Log("Enemy Action");
-
-        // Enemy tấn công
-
-        ChangeState(BattleState.PlayerTurn);
-    }
-
-    private void GameOver()
-    {
-        Debug.Log("Game Over!");
+        return currentState == BattleState.Victory ||
+               currentState == BattleState.Defeat;
     }
 }

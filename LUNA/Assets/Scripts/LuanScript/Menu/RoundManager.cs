@@ -32,6 +32,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private int coinPerRound = 50;
     [SerializeField] private int expPerRound = 100;
 
+    [Header("Battle State Machine")]
+    [SerializeField] private BattleStateMachine battleStateMachine;
+
 
     private void Start()
     {
@@ -240,5 +243,30 @@ public class RoundManager : MonoBehaviour
     public int GetCurrentExp()
     {
         return currentExp;
+    }
+
+    public void PlayerDefeated()
+    {
+        Debug.Log("PLAYER DEFEATED!");
+
+        // Chuyển FSM sang trạng thái thua
+        if (battleStateMachine != null)
+        {
+            battleStateMachine.ChangeState(
+                BattleStateMachine.BattleState.Defeat
+            );
+        }
+
+        // Ẩn giao diện chiến đấu
+        SetGameplayUI(false);
+
+        // Hiện bảng kết thúc
+        if (finishPanel != null)
+        {
+            finishPanel.SetActive(true);
+        }
+
+        // Dừng game
+        Time.timeScale = 0f;
     }
 }

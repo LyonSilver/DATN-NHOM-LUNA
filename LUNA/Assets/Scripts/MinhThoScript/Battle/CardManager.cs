@@ -8,11 +8,12 @@ public class CardManager : MonoBehaviour
     public HandManager handManager;
     public DeckManager deckManager;
     public CardEffectManager cardEffectManager;
+    public BattleStateMachine battleStateMachine;
 
     [Header("Card Use")]
     [SerializeField] private float useDelay = 0.5f;
 
-    [Header("Runtime State (Chỉ để xem, không chỉnh sửa)")]
+    [Header("Runtime State")]
     public CardUI selectedCard;
 
     private bool isUsingCard = false;
@@ -20,33 +21,51 @@ public class CardManager : MonoBehaviour
     private void OnEnable()
     {
         if (deckManager != null)
-        {
             deckManager.OnHandChanged += HandleHandChanged;
-        }
     }
 
     private void OnDisable()
     {
         if (deckManager != null)
-        {
             deckManager.OnHandChanged -= HandleHandChanged;
-        }
     }
-
-    // =====================================================
-    // CLICK CARD
-    // =====================================================
 
     public void OnCardClicked(CardInputHandler clickedCard)
     {
+        // Chỉ được dùng bài trong lượt người chơi.
+        if (battleStateMachine == null)
+        {
+            Debug.LogError(
+                "CardManager: Chưa gán BattleStateMachine!"
+            );
+            return;
+        }
+
+        if (!battleStateMachine.IsPlayerTurn())
+        {
+            Debug.Log("CardManager: Hiện không phải lượt người chơi.");
+            return;
+        }
+
         if (isUsingCard)
         {
-            Debug.Log("CardManager: Đang sử dụng Card.");
+            Debug.Log("CardManager: Đang sử dụng bài.");
             return;
         }
 
         if (clickedCard == null)
             return;
+
+        if (turnManager == null ||
+            handManager == null ||
+            deckManager == null ||
+            cardEffectManager == null)
+        {
+            Debug.LogError(
+                "CardManager: Chưa gán đủ các Manager trong Inspector!"
+            );
+            return;
+        }
 
         CardUI clickedUI = clickedCard.GetCardUI();
 
@@ -55,155 +74,90 @@ public class CardManager : MonoBehaviour
 
         CardData card = clickedUI.cardData;
 
-        // ---------------------------------------------
-        // KIỂM TRA ENERGY
-        // ---------------------------------------------
-
+        // Kiểm tra Energy trước khi bắt đầu sử dụng.
         if (!turnManager.CanAfford(card))
         {
             Debug.Log(
-                "CardManager: Không đủ Energy để sử dụng Card '" +
-                card.cardName +
-                "'."
+                "CardManager: Không đủ Energy cho " + card.cardName
             );
-
             return;
         }
-
-        // ---------------------------------------------
-        // KIỂM TRA CARD EFFECT MANAGER
-        // ---------------------------------------------
-
-        if (cardEffectManager == null)
-        {
-            Debug.LogError(
-                "CardManager: Chưa gán CardEffectManager!"
-            );
-
-            return;
-        }
-
-        // ---------------------------------------------
-        // CHỌN CARD
-        // ---------------------------------------------
 
         selectedCard = clickedUI;
-
         handManager.SetSelectedCard(clickedUI);
 
-        Debug.Log(
-            "CardManager: Đã chọn Card '" +
-            card.cardName +
-            "'."
-        );
-
-        // ---------------------------------------------
-        // BẮT ĐẦU SỬ DỤNG
-        // ---------------------------------------------
-
-        StartCoroutine(UseCard(card));
+        StartCoroutine(UseCard(card, clickedUI));
     }
 
-    // =====================================================
-    // USE CARD
-    // =====================================================
-
-    private IEnumerator UseCard(CardData card)
+    private IEnumerator UseCard(CardData card, CardUI cardUI)
     {
         isUsingCard = true;
 
         Debug.Log(
-            "CardManager: Đang chờ " +
-            useDelay +
-            " giây trước khi sử dụng Card."
+            "CardManager: Chuẩn bị sử dụng " + card.cardName
         );
 
-        // =================================================
-        // KHOẢNG CHỜ
-        // Sau này đặt animation ở đây
-        // =================================================
-
+        // Giữ khoảng chờ để sau này thêm animation.
         yield return new WaitForSeconds(useDelay);
 
-        // =================================================
-        // TRỪ ENERGY
-        // =================================================
+        // Kiểm tra lại trạng thái sau khoảng chờ.
+        if (battleStateMachine == null ||
+            !battleStateMachine.IsPlayerTurn())
+        {
+            ResetSelection();
+            isUsingCard = false;
+            yield break;
+        }
 
-        turnManager.SpendEnergy(card.cost);
+        // Đảm bảo đủ Energy tại thời điểm thực sự dùng bài.
+        if (!turnManager.CanAfford(card))
+        {
+            ResetSelection();
+            isUsingCard = false;
+            yield break;
+        }
 
-        Debug.Log(
-            "CardManager: Đã trừ " +
-            card.cost +
-            " Energy."
-        );
+        // Trừ Energy đúng một lần.
+        if (!turnManager.SpendEnergy(card.cost))
+        {
+            ResetSelection();
+            isUsingCard = false;
+            yield break;
+        }
 
-        // =================================================
-        // THỰC HIỆN EFFECT
-        // =================================================
-
-        Debug.Log(
-            "CardManager: Đang ExecuteCardEffect cho Card '" +
-            card.cardName +
-            "'."
-        );
-
+        // Thực hiện hiệu ứng bài.
         cardEffectManager.ExecuteCardEffect(card);
 
-        // =================================================
-        // XÓA CARD KHỎI HAND
-        // =================================================
+        // Đưa bài đã sử dụng ra khỏi hand.
+        deckManager.PlayCard(card);
 
-        if (deckManager != null)
-        {
-            deckManager.PlayCard(card);
-        }
-
-        // =================================================
-        // RESET
-        // =================================================
-
-        selectedCard = null;
-
-        if (handManager != null)
-        {
-            handManager.SetSelectedCard(null);
-        }
-
+        ResetSelection();
         isUsingCard = false;
 
         Debug.Log(
-            "CardManager: Đã sử dụng xong Card '" +
-            card.cardName +
-            "'."
+            "CardManager: Đã sử dụng xong " + card.cardName
         );
     }
 
-    // =====================================================
-    // DESELECT
-    // =====================================================
+    private void ResetSelection()
+    {
+        selectedCard = null;
+
+        if (handManager != null)
+            handManager.SetSelectedCard(null);
+    }
 
     public void Deselect()
     {
         if (isUsingCard)
             return;
 
-        selectedCard = null;
-
-        if (handManager != null)
-        {
-            handManager.SetSelectedCard(null);
-        }
+        ResetSelection();
     }
-
-    // =====================================================
-    // HAND CHANGED
-    // =====================================================
 
     private void HandleHandChanged()
     {
         if (!isUsingCard)
-        {
             selectedCard = null;
-        }
     }
 }

@@ -17,9 +17,13 @@ public class EndButton : MonoBehaviour
     [Header("Turn")]
     [SerializeField] private TurnManager turnManager;
 
+    [Header("Battle FSM")]
+    [SerializeField] private BattleStateMachine battleStateMachine;
+
     [Header("Animator")]
     [SerializeField] private Animator animator;
 
+    private bool isResolvingTurn = false;
 
     private void Start()
     {
@@ -30,7 +34,6 @@ public class EndButton : MonoBehaviour
         }
     }
 
-
     private void OnDestroy()
     {
         if (timingManager != null)
@@ -39,10 +42,32 @@ public class EndButton : MonoBehaviour
         }
     }
 
-
     public void EndTurn()
     {
-        Debug.Log("========== END TURN ==========");
+        if (battleStateMachine == null)
+        {
+            Debug.LogError("EndButton: Chưa gán BattleStateMachine!");
+            return;
+        }
+
+        // Chỉ cho phép kết thúc lượt trong PlayerTurn.
+        if (!battleStateMachine.IsPlayerTurn())
+        {
+            Debug.Log("EndButton: Hiện không thể kết thúc lượt.");
+            return;
+        }
+
+        if (isResolvingTurn)
+            return;
+
+        isResolvingTurn = true;
+
+        // Bắt đầu lượt địch.
+        battleStateMachine.ChangeState(
+            BattleStateMachine.BattleState.EnemyTurn
+        );
+
+        Debug.Log("========== ENEMY TURN ==========");
 
         if (enemyAttack == null)
         {
@@ -51,42 +76,28 @@ public class EndButton : MonoBehaviour
             return;
         }
 
-        // Random Enemy Action
+        // Địch chọn Attack hoặc Shield.
         bool isAttack = enemyAttack.RandomAction();
 
-        // =========================
-        // ENEMY SHIELD
-        // =========================
         if (!isAttack)
         {
             Debug.Log("Enemy chọn SHIELD.");
-
             FinishTurn();
             return;
         }
-
-        // =========================
-        // ENEMY ATTACK
-        // =========================
 
         Debug.Log("Enemy chọn ATTACK.");
 
         float randomValue = Random.Range(0f, 100f);
 
-        if (randomValue <= timingChance &&
-            timingManager != null)
+        if (randomValue <= timingChance && timingManager != null)
         {
-            Debug.Log(
-                "Enemy Attack: Timing xuất hiện!"
-            );
-
+            Debug.Log("Enemy Attack: Timing xuất hiện!");
             timingManager.StartTiming();
         }
         else
         {
-            Debug.Log(
-                "Enemy Attack: Không có Timing."
-            );
+            Debug.Log("Enemy Attack: Không có Timing.");
 
             enemyAttack.PlayAttackAnimation();
             enemyAttack.AttackWithoutTiming();
@@ -103,37 +114,53 @@ public class EndButton : MonoBehaviour
         }
     }
 
-
     private void HandleTimingResult(
-     TimingManager.TimingResult result,
-     float multiplier)
+        TimingManager.TimingResult result,
+        float multiplier)
     {
+        // Bỏ qua kết quả Timing nếu không còn xử lý lượt địch.
+        if (!isResolvingTurn ||
+            battleStateMachine == null ||
+            battleStateMachine.CurrentState !=
+            BattleStateMachine.BattleState.EnemyTurn)
+        {
+            return;
+        }
+
         Debug.Log(
-            "End: Timing Result = " +
-            result +
-            " | Multiplier = " +
-            multiplier
+            "Timing Result = " + result +
+            " | Multiplier = " + multiplier
         );
 
         if (enemyAttack != null)
         {
             enemyAttack.PlayAttackAnimation();
             enemyAttack.ApplyTimingDamage(multiplier);
-            FinishTurn();
         }
-        else
-        {
-            Debug.LogWarning(
-                "EndButton: Chưa gán EnemyAttack."
-            );
 
-            FinishTurn();
-        }
+        FinishTurn();
     }
-
 
     public void FinishTurn()
     {
+        if (!isResolvingTurn)
+            return;
+
+        // Dừng Timing trước khi quay lại lượt người chơi.
+        if (timingManager != null)
+        {
+            timingManager.StopTiming();
+        }
+
+        // Nếu trận đấu đã kết thúc, không reset lượt.
+        if (battleStateMachine == null ||
+            battleStateMachine.IsBattleFinished())
+        {
+            isResolvingTurn = false;
+            return;
+        }
+
+        // Tạm giữ hành vi reset bài hiện tại của dự án.
         if (deckManager != null)
         {
             deckManager.InitializeDeck();
@@ -144,6 +171,12 @@ public class EndButton : MonoBehaviour
             turnManager.StartTurn();
         }
 
-        Debug.Log("End: Đã bắt đầu lượt mới.");
+        isResolvingTurn = false;
+
+        battleStateMachine.ChangeState(
+            BattleStateMachine.BattleState.PlayerTurn
+        );
+
+        Debug.Log("========== PLAYER TURN ==========");
     }
 }
