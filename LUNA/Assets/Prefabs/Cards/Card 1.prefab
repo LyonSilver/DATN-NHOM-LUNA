@@ -316,9 +316,8 @@ GameObject:
   - component: {fileID: -117109847166238510}
   - component: {fileID: 8085103637193569656}
   - component: {fileID: 2016009220808969566}
-  - component: {fileID: 4330293045668309819}
   m_Layer: 5
-  m_Name: Card
+  m_Name: Card 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,34 +443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b37fbcd2df647584394e91fc6296277c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardInputHandler
-  hoverScale: 1.08
-  hoverMoveY: 40
-  selectedScale: 1.1
---- !u!114 &4330293045668309819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2997509876283000121}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9df66a6d1a75fc74f8656a4706db25d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardAnimator
-  followSpeed: 14
-  hoverScale: 1.08
-  hoverMoveY: 40
-  selectedScale: 1.1
-  selectedMoveY: 40
-  playTargetPosition: {x: 0, y: 170}
-  playScale: 0.85
-  playFadeAlpha: 0.8
-  playDuration: 0.3
-  playHoldTime: 0.15
-  discardTargetPosition: {x: 900, y: 200}
-  discardScale: 0.5
-  discardDuration: 0.35
+  collapsedHeight: 0
+  animationDuration: 0.15
 --- !u!1 &3582321852745082869
 GameObject:
   m_ObjectHideFlags: 0
