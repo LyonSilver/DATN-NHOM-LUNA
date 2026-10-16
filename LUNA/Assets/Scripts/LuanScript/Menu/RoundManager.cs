@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -10,8 +11,11 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private int maxRound = 2;
 
     [Header("Managers")]
-    [SerializeField] private CardEffectManager cardEffectManager;
     [SerializeField] private BattleStateMachine battleStateMachine;
+    [SerializeField] private EnemySpawner enemySpawner;
+
+    [Header("Enemy Spawn")]
+    [SerializeField] private float spawnDelay = 2f;
 
     [Header("Round UI")]
     [SerializeField] private TMP_Text roundText;
@@ -40,7 +44,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private float transitionDelay = 0.5f;
 
     private bool isTransitioning = false;
-
+    private bool isChangingRound = false;
     private bool battleFinished = false;
     private bool currentEnemyRewardClaimed = false;
 
@@ -56,6 +60,19 @@ public class RoundManager : MonoBehaviour
         UpdateRoundUI();
         UpdateRewardUI();
 
+        // Spawn Enemy đầu tiên.
+        if (enemySpawner != null)
+        {
+            enemySpawner.SpawnEnemy(currentRound - 1);
+        }
+        else
+        {
+            Debug.LogError(
+                "RoundManager: Chưa gán EnemySpawner!"
+            );
+            return;
+        }
+
         if (battleStateMachine != null)
         {
             battleStateMachine.StartPlayerTurn();
@@ -68,17 +85,22 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    // Gọi khi HP của kẻ địch giảm về 0.
+    // =========================================
+    // ENEMY DEFEATED
+    // =========================================
+
     public void EnemyDefeated()
     {
-        if (battleFinished || currentEnemyRewardClaimed)
+        if (battleFinished ||
+            currentEnemyRewardClaimed ||
+            isChangingRound)
             return;
 
         currentEnemyRewardClaimed = true;
 
         Debug.Log("RoundManager: Enemy đã bị đánh bại!");
 
-        // Nhận thưởng của round hiện tại.
+        // Nhận thưởng Round hiện tại.
         currentCoin += coinPerRound;
         currentExp += expPerRound;
 
@@ -89,21 +111,30 @@ public class RoundManager : MonoBehaviour
             expPerRound + " EXP"
         );
 
-        // Nếu đã hoàn thành round cuối.
+        // Nếu là Round cuối thì Victory.
         if (currentRound >= maxRound)
         {
             WinBattle();
             return;
         }
 
-        // Chuyển sang round tiếp theo.
-        currentRound++;
+        // Chuyển sang Round tiếp theo.
+        StartCoroutine(NextRoundCoroutine());
+    }
+
+    // =========================================
+    // NEXT ROUND
+    // =========================================
+
+    private IEnumerator NextRoundCoroutine()
+    {
+        isChangingRound = true;
 
         Debug.Log(
-            "RoundManager: Chuyển sang Round " +
-            currentRound + "/" + maxRound
+            "RoundManager: Đang chuyển sang Round mới..."
         );
 
+        // Chuyển FSM sang trạng thái NextRound.
         if (battleStateMachine != null)
         {
             battleStateMachine.ChangeState(
@@ -111,31 +142,76 @@ public class RoundManager : MonoBehaviour
             );
         }
 
-        if (cardEffectManager != null)
-        {
-            cardEffectManager.NextRoundEnemyHP();
-        }
-        else
+        // Tạm ẩn Card và Enemy HP UI.
+        if (cardUI != null)
+            cardUI.SetActive(false);
+
+        if (enemyUI != null)
+            enemyUI.SetActive(false);
+
+        if (enemySpawner == null)
         {
             Debug.LogError(
-                "RoundManager: Chưa gán CardEffectManager!"
+                "RoundManager: Chưa gán EnemySpawner!"
             );
-            return;
+
+            isChangingRound = false;
+            yield break;
         }
+
+        // Xóa Enemy cũ.
+        enemySpawner.DespawnCurrentEnemy();
+
+        // Chờ trước khi Spawn Enemy mới.
+        yield return new WaitForSecondsRealtime(
+            Mathf.Max(0f, spawnDelay)
+        );
+
+        if (battleFinished)
+            yield break;
+
+        // Tăng Round.
+        currentRound++;
 
         UpdateRoundUI();
 
-        // Cho phép nhận thưởng khi hạ kẻ địch ở round mới.
-        currentEnemyRewardClaimed = false;
+        Debug.Log(
+            "RoundManager: Round " +
+            currentRound + "/" + maxRound
+        );
 
-        // Bắt đầu lượt người chơi của round mới.
+        // Hiện lại Enemy HP UI.
+        if (enemyUI != null)
+            enemyUI.SetActive(true);
+
+        // Spawn Enemy mới.
+        // Round 1 = Element 0
+        // Round 2 = Element 1
+        enemySpawner.SpawnEnemy(currentRound - 1);
+
+        // Hiện lại Card.
+        if (cardUI != null)
+            cardUI.SetActive(true);
+
+        // Cho phép nhận thưởng ở Round mới.
+        currentEnemyRewardClaimed = false;
+        isChangingRound = false;
+
+        // Bắt đầu Player Turn.
         if (battleStateMachine != null)
         {
             battleStateMachine.StartPlayerTurn();
         }
+
+        Debug.Log(
+            "RoundManager: Bắt đầu Player Turn!"
+        );
     }
 
-    // Gọi khi HP người chơi giảm về 0.
+    // =========================================
+    // PLAYER DEFEATED
+    // =========================================
+
     public void PlayerDefeated()
     {
         if (battleFinished)
@@ -155,6 +231,10 @@ public class RoundManager : MonoBehaviour
         ShowFinishPanel();
     }
 
+    // =========================================
+    // VICTORY
+    // =========================================
+
     private void WinBattle()
     {
         if (battleFinished || isTransitioning)
@@ -164,6 +244,7 @@ public class RoundManager : MonoBehaviour
         isTransitioning = true;
 
         Debug.Log("RoundManager: VICTORY!");
+
         Debug.Log(
             "TỔNG PHẦN THƯỞNG: " +
             currentCoin + " Coin / " +
@@ -180,13 +261,17 @@ public class RoundManager : MonoBehaviour
         StartCoroutine(LoadNextSceneAfterDelay());
     }
 
+    // =========================================
+    // LOAD NEXT SCENE
+    // =========================================
+
     private IEnumerator LoadNextSceneAfterDelay()
     {
-        // Khóa thao tác trong lúc chuyển Scene.
         SetGameplayUI(false);
 
-        // Đợi một khoảng thời gian như khi dùng card.
-        yield return new WaitForSecondsRealtime(transitionDelay);
+        yield return new WaitForSecondsRealtime(
+            transitionDelay
+        );
 
         if (string.IsNullOrEmpty(nextSceneName))
         {
@@ -198,11 +283,14 @@ public class RoundManager : MonoBehaviour
             yield break;
         }
 
-        // Đảm bảo Scene tiếp theo không bị đóng băng.
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(nextSceneName);
     }
+
+    // =========================================
+    // FINISH PANEL
+    // =========================================
 
     private void ShowFinishPanel()
     {
@@ -222,6 +310,10 @@ public class RoundManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    // =========================================
+    // GAMEPLAY UI
+    // =========================================
+
     private void SetGameplayUI(bool isActive)
     {
         if (roundUI != null)
@@ -237,6 +329,10 @@ public class RoundManager : MonoBehaviour
             enemyUI.SetActive(isActive);
     }
 
+    // =========================================
+    // ROUND UI
+    // =========================================
+
     private void UpdateRoundUI()
     {
         if (roundText != null)
@@ -246,6 +342,10 @@ public class RoundManager : MonoBehaviour
         }
     }
 
+    // =========================================
+    // REWARD UI
+    // =========================================
+
     private void UpdateRewardUI()
     {
         if (coinText != null)
@@ -254,6 +354,10 @@ public class RoundManager : MonoBehaviour
         if (expText != null)
             expText.text = "EXP: " + currentExp;
     }
+
+    // =========================================
+    // GETTERS
+    // =========================================
 
     public int GetCurrentCoin()
     {
@@ -273,5 +377,10 @@ public class RoundManager : MonoBehaviour
     public bool IsBattleFinished()
     {
         return battleFinished;
+    }
+
+    public bool IsChangingRound()
+    {
+        return isChangingRound;
     }
 }

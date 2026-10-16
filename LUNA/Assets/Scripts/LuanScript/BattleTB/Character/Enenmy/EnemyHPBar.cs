@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,14 +18,28 @@ public class EnemyHPBar : MonoBehaviour
     [SerializeField] private Sprite lowHP;
     [SerializeField] private Sprite emptyHP;
 
+    private void Start()
+    {
+        UpdateHPBar();
+    }
+
     public void SetHP(int hp)
     {
         currentHP = Mathf.Clamp(hp, 0, maxHP);
         UpdateHPBar();
     }
 
+    public void SetHP(int hp, int max)
+    {
+        maxHP = Mathf.Max(1, max);
+        SetHP(hp);
+    }
+
     private void UpdateHPBar()
     {
+        if (hpImage == null)
+            return;
+
         float hpPercent = (float)currentHP / maxHP;
 
         if (hpPercent > 0.8f)

@@ -1,128 +1,79 @@
-using System;
+
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour
+public class EnemyAttack : EnemyAttackBase
 {
-    [Header("Animator")]
-    [SerializeField] private Animator animator;
+    [Header("Enemy Skills")]
+    [SerializeField] private EnemySkillBase[] skills;
 
-    [Header("Damage")]
-    [SerializeField] private int damage = 10;
+    [Range(0f, 100f)]
+    [SerializeField] private float skillChance = 50f;
 
-    [Header("Card Effect Manager")]
-    [SerializeField] private CardEffectManager cardEffectManager;
+    private EnemySkillBase selectedSkill;
 
-    public event Action<int> OnDamageCalculated;
+    // =========================================
+    // RANDOM ACTION
+    // =========================================
 
-    // =========================================================
-    // RANDOM ENEMY ACTION
-    // =========================================================
-
-    public bool RandomAction()
+    public virtual bool RandomAction()
     {
-        int randomAction = UnityEngine.Random.Range(0, 2);
+        selectedSkill = null;
 
-        if (randomAction == 0)
+        if (skills == null || skills.Length == 0)
+            return true;
+
+        float randomValue = Random.Range(0f, 100f);
+
+        // true = Normal Attack
+        if (randomValue >= skillChance)
         {
-            // Enemy Attack
+            Debug.Log("Enemy chọn Normal Attack.");
             return true;
         }
-        else
+
+        // false = Skill
+        int startIndex = Random.Range(0, skills.Length);
+
+        for (int i = 0; i < skills.Length; i++)
         {
-            // Enemy Shield
-            UseShield();
-            return false;
+            int index = (startIndex + i) % skills.Length;
+
+            if (skills[index] != null)
+            {
+                selectedSkill = skills[index];
+                break;
+            }
         }
-    }
 
-    // =========================================================
-    // SHIELD
-    // =========================================================
-
-    public void UseShield()
-    {
-        if (cardEffectManager != null)
-        {
-            cardEffectManager.ApplyEnemyShield(10);
-        }
-        else
-        {
-            Debug.LogWarning(
-                "EnemyAttack: Chưa gán CardEffectManager."
-            );
-        }
-    }
-
-    // =========================================================
-    // ATTACK
-    // =========================================================
-
-    public void PlayAttackAnimation()
-    {
-        if (animator != null)
-        {
-            animator.SetTrigger("Attack");
-        }
-    }
-
-    public void AttackWithoutTiming()
-    {
-        Debug.Log(
-            "Enemy Attack | Không có Timing | Damage: " +
-            damage
-        );
-
-        DealDamage(damage);
-    }
-
-    // =========================================================
-    // TIMING DAMAGE
-    // =========================================================
-
-    public void ApplyTimingDamage(float multiplier)
-    {
-        int finalDamage = Mathf.RoundToInt(
-            damage * multiplier
-        );
+        if (selectedSkill == null)
+            return true;
 
         Debug.Log(
-            "Enemy Attack | Timing Damage: " +
-            finalDamage +
-            " | Base Damage: " +
-            damage +
-            " | Multiplier: " +
-            multiplier
+            $"Enemy chọn Skill: {selectedSkill.GetType().Name}"
         );
 
-        DealDamage(finalDamage);
+        return false;
     }
 
-    // =========================================================
-    // DEAL DAMAGE
-    // =========================================================
+    // =========================================
+    // USE SKILL
+    // =========================================
 
-    private void DealDamage(int finalDamage)
+    public virtual void UseSkill()
     {
-        if (cardEffectManager != null)
-        {
-            cardEffectManager.TakeDamage(finalDamage);
-        }
-        else
+        if (selectedSkill == null)
         {
             Debug.LogWarning(
-                "EnemyAttack: Chưa gán CardEffectManager."
+                "Enemy chưa chọn Skill!"
             );
+            return;
         }
 
-        OnDamageCalculated?.Invoke(finalDamage);
-    }
+        selectedSkill.Execute(
+            cardEffectManager,
+            animator
+        );
 
-    // =========================================================
-    // GET DAMAGE
-    // =========================================================
-
-    public int GetDamage()
-    {
-        return damage;
+        selectedSkill = null;
     }
 }
