@@ -1,9 +1,11 @@
+
 using UnityEngine;
+using System.Collections;
 
 public class EndButton : MonoBehaviour
 {
-    [Header("Enemy Attack")]
-    [SerializeField] private EnemyAttack enemyAttack;
+    [Header("Enemy Spawner")]
+    [SerializeField] private EnemySpawner enemySpawner;
 
     [Header("Timing")]
     [SerializeField] private TimingManager timingManager;
@@ -17,9 +19,27 @@ public class EndButton : MonoBehaviour
     [Header("Turn")]
     [SerializeField] private TurnManager turnManager;
 
-    [Header("Animator")]
-    [SerializeField] private Animator animator;
+    [Header("Battle FSM")]
+    [SerializeField] private BattleStateMachine battleStateMachine;
 
+    [Header("Player Status")]
+    [SerializeField] private PlayerStatusController playerStatusController;
+
+    [Header("Animation Duration")]
+    [SerializeField] private float attackAnimationDuration = 1f;
+    [SerializeField] private float skillAnimationDuration = 1f;
+
+    [Header("Status Settings")]
+    [SerializeField] private float skipTurnDelay = 0.5f;
+
+    private EnemyAttack enemyAttack;
+
+    private bool isResolvingTurn = false;
+    private bool isWaitingForTiming = false;
+
+    // =========================================
+    // START
+    // =========================================
 
     private void Start()
     {
@@ -30,7 +50,6 @@ public class EndButton : MonoBehaviour
         }
     }
 
-
     private void OnDestroy()
     {
         if (timingManager != null)
@@ -39,47 +58,131 @@ public class EndButton : MonoBehaviour
         }
     }
 
+    // =========================================
+    // END TURN
+    // =========================================
 
     public void EndTurn()
     {
-        Debug.Log("========== END TURN ==========");
+        if (battleStateMachine == null)
+        {
+            Debug.LogError(
+                "EndButton: Chưa gán BattleStateMachine!"
+            );
+            return;
+        }
+
+        if (isResolvingTurn)
+            return;
+
+        // Chỉ được End Turn trong PlayerTurn.
+        if (!battleStateMachine.IsPlayerTurn())
+        {
+            Debug.Log(
+                "EndButton: Hiện không phải Player Turn."
+            );
+            return;
+        }
+
+        if (battleStateMachine.IsBattleFinished())
+            return;
+
+        // Kiểm tra Enemy hiện tại.
+        enemyAttack = enemySpawner != null
+            ? enemySpawner.GetCurrentEnemyAttack()
+            : null;
 
         if (enemyAttack == null)
         {
-            Debug.LogWarning("EndButton: Chưa gán EnemyAttack.");
+            Debug.LogWarning(
+                "EndButton: Không tìm thấy EnemyAttack!"
+            );
+            return;
+        }
+
+        // =========================================
+        // PROCESS DOT
+        // =========================================
+
+        if (playerStatusController != null)
+        {
+            playerStatusController.ProcessTurnEndEffects();
+
+            // Player có thể chết do Poison hoặc Burn.
+            if (playerStatusController.IsPlayerDefeated ||
+                battleStateMachine.IsBattleFinished())
+            {
+                return;
+            }
+        }
+
+        isResolvingTurn = true;
+
+        // Chuyển sang Enemy Turn.
+        battleStateMachine.ChangeState(
+            BattleStateMachine.BattleState.EnemyTurn
+        );
+
+        Debug.Log("========== ENEMY TURN ==========");
+
+        BeginEnemyAction();
+    }
+
+    // =========================================
+    // BEGIN ENEMY ACTION
+    // =========================================
+
+    private void BeginEnemyAction()
+    {
+        if (!isResolvingTurn ||
+            battleStateMachine == null ||
+            battleStateMachine.IsBattleFinished() ||
+            battleStateMachine.CurrentState !=
+            BattleStateMachine.BattleState.EnemyTurn)
+        {
+            return;
+        }
+
+        // Lấy lại Enemy hiện tại.
+        enemyAttack = enemySpawner != null
+            ? enemySpawner.GetCurrentEnemyAttack()
+            : null;
+
+        if (enemyAttack == null)
+        {
+            Debug.LogWarning(
+                "EndButton: Không có Enemy để hành động!"
+            );
+
             FinishTurn();
             return;
         }
 
-        // Random Enemy Action
+        // true = Normal Attack
+        // false = Skill
         bool isAttack = enemyAttack.RandomAction();
 
-        // =========================
-        // ENEMY SHIELD
-        // =========================
         if (!isAttack)
         {
-            Debug.Log("Enemy chọn SHIELD.");
+            Debug.Log("Enemy chọn SKILL.");
 
-            FinishTurn();
+            StartCoroutine(ResolveSkill());
             return;
         }
 
-        // =========================
-        // ENEMY ATTACK
-        // =========================
+        Debug.Log("Enemy chọn NORMAL ATTACK.");
 
-        Debug.Log("Enemy chọn ATTACK.");
-
+        // Timing Chance chỉ áp dụng Normal Attack.
         float randomValue = Random.Range(0f, 100f);
 
-        if (randomValue <= timingChance &&
+        if (randomValue < timingChance &&
             timingManager != null)
         {
             Debug.Log(
                 "Enemy Attack: Timing xuất hiện!"
             );
 
+            isWaitingForTiming = true;
             timingManager.StartTiming();
         }
         else
@@ -88,52 +191,161 @@ public class EndButton : MonoBehaviour
                 "Enemy Attack: Không có Timing."
             );
 
-            enemyAttack.PlayAttackAnimation();
-            enemyAttack.AttackWithoutTiming();
-
-            FinishTurn();
+            StartCoroutine(
+                ResolveAttack(false, 1f)
+            );
         }
     }
 
-    public void PlayAttackAnimation()
+    // =========================================
+    // RESOLVE SKILL
+    // =========================================
+
+    private IEnumerator ResolveSkill()
     {
-        if (animator != null)
+        EnemyAttack actingEnemy = enemyAttack;
+
+        if (actingEnemy != null)
         {
-            animator.SetTrigger("Attack");
+            // UseSkill tự phát Animation
+            // và áp dụng hiệu ứng đã chọn.
+            actingEnemy.UseSkill();
         }
-    }
 
-
-    private void HandleTimingResult(
-     TimingManager.TimingResult result,
-     float multiplier)
-    {
-        Debug.Log(
-            "End: Timing Result = " +
-            result +
-            " | Multiplier = " +
-            multiplier
+        // Chờ Animation Skill.
+        yield return new WaitForSeconds(
+            Mathf.Max(0f, skillAnimationDuration)
         );
 
-        if (enemyAttack != null)
-        {
-            enemyAttack.PlayAttackAnimation();
-            enemyAttack.ApplyTimingDamage(multiplier);
-            FinishTurn();
-        }
-        else
-        {
-            Debug.LogWarning(
-                "EndButton: Chưa gán EnemyAttack."
-            );
-
-            FinishTurn();
-        }
+        FinishTurn();
     }
 
+    // =========================================
+    // RESOLVE ATTACK
+    // =========================================
+
+    private IEnumerator ResolveAttack(
+        bool hasTiming,
+        float multiplier)
+    {
+        EnemyAttack actingEnemy = enemyAttack;
+
+        if (actingEnemy != null)
+        {
+            actingEnemy.PlayAttackAnimation();
+        }
+
+        // Chờ Animation Attack.
+        yield return new WaitForSeconds(
+            Mathf.Max(0f, attackAnimationDuration)
+        );
+
+        if (actingEnemy != null &&
+            enemySpawner != null &&
+            actingEnemy == enemySpawner.GetCurrentEnemyAttack() &&
+            battleStateMachine != null &&
+            battleStateMachine.CurrentState ==
+            BattleStateMachine.BattleState.EnemyTurn)
+        {
+            if (hasTiming)
+            {
+                actingEnemy.ApplyTimingDamage(multiplier);
+            }
+            else
+            {
+                actingEnemy.AttackWithoutTiming();
+            }
+        }
+
+        FinishTurn();
+    }
+
+    // =========================================
+    // TIMING RESULT
+    // =========================================
+
+    private void HandleTimingResult(
+        TimingManager.TimingResult result,
+        float multiplier)
+    {
+        if (!isResolvingTurn ||
+            !isWaitingForTiming ||
+            battleStateMachine == null ||
+            battleStateMachine.CurrentState !=
+            BattleStateMachine.BattleState.EnemyTurn)
+        {
+            return;
+        }
+
+        isWaitingForTiming = false;
+
+        Debug.Log(
+            "Timing Result = " + result +
+            " | Multiplier = " + multiplier
+        );
+
+        if (timingManager != null)
+        {
+            timingManager.StopTiming();
+        }
+
+        StartCoroutine(
+            ResolveAttack(true, multiplier)
+        );
+    }
+
+    // =========================================
+    // FINISH TURN
+    // =========================================
 
     public void FinishTurn()
     {
+        if (!isResolvingTurn)
+            return;
+
+        if (timingManager != null)
+        {
+            timingManager.StopTiming();
+        }
+
+        isWaitingForTiming = false;
+
+        if (battleStateMachine == null ||
+            battleStateMachine.IsBattleFinished())
+        {
+            isResolvingTurn = false;
+            return;
+        }
+
+        // Không ghi đè NextRound, Victory, Defeat.
+        if (battleStateMachine.CurrentState !=
+            BattleStateMachine.BattleState.EnemyTurn)
+        {
+            isResolvingTurn = false;
+            return;
+        }
+
+        // =====================================
+        // CHECK STUN / FREEZE
+        // =====================================
+
+        if (playerStatusController != null &&
+            playerStatusController.ConsumeSkippedTurn())
+        {
+            Debug.Log(
+                "Player bị Stun hoặc Freeze! Bỏ qua lượt."
+            );
+
+            StartCoroutine(SkipPlayerTurn());
+            return;
+        }
+
+        // =====================================
+        // NORMAL PLAYER TURN
+        // =====================================
+
+        isResolvingTurn = false;
+
         if (deckManager != null)
         {
             deckManager.InitializeDeck();
@@ -144,6 +356,56 @@ public class EndButton : MonoBehaviour
             turnManager.StartTurn();
         }
 
-        Debug.Log("End: Đã bắt đầu lượt mới.");
+        battleStateMachine.ChangeState(
+            BattleStateMachine.BattleState.PlayerTurn
+        );
+
+        Debug.Log("========== PLAYER TURN ==========");
+    }
+
+    // =========================================
+    // SKIP PLAYER TURN
+    // =========================================
+
+    private IEnumerator SkipPlayerTurn()
+    {
+        Debug.Log("Player mất lượt tiếp theo!");
+
+        // Giữ FSM tại EnemyTurn để Player
+        // không thể sử dụng Card trong lúc bị khóa.
+
+        yield return new WaitForSecondsRealtime(
+            Mathf.Max(0f, skipTurnDelay)
+        );
+
+        if (battleStateMachine == null ||
+            battleStateMachine.IsBattleFinished() ||
+            battleStateMachine.CurrentState !=
+            BattleStateMachine.BattleState.EnemyTurn)
+        {
+            isResolvingTurn = false;
+            yield break;
+        }
+
+        // Lượt Player bị bỏ qua cũng được tính
+        // là một lượt để xử lý Poison và Burn.
+        if (playerStatusController != null)
+        {
+            playerStatusController.ProcessTurnEndEffects();
+
+            if (playerStatusController.IsPlayerDefeated ||
+                battleStateMachine.IsBattleFinished())
+            {
+                isResolvingTurn = false;
+                yield break;
+            }
+        }
+
+        Debug.Log(
+            "========== ENEMY TURN (PLAYER SKIPPED) =========="
+        );
+
+        // Enemy tiếp tục hành động.
+        BeginEnemyAction();
     }
 }

@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -20,34 +21,78 @@ public class CardInputHandler : MonoBehaviour,
     private Coroutine resizeCoroutine;
 
     private bool isSelected;
+    private bool reportedMissingCardUI;
+
+    // =====================================================
+    // AWAKE
+    // =====================================================
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        cardUI = GetComponent<CardUI>();
 
-        // QUAN TRỌNG:
-        // Pivot nằm ở đáy Card.
-        // Khi tăng Height, Card sẽ mọc lên phía trên.
+        // Lấy CardUI của Card hiện tại
+        TryGetCardUI();
+
+        // Pivot nằm ở đáy Card
         rectTransform.pivot = new Vector2(0.5f, 0f);
     }
 
+    // =====================================================
+    // START
+    // =====================================================
+
     private void Start()
     {
-        // Chiều cao đầy đủ của Card
         fullHeight = rectTransform.rect.height;
 
-        // Nếu không nhập thì lấy Width làm chiều cao hình vuông
         if (collapsedHeight <= 0f)
         {
             collapsedHeight = rectTransform.rect.width;
         }
 
-        // Ban đầu: hình vuông
         SetCardHeight(collapsedHeight);
 
-        cardUI.SetHover(false);
+        if (TryGetCardUI())
+        {
+            cardUI.SetHover(false);
+        }
     }
+
+    // =====================================================
+    // GET CARD UI
+    // =====================================================
+
+    private bool TryGetCardUI()
+    {
+        if (cardUI != null)
+            return true;
+
+        cardUI = GetComponent<CardUI>();
+
+        if (cardUI == null)
+        {
+            if (!reportedMissingCardUI)
+            {
+                Debug.LogError(
+                    $"CardInputHandler: {gameObject.name} " +
+                    "không tìm thấy Component CardUI!",
+                    gameObject
+                );
+
+                reportedMissingCardUI = true;
+            }
+
+            return false;
+        }
+
+        reportedMissingCardUI = false;
+        return true;
+    }
+
+    // =====================================================
+    // INIT
+    // =====================================================
 
     public void Init(CardManager manager)
     {
@@ -86,23 +131,27 @@ public class CardInputHandler : MonoBehaviour,
 
     public void SetHoverVisual(bool hover)
     {
+        if (!TryGetCardUI())
+            return;
+
         if (resizeCoroutine != null)
         {
             StopCoroutine(resizeCoroutine);
+            resizeCoroutine = null;
         }
 
         float targetHeight;
 
         if (hover)
         {
-            // Hover → mở thành Card đầy đủ
+            // Hover: mở Card đầy đủ
             targetHeight = fullHeight;
 
             cardUI.SetHover(true);
         }
         else
         {
-            // Không hover → thu thành hình vuông
+            // Không Hover: thu Card thành hình vuông
             targetHeight = collapsedHeight;
 
             cardUI.SetHover(false);
@@ -120,6 +169,13 @@ public class CardInputHandler : MonoBehaviour,
     private IEnumerator AnimateHeight(float targetHeight)
     {
         float startHeight = rectTransform.rect.height;
+
+        if (animationDuration <= 0f)
+        {
+            SetCardHeight(targetHeight);
+            resizeCoroutine = null;
+            yield break;
+        }
 
         float timer = 0f;
 
@@ -171,12 +227,16 @@ public class CardInputHandler : MonoBehaviour,
         if (cardManager == null)
         {
             Debug.LogWarning(
-                "CardInputHandler: Chưa được gán CardManager " +
-                "(HandManager cần gọi Init khi Instantiate)."
+                "CardInputHandler: Chưa được gán CardManager! " +
+                "HandManager cần gọi Init khi Instantiate.",
+                gameObject
             );
 
             return;
         }
+
+        if (!TryGetCardUI())
+            return;
 
         cardManager.OnCardClicked(this);
     }
@@ -189,11 +249,23 @@ public class CardInputHandler : MonoBehaviour,
     {
         isSelected = selected;
 
+        // Kiểm tra CardUI trước khi sử dụng
+        if (!TryGetCardUI())
+        {
+            Debug.LogWarning(
+                $"CardInputHandler: Không thể cập nhật " +
+                $"Selected cho {gameObject.name}.",
+                gameObject
+            );
+
+            return;
+        }
+
         cardUI.SetSelected(selected);
 
-        // Không scale.
-        // Không di chuyển.
-        // Không đổi kích thước khi click.
+        // Không Scale
+        // Không di chuyển
+        // Không thay đổi kích thước khi Click
     }
 
     // =====================================================
@@ -202,6 +274,9 @@ public class CardInputHandler : MonoBehaviour,
 
     public CardUI GetCardUI()
     {
+        if (!TryGetCardUI())
+            return null;
+
         return cardUI;
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8371250928407109627}
   - component: {fileID: 4685268803353218684}
   - component: {fileID: 4389221571193509666}
+  - component: {fileID: 2517871913048312273}
   m_Layer: 6
   m_Name: slime-idle-0
   m_TagString: Untagged
@@ -127,5 +128,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50149f3b5aa6cba4a9c8fa103b12c011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  animator: {fileID: 0}
   damage: 20
   cardEffectManager: {fileID: 0}
+--- !u!114 &2517871913048312273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949863900970485142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfdae745c68154946b49c64b4e223386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHP: 50
