@@ -119,4 +119,12 @@ public class EnemySpawner : MonoBehaviour
 
         return currentEnemy.GetComponentInChildren<EnemyAttack>(true);
     }
+
+    public EnemyHealth GetCurrentEnemyHealth()
+    {
+        if (currentEnemy == null)
+            return null;
+
+        return currentEnemy.GetComponentInChildren<EnemyHealth>(true);
+    }
 }
