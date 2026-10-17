@@ -11,6 +11,8 @@ public class EnemyAttack : EnemyAttackBase
 
     private EnemySkillBase selectedSkill;
 
+    public EnemySkillBase SelectedSkill => selectedSkill;
+
     // =========================================
     // RANDOM ACTION
     // =========================================
@@ -19,19 +21,25 @@ public class EnemyAttack : EnemyAttackBase
     {
         selectedSkill = null;
 
+        // Nếu Enemy không có Skill thì đánh thường.
         if (skills == null || skills.Length == 0)
+        {
             return true;
+        }
 
         float randomValue = Random.Range(0f, 100f);
 
         // true = Normal Attack
         if (randomValue >= skillChance)
         {
-            Debug.Log("Enemy chọn Normal Attack.");
+            Debug.Log(
+                $"{gameObject.name} chọn Normal Attack."
+            );
+
             return true;
         }
 
-        // false = Skill
+        // Chọn một Skill hợp lệ trong danh sách.
         int startIndex = Random.Range(0, skills.Length);
 
         for (int i = 0; i < skills.Length; i++)
@@ -45,18 +53,20 @@ public class EnemyAttack : EnemyAttackBase
             }
         }
 
+        // Không có Skill hợp lệ thì đánh thường.
         if (selectedSkill == null)
             return true;
 
         Debug.Log(
-            $"Enemy chọn Skill: {selectedSkill.GetType().Name}"
+            $"{gameObject.name} chọn Skill: " +
+            selectedSkill.GetType().Name
         );
 
         return false;
     }
 
     // =========================================
-    // USE SKILL
+    // USE SELECTED SKILL
     // =========================================
 
     public virtual void UseSkill()
@@ -64,16 +74,20 @@ public class EnemyAttack : EnemyAttackBase
         if (selectedSkill == null)
         {
             Debug.LogWarning(
-                "Enemy chưa chọn Skill!"
+                "EnemyAttack: Chưa chọn Skill!"
             );
             return;
         }
 
-        selectedSkill.Execute(
+        EnemySkillBase skill = selectedSkill;
+
+        // Xóa lựa chọn sau khi lấy Skill,
+        // tránh sử dụng lại ngoài ý muốn.
+        selectedSkill = null;
+
+        skill.Execute(
             cardEffectManager,
             animator
         );
-
-        selectedSkill = null;
     }
 }
