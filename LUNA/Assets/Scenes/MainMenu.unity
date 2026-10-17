@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "TRANG CH\u1EE6"
+  m_text: "V\xC0O TR\xD2 CH\u01A0I"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1643,7 +1643,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1451337717}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2137915100}
+        m_TargetAssemblyTypeName: MainMenuTransition, Assembly-CSharp
+        m_MethodName: PlayGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1451337717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2474,6 +2486,7 @@ GameObject:
   - component: {fileID: 2137915098}
   - component: {fileID: 2137915097}
   - component: {fileID: 2137915096}
+  - component: {fileID: 2137915100}
   m_Layer: 5
   m_Name: Canvas_Background
   m_TagString: Untagged
@@ -2569,6 +2582,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2137915100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137915095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd26eaf0c8600b948b47c320d9ea7a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenuTransition
+  logo: {fileID: 368643709}
+  menuButtons:
+  - {fileID: 1451337714}
+  - {fileID: 902980776}
+  - {fileID: 1245394254}
+  - {fileID: 510753855}
+  backgroundRoot: {fileID: 1823271972}
+  portalFocus: {fileID: 1273377103}
+  slideDuration: 0.7
+  zoomDuration: 1.3
+  zoomDelay: 0.25
+  zoomMultiplier: 3
+  loadNextScene: 1
+  nextSceneName: LienketLobby
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
