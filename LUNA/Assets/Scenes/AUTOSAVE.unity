@@ -652,6 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5b94432d6a0c4ea5ac10c6b9351bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoadManager
+  currentPlayerId: 3618
 --- !u!4 &283759517
 Transform:
   m_ObjectHideFlags: 0
@@ -692,7 +693,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoSaveManager
   enableAutoSave: 1
-  autoSaveInterval: 300
   saveLoadManager: {fileID: 283759516}
 --- !u!1 &529002603
 GameObject:
