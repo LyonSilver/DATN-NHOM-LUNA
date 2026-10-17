@@ -33,6 +33,7 @@ public class StoreCardUI : MonoBehaviour
 
         cardNameText.text = card.cardName;
         cardTypeText.text = card.cardType.ToString();
+    
         rarityText.text = card.rarity.ToString();
 
         if (cardCanvasGroup == null)

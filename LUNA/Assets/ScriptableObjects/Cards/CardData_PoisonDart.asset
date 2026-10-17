@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052661719380dfd40ba44f2124f7beb9, type: 3}
+  m_Name: CardData_PoisonDart
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  cardID: poison_dart
+  cardName: POISON DART
+  cardType: 2
+  cost: 2
+  description: Deal 5 Damage and apply Poison for 3 turns.
+  artwork: {fileID: 21300000, guid: 4dc81bfad6ea4fd459d29985f9b0e5f3, type: 3}
+  typeIcon: {fileID: 21300000, guid: 645197b98e8d4c040a13c68abeddfeb8, type: 3}
+  effectType: 3
+  baseDamage: 5
+  shieldValue: 0
+  healValue: 0
+  statusEffect: 1
+  statusDuration: 3
+  extraValue: 0

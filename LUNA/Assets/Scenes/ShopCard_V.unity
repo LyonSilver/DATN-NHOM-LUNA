@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 65942811}
   - component: {fileID: 65942810}
   - component: {fileID: 65942809}
+  - component: {fileID: 65942812}
   m_Layer: 5
   m_Name: TrangchuButton
   m_TagString: Untagged
@@ -413,7 +414,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 65942810}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 65942812}
+        m_TargetAssemblyTypeName: AutoSceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &65942810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,6 +465,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65942807}
   m_CullTransparentMesh: 1
+--- !u!114 &65942812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65942807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5902c01ddd7fee4e86fa5d9fe56e4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSceneLoader
+  sceneName: ChaosCardLobbyScene
 --- !u!1 &81057388
 GameObject:
   m_ObjectHideFlags: 0
@@ -4231,7 +4257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1357999255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6225,10 +6251,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838689429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5341b6962848c9b42b1d5877920cf866, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eece5d60ec877644b50cdefdf930f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalRotationUI
-  rotationSpeed: -10
+  rotationSpeed: -12
 --- !u!1 &1878106243
 GameObject:
   m_ObjectHideFlags: 0
