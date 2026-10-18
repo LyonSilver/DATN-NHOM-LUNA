@@ -10,44 +10,36 @@ public class HandManager : MonoBehaviour
     public RectTransform handContainer;
     public GameObject cardPrefab;
 
-    [Header("Bố cục Hand (Đơn vị pixel, màn hình 1920x1080)")]
-    public float cardSpacing = 300f;
-    public float cardPositionY = 0f;
+    [Header("Bố cục Hand - Fan")]
+    public float cardSpacing = 70f;      // Khoảng cách giữa tâm các lá (thử 60~90)
+    public float maxAngle = 18f;         // Góc xoay tối đa của 2 lá ngoài cùng
+    public float arcHeight = 30f;        // Độ cong của hàng bài (0 = thẳng)
+    public float cardPositionY = 0f;     // Offset Y chung của cả hàng bài
 
     private List<CardUI> spawnedCards = new List<CardUI>();
 
     private void OnEnable()
     {
         if (deckManager != null)
-        {
             deckManager.OnHandChanged += RefreshHand;
-        }
 
         if (turnManager != null)
-        {
             turnManager.OnEnergyChanged += UpdateCardAffordability;
-        }
     }
 
     private void OnDisable()
     {
         if (deckManager != null)
-        {
             deckManager.OnHandChanged -= RefreshHand;
-        }
 
         if (turnManager != null)
-        {
             turnManager.OnEnergyChanged -= UpdateCardAffordability;
-        }
     }
 
     private void Start()
     {
         if (deckManager != null)
-        {
             deckManager.InitializeDeck();
-        }
     }
 
     public void RefreshHand()
@@ -72,18 +64,46 @@ public class HandManager : MonoBehaviour
 
             CardInputHandler inputHandler = cardGO.GetComponent<CardInputHandler>();
             if (inputHandler != null)
-            {
                 inputHandler.Init(cardManager);
-            }
 
             RectTransform rt = cardGO.GetComponent<RectTransform>();
-            float xPos = GetXPositionForIndex(i, count);
-            rt.anchoredPosition = new Vector2(xPos, cardPositionY);
+            LayoutCard(rt, i, count);
+
+            // Sắp xếp thứ tự vẽ (lá bên phải đè lên bên trái)
+            rt.SetSiblingIndex(i);
 
             spawnedCards.Add(cardUI);
         }
 
         UpdateCardAffordability();
+    }
+
+    private void LayoutCard(RectTransform rt, int index, int count)
+    {
+        if (count <= 0) return;
+
+        // Chỉ có 1 lá
+        if (count == 1)
+        {
+            rt.anchoredPosition = new Vector2(0f, cardPositionY);
+            rt.localEulerAngles = Vector3.zero;
+            return;
+        }
+
+        float mid = (count - 1) * 0.5f;
+        float offset = index - mid;
+
+        // X đều
+        float x = offset * cardSpacing;
+
+        // Y: giữa CAO hơn hai đầu (đổi dấu nếu muốn ngược lại)
+        float y = (1f - Mathf.Abs(offset) / mid) * arcHeight;
+
+        // Góc xoay
+        float angle = offset * (maxAngle / mid);
+
+        rt.anchoredPosition = new Vector2(x, y + cardPositionY);
+        rt.localEulerAngles = new Vector3(0f, 0f, -angle);
     }
 
     public void UpdateCardAffordability()
@@ -110,18 +130,10 @@ public class HandManager : MonoBehaviour
             bool isSelected = card == selected;
 
             if (inputHandler != null)
-            {
                 inputHandler.SetSelectedVisual(isSelected);
-            }
 
             card.SetDimmed(selected != null && !isSelected);
         }
-    }
-
-    private float GetXPositionForIndex(int index, int count)
-    {
-        float offsetFromCenter = index - (count - 1) / 2f;
-        return offsetFromCenter * cardSpacing;
     }
 
     private void ClearSpawnedCards()
@@ -129,9 +141,7 @@ public class HandManager : MonoBehaviour
         foreach (CardUI card in spawnedCards)
         {
             if (card != null)
-            {
                 Destroy(card.gameObject);
-            }
         }
         spawnedCards.Clear();
     }
