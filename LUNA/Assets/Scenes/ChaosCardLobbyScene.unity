@@ -635,9 +635,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RadialMenuController
   radialMenu: {fileID: 1767559237}
-  animDuration: 0.25
-  pressScale: 0.92
-  pressDuration: 0.12
+  openDuration: 0.32
+  closeDuration: 0.22
+  openScaleFrom: 0.6
+  closeScaleTo: 0.75
+  openCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  closeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &159454912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,13 +2516,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 132364109}
-        m_TargetAssemblyTypeName: RadialMenuController, Assembly-CSharp
-        m_MethodName: OpenMenu
+      - m_Target: {fileID: 1089452046}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2490,11 +2539,23 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f909f9c5513dcc4a9d8c9812519d67c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DraggableButton
-  smoothTime: 0.04
+  m_EditorClassIdentifier: Assembly-CSharp::HomeButton
   menuController: {fileID: 132364109}
-  pressScale: 0.9
-  pressSpeed: 12
+  _onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1089452046}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1106643057
 GameObject:
   m_ObjectHideFlags: 0
@@ -3781,7 +3842,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RadialLayout
   radius: 200
   startAngle: 90
-  buttonSize: {x: 140, y: 50}
 --- !u!1 &1821804398
 GameObject:
   m_ObjectHideFlags: 0
