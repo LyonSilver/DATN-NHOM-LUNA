@@ -77,6 +77,19 @@ public class GachaManager : MonoBehaviour
             ? config.upgradedRareRate
             : config.rareRate;
     }
+    public int GetRollCoinCost()
+    {
+        if (config == null) return 0;
+
+        return config.rollCoinCost;
+    }
+
+    public int GetUpgradeGemCost()
+    {
+        if (config == null) return 0;
+
+        return config.upgradeGemCost;
+    }
 
     private bool IsConfigurationValid()
     {
