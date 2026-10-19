@@ -56,6 +56,7 @@ public class IslandHoverEffect : MonoBehaviour,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (cinematicLocked) return;
         isHovering = true;
 
         if (infoPanel != null)
@@ -64,6 +65,7 @@ public class IslandHoverEffect : MonoBehaviour,
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (cinematicLocked) return;
         isHovering = false;
 
         if (infoPanel != null)
@@ -72,6 +74,7 @@ public class IslandHoverEffect : MonoBehaviour,
 
     private void Update()
     {
+        if (cinematicLocked) return;
         float target = isHovering ? 1f : 0f;
 
         hoverAmount = Mathf.MoveTowards(
@@ -128,4 +131,21 @@ public class IslandHoverEffect : MonoBehaviour,
         if (infoPanel != null)
             infoPanel.Hide(this);
     }
+    private bool cinematicLocked;
+
+public void SetCinematicMode(bool locked)
+{
+    cinematicLocked = locked;
+
+    if (locked)
+    {
+        isHovering = false;
+        hoverAmount = 0f;
+
+        rect.anchoredPosition = originalPosition;
+        rect.localScale = originalScale;
+
+        SetGlowAlpha(0f);
+    }
+}
 }
