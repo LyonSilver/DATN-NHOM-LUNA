@@ -375,6 +375,7 @@ GameObject:
   - component: {fileID: 510753858}
   - component: {fileID: 510753857}
   - component: {fileID: 510753856}
+  - component: {fileID: 510753860}
   m_Layer: 5
   m_Name: ThanhTuu_Button (4)
   m_TagString: Untagged
@@ -500,6 +501,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510753854}
   m_CullTransparentMesh: 1
+--- !u!114 &510753860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510753854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424bc8528ce61dc43a8bd95676d207a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonLock
+  startLocked: 1
+  lockSprite: {fileID: 21300000, guid: 632da29ae134d8948a0e5d93e2479cb2, type: 3}
+  lockIconSize: {x: 100, y: 100}
+  lockIconPosition: {x: 0, y: 0}
 --- !u!1 &542604319
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +979,7 @@ GameObject:
   - component: {fileID: 902980779}
   - component: {fileID: 902980778}
   - component: {fileID: 902980777}
+  - component: {fileID: 902980781}
   m_Layer: 5
   m_Name: BoBai_Button (2)
   m_TagString: Untagged
@@ -1087,6 +1105,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902980775}
   m_CullTransparentMesh: 1
+--- !u!114 &902980781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902980775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424bc8528ce61dc43a8bd95676d207a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonLock
+  startLocked: 1
+  lockSprite: {fileID: 21300000, guid: 632da29ae134d8948a0e5d93e2479cb2, type: 3}
+  lockIconSize: {x: 100, y: 100}
+  lockIconPosition: {x: 0, y: 0}
 --- !u!1 &1157854017
 GameObject:
   m_ObjectHideFlags: 0
