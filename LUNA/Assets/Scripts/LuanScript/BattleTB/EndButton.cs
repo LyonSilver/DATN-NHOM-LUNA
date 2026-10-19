@@ -1,6 +1,6 @@
 
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class EndButton : MonoBehaviour
 {
@@ -10,6 +10,10 @@ public class EndButton : MonoBehaviour
 
     [Header("Card")]
     [SerializeField] private DeckManager deckManager;
+    [SerializeField] private CardManager cardManager;
+
+    [Header("Player Card Cinematic")]
+    [SerializeField] private PlayerCardCinematic playerCardCinematic;
 
     [Header("Turn")]
     [SerializeField] private TurnManager turnManager;
@@ -20,7 +24,7 @@ public class EndButton : MonoBehaviour
     [Header("Player Status")]
     [SerializeField] private PlayerStatusController playerStatusController;
 
-    [Header("Animation Duration")]
+    [Header("Enemy Animation")]
     [SerializeField] private float attackAnimationDuration = 1f;
     [SerializeField] private float skillAnimationDuration = 1f;
 
@@ -33,7 +37,9 @@ public class EndButton : MonoBehaviour
     [SerializeField] private float skipTurnDelay = 0.5f;
 
     private EnemyAttack enemyAttack;
+
     private bool isResolvingTurn = false;
+    private bool isSkippingTurn = false;
 
     // =========================================
     // END TURN BUTTON
@@ -41,26 +47,69 @@ public class EndButton : MonoBehaviour
 
     public void EndTurn()
     {
+        // =====================================
+        // 1. VALIDATE MANAGERS
+        // =====================================
+
         if (battleStateMachine == null ||
-            enemyIntentManager == null ||
-            enemySpawner == null)
+            enemySpawner == null ||
+            enemyIntentManager == null)
         {
             Debug.LogError(
-                "EndButton: Thiếu FSM, EnemySpawner " +
-                "hoặc EnemyIntentManager!"
+                "EndButton: Thiếu BattleStateMachine, " +
+                "EnemySpawner hoặc EnemyIntentManager!"
             );
+
             return;
         }
 
-        // Không cho kết thúc lượt nhiều lần.
+        // =====================================
+        // 2. CHECK TURN STATE
+        // =====================================
+
         if (isResolvingTurn ||
+            isSkippingTurn ||
             !battleStateMachine.IsPlayerTurn() ||
             battleStateMachine.IsBattleFinished())
         {
             return;
         }
 
-        // Lấy hành động Enemy đã chuẩn bị.
+        // =====================================
+        // 3. CHECK CARD MANAGER
+        // =====================================
+
+        // Player đang chọn và thực hiện Card.
+        if (cardManager != null &&
+            cardManager.IsUsingCard)
+        {
+            Debug.Log(
+                "EndButton: Player đang sử dụng Card!"
+            );
+
+            return;
+        }
+
+        // =====================================
+        // 4. CHECK PLAYER CINEMATIC
+        // =====================================
+
+        // Camera đang Zoom hoặc Player đang
+        // chạy đến Enemy / quay về vị trí cũ.
+        if (playerCardCinematic != null &&
+            playerCardCinematic.IsPlaying)
+        {
+            Debug.Log(
+                "EndButton: Card Cinematic chưa kết thúc!"
+            );
+
+            return;
+        }
+
+        // =====================================
+        // 5. GET ENEMY INTENT
+        // =====================================
+
         bool isAttack;
 
         if (!enemyIntentManager.TryConsumeIntent(
@@ -70,6 +119,7 @@ public class EndButton : MonoBehaviour
             Debug.LogWarning(
                 "EndButton: Chưa có Enemy Intent hợp lệ!"
             );
+
             return;
         }
 
@@ -80,11 +130,11 @@ public class EndButton : MonoBehaviour
         );
 
         // =====================================
-        // PROCESS STATUS EFFECTS
+        // 6. PROCESS STATUS EFFECTS
         // =====================================
 
-        // Poison / Burn gây Damage khi kết thúc
-        // Player Turn, kể cả khi Player không đánh.
+        // Poison và Burn gây Damage
+        // khi kết thúc Player Turn.
         if (playerStatusController != null)
         {
             playerStatusController.ProcessTurnEndEffects();
@@ -98,7 +148,7 @@ public class EndButton : MonoBehaviour
         }
 
         // =====================================
-        // CHANGE TO ENEMY TURN
+        // 7. CHANGE TO ENEMY TURN
         // =====================================
 
         battleStateMachine.ChangeState(
@@ -128,6 +178,7 @@ public class EndButton : MonoBehaviour
             return;
         }
 
+        // Kiểm tra Enemy đang tồn tại.
         if (enemyAttack == null ||
             enemySpawner == null ||
             enemyAttack != enemySpawner.GetCurrentEnemyAttack())
@@ -147,7 +198,7 @@ public class EndButton : MonoBehaviour
         if (isAttack)
         {
             Debug.Log(
-                "Enemy thực hiện NORMAL ATTACK!"
+                "Enemy thực hiện Normal Attack!"
             );
 
             StartCoroutine(
@@ -160,7 +211,7 @@ public class EndButton : MonoBehaviour
         else
         {
             Debug.Log(
-                "Enemy thực hiện SKILL!"
+                "Enemy thực hiện Skill!"
             );
 
             StartCoroutine(
@@ -182,6 +233,7 @@ public class EndButton : MonoBehaviour
             yield break;
         }
 
+        // Lấy script di chuyển của Enemy.
         EnemyDashMovement movement =
             actingEnemy.GetComponentInParent<EnemyDashMovement>();
 
@@ -210,15 +262,12 @@ public class EndButton : MonoBehaviour
         }
 
         // =====================================
-        // 2. ATTACK + DAMAGE
+        // 2. PERFORM ATTACK
         // =====================================
 
-        // Hàm AttackWithoutTiming trong
-        // EnemyAttackBase hiện tại sẽ thực hiện
-        // Normal Attack với Damage cố định.
-        //
-        // Nếu hàm này đã phát Animation Attack,
-        // không gọi PlayAttackAnimation() lần nữa.
+        // AttackWithoutTiming thực hiện
+        // Damage cố định và phát Animation
+        // theo EnemyAttackBase hiện tại.
         actingEnemy.AttackWithoutTiming();
 
         Debug.Log(
@@ -242,7 +291,7 @@ public class EndButton : MonoBehaviour
             CanAct(actingEnemy))
         {
             Debug.Log(
-                "Enemy đang quay về vị trí ban đầu..."
+                "Enemy quay về vị trí ban đầu..."
             );
 
             yield return movement.ReturnToStart();
@@ -299,8 +348,9 @@ public class EndButton : MonoBehaviour
         // 2. EXECUTE SKILL
         // =====================================
 
-        // UseSkill phát Animation và áp dụng
-        // hiệu ứng Skill đã chọn trong Intent.
+        // UseSkill sẽ phát Animation
+        // và áp dụng Skill đã chọn
+        // trong EnemyIntentManager.
         actingEnemy.UseSkill();
 
         Debug.Log(
@@ -308,7 +358,7 @@ public class EndButton : MonoBehaviour
         );
 
         // =====================================
-        // 3. WAIT FOR ANIMATION
+        // 3. WAIT FOR SKILL ANIMATION
         // =====================================
 
         yield return new WaitForSeconds(
@@ -343,7 +393,7 @@ public class EndButton : MonoBehaviour
 
     public void FinishTurn()
     {
-        if (!isResolvingTurn)
+        if (!isResolvingTurn || isSkippingTurn)
             return;
 
         if (battleStateMachine == null ||
@@ -360,21 +410,17 @@ public class EndButton : MonoBehaviour
         );
 
         // =====================================
-        // STUN / FREEZE
+        // CHECK STUN / FREEZE
         // =====================================
 
-        // Nếu Player bị Stun hoặc Freeze,
-        // Enemy sẽ có thêm lượt hành động.
         if (playerStatusController != null &&
             playerStatusController.ConsumeSkippedTurn())
         {
-            StartCoroutine(
-                SkipPlayerTurn()
-            );
+            StartCoroutine(SkipPlayerTurn());
             return;
         }
 
-        // Player không bị mất lượt.
+        // Player không mất lượt.
         CompletePlayerTurnTransition();
     }
 
@@ -384,18 +430,21 @@ public class EndButton : MonoBehaviour
 
     private void CompletePlayerTurnTransition()
     {
-        isResolvingTurn = false;
-
         if (battleStateMachine == null ||
             battleStateMachine.IsBattleFinished() ||
             battleStateMachine.CurrentState !=
                 BattleStateMachine.BattleState.EnemyTurn)
         {
+            isResolvingTurn = false;
+            isSkippingTurn = false;
             return;
         }
 
+        isResolvingTurn = false;
+        isSkippingTurn = false;
+
         // =====================================
-        // RESET CARD
+        // 1. RESET CARD
         // =====================================
 
         if (deckManager != null)
@@ -404,16 +453,18 @@ public class EndButton : MonoBehaviour
         }
 
         // =====================================
-        // RESET TURN / ENERGY
+        // 2. RECOVER MANA
         // =====================================
 
+        // TurnManager.StartTurn hiện tại
+        // chỉ hồi 40% Max Mana.
         if (turnManager != null)
         {
             turnManager.StartTurn();
         }
 
         // =====================================
-        // PLAYER TURN
+        // 3. START PLAYER TURN
         // =====================================
 
         battleStateMachine.ChangeState(
@@ -425,7 +476,7 @@ public class EndButton : MonoBehaviour
         );
 
         // =====================================
-        // PREPARE NEW ENEMY INTENT
+        // 4. PREPARE NEW ENEMY INTENT
         // =====================================
 
         if (enemyIntentManager != null)
@@ -448,6 +499,8 @@ public class EndButton : MonoBehaviour
 
     private IEnumerator SkipPlayerTurn()
     {
+        isSkippingTurn = true;
+
         Debug.Log(
             "Player mất lượt vì Stun hoặc Freeze!"
         );
@@ -456,20 +509,26 @@ public class EndButton : MonoBehaviour
             Mathf.Max(0f, skipTurnDelay)
         );
 
+        // =====================================
+        // CHECK BATTLE
+        // =====================================
+
         if (battleStateMachine == null ||
             battleStateMachine.IsBattleFinished() ||
             battleStateMachine.CurrentState !=
                 BattleStateMachine.BattleState.EnemyTurn)
         {
+            isSkippingTurn = false;
             isResolvingTurn = false;
             yield break;
         }
 
         // =====================================
-        // PROCESS STATUS DAMAGE
+        // PROCESS DOT
         // =====================================
 
-        // DoT vẫn gây Damage khi Player mất lượt.
+        // Poison / Burn vẫn gây Damage
+        // dù Player đang bị mất lượt.
         if (playerStatusController != null)
         {
             playerStatusController.ProcessTurnEndEffects();
@@ -477,13 +536,14 @@ public class EndButton : MonoBehaviour
             if (playerStatusController.IsPlayerDefeated ||
                 battleStateMachine.IsBattleFinished())
             {
+                isSkippingTurn = false;
                 isResolvingTurn = false;
                 yield break;
             }
         }
 
         // =====================================
-        // PREPARE NEXT ENEMY ACTION
+        // PREPARE ENEMY NEXT INTENT
         // =====================================
 
         if (enemyIntentManager == null ||
@@ -493,6 +553,7 @@ public class EndButton : MonoBehaviour
                 "EndButton: Không thể chuẩn bị Enemy Intent!"
             );
 
+            isSkippingTurn = false;
             CompletePlayerTurnTransition();
             yield break;
         }
@@ -507,6 +568,7 @@ public class EndButton : MonoBehaviour
                 "EndButton: Không thể lấy Enemy Intent!"
             );
 
+            isSkippingTurn = false;
             CompletePlayerTurnTransition();
             yield break;
         }
@@ -514,6 +576,10 @@ public class EndButton : MonoBehaviour
         Debug.Log(
             "========== ENEMY TURN (PLAYER SKIPPED) =========="
         );
+
+        // Cho phép hành động Enemy tiếp theo
+        // hoàn tất và tiếp tục kiểm tra Stun.
+        isSkippingTurn = false;
 
         BeginEnemyAction(isAttack);
     }
