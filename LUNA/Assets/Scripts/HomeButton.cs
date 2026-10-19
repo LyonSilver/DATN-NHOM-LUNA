@@ -1,14 +1,46 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using System.Collections;
 
-public class HomeButton : MonoBehaviour, IPointerClickHandler
+public class HomeButton : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
+    [Header("Menu")]
     public RadialMenuController menuController;
 
-    [SerializeField] private UnityEvent _onClick;
+    [Header("Events")]
+    public UnityEvent onClick;
+
+    [Header("Press Feel")]
+    public float pressScale = 0.9f;
+    public float pressSpeed = 18f;
+
+    [Header("Protection")]
+    public float clickCooldown = 0.18f;
 
     private bool canClick = true;
+    private bool isPressed;
+    private Vector3 originalScale;
+    private Coroutine scaleRoutine;
+
+    void Awake()
+    {
+        originalScale = transform.localScale;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        isPressed = true;
+        AnimateScale(originalScale * pressScale);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        isPressed = false;
+        AnimateScale(originalScale);
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -16,13 +48,36 @@ public class HomeButton : MonoBehaviour, IPointerClickHandler
         if (!canClick) return;
 
         canClick = false;
-        _onClick?.Invoke();
+        onClick?.Invoke();
 
         if (menuController != null)
             menuController.ToggleMenu();
 
-        Invoke(nameof(ResetClick), 0.2f);
+        Invoke(nameof(Unlock), clickCooldown);
     }
 
-    void ResetClick() => canClick = true;
+    void Unlock() => canClick = true;
+
+    void AnimateScale(Vector3 target)
+    {
+        if (scaleRoutine != null) StopCoroutine(scaleRoutine);
+        scaleRoutine = StartCoroutine(ScaleRoutine(target));
+    }
+
+    IEnumerator ScaleRoutine(Vector3 target)
+    {
+        while (Vector3.Distance(transform.localScale, target) > 0.001f)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, target, Time.unscaledDeltaTime * pressSpeed);
+            yield return null;
+        }
+        transform.localScale = target;
+    }
+
+    void OnDisable()
+    {
+        if (scaleRoutine != null) StopCoroutine(scaleRoutine);
+        transform.localScale = originalScale;
+        isPressed = false;
+    }
 }
