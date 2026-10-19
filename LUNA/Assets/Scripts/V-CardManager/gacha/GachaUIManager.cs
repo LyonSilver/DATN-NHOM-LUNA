@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+//sửa code
+using System.Collections;
 
 public class GachaUIManager : MonoBehaviour
 {
@@ -35,6 +37,22 @@ public class GachaUIManager : MonoBehaviour
     [SerializeField] private Sprite coinSprite;
     [SerializeField] private Sprite gemSprite;
 
+    //sửa code 
+    [Header("Gacha Animation")]
+    [SerializeField] private RectTransform storePanel;
+    [SerializeField] private RectTransform zoomTarget;
+    [SerializeField] private GameObject gachaOpenVFX;
+
+    [SerializeField] private float zoomScale = 1.6f;
+    [SerializeField] private float zoomDuration = 0.5f;
+    [SerializeField] private float effectDuration = 2.5f;
+
+    private Vector3 originalScale;
+    private Vector2 originalPosition;
+    private bool isRolling = false;
+
+    //--//
+
     private bool isPopupOpen = false;
 
     private void Awake()
@@ -59,6 +77,21 @@ public class GachaUIManager : MonoBehaviour
 
         if (okButton != null)
             okButton.onClick.AddListener(OnOKButtonClicked);
+
+        //sửa code
+        // Lưu trạng thái ban đầu của giao diện
+        if (storePanel != null)
+        {
+            originalScale = storePanel.localScale;
+            originalPosition = storePanel.anchoredPosition;
+        }
+
+        // Tắt VFX khi bắt đầu
+        if (gachaOpenVFX != null)
+        {
+            gachaOpenVFX.SetActive(false);
+        }
+        //--//
     }
 
     private void OnEnable()
@@ -151,25 +184,48 @@ public class GachaUIManager : MonoBehaviour
             group.alpha = canUse ? 1f : 0.4f;
     }
 
+    // public void OnRollButtonClicked()
+    // {
+    //     if (gachaManager == null || isPopupOpen)
+    //         return;
+
+    //     GachaResult result = gachaManager.TryRoll();
+
+    //     if (result == GachaResult.Success)
+    //     {
+    //         ShowReward(gachaManager.LastReward);
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Gacha quay không thành công: " + result);
+    //     }
+
+    //     RefreshCurrencyUI();
+    // }
+
+    //sửa code
     public void OnRollButtonClicked()
     {
-        if (gachaManager == null || isPopupOpen)
+        if (gachaManager == null || isPopupOpen || isRolling)
             return;
 
         GachaResult result = gachaManager.TryRoll();
 
         if (result == GachaResult.Success)
         {
-            ShowReward(gachaManager.LastReward);
+            isRolling = true;
+            isPopupOpen = true;
+
+            RefreshCurrencyUI();
+
+            StartCoroutine(PlayGachaAnimation());
         }
         else
         {
-            Debug.Log("Gacha quay không thành công: " + result);
+            Debug.Log("Gacha quay khong thanh cong: " + result);
         }
-
-        RefreshCurrencyUI();
     }
-
+    //--//
     public void OnUpgradeButtonClicked()
     {
         if (gachaManager == null || isPopupOpen)
@@ -354,4 +410,136 @@ public class GachaUIManager : MonoBehaviour
 
         RefreshButtonStates();
     }
+
+    //sửa code
+    private IEnumerator PlayGachaAnimation()
+    {
+        // Lưu lại trạng thái ban đầu trước mỗi lần quay
+        if (storePanel != null)
+        {
+            originalScale = storePanel.localScale;
+            originalPosition = storePanel.anchoredPosition;
+        }
+
+        // Bật hiệu ứng cổng không gian
+        if (gachaOpenVFX != null)
+        {
+            gachaOpenVFX.SetActive(true);
+
+            ParticleSystem[] particles =
+                gachaOpenVFX.GetComponentsInChildren<ParticleSystem>(true);
+
+            foreach (ParticleSystem particle in particles)
+            {
+                particle.Clear();
+                particle.Play(true);
+            }
+        }
+
+        // Zoom về phía cổng không gian
+        if (storePanel != null && zoomTarget != null)
+        {
+            yield return StartCoroutine(
+                ZoomStoreToTarget(zoomScale, zoomDuration)
+            );
+        }
+
+        // Giữ hiệu ứng trong thời gian đã thiết lập
+        yield return new WaitForSeconds(effectDuration);
+
+        // Trả giao diện về trạng thái ban đầu
+        yield return StartCoroutine(RestoreStoreAnimated());
+
+        // Tắt VFX
+        if (gachaOpenVFX != null)
+        {
+            gachaOpenVFX.SetActive(false);
+        }
+
+        // Chỉ mở popup sau khi animation kết thúc
+        isRolling = false;
+        ShowReward(gachaManager.LastReward);
+    }
+
+    private IEnumerator ZoomStoreToTarget(float targetScale, float duration)
+    {
+        if (storePanel == null || zoomTarget == null)
+            yield break;
+
+        RectTransform parentRect = storePanel.parent as RectTransform;
+
+        if (parentRect == null)
+            yield break;
+
+        // Lấy tọa độ tâm cổng trong hệ tọa độ của StorePanel
+        Vector3 targetLocal =
+            storePanel.InverseTransformPoint(zoomTarget.position);
+
+        Vector2 startPosition = storePanel.anchoredPosition;
+        Vector3 startScale = storePanel.localScale;
+
+        // Với parent có tâm tại (0, 0), đưa tâm cổng về tâm màn hình
+        Vector2 targetPosition = new Vector2(
+            -targetLocal.x * targetScale,
+            -targetLocal.y * targetScale
+        );
+
+        Vector3 endScale = originalScale * targetScale;
+
+        float timer = 0f;
+        duration = Mathf.Max(duration, 0.01f);
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            float t = Mathf.Clamp01(timer / duration);
+
+            // Làm chuyển động mượt hơn
+            t = t * t * (3f - 2f * t);
+
+            storePanel.localScale =
+                Vector3.Lerp(startScale, endScale, t);
+
+            storePanel.anchoredPosition =
+                Vector2.Lerp(startPosition, targetPosition, t);
+
+            yield return null;
+        }
+
+        storePanel.localScale = endScale;
+        storePanel.anchoredPosition = targetPosition;
+    }
+
+    private IEnumerator RestoreStoreAnimated()
+    {
+        if (storePanel == null)
+            yield break;
+
+        Vector3 startScale = storePanel.localScale;
+        Vector2 startPosition = storePanel.anchoredPosition;
+
+        float duration = Mathf.Max(zoomDuration, 0.01f);
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            float t = Mathf.Clamp01(timer / duration);
+            t = t * t * (3f - 2f * t);
+
+            storePanel.localScale =
+                Vector3.Lerp(startScale, originalScale, t);
+
+            storePanel.anchoredPosition =
+                Vector2.Lerp(startPosition, originalPosition, t);
+
+            yield return null;
+        }
+
+        storePanel.localScale = originalScale;
+        storePanel.anchoredPosition = originalPosition;
+    }
+    //--//
 }
