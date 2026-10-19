@@ -32,6 +32,22 @@ public class StoreUI : MonoBehaviour
     private List<CardData> currentStoreCards =
         new List<CardData>();
 
+
+    private void OnEnable()
+    {
+        if (currencyManager != null)
+        {
+            currencyManager.OnCurrencyChanged += UpdateCurrencyUI;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (currencyManager != null)
+        {
+            currencyManager.OnCurrencyChanged -= UpdateCurrencyUI;
+        }
+    }
     private void Start()
     {
         RefreshStore();
@@ -259,5 +275,5 @@ public class StoreUI : MonoBehaviour
         RefreshStore();
     }
 
-    
+
 }
