@@ -8,53 +8,49 @@ public class GachaUIManager : MonoBehaviour
     [SerializeField] private GachaManager gachaManager;
     [SerializeField] private CurrencyManager currencyManager;
 
-    [Header("Main Buttons")]
+    [Header("Button Quay Thuong")]
     [SerializeField] private Button rollButton;
     [SerializeField] private CanvasGroup rollButtonGroup;
 
+    [Header("Button Upgrade")]
     [SerializeField] private Button upgradeButton;
     [SerializeField] private CanvasGroup upgradeButtonGroup;
 
-    [Header("Currency UI - Optional")]
+    [Header("Currency UI - Khong bat buoc")]
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private TMP_Text gemText;
 
-    [Header("Rate UI - Optional")]
-    [SerializeField] private TMP_Text commonRateText;
-    [SerializeField] private TMP_Text expandedRateText;
-    [SerializeField] private TMP_Text rareRateText;
-
-    [Header("Popup")]
-    [SerializeField] private GameObject modalOverlayImage;
+    [Header("Gacha Popup")]
     [SerializeField] private GameObject gachaPopupPanel;
+    [SerializeField] private GameObject modalOverlayImage;
     [SerializeField] private Button okButton;
 
-    [Header("Reward UI")]
-    [SerializeField] private Image rewardIcon;
+    [Header("Reward UI - Cac object ban da tao")]
+    [SerializeField] private Image rewardIconImage;
+    [SerializeField] private TMP_Text rewardNameText;
+    [SerializeField] private TMP_Text rewardAmountText;
+    [SerializeField] private TMP_Text compensationText;
+
+    [Header("Reward Sprites")]
     [SerializeField] private Sprite coinSprite;
     [SerializeField] private Sprite gemSprite;
-
-    [SerializeField] private TMP_Text rewardTitleText;
-    [SerializeField] private TMP_Text rewardDescriptionText;
-
-    [Header("Message UI - Optional")]
-    [SerializeField] private TMP_Text messageText;
 
     private bool isPopupOpen = false;
 
     private void Awake()
     {
-        // An popup khi bat dau game.
+        // An popup khi bat dau.
         if (gachaPopupPanel != null)
             gachaPopupPanel.SetActive(false);
 
         if (modalOverlayImage != null)
             modalOverlayImage.SetActive(false);
 
-        if (messageText != null)
-            messageText.text = "";
+        // An dong thong bao bu Coin ban dau.
+        if (compensationText != null)
+            compensationText.gameObject.SetActive(false);
 
-        // Noi su kien cho cac button.
+        // Tu dong ket noi cac button.
         if (rollButton != null)
             rollButton.onClick.AddListener(OnRollButtonClicked);
 
@@ -68,19 +64,19 @@ public class GachaUIManager : MonoBehaviour
     private void OnEnable()
     {
         if (currencyManager != null)
-            currencyManager.OnCurrencyChanged += RefreshUI;
+            currencyManager.OnCurrencyChanged += RefreshCurrencyUI;
     }
 
     private void Start()
     {
-        RefreshUI();
-        RefreshRates();
+        RefreshCurrencyUI();
+        RefreshButtonStates();
     }
 
     private void OnDisable()
     {
         if (currencyManager != null)
-            currencyManager.OnCurrencyChanged -= RefreshUI;
+            currencyManager.OnCurrencyChanged -= RefreshCurrencyUI;
     }
 
     private void OnDestroy()
@@ -97,11 +93,12 @@ public class GachaUIManager : MonoBehaviour
 
     private void Update()
     {
-        // Dong bo neu sua tien truc tiep trong Inspector khi Play.
+        // Cap nhat trang thai nut neu tien thay doi
+        // truc tiep trong Inspector khi dang Play.
         RefreshButtonStates();
     }
 
-    public void RefreshUI()
+    private void RefreshCurrencyUI()
     {
         if (currencyManager != null)
         {
@@ -131,7 +128,7 @@ public class GachaUIManager : MonoBehaviour
                 gachaManager.GetUpgradeGemCost()
             );
 
-        // Khi popup mo, khoa hai nut chinh.
+        // Khoa hai nut khi popup dang mo.
         if (isPopupOpen)
         {
             canRoll = false;
@@ -156,13 +153,8 @@ public class GachaUIManager : MonoBehaviour
 
     public void OnRollButtonClicked()
     {
-        if (gachaManager == null)
+        if (gachaManager == null || isPopupOpen)
             return;
-
-        if (isPopupOpen)
-            return;
-
-        ClearMessage();
 
         GachaResult result = gachaManager.TryRoll();
 
@@ -172,109 +164,136 @@ public class GachaUIManager : MonoBehaviour
         }
         else
         {
-            ShowResultMessage(result);
+            Debug.Log("Gacha quay không thành công: " + result);
         }
 
-        RefreshUI();
+        RefreshCurrencyUI();
     }
 
     public void OnUpgradeButtonClicked()
     {
-        if (gachaManager == null)
+        if (gachaManager == null || isPopupOpen)
             return;
-
-        if (isPopupOpen)
-            return;
-
-        ClearMessage();
 
         GachaResult result = gachaManager.UpgradeRareRate();
 
-        if (result == GachaResult.Success)
+        switch (result)
         {
-            ShowMessage("Nang cap thanh cong! Ti le the hiem da tang.");
-            RefreshRates();
-        }
-        else
-        {
-            ShowResultMessage(result);
+            case GachaResult.Success:
+                ShowMessage(
+                    "Nâng cấp thành công!\nTỉ lệ thẻ hiếm đã tăng."
+                );
+                break;
+
+            case GachaResult.NotEnoughGem:
+                ShowMessage(
+                    "Nâng cấp thất bại!\nKhông đủ Gem."
+                );
+                break;
+
+            case GachaResult.UpgradeAlreadyPurchased:
+                ShowMessage(
+                    "Bạn đã nâng cấp tỉ lệ thẻ hiếm rồi!"
+                );
+                break;
+
+            case GachaResult.InvalidConfiguration:
+                ShowMessage(
+                    "Nâng cấp thất bại!\nCấu hình Gacha không hợp lệ."
+                );
+                break;
+
+            default:
+                ShowMessage("Nâng cấp thất bại!");
+                break;
         }
 
-        RefreshUI();
+        RefreshCurrencyUI();
     }
 
     private void ShowReward(GachaReward reward)
     {
         if (reward == null)
-        {
-            ShowMessage("Khong tim thay phan thuong.");
             return;
+
+        // Hien lai cac thanh phan phan thuong
+        if (rewardIconImage != null)
+            rewardIconImage.gameObject.SetActive(true);
+
+        if (rewardNameText != null)
+            rewardNameText.gameObject.SetActive(true);
+
+        if (rewardAmountText != null)
+            rewardAmountText.gameObject.SetActive(true);
+
+        // An thong bao cu
+        if (compensationText != null)
+        {
+            compensationText.text = "";
+            compensationText.gameObject.SetActive(false);
         }
 
-        if (rewardIcon != null)
+        if (rewardIconImage != null)
         {
-            rewardIcon.enabled = true;
+            rewardIconImage.sprite = null;
+            rewardIconImage.enabled = true;
 
             if (reward.rewardType == GachaRewardType.Card)
             {
-                rewardIcon.sprite = reward.card != null
-                    ? reward.card.cardSprite
-                    : null;
+                if (reward.card != null)
+                    rewardIconImage.sprite = reward.card.cardSprite;
             }
             else if (reward.rewardType == GachaRewardType.Coin)
             {
-                rewardIcon.sprite = coinSprite;
+                rewardIconImage.sprite = coinSprite;
             }
             else if (reward.rewardType == GachaRewardType.Gem)
             {
-                rewardIcon.sprite = gemSprite;
+                rewardIconImage.sprite = gemSprite;
             }
 
-            if (rewardIcon.sprite == null)
-                rewardIcon.enabled = false;
+            if (rewardIconImage.sprite == null)
+                rewardIconImage.enabled = false;
         }
 
-        if (rewardTitleText != null)
+        if (rewardNameText != null)
         {
             if (reward.rewardType == GachaRewardType.Card)
-                rewardTitleText.text = "Nhan duoc the bai";
+            {
+                rewardNameText.text = reward.card != null
+                    ? reward.card.cardName
+                    : "Lá bài";
+            }
             else if (reward.rewardType == GachaRewardType.Coin)
-                rewardTitleText.text = reward.wasCompensation
-                    ? "Nhan Coin bu"
-                    : "Nhan duoc Coin";
+            {
+                rewardNameText.text = "Coin";
+            }
             else
-                rewardTitleText.text = "Nhan duoc Gem";
+            {
+                rewardNameText.text = "Gem";
+            }
         }
 
-        if (rewardDescriptionText != null)
+        if (rewardAmountText != null)
         {
-            if (reward.rewardType == GachaRewardType.Card &&
-                reward.card != null)
-            {
-                rewardDescriptionText.text =
-                    reward.card.cardName + "\n" +
-                    reward.card.description;
-            }
-            else if (reward.rewardType == GachaRewardType.Coin)
-            {
-                string text = "+" + reward.amount + " Coin";
-
-                if (reward.wasCompensation &&
-                    reward.replacedCard != null)
-                {
-                    text =
-                        "Da full luot so huu cua la bai: " +
-                        reward.replacedCard.cardName +
-                        "\nNhan Coin bu: +" + reward.amount;
-                }
-
-                rewardDescriptionText.text = text;
-            }
+            if (reward.rewardType == GachaRewardType.Card)
+                rewardAmountText.text = "x" + reward.amount;
             else
-            {
-                rewardDescriptionText.text =
-                    "+" + reward.amount + " Gem";
-            }
+                rewardAmountText.text = "+" + reward.amount;
+        }
+
+        // Chi hien thong bao neu the quay duoc da full.
+        if (reward.wasCompensation && compensationText != null)
+        {
+            string cardName = reward.replacedCard != null
+                ? reward.replacedCard.cardName
+                : "Lá bài";
+
+            compensationText.text =
+                "Đã full lượt sở hữu của " + cardName +
+                ". Nhận bù +" + reward.amount + " Coin.";
+
+            compensationText.gameObject.SetActive(true);
         }
 
         isPopupOpen = true;
@@ -298,69 +317,41 @@ public class GachaUIManager : MonoBehaviour
 
         isPopupOpen = false;
 
-        ClearMessage();
-        RefreshUI();
-    }
-
-    private void ShowResultMessage(GachaResult result)
-    {
-        switch (result)
-        {
-            case GachaResult.NotEnoughCoin:
-                ShowMessage("Khong du Coin de quay thuong!");
-                break;
-
-            case GachaResult.NotEnoughGem:
-                ShowMessage("Khong du Gem de nang cap!");
-                break;
-
-            case GachaResult.UpgradeAlreadyPurchased:
-                ShowMessage("Ban da nang cap ti le roi!");
-                break;
-
-            case GachaResult.NoAvailableReward:
-                ShowMessage("Khong co phan thuong kha dung!");
-                break;
-
-            case GachaResult.InvalidConfiguration:
-                ShowMessage("Cau hinh gacha khong hop le. Hay kiem tra Console.");
-                break;
-
-            default:
-                ShowMessage("Thao tac khong thanh cong.");
-                break;
-        }
-    }
-
-    private void RefreshRates()
-    {
-        if (gachaManager == null)
-            return;
-
-        if (commonRateText != null)
-            commonRateText.text =
-                "Common: " + gachaManager.GetCommonRate() + "%";
-
-        if (expandedRateText != null)
-            expandedRateText.text =
-                "Expanded: " + gachaManager.GetExpandedRate() + "%";
-
-        if (rareRateText != null)
-            rareRateText.text =
-                "Rare: " + gachaManager.GetRareRate() + "%";
+        RefreshCurrencyUI();
     }
 
     private void ShowMessage(string message)
     {
-        if (messageText != null)
-            messageText.text = message;
-        else
-            Debug.Log(message);
-    }
+        // An thong tin phan thuong cua lan quay truoc
+        if (rewardIconImage != null)
+        {
+            rewardIconImage.sprite = null;
+            rewardIconImage.enabled = false;
+            rewardIconImage.gameObject.SetActive(false);
+        }
 
-    private void ClearMessage()
-    {
-        if (messageText != null)
-            messageText.text = "";
+        if (rewardNameText != null)
+            rewardNameText.gameObject.SetActive(false);
+
+        if (rewardAmountText != null)
+            rewardAmountText.gameObject.SetActive(false);
+
+        // Dung compesationText de hien thi thong bao
+        if (compensationText != null)
+        {
+            compensationText.text = message;
+            compensationText.gameObject.SetActive(true);
+        }
+
+        // Mo popup
+        isPopupOpen = true;
+
+        if (modalOverlayImage != null)
+            modalOverlayImage.SetActive(true);
+
+        if (gachaPopupPanel != null)
+            gachaPopupPanel.SetActive(true);
+
+        RefreshButtonStates();
     }
 }

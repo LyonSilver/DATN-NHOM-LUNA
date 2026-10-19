@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: CARD_005
   cardName: Poison Dart
-  description: Deals damage and applies a poison effect to the enemy.
   cardType: 2
   rarity: 1
+  description: Deals damage and applies a poison effect to the enemy.
+  baseValue: 0
   purchaseType: 1
   moneyCost: 0
   energyCost: 25
   maxQuantity: 2
-  isStarterCard: 0
-  canAppearInStore: 1
+  cardSprite: {fileID: 21300000, guid: 4dc81bfad6ea4fd459d29985f9b0e5f3, type: 3}

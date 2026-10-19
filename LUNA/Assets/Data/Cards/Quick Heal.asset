@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: CARD_004
   cardName: Quick Heal
-  description: Quickly restores a small amount of health.
   cardType: 3
   rarity: 0
+  description: Quickly restores a small amount of health.
+  baseValue: 0
   purchaseType: 0
   moneyCost: 150
   energyCost: 0
   maxQuantity: 3
-  isStarterCard: 1
-  canAppearInStore: 1
+  cardSprite: {fileID: 21300000, guid: 0b7ba8a2b929c2d43bd5718a5936e840, type: 3}
