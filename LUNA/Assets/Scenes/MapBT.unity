@@ -371,6 +371,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63872807}
   m_CullTransparentMesh: 1
+--- !u!1 &67436342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67436344}
+  - component: {fileID: 67436343}
+  m_Layer: 0
+  m_Name: BattleResultTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &67436343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67436342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35094a0ce63125b41a7a0b4a1bdc1db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleResultTracker
+  damageDealt: 0
+  damageReceived: 0
+  killCount: 0
+--- !u!4 &67436344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67436342}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 940.63806, y: 796.4873, z: 7.42358}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &76109857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1048,6 @@ GameObject:
   - component: {fileID: 337321790}
   - component: {fileID: 337321789}
   - component: {fileID: 337321788}
-  - component: {fileID: 337321787}
   m_Layer: 5
   m_Name: AgainButton
   m_TagString: Untagged
@@ -1029,18 +1075,6 @@ RectTransform:
   m_AnchoredPosition: {x: 247, y: -415}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &337321787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337321785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a87a1293d9ea5446be3aad66081f2e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AgainButton
 --- !u!114 &337321788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1085,9 +1119,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 337321787}
-        m_TargetAssemblyTypeName: AgainButton, Assembly-CSharp
-        m_MethodName: RestartBattle
+      - m_Target: {fileID: 884404677}
+        m_TargetAssemblyTypeName: RoundManager, Assembly-CSharp
+        m_MethodName: RetryBattle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3981,34 +4015,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9fd285c01f5094880469edd310f8cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
-  currentRound: 1
-  maxRound: 2
   battleStateMachine: {fileID: 1688428706}
   enemySpawner: {fileID: 371778800}
   enemyIntentManager: {fileID: 2015851940}
-  cardManager: {fileID: 0}
-  playerCardCinematic: {fileID: 0}
+  cardManager: {fileID: 1418680897}
+  playerCardCinematic: {fileID: 1254170767}
+  battleStats: {fileID: 67436343}
+  testStage: {fileID: 0}
   spawnDelay: 2
   roundText: {fileID: 63872809}
-  roundUI: {fileID: 63872807}
-  cardUI: {fileID: 851991815}
-  playerUI: {fileID: 0}
-  enemyUI: {fileID: 0}
+  battleHUD: {fileID: 851991815}
   finishPanel: {fileID: 2022740345}
   resultTitleText: {fileID: 0}
-  homeButton: {fileID: 1502154934}
-  againButton: {fileID: 337321785}
-  nextButton: {fileID: 1377448375}
-  victoryText: VICTORY
-  defeatText: DEFEAT
-  coinText: {fileID: 0}
-  expText: {fileID: 0}
-  currentCoin: 0
-  currentExp: 0
-  coinPerRound: 50
-  expPerRound: 100
-  nextSceneName: LevelStage
-  transitionDelay: 0.5
+  resultRewardUI: {fileID: 2022740347}
 --- !u!4 &884404678
 Transform:
   m_ObjectHideFlags: 0
@@ -4249,7 +4268,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 407}
-  m_SizeDelta: {x: 400, y: 150}
+  m_SizeDelta: {x: 350, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1014855678
 MonoBehaviour:
@@ -4271,7 +4290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7b5648974bccc3049bd190002c1db7ba, type: 3}
+  m_Sprite: {fileID: -2001830547, guid: 45db5eb4f5d908e45adc8c08c22fb310, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4525,10 +4544,15 @@ MonoBehaviour:
   enemyShield: 0
   roundManager: {fileID: 884404677}
   battleStateMachine: {fileID: 1688428706}
+  battleStats: {fileID: 0}
   playerHPBar: {fileID: 1975799299}
   enemyHPBar: {fileID: 308863035}
   playerAnimation: {fileID: 531574974}
   deathAnimationDuration: 1
+  slashGoodBonus: 2
+  poisonDamagePerTurn: 2
+  negativeEffectChance: 30
+  negativeEffectDamage: 3
 --- !u!4 &1156435793
 Transform:
   m_ObjectHideFlags: 0
@@ -5091,9 +5115,9 @@ Transform:
   m_GameObject: {fileID: 1230254599}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -3.48, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.04, y: -3.74, z: 0}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 665426363}
   - {fileID: 518753020}
@@ -5334,12 +5358,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254170765}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 785.3362, y: 0, z: 2363.5789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1507204815}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1254170767
 MonoBehaviour:
@@ -5722,7 +5746,6 @@ GameObject:
   - component: {fileID: 1377448380}
   - component: {fileID: 1377448379}
   - component: {fileID: 1377448378}
-  - component: {fileID: 1377448377}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -5750,35 +5773,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: -415}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1377448377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1377448375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3770612b9f13de94abfb04164ace3a10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayButton
-  sceneName: LienketLobby
-  delay: 0
-  onPlay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1377448377}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1377448378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5823,9 +5817,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1377448377}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
+      - m_Target: {fileID: 884404677}
+        m_TargetAssemblyTypeName: RoundManager, Assembly-CSharp
+        m_MethodName: ContinueToNextScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6377,9 +6371,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1377448377}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
-        m_MethodName: Play
+      - m_Target: {fileID: 884404677}
+        m_TargetAssemblyTypeName: RoundManager, Assembly-CSharp
+        m_MethodName: ReturnToSelectMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6465,7 +6459,6 @@ Transform:
   - {fileID: 884404678}
   - {fileID: 2015851939}
   - {fileID: 510366731}
-  - {fileID: 1254170766}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511851467
@@ -7118,7 +7111,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.248109, y: 1.248109, z: 1.248109}
+  m_LocalScale: {x: 1.4000001, y: 1.4000001, z: 1.4000001}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1844341350}
@@ -8865,7 +8858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2022740346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8903,19 +8896,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultRewardUI
   rewardSystem: {fileID: 510366733}
-  damageDealtText: {fileID: 0}
-  damageReceivedText: {fileID: 0}
-  killCountText: {fileID: 0}
-  goldEarnedText: {fileID: 0}
-  scoreText: {fileID: 0}
-  successStars: []
-  failStars: []
-  expRewardObject: {fileID: 0}
-  goldRewardObject: {fileID: 0}
-  cardRewardObject: {fileID: 0}
-  expRewardText: {fileID: 0}
-  goldRewardText: {fileID: 0}
-  cardRewardText: {fileID: 0}
+  roundManager: {fileID: 884404677}
+  battleStats: {fileID: 67436343}
+  damageDealtText: {fileID: 1977906221}
+  damageReceivedText: {fileID: 637759639}
+  killCountText: {fileID: 1935916749}
+  goldEarnedText: {fileID: 2034675578}
+  scoreText: {fileID: 2034585134}
+  successStars:
+  - {fileID: 454109526}
+  - {fileID: 1394842871}
+  - {fileID: 1734034555}
+  failStars:
+  - {fileID: 1523733778}
+  - {fileID: 1271914625}
+  - {fileID: 2035188162}
+  expRewardObject: {fileID: 421683626}
+  goldRewardObject: {fileID: 1516997961}
+  cardRewardObject: {fileID: 1529574657}
+  expRewardText: {fileID: 421683628}
+  goldRewardText: {fileID: 1516997963}
+  cardRewardText: {fileID: 1529574659}
   nextButton: {fileID: 1377448375}
   againButton: {fileID: 337321785}
   homeButton: {fileID: 1502154934}
@@ -9568,4 +9569,6 @@ SceneRoots:
   - {fileID: 660923968}
   - {fileID: 1507204815}
   - {fileID: 1688428707}
+  - {fileID: 1254170766}
   - {fileID: 1255376233}
+  - {fileID: 67436344}

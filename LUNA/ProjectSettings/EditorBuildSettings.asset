@@ -11,19 +11,25 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Menu (Luan).unity
     guid: e297c44ba75775948b883d99a4849b28
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BattleTest.unity
     guid: a05bd141979f0984eb54f5a87cd1c4c5
   - enabled: 0
     path: Assets/Scenes/LevelStage.unity
     guid: a2a047c92c3994149a9fb16de2091f31
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LienketLobby.unity
     guid: ab0af8c6c16e8164a8609709963e87de
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LevelStage/LevelStage.unity
     guid: 5f79aa835f0e32a41ba3bc2b50a3dd1c
   - enabled: 1
+    path: Assets/Scenes/SelectMap.unity
+    guid: ce27338900bcddf4c866163b6d242130
+  - enabled: 1
+    path: Assets/Scenes/MapBT.unity
+    guid: ec27f9d9898a2984fa02dc30f4ee83b1
+  - enabled: 0
     path: Assets/Scenes/BattleTest 1.unity
     guid: 6e93dae32dc4b594b861be241ac4b6e6
   - enabled: 0
@@ -32,9 +38,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LuanTest.unity
     guid: bd2cb7308c9bd094cb90578c4d3202aa
-  - enabled: 1
-    path: Assets/Scenes/SelectMap.unity
-    guid: ce27338900bcddf4c866163b6d242130
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
