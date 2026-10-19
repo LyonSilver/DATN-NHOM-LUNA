@@ -15,20 +15,18 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private PlayerCardCinematic playerCardCinematic;
 
-    [Header("Card Use")]
-    [SerializeField] private float useDelay = 0.5f;
+    [Header("Card Use Settings")]
+    [SerializeField] private float useDelay = 0.1f;
 
     [Header("Runtime State")]
     public CardUI selectedCard;
 
     private bool isUsingCard = false;
 
-    // Cho phép các Manager khác kiểm tra
-    // Player có đang thực hiện Card hay không.
     public bool IsUsingCard => isUsingCard;
 
     // =========================================
-    // ON ENABLE
+    // EVENTS
     // =========================================
 
     private void OnEnable()
@@ -39,10 +37,6 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    // =========================================
-    // ON DISABLE
-    // =========================================
-
     private void OnDisable()
     {
         if (deckManager != null)
@@ -50,8 +44,6 @@ public class CardManager : MonoBehaviour
             deckManager.OnHandChanged -= HandleHandChanged;
         }
 
-        // Coroutine trên GameObject bị tắt
-        // không thể tiếp tục chờ Cinematic.
         StopAllCoroutines();
 
         isUsingCard = false;
@@ -59,13 +51,13 @@ public class CardManager : MonoBehaviour
     }
 
     // =========================================
-    // CARD CLICK
+    // ON CARD CLICKED
     // =========================================
 
     public void OnCardClicked(CardInputHandler clickedCard)
     {
         // =====================================
-        // 1. CHECK BATTLE STATE
+        // 1. CHECK PLAYER TURN
         // =====================================
 
         if (battleStateMachine == null)
@@ -86,7 +78,7 @@ public class CardManager : MonoBehaviour
         }
 
         // =====================================
-        // 2. CHECK CARD ACTION
+        // 2. CHECK CURRENT ACTION
         // =====================================
 
         if (isUsingCard)
@@ -101,7 +93,7 @@ public class CardManager : MonoBehaviour
             playerCardCinematic.IsPlaying)
         {
             Debug.Log(
-                "CardManager: Cinematic chưa hoàn thành!"
+                "CardManager: Cinematic chưa hoàn tất!"
             );
             return;
         }
@@ -110,7 +102,7 @@ public class CardManager : MonoBehaviour
             return;
 
         // =====================================
-        // 3. VALIDATE MANAGERS
+        // 3. VALIDATE REFERENCES
         // =====================================
 
         if (turnManager == null ||
@@ -120,13 +112,13 @@ public class CardManager : MonoBehaviour
             playerCardCinematic == null)
         {
             Debug.LogError(
-                "CardManager: Chưa gán đầy đủ References!"
+                "CardManager: Chưa gán đầy đủ Managers!"
             );
             return;
         }
 
         // =====================================
-        // 4. GET CARD DATA
+        // 4. GET CARD
         // =====================================
 
         CardUI clickedUI = clickedCard.GetCardUI();
@@ -143,7 +135,38 @@ public class CardManager : MonoBehaviour
         CardData card = clickedUI.cardData;
 
         // =====================================
-        // 5. CHECK ENERGY
+        // 5. GET CARD DISSOLVE
+        // =====================================
+
+        // Tìm CardDissolveUI trên Card
+        // hoặc GameObject cha của Card.
+        CardDissolveUI dissolve =
+            clickedUI.GetComponent<CardDissolveUI>();
+
+        if (dissolve == null)
+        {
+            dissolve =
+                clickedUI.GetComponentInParent<CardDissolveUI>();
+        }
+
+        if (dissolve == null)
+        {
+            Debug.LogError(
+                "CardManager: Card chưa có CardDissolveUI!"
+            );
+            return;
+        }
+
+        if (dissolve.IsPlaying)
+        {
+            Debug.Log(
+                "CardManager: Card đang tan biến!"
+            );
+            return;
+        }
+
+        // =====================================
+        // 6. CHECK ENERGY
         // =====================================
 
         if (!turnManager.CanAfford(card))
@@ -156,32 +179,33 @@ public class CardManager : MonoBehaviour
         }
 
         // =====================================
-        // 6. SELECT CARD
+        // 7. SELECT CARD
         // =====================================
 
         selectedCard = clickedUI;
 
         handManager.SetSelectedCard(clickedUI);
 
-        // Khóa thao tác ngay khi nhấn Card.
+        // Khóa tất cả thao tác sử dụng Card.
         isUsingCard = true;
 
         // =====================================
-        // 7. BEGIN USE CARD
+        // 8. START CARD SEQUENCE
         // =====================================
 
         StartCoroutine(
-            UseCard(card, clickedUI)
+            UseCard(card, clickedUI, dissolve)
         );
     }
 
     // =========================================
-    // USE CARD COROUTINE
+    // USE CARD SEQUENCE
     // =========================================
 
     private IEnumerator UseCard(
         CardData card,
-        CardUI cardUI)
+        CardUI cardUI,
+        CardDissolveUI dissolve)
     {
         Debug.Log(
             "CardManager: Chuẩn bị sử dụng " +
@@ -189,51 +213,32 @@ public class CardManager : MonoBehaviour
         );
 
         // =====================================
-        // 1. WAIT BEFORE CARD ACTION
+        // 1. PREPARE DELAY
         // =====================================
 
-        yield return new WaitForSeconds(
-            Mathf.Max(0f, useDelay)
-        );
-
-        // =====================================
-        // 2. VALIDATE PLAYER TURN
-        // =====================================
-
-        if (battleStateMachine == null ||
-            !battleStateMachine.IsPlayerTurn() ||
-            battleStateMachine.IsBattleFinished())
+        if (useDelay > 0f)
         {
-            CancelCardUse();
-            yield break;
-        }
-
-        // Card có thể đã bị thay đổi hoặc xóa
-        // trong lúc đang chờ.
-        if (card == null ||
-            cardUI == null ||
-            cardUI.cardData != card)
-        {
-            Debug.LogWarning(
-                "CardManager: Card không còn hợp lệ!"
-            );
-
-            CancelCardUse();
-            yield break;
+            yield return new WaitForSeconds(useDelay);
         }
 
         // =====================================
-        // 3. CHECK ENERGY AGAIN
+        // 2. VALIDATE CARD
         // =====================================
+
+        if (!IsCardValid(card, cardUI))
+        {
+            CancelCardUse(dissolve);
+            yield break;
+        }
 
         if (turnManager == null ||
             !turnManager.CanAfford(card))
         {
             Debug.Log(
-                "CardManager: Không đủ Mana để sử dụng!"
+                "CardManager: Không đủ Mana!"
             );
 
-            CancelCardUse();
+            CancelCardUse(dissolve);
             yield break;
         }
 
@@ -244,28 +249,83 @@ public class CardManager : MonoBehaviour
                 "CardManager: Cinematic không sẵn sàng!"
             );
 
-            CancelCardUse();
+            CancelCardUse(dissolve);
             yield break;
         }
 
         // =====================================
-        // 4. SPEND ENERGY
+        // 3. SPEND ENERGY
         // =====================================
 
+        // Chỉ trừ Mana một lần.
         if (!turnManager.SpendEnergy(card.cost))
         {
-            CancelCardUse();
+            CancelCardUse(dissolve);
             yield break;
         }
 
         Debug.Log(
-            $"CardManager: Đã trừ {card.cost} Mana."
+            $"CardManager: Trừ {card.cost} Mana."
         );
 
         // =====================================
-        // 5. START CARD CINEMATIC
+        // 4. PLAY CARD DISSOLVE
         // =====================================
 
+        Debug.Log(
+            "CardManager: Bắt đầu hiệu ứng Dissolve!"
+        );
+
+        if (dissolve == null)
+        {
+            RefundEnergy(card);
+            CancelCardUse();
+            yield break;
+        }
+
+        // Đợi Shader tan biến hoàn toàn.
+        yield return dissolve.PlayDissolve();
+
+        if (!dissolve.LastPlaySucceeded)
+        {
+            Debug.LogError(
+                "CardManager: Dissolve thất bại, hủy sử dụng Card!"
+            );
+
+            RefundEnergy(card);
+            CancelCardUse(dissolve);
+            yield break;
+        }
+
+        Debug.Log(
+            "CardManager: Dissolve hoàn tất!"
+        );
+
+        // =====================================
+        // 5. VALIDATE AFTER DISSOLVE
+        // =====================================
+
+        if (!IsCardValid(card, cardUI))
+        {
+            RefundEnergy(card);
+            CancelCardUse(dissolve);
+            yield break;
+        }
+
+        if (playerCardCinematic == null ||
+            playerCardCinematic.IsPlaying)
+        {
+            RefundEnergy(card);
+            CancelCardUse(dissolve);
+            yield break;
+        }
+
+        // =====================================
+        // 6. START PLAYER CINEMATIC
+        // =====================================
+
+        // Camera chỉ Zoom sau khi Card
+        // đã tan biến xong.
         bool cinematicStarted =
             playerCardCinematic.PlayCard(card);
 
@@ -275,26 +335,35 @@ public class CardManager : MonoBehaviour
                 "CardManager: Không thể bắt đầu Cinematic!"
             );
 
-            // Hoàn lại Mana nếu chưa thực hiện Card.
-            turnManager.RecoverEnergy(card.cost);
+            // Hoàn Mana vì Card chưa được sử dụng.
+            RefundEnergy(card);
 
-            CancelCardUse();
+            // Khôi phục Card nếu Cinematic thất bại.
+            CancelCardUse(dissolve);
+
             yield break;
         }
 
         Debug.Log(
-            "CardManager: Bắt đầu Cinematic " +
-            card.cardName
+            "CardManager: Bắt đầu Camera Zoom!"
         );
 
         // =====================================
-        // 6. WAIT FOR CINEMATIC
+        // 7. WAIT FOR PLAYER CINEMATIC
         // =====================================
 
-        // CardEffectManager.ExecuteCardEffect(card)
-        // được gọi trong PlayerCardCinematic.
+        // Trong PlayerCardCinematic:
         //
-        // KHÔNG gọi ExecuteCardEffect tại đây.
+        // Damage:
+        //   Zoom -> Run -> Attack -> Return
+        //
+        // Buff:
+        //   Zoom -> Buff -> Zoom Out
+        //
+        // CardEffectManager.ExecuteCardEffect(card)
+        // được gọi bên trong Cinematic.
+        //
+        // KHÔNG gọi lại tại đây.
 
         while (playerCardCinematic != null &&
                playerCardCinematic.IsPlaying)
@@ -305,7 +374,7 @@ public class CardManager : MonoBehaviour
         if (playerCardCinematic == null)
         {
             Debug.LogError(
-                "CardManager: Cinematic bị mất!"
+                "CardManager: PlayerCardCinematic đã bị hủy!"
             );
 
             CancelCardUse();
@@ -313,14 +382,13 @@ public class CardManager : MonoBehaviour
         }
 
         // =====================================
-        // 7. RESET CARD SELECTION
+        // 8. RESET SELECTED CARD
         // =====================================
 
-        // Bỏ chọn trước khi xóa Card khỏi Hand.
         ResetSelection();
 
         // =====================================
-        // 8. REMOVE USED CARD
+        // 9. REMOVE CARD FROM HAND
         // =====================================
 
         if (deckManager != null)
@@ -329,14 +397,63 @@ public class CardManager : MonoBehaviour
         }
 
         // =====================================
-        // 9. COMPLETE CARD ACTION
+        // 10. FINISH CARD SEQUENCE
         // =====================================
 
         isUsingCard = false;
 
         Debug.Log(
-            "CardManager: Hoàn thành Card " +
+            "CardManager: Hoàn tất sử dụng " +
             card.cardName
+        );
+    }
+
+    // =========================================
+    // VALIDATE CARD
+    // =========================================
+
+    private bool IsCardValid(
+        CardData card,
+        CardUI cardUI)
+    {
+        if (card == null ||
+            cardUI == null ||
+            cardUI.cardData != card)
+        {
+            Debug.LogWarning(
+                "CardManager: Card không hợp lệ!"
+            );
+
+            return false;
+        }
+
+        if (battleStateMachine == null ||
+            !battleStateMachine.IsPlayerTurn() ||
+            battleStateMachine.IsBattleFinished())
+        {
+            Debug.LogWarning(
+                "CardManager: Player Turn không hợp lệ!"
+            );
+
+            return false;
+        }
+
+        return true;
+    }
+
+    // =========================================
+    // REFUND ENERGY
+    // =========================================
+
+    private void RefundEnergy(CardData card)
+    {
+        if (turnManager == null || card == null)
+            return;
+
+        turnManager.RecoverEnergy(card.cost);
+
+        Debug.Log(
+            $"CardManager: Hoàn lại {card.cost} Mana."
         );
     }
 
@@ -344,14 +461,20 @@ public class CardManager : MonoBehaviour
     // CANCEL CARD USE
     // =========================================
 
-    private void CancelCardUse()
+    private void CancelCardUse(
+        CardDissolveUI dissolve = null)
     {
+        if (dissolve != null)
+        {
+            dissolve.ResetDissolve();
+        }
+
         ResetSelection();
 
         isUsingCard = false;
 
         Debug.Log(
-            "CardManager: Đã hủy sử dụng Card."
+            "CardManager: Đã hủy sử dụng Card!"
         );
     }
 

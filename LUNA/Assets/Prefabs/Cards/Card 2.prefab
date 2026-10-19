@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: -117109847166238510}
   - component: {fileID: 8085103637193569656}
   - component: {fileID: 2016009220808969566}
+  - component: {fileID: 3703788853780002169}
   m_Layer: 5
   m_Name: Card 2
   m_TagString: Untagged
@@ -445,6 +446,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardInputHandler
   collapsedHeight: 0
   animationDuration: 0.15
+--- !u!114 &3703788853780002169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997509876283000121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f61b87e4929dd499726eb9cd2c462d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDissolveUI
+  dissolveMaterial: {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
+  dissolveProperty: _Dissolve
+  dissolveDuration: 0.8
+  startValue: 0
+  endValue: 1
+  startOffset: {x: 0, y: 0, z: 0}
+  endOffset: {x: 0, y: 1, z: 0}
+  fadeOtherGraphics: 1
+  otherGraphicsFadeEnd: 0.65
 --- !u!1 &3413847561350165180
 GameObject:
   m_ObjectHideFlags: 0
