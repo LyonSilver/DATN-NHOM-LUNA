@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class RadialLayout : MonoBehaviour
 {
-    public float radius = 220f;
+    public float radius = 200f;
     public float startAngle = 90f;
-    public Vector2 buttonSize = new Vector2(140, 50);
 
     void OnEnable()
     {
@@ -30,7 +29,6 @@ public class RadialLayout : MonoBehaviour
 
             child.anchorMin = child.anchorMax = new Vector2(0.5f, 0.5f);
             child.pivot = new Vector2(0.5f, 0.5f);
-            // child.sizeDelta = buttonSize;
 
             float angle = (startAngle - i * angleStep) * Mathf.Deg2Rad;
             Vector2 pos = new Vector2(

@@ -1,66 +1,32 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.EventSystems;
 
 public class RadialMenuController : MonoBehaviour
 {
+    [Header("References")]
     public GameObject radialMenu;
-    public float animDuration = 0.28f;
-    public float pressScale = 0.92f;
-    public float pressDuration = 0.12f;
+
+    [Header("Animation")]
+    public float openDuration = 0.32f;
+    public float closeDuration = 0.22f;
+    public float openScaleFrom = 0.6f;
+    public float closeScaleTo = 0.75f;
+    public AnimationCurve openCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    public AnimationCurve closeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private CanvasGroup canvasGroup;
     private RectTransform rect;
-    private bool isOpen = false;
+    private bool isOpen;
+    private Coroutine currentAnim;
 
     void Awake()
     {
-        canvasGroup = radialMenu.GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-            canvasGroup = radialMenu.AddComponent<CanvasGroup>();
+        if (radialMenu == null) return;
 
+        canvasGroup = radialMenu.GetComponent<CanvasGroup>() ?? radialMenu.AddComponent<CanvasGroup>();
         rect = radialMenu.GetComponent<RectTransform>();
         radialMenu.SetActive(false);
-
-        // Tự gắn hiệu ứng nhấn cho tất cả nút con
-        AddPressEffectToChildren();
-    }
-
-    void AddPressEffectToChildren()
-    {
-        foreach (Transform child in radialMenu.transform)
-        {
-            var btn = child.GetComponent<UnityEngine.UI.Button>();
-            if (btn == null) continue;
-
-            var trigger = child.gameObject.GetComponent<EventTrigger>() ?? child.gameObject.AddComponent<EventTrigger>();
-
-            // Pointer Down
-            var down = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
-            down.callback.AddListener((data) => StartCoroutine(PressAnim(child, true)));
-            trigger.triggers.Add(down);
-
-            // Pointer Up
-            var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
-            up.callback.AddListener((data) => StartCoroutine(PressAnim(child, false)));
-            trigger.triggers.Add(up);
-        }
-    }
-
-    IEnumerator PressAnim(Transform target, bool pressing)
-    {
-        Vector3 start = target.localScale;
-        Vector3 end = pressing ? Vector3.one * pressScale : Vector3.one;
-        float t = 0f;
-
-        while (t < pressDuration)
-        {
-            t += Time.unscaledDeltaTime;
-            float lerp = Mathf.SmoothStep(0f, 1f, t / pressDuration);
-            target.localScale = Vector3.Lerp(start, end, lerp);
-            yield return null;
-        }
-        target.localScale = end;
+        isOpen = false;
     }
 
     public void ToggleMenu()
@@ -71,45 +37,67 @@ public class RadialMenuController : MonoBehaviour
 
     public void OpenMenu()
     {
-        if (isOpen) return;
-        StopAllCoroutines();
+        if (isOpen || radialMenu == null) return;
+        if (currentAnim != null) StopCoroutine(currentAnim);
+
         isOpen = true;
         radialMenu.SetActive(true);
-        StartCoroutine(AnimateMenu(true));
+        currentAnim = StartCoroutine(AnimateOpen());
     }
 
     public void CloseMenu()
     {
-        if (!isOpen) return;
-        StopAllCoroutines();
+        if (!isOpen || radialMenu == null) return;
+        if (currentAnim != null) StopCoroutine(currentAnim);
+
         isOpen = false;
-        StartCoroutine(AnimateMenu(false));
+        currentAnim = StartCoroutine(AnimateClose());
     }
 
-    IEnumerator AnimateMenu(bool open)
+    IEnumerator AnimateOpen()
     {
         float time = 0f;
-        float startScale = open ? 0.65f : 1f;
-        float endScale = open ? 1f : 0.65f;
-        float startAlpha = open ? 0f : 1f;
-        float endAlpha = open ? 1f : 0f;
+        Vector3 startScale = Vector3.one * openScaleFrom;
+        Vector3 endScale = Vector3.one;
 
-        while (time < animDuration)
+        while (time < openDuration)
         {
             time += Time.unscaledDeltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, time / animDuration);
+            float t = Mathf.Clamp01(time / openDuration);
+            float curve = openCurve.Evaluate(t);
 
-            float scale = Mathf.Lerp(startScale, endScale, t);
-            rect.localScale = Vector3.one * scale;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, t);
+            rect.localScale = Vector3.LerpUnclamped(startScale, endScale, curve);
+            canvasGroup.alpha = Mathf.Lerp(0f, 1f, curve);
 
             yield return null;
         }
 
-        rect.localScale = Vector3.one * endScale;
-        canvasGroup.alpha = endAlpha;
+        rect.localScale = endScale;
+        canvasGroup.alpha = 1f;
+        currentAnim = null;
+    }
 
-        if (!open)
-            radialMenu.SetActive(false);
+    IEnumerator AnimateClose()
+    {
+        float time = 0f;
+        Vector3 startScale = rect.localScale;
+        Vector3 endScale = Vector3.one * closeScaleTo;
+
+        while (time < closeDuration)
+        {
+            time += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(time / closeDuration);
+            float curve = closeCurve.Evaluate(t);
+
+            rect.localScale = Vector3.LerpUnclamped(startScale, endScale, curve);
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, curve);
+
+            yield return null;
+        }
+
+        rect.localScale = endScale;
+        canvasGroup.alpha = 0f;
+        radialMenu.SetActive(false);
+        currentAnim = null;
     }
 }
