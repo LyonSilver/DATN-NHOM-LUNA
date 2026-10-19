@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,13 +11,13 @@ public class AutoSceneLoader : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(sceneName))
         {
-            Debug.LogError("Scene name is empty!");
+            Debug.LogError("Chưa nhập tên Scene!");
             return;
         }
 
         if (!Application.CanStreamedLevelBeLoaded(sceneName))
         {
-            Debug.LogError("Scene is not added to Build Settings: " + sceneName);
+            Debug.LogError("Scene chưa được thêm vào Build Profiles: " + sceneName);
             return;
         }
 
