@@ -1,0 +1,121 @@
+{
+  "canvas_size": [
+    2048,
+    746
+  ],
+  "origin": "top_left",
+  "assets": {
+    "01_Stone_Floor_Clean.png": {
+      "x": 175,
+      "y": 180,
+      "width": 1693,
+      "height": 506,
+      "description": "Cobblestone arena floor with center ornaments and fountains replaced by matched stone texture"
+    },
+    "02_Fountain_Left_Complete.png": {
+      "x": 0,
+      "y": 122,
+      "width": 325,
+      "height": 419,
+      "description": "Entire left fountain and hooded statue"
+    },
+    "03_Fountain_Right_Complete.png": {
+      "x": 1734,
+      "y": 122,
+      "width": 314,
+      "height": 418,
+      "description": "Entire right fountain and hooded statue"
+    },
+    "04_Compass_and_Small_Diamonds.png": {
+      "x": 843,
+      "y": 317,
+      "width": 361,
+      "height": 193,
+      "description": "Central compass medallion with two small turquoise gems"
+    },
+    "05_Large_Diamond_Left.png": {
+      "x": 466,
+      "y": 371,
+      "width": 147,
+      "height": 89,
+      "description": "Left decorative large turquoise-gold diamond"
+    },
+    "06_Large_Diamond_Right.png": {
+      "x": 1432,
+      "y": 368,
+      "width": 152,
+      "height": 94,
+      "description": "Right decorative large turquoise-gold diamond"
+    },
+    "07_Gold_Teal_Trim_1.png": {
+      "x": 308,
+      "y": 397,
+      "width": 166,
+      "height": 34,
+      "description": "Decorative horizontal trim section, segment 1"
+    },
+    "08_Gold_Teal_Trim_2.png": {
+      "x": 606,
+      "y": 397,
+      "width": 247,
+      "height": 34,
+      "description": "Decorative horizontal trim section, segment 2"
+    },
+    "09_Gold_Teal_Trim_3.png": {
+      "x": 1195,
+      "y": 397,
+      "width": 246,
+      "height": 34,
+      "description": "Decorative horizontal trim section, segment 3"
+    },
+    "10_Gold_Teal_Trim_4.png": {
+      "x": 1575,
+      "y": 397,
+      "width": 176,
+      "height": 34,
+      "description": "Decorative horizontal trim section, segment 4"
+    },
+    "11_Gold_Teal_Trim_All.png": {
+      "x": 308,
+      "y": 397,
+      "width": 1443,
+      "height": 34,
+      "description": "All four horizontal line segments in one transparent image"
+    },
+    "12_Small_Diamond_Left_Optional.png": {
+      "x": 844,
+      "y": 377,
+      "width": 96,
+      "height": 76,
+      "description": "Optional stand-alone small diamond; already visible in asset 04"
+    },
+    "13_Small_Diamond_Right_Optional.png": {
+      "x": 1108,
+      "y": 376,
+      "width": 96,
+      "height": 76,
+      "description": "Optional stand-alone small diamond; already visible in asset 04"
+    },
+    "15_Hooded_Statue_Left_Optional.png": {
+      "x": 92,
+      "y": 122,
+      "width": 95,
+      "height": 234,
+      "description": "Optional stand-alone hooded statue from the left fountain"
+    },
+    "16_Hooded_Statue_Right_Optional.png": {
+      "x": 1860,
+      "y": 122,
+      "width": 93,
+      "height": 234,
+      "description": "Optional stand-alone hooded statue from the right fountain"
+    },
+    "14_Full_Original_Transparent.png": {
+      "x": 0,
+      "y": 121,
+      "width": 2048,
+      "height": 570,
+      "description": "Original assembled artwork with fake checkerboard removed"
+    }
+  }
+}

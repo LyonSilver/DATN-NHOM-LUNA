@@ -1,7 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:LUNA/Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Yellow to Orange - Vertical.asset.meta
 guid: 69a525efa7e6472eab268f6ea605f06e
 timeCreated: 1468213165
 licenseType: Pro
+========
+guid: 820e6d5ae07308d4abbd808aa0997def
+>>>>>>>> Hoan-Chinh-Game:LUNA/Assets/ScriptableObjects/Cards/CardData_Focus.asset.meta
 NativeFormatImporter:
   userData: 
   assetBundleName: 
