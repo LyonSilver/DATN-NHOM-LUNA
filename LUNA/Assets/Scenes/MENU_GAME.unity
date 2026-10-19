@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChaosButtonHover
   buttonImage: {fileID: 1451337717}
   buttonText: {fileID: 1157854019}
-  idleBrightness: 0.3
+  idleBrightness: 0.8
   fadeDuration: 0.2
 --- !u!114 &1451337716
 MonoBehaviour:
