@@ -19,7 +19,6 @@ public class HomeButton : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     public float clickCooldown = 0.18f;
 
     private bool canClick = true;
-    private bool isPressed;
     private Vector3 originalScale;
     private Coroutine scaleRoutine;
 
@@ -31,14 +30,12 @@ public class HomeButton : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
-        isPressed = true;
         AnimateScale(originalScale * pressScale);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
-        isPressed = false;
         AnimateScale(originalScale);
     }
 
@@ -78,6 +75,5 @@ public class HomeButton : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     {
         if (scaleRoutine != null) StopCoroutine(scaleRoutine);
         transform.localScale = originalScale;
-        isPressed = false;
     }
 }

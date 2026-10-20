@@ -91,7 +91,12 @@ public class CardUI : MonoBehaviour
         if (buyBtn != null)
         {
             buyBtn.onClick.RemoveAllListeners();
-            buyBtn.onClick.AddListener(() => storeUI.BuyCard(card));
+            buyBtn.onClick.AddListener(() =>
+            {
+#pragma warning disable CS0612
+                storeUI.BuyCard(card);
+#pragma warning restore CS0612
+            });
         }
     }
 

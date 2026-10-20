@@ -32,6 +32,7 @@ public class StoreUI : MonoBehaviour
     private List<CardData> currentStoreCards =
         new List<CardData>();
 
+    [System.Obsolete]
     private void Start()
     {
         RefreshStore();
@@ -40,7 +41,8 @@ public class StoreUI : MonoBehaviour
 
     // Chọn ngẫu nhiên các card mới.
     // Hàm này được gọi lúc mở Shop và khi nhấn Reset.
-       public void RefreshStore()
+    [System.Obsolete]
+    public void RefreshStore()
 {
     if (cardDatabase == null)
     {
@@ -165,7 +167,8 @@ public class StoreUI : MonoBehaviour
     }
 
     // Cập nhật trạng thái card mà không chọn lại card.
-     private void UpdateVisibleCardStates()
+    [System.Obsolete]
+    private void UpdateVisibleCardStates()
 {
     if (storePanel == null)
         return;
@@ -177,11 +180,12 @@ public class StoreUI : MonoBehaviour
 
         if (cardUI != null)
         {
-            cardUI.UpdateCardState();
+                cardUI.UpdateCardState();
         }
     }
     }
 
+    [System.Obsolete]
     public void BuyCard(CardData card)
     {
         PurchaseResult result =
@@ -276,6 +280,8 @@ public class StoreUI : MonoBehaviour
                 "" + currencyManager.GetEnergy();
         }
     }
+
+    [System.Obsolete]
     public void ResetShop()
 {
     RefreshStore();

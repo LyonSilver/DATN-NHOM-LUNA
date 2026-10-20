@@ -33,7 +33,6 @@ public class StoreCardUI : MonoBehaviour
 
         cardNameText.text = card.cardName;
         cardTypeText.text = card.cardType.ToString();
-    
         rarityText.text = card.rarity.ToString();
 
         if (cardCanvasGroup == null)
@@ -59,17 +58,14 @@ public class StoreCardUI : MonoBehaviour
         switch (cardData.purchaseType)
         {
             case PurchaseType.Money:
-
                 priceText.text = "Money: " + cardData.moneyCost;
                 break;
 
             case PurchaseType.Energy:
-
                 priceText.text = "Gem: " + cardData.energyCost;
                 break;
 
             case PurchaseType.MoneyAndEnergy:
-
                 priceText.text =
                     "Money: " + cardData.moneyCost +
                     "\nGem: " + cardData.energyCost;
@@ -87,7 +83,6 @@ public class StoreCardUI : MonoBehaviour
         }
 
         int purchasedCount = storeManager.GetPurchasedCount(cardData);
-
         int ownedCount = cardInventory.GetCardQuantity(cardData);
 
         quantityText.text =
@@ -95,15 +90,9 @@ public class StoreCardUI : MonoBehaviour
             " / " + cardData.maxQuantity +
             "\nOwned: " + ownedCount;
 
-           bool canBuy = storeManager.CanBuyMoreInMatch(cardData);
-        // bool canBuy =
-        // storeManager.CanBuyMoreInMatch(cardData) &&
-        // cardInventory.CanAddCard(cardData);
+        bool canBuy = storeManager.CanBuyMoreInMatch(cardData);
 
-        // Card mờ khi hết giới hạn mua hoặc Inventory đã đầy.
         cardCanvasGroup.alpha = canBuy ? 1f : 0.4f;
-
-        // Chặn người chơi nhấn nút Buy.
         buyButton.interactable = canBuy;
     }
 
@@ -114,6 +103,8 @@ public class StoreCardUI : MonoBehaviour
             return;
         }
 
+#pragma warning disable CS0612
         storeUI.BuyCard(cardData);
+#pragma warning restore CS0612
     }
 }
