@@ -7138,7 +7138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eece5d60ec877644b50cdefdf930f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalRotationUI
-  rotationSpeed: -12
 --- !u!1 &1878106243
 GameObject:
   m_ObjectHideFlags: 0
@@ -8109,16 +8108,16 @@ MonoBehaviour:
   gachaPopupPanel: {fileID: 1060928591}
   modalOverlayImage: {fileID: 250851734}
   okButton: {fileID: 312144553}
-  rewardIconImage: {fileID: 0}
-  rewardNameText: {fileID: 0}
-  rewardAmountText: {fileID: 0}
-  compensationText: {fileID: 0}
+  rewardIconImage: {fileID: 381343189}
+  rewardNameText: {fileID: 633076908}
+  rewardAmountText: {fileID: 111819103}
+  compensationText: {fileID: 71809421}
   coinSprite: {fileID: 21300000, guid: e298402e1f2a87242944f68e4587e699, type: 3}
   gemSprite: {fileID: 21300000, guid: e6741847f1d95b04e957d10bf2411ce8, type: 3}
   storePanel: {fileID: 870085303}
   zoomTarget: {fileID: 1838689430}
   gachaOpenVFX: {fileID: 0}
-  zoomScale: 1.6
+  zoomScale: 2.5
   zoomDuration: 0.5
   effectDuration: 2.5
 --- !u!1 &2121667029
