@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class CardEffectManager : MonoBehaviour
 {
-    // =========================================
+    // =====================================
     // CARD EFFECT TYPES
-    // =========================================
+    // =====================================
 
     private const int DAMAGE = 0;
     private const int SHIELD = 1;
@@ -20,10 +20,6 @@ public class CardEffectManager : MonoBehaviour
     private const int POISON_STATUS = 1;
     private const int BREAK_STATUS = 2;
 
-    // =========================================
-    // OPTIONAL TIMING
-    // =========================================
-
     public enum TimingGrade
     {
         None,
@@ -33,114 +29,75 @@ public class CardEffectManager : MonoBehaviour
         Perfect
     }
 
-    // =========================================
-    // PLAYER HP
-    // =========================================
+    // =====================================
+    // PLAYER STATUS
+    // =====================================
 
     [Header("Player HP")]
     [SerializeField] private int playerHP = 100;
     [SerializeField] private int maxPlayerHP = 100;
 
-    [Header("Player Shield")]
-    [SerializeField] private int playerShield = 0;
+    [Header("Shield")]
+    [SerializeField] private int playerShield;
+    [SerializeField] private int enemyShield;
 
-    [Header("Enemy Shield")]
-    [SerializeField] private int enemyShield = 0;
+    // =====================================
+    // REFERENCES
+    // =====================================
 
-    // =========================================
-    // MANAGERS
-    // =========================================
-
-    [Header("Managers")]
+    [Header("Battle Systems")]
     [SerializeField] private RoundManager roundManager;
+    [SerializeField] private BattleStateMachine battleStateMachine;
+    [SerializeField] private BattleResultTracker battleStats;
 
-    [SerializeField]
-    private BattleStateMachine battleStateMachine;
-
-    // =========================================
-    // BATTLE STATISTICS - NEW
-    // =========================================
-
-    [Header("Battle Statistics")]
-    [SerializeField]
-    private BattleResultTracker battleStats;
-
-    // =========================================
-    // HP UI
-    // =========================================
-
-    [Header("Player HP UI")]
+    [Header("HP UI")]
     [SerializeField] private PlayerHPBar playerHPBar;
-
-    [Header("Enemy HP UI")]
     [SerializeField] private EnemyHPBar enemyHPBar;
 
-    // =========================================
-    // PLAYER ANIMATION
-    // =========================================
-
     [Header("Player Animation")]
-    [SerializeField]
-    private PlayerAnimationController playerAnimation;
+    [SerializeField] private PlayerAnimationController playerAnimation;
+    [SerializeField] private float deathAnimationDuration = 1f;
 
-    [Header("Player Death")]
-    [SerializeField]
-    private float deathAnimationDuration = 1f;
+    [Header("Skill VFX")]
+    [SerializeField] private CardSkillVFX cardSkillVFX;
 
-    // =========================================
+    // =====================================
     // CARD SETTINGS
-    // =========================================
+    // =====================================
 
-    [Header("Slash Settings")]
+    [Header("Card Settings")]
     [SerializeField] private int slashGoodBonus = 2;
-
-    [Header("Poison Settings")]
     [SerializeField] private int poisonDamagePerTurn = 2;
 
-    [Header("Chaos Draw Settings")]
     [Range(0f, 100f)]
-    [SerializeField]
-    private float negativeEffectChance = 30f;
+    [SerializeField] private float negativeEffectChance = 30f;
+    [SerializeField] private int negativeEffectDamage = 3;
 
-    [SerializeField]
-    private int negativeEffectDamage = 3;
-
-    // =========================================
-    // RUNTIME DATA
-    // =========================================
+    // =====================================
+    // RUNTIME
+    // =====================================
 
     private EnemyHealth currentEnemyHealth;
 
     private bool enemyDefeated = true;
-    private bool playerDefeated = false;
+    private bool playerDefeated;
 
-    // Shield của Guard.
-    private int temporaryGuardShield = 0;
+    private int temporaryGuardShield;
+    private int enemyPoisonTurns;
+    private int enemyBreakTurns;
 
-    // Status của Enemy.
-    private int enemyPoisonTurns = 0;
-    private int enemyBreakTurns = 0;
+    private int focusBonus;
+    private int pendingDrawCards;
 
-    // Focus.
-    private int focusBonus = 0;
-
-    // Chaos Draw.
-    private int pendingDrawCards = 0;
-
-    // Timing.
     private TimingGrade firstTiming = TimingGrade.None;
     private TimingGrade secondTiming = TimingGrade.None;
 
-    // =========================================
-    // EVENTS
-    // =========================================
+    // =====================================
+    // EVENTS / PROPERTIES
+    // =====================================
 
     public event Action<int> OnDrawCardsRequested;
     public event Action<int> OnFocusPrepared;
-
-    // =========================================
-    // PROPERTIES
-    // =========================================
 
     public bool IsEnemyDefeated => enemyDefeated;
     public bool IsPlayerDefeated => playerDefeated;
@@ -149,19 +106,14 @@ public class CardEffectManager : MonoBehaviour
     public int EnemyBreakTurns => enemyBreakTurns;
     public int FocusBonus => focusBonus;
 
-    // =========================================
-    // START
-    // =========================================
+    // =====================================
+    // INITIALIZATION
+    // =====================================
 
     private void Start()
     {
         maxPlayerHP = Mathf.Max(1, maxPlayerHP);
-
-        playerHP = Mathf.Clamp(
-            playerHP,
-            0,
-            maxPlayerHP
-        );
+        playerHP = Mathf.Clamp(playerHP, 0, maxPlayerHP);
 
         playerShield = Mathf.Max(0, playerShield);
         enemyShield = Mathf.Max(0, enemyShield);
@@ -169,38 +121,29 @@ public class CardEffectManager : MonoBehaviour
         UpdateUI();
 
         if (playerHP <= 0)
-        {
             CheckPlayerDead();
-        }
     }
 
-    // =========================================
-    // SET CURRENT ENEMY
-    // =========================================
+    // =====================================
+    // ENEMY MANAGEMENT
+    // =====================================
 
     public void SetCurrentEnemy(EnemyHealth enemy)
     {
-        // Hủy đăng ký Enemy cũ.
         UnsubscribeEnemy();
 
-        // Gán Enemy mới.
         currentEnemyHealth = enemy;
 
-        // Reset trạng thái khi sang Round mới.
         enemyShield = 0;
         enemyPoisonTurns = 0;
         enemyBreakTurns = 0;
 
-        enemyDefeated =
-            enemy == null || enemy.IsDead;
+        enemyDefeated = enemy == null || enemy.IsDead;
 
         if (currentEnemyHealth != null)
         {
-            currentEnemyHealth.OnHealthChanged +=
-                HandleEnemyHealthChanged;
-
-            currentEnemyHealth.OnDied +=
-                HandleEnemyDied;
+            currentEnemyHealth.OnHealthChanged += HandleEnemyHealthChanged;
+            currentEnemyHealth.OnDied += HandleEnemyDied;
         }
 
         UpdateUI();
@@ -211,52 +154,26 @@ public class CardEffectManager : MonoBehaviour
         if (currentEnemyHealth == null)
             return;
 
-        currentEnemyHealth.OnHealthChanged -=
-            HandleEnemyHealthChanged;
-
-        currentEnemyHealth.OnDied -=
-            HandleEnemyDied;
+        currentEnemyHealth.OnHealthChanged -= HandleEnemyHealthChanged;
+        currentEnemyHealth.OnDied -= HandleEnemyDied;
     }
 
-    // =========================================
-    // ENEMY HEALTH CHANGED
-    // =========================================
-
-    private void HandleEnemyHealthChanged(
-        EnemyHealth enemy)
+    private void HandleEnemyHealthChanged(EnemyHealth enemy)
     {
-        if (enemy != currentEnemyHealth)
-            return;
-
-        UpdateUI();
+        if (enemy == currentEnemyHealth)
+            UpdateUI();
     }
 
-    // =========================================
-    // ENEMY DIED
-    // =========================================
-
-    private void HandleEnemyDied(
-        EnemyHealth enemy)
+    private void HandleEnemyDied(EnemyHealth enemy)
     {
-        if (enemy != currentEnemyHealth ||
-            enemyDefeated)
-        {
+        if (enemy != currentEnemyHealth || enemyDefeated)
             return;
-        }
 
         enemyDefeated = true;
-
         enemyPoisonTurns = 0;
         enemyBreakTurns = 0;
 
         UpdateUI();
-
-        Debug.Log(
-            "CardEffectManager: Enemy đã bị hạ!"
-        );
-
-        // RoundManager sẽ ghi KillCount,
-        // tránh ghi trùng khi OnDied gọi nhiều lần.
 
         if (battleStateMachine != null)
         {
@@ -265,63 +182,66 @@ public class CardEffectManager : MonoBehaviour
             );
         }
 
+        // RoundManager tự ghi Kill Count.
         if (roundManager != null)
-        {
             roundManager.EnemyDefeated();
-        }
         else
-        {
-            Debug.LogError(
-                "CardEffectManager: Chưa gán RoundManager!"
-            );
-        }
+            Debug.LogError("Chưa gán RoundManager!");
     }
 
-    // =========================================
-    // EXECUTE CARD EFFECT
-    // =========================================
+    private bool CanDamageEnemy()
+    {
+        return !playerDefeated &&
+               !enemyDefeated &&
+               currentEnemyHealth != null &&
+               !currentEnemyHealth.IsDead;
+    }
+
+    // =====================================
+    // EXECUTE CARD
+    // =====================================
 
     public void ExecuteCardEffect(CardData card)
     {
         if (card == null || playerDefeated)
             return;
 
-        int effectType = (int)card.effectType;
+        int effect = (int)card.effectType;
 
-        // Những Card tấn công cần Enemy sống.
-        if (effectType == DAMAGE ||
-            effectType == POISON ||
-            effectType == MULTI_HIT)
-        {
-            if (!CanDamageEnemy())
-            {
-                Debug.LogWarning(
-                    "CardEffectManager: Không có Enemy hợp lệ!"
-                );
+        bool isAttackCard =
+            effect == DAMAGE ||
+            effect == POISON ||
+            effect == MULTI_HIT;
 
-                return;
-            }
-        }
+        if (isAttackCard && !CanDamageEnemy())
+            return;
 
-        // Lấy Timing của Card.
+        // Lấy Timing cho lần sử dụng Card này.
         TimingGrade timing1 = firstTiming;
         TimingGrade timing2 = secondTiming;
 
         firstTiming = TimingGrade.None;
         secondTiming = TimingGrade.None;
 
-        // Focus chỉ áp dụng cho Card tiếp theo.
-        if (effectType != FOCUS)
-        {
+        // Focus áp dụng cho Card tiếp theo.
+        if (effect != FOCUS)
             focusBonus = 0;
-        }
 
-        Debug.Log(
-            "CardEffectManager: Sử dụng " +
-            card.cardName
-        );
+        // =================================
+        // PLAY SKILL VFX
+        // =================================
 
-        switch (effectType)
+        // Spawn VFX trước khi gây Damage.
+        // Tránh mất Enemy Transform nếu Enemy
+        // chết ngay sau khi nhận đòn.
+        if (cardSkillVFX != null)
+            cardSkillVFX.PlayCardVFX(card);
+
+        // =================================
+        // APPLY CARD EFFECT
+        // =================================
+
+        switch (effect)
         {
             case DAMAGE:
                 ApplyDamageWithTiming(card, timing1);
@@ -353,36 +273,19 @@ public class CardEffectManager : MonoBehaviour
 
             default:
                 Debug.LogWarning(
-                    "CardEffectManager: Chưa hỗ trợ Effect: " +
-                    effectType
+                    "Card Effect chưa được hỗ trợ: " + effect
                 );
                 break;
         }
     }
 
-    // =========================================
-    // CHECK ENEMY
-    // =========================================
-
-    private bool CanDamageEnemy()
-    {
-        return
-            !playerDefeated &&
-            !enemyDefeated &&
-            currentEnemyHealth != null &&
-            !currentEnemyHealth.IsDead;
-    }
-
-    // =========================================
-    // DAMAGE CARD: SLASH / HEAVY HIT
-    // =========================================
+    // =====================================
+    // NORMAL DAMAGE / HEAVY HIT
+    // =====================================
 
     public void ApplyDamage(CardData card)
     {
-        ApplyDamageWithTiming(
-            card,
-            TimingGrade.None
-        );
+        ApplyDamageWithTiming(card, TimingGrade.None);
     }
 
     private void ApplyDamageWithTiming(
@@ -392,31 +295,18 @@ public class CardEffectManager : MonoBehaviour
         if (card == null || !CanDamageEnemy())
             return;
 
-        int damage = Mathf.Max(
-            0,
-            card.baseDamage
-        );
+        int damage = Mathf.Max(0, card.baseDamage);
 
-        // SLASH: GOOD trở lên cộng Damage.
+        // SLASH: GOOD trở lên +2 Damage.
         if (card.cardID == "slash" &&
             IsGoodOrBetter(timing))
         {
             damage += slashGoodBonus;
         }
 
-        // Áp dụng Timing.
-        damage = ApplyTimingMultiplier(
-            damage,
-            timing
+        DealEnemyDamage(
+            CalculateTimingDamage(damage, timing)
         );
-
-        if (damage <= 0)
-            return;
-
-        playerAnimation?.PlayAttack();
-
-        // Hàm này tự ghi Damage Dealt.
-        DealEnemyDamage(damage);
 
         // HEAVY HIT: PERFECT gây Break.
         if (card.cardID == "heavy_hit" &&
@@ -430,9 +320,9 @@ public class CardEffectManager : MonoBehaviour
         }
     }
 
-    // =========================================
+    // =====================================
     // DOUBLE STRIKE
-    // =========================================
+    // =====================================
 
     private void ApplyMultiHit(
         CardData card,
@@ -442,17 +332,7 @@ public class CardEffectManager : MonoBehaviour
         if (card == null || !CanDamageEnemy())
             return;
 
-        int hitCount = Mathf.Max(
-            1,
-            card.extraValue
-        );
-
-        int damagePerHit = Mathf.Max(
-            0,
-            card.baseDamage
-        );
-
-        playerAnimation?.PlayAttack();
+        int hitCount = Mathf.Max(1, card.extraValue);
 
         for (int i = 0; i < hitCount; i++)
         {
@@ -466,24 +346,18 @@ public class CardEffectManager : MonoBehaviour
             else if (i == 1)
                 timing = timing2;
 
-            int finalDamage = ApplyTimingMultiplier(
-                damagePerHit,
+            int damage = CalculateTimingDamage(
+                card.baseDamage,
                 timing
             );
 
-            // Mỗi Hit ghi Damage riêng.
-            DealEnemyDamage(finalDamage);
-
-            Debug.Log(
-                $"DOUBLE STRIKE | Hit {i + 1}/{hitCount}" +
-                $" | Damage: {finalDamage}"
-            );
+            DealEnemyDamage(damage);
         }
     }
 
-    // =========================================
+    // =====================================
     // POISON DART
-    // =========================================
+    // =====================================
 
     private void ApplyPoison(
         CardData card,
@@ -492,98 +366,46 @@ public class CardEffectManager : MonoBehaviour
         if (card == null || !CanDamageEnemy())
             return;
 
-        int damage = ApplyTimingMultiplier(
-            Mathf.Max(0, card.baseDamage),
+        int damage = CalculateTimingDamage(
+            card.baseDamage,
             timing
         );
 
-        playerAnimation?.PlayAttack();
-
-        // Damage ban đầu được ghi thống kê.
         DealEnemyDamage(damage);
 
         if (!CanDamageEnemy())
             return;
 
-        if ((int)card.statusEffect != POISON_STATUS)
-            return;
-
-        int duration = Mathf.Max(
-            0,
-            card.statusDuration
-        );
-
-        enemyPoisonTurns = Mathf.Max(
-            enemyPoisonTurns,
-            duration
-        );
-
-        Debug.Log(
-            $"POISON DART: Enemy bị Poison " +
-            $"{enemyPoisonTurns} lượt!"
-        );
+        if ((int)card.statusEffect == POISON_STATUS)
+        {
+            enemyPoisonTurns = Mathf.Max(
+                enemyPoisonTurns,
+                card.statusDuration
+            );
+        }
     }
 
-    // =========================================
-    // ENEMY POISON PER TURN
-    // =========================================
-
+    // Poison gây Damage đầu Enemy Turn.
     public void ProcessEnemyTurnStatuses()
     {
-        if (!CanDamageEnemy())
-            return;
-
-        if (enemyPoisonTurns <= 0)
+        if (!CanDamageEnemy() || enemyPoisonTurns <= 0)
             return;
 
         enemyPoisonTurns--;
 
-        int damage = Mathf.Max(
-            0,
-            poisonDamagePerTurn
-        );
-
-        if (damage <= 0)
-            return;
-
-        // =====================================
-        // BATTLE STATS: POISON DAMAGE
-        // =====================================
-
-        // Damage thực tế không vượt quá HP Enemy.
-        int actualDamage = Mathf.Min(
-            damage,
-            Mathf.Max(0, currentEnemyHealth.CurrentHP)
-        );
-
-        // Ghi trước TakeDamage để bảo đảm
-        // thống kê cập nhật trước sự kiện OnDied.
-        if (battleStats != null)
-        {
-            battleStats.AddDamageDealt(actualDamage);
-        }
-
-        // Poison bỏ qua Enemy Shield.
-        currentEnemyHealth.TakeDamage(damage);
-
-        UpdateUI();
-
-        Debug.Log(
-            $"Enemy nhận {actualDamage} Poison Damage." +
-            $" Còn {enemyPoisonTurns} lượt."
-        );
+        // Poison bỏ qua Shield.
+        DamageEnemyHP(poisonDamagePerTurn);
     }
 
-    // =========================================
-    // HEAVY HIT: BREAK
-    // =========================================
+    // =====================================
+    // BREAK
+    // =====================================
 
     private void ApplyBreak(int duration)
     {
         if (!CanDamageEnemy())
             return;
 
-        // Break phá Shield Enemy.
         enemyShield = 0;
 
         enemyBreakTurns = Mathf.Max(
@@ -592,59 +414,57 @@ public class CardEffectManager : MonoBehaviour
         );
 
         UpdateUI();
-
-        Debug.Log(
-            $"HEAVY HIT: Enemy bị Break " +
-            $"{enemyBreakTurns} lượt!"
-        );
     }
 
     public bool TryConsumeEnemyBreak()
     {
-        if (enemyDefeated ||
-            enemyBreakTurns <= 0)
-        {
+        if (enemyDefeated || enemyBreakTurns <= 0)
             return false;
-        }
 
         enemyBreakTurns--;
-
-        Debug.Log(
-            "Enemy bị Break, bỏ qua hành động!"
-        );
-
         return true;
     }
 
-    // =========================================
-    // GUARD: PLAYER SHIELD
-    // =========================================
+    // =====================================
+    // PLAYER SHIELD / HEAL
+    // =====================================
 
     public void ApplyShield(CardData card)
     {
         if (card == null || playerDefeated)
             return;
 
-        int amount = Mathf.Max(
-            0,
-            card.shieldValue
-        );
+        int amount = Mathf.Max(0, card.shieldValue);
 
         playerShield += amount;
         temporaryGuardShield += amount;
 
         UpdateUI();
-
-        Debug.Log(
-            $"GUARD: Player nhận {amount} Shield." +
-            $" Tổng Shield: {playerShield}"
-        );
     }
 
-    // =========================================
-    // RESET GUARD AT PLAYER TURN START
-    // =========================================
+    public void ApplyHeal(CardData card)
+    {
+        if (card == null || playerDefeated)
+            return;
 
+        playerHP = Mathf.Min(
+            maxPlayerHP,
+            playerHP + Mathf.Max(0, card.healValue)
+        );
+
+        UpdateUI();
+    }
+
+    public void ApplyEnemyShield(int amount)
+    {
+        if (!CanDamageEnemy() || amount <= 0)
+            return;
+
+        enemyShield += amount;
+        UpdateUI();
+    }
+
+    // Guard hết hạn ở đầu lượt Player kế tiếp.
     public void OnPlayerTurnStarted()
     {
         if (temporaryGuardShield <= 0)
@@ -656,83 +476,16 @@ public class CardEffectManager : MonoBehaviour
         );
 
         temporaryGuardShield = 0;
-
         UpdateUI();
-
-        Debug.Log(
-            "GUARD: Shield còn lại đã hết hiệu lực."
-        );
     }
 
-    // =========================================
-    // ENEMY SHIELD
-    // =========================================
-
-    public void ApplyEnemyShield(int shieldAmount)
-    {
-        if (shieldAmount <= 0 ||
-            !CanDamageEnemy())
-        {
-            return;
-        }
-
-        enemyShield += shieldAmount;
-
-        UpdateUI();
-
-        Debug.Log(
-            $"Enemy nhận {shieldAmount} Shield!"
-        );
-    }
-
-    // =========================================
-    // QUICK HEAL
-    // =========================================
-
-    public void ApplyHeal(CardData card)
-    {
-        if (card == null || playerDefeated)
-            return;
-
-        int amount = Mathf.Max(
-            0,
-            card.healValue
-        );
-
-        int oldHP = playerHP;
-
-        playerHP = Mathf.Min(
-            maxPlayerHP,
-            playerHP + amount
-        );
-
-        int actualHeal = playerHP - oldHP;
-
-        UpdateUI();
-
-        Debug.Log(
-            $"QUICK HEAL: Player hồi {actualHeal} HP."
-        );
-    }
-
-    // =========================================
+    // =====================================
     // FOCUS
-    // =========================================
+    // =====================================
 
     private void ApplyFocus(CardData card)
     {
-        if (card == null || playerDefeated)
-            return;
-
-        focusBonus = Mathf.Max(
-            0,
-            card.extraValue
-        );
-
-        Debug.Log(
-            $"FOCUS: Card kế tiếp nhận +" +
-            $"{focusBonus} Timing Zone."
-        );
+        focusBonus = Mathf.Max(0, card.extraValue);
 
         OnFocusPrepared?.Invoke(focusBonus);
     }
@@ -742,50 +495,23 @@ public class CardEffectManager : MonoBehaviour
         return focusBonus;
     }
 
-    // =========================================
+    // =====================================
     // CHAOS DRAW
-    // =========================================
+    // =====================================
 
     private void ApplyChaosDraw(CardData card)
     {
-        if (card == null || playerDefeated)
-            return;
+        pendingDrawCards += Mathf.Max(0, card.extraValue);
 
-        int drawCount = Mathf.Max(
-            0,
-            card.extraValue
-        );
+        float chance = UnityEngine.Random.Range(0f, 100f);
 
-        // Chờ CardManager bỏ Card đã dùng
-        // ra khỏi Hand trước khi rút bài.
-        pendingDrawCards += drawCount;
-
-        Debug.Log(
-            $"CHAOS DRAW: Yêu cầu rút {drawCount} Card."
-        );
-
-        float randomValue = UnityEngine.Random.Range(
-            0f,
-            100f
-        );
-
-        if (randomValue < negativeEffectChance)
+        if (chance < negativeEffectChance)
         {
-            Debug.Log(
-                "CHAOS DRAW: Kích hoạt hiệu ứng bất lợi!"
-            );
-
-            // Damage này được ghi Damage Received
-            // thông qua TakeStatusDamage.
             TakeStatusDamage(
                 Mathf.Max(0, negativeEffectDamage)
             );
         }
     }
-
-    // =========================================
-    // DRAW CARD EVENT
-    // =========================================
 
     public void FlushPendingCardDraws()
     {
@@ -796,21 +522,16 @@ public class CardEffectManager : MonoBehaviour
         pendingDrawCards = 0;
 
         if (OnDrawCardsRequested != null)
-        {
             OnDrawCardsRequested.Invoke(amount);
-        }
         else
-        {
             Debug.LogWarning(
-                "CardEffectManager: Chưa kết nối " +
-                "DeckManager để rút Card!"
+                "Chưa kết nối DeckManager để rút Card!"
             );
-        }
     }
 
-    // =========================================
-    // TIMING SUPPORT
-    // =========================================
+    // =====================================
+    // TIMING
+    // =====================================
 
     public void SetNextCardTiming(
         TimingGrade first,
@@ -822,13 +543,12 @@ public class CardEffectManager : MonoBehaviour
 
     private bool IsGoodOrBetter(TimingGrade timing)
     {
-        return
-            timing == TimingGrade.Good ||
-            timing == TimingGrade.Great ||
-            timing == TimingGrade.Perfect;
+        return timing == TimingGrade.Good ||
+               timing == TimingGrade.Great ||
+               timing == TimingGrade.Perfect;
     }
 
-    private int ApplyTimingMultiplier(
+    private int CalculateTimingDamage(
         int damage,
         TimingGrade timing)
     {
@@ -838,10 +558,6 @@ public class CardEffectManager : MonoBehaviour
         {
             case TimingGrade.Miss:
                 multiplier = 0.5f;
-                break;
-
-            case TimingGrade.Good:
-                multiplier = 1f;
                 break;
 
             case TimingGrade.Great:
@@ -859,72 +575,50 @@ public class CardEffectManager : MonoBehaviour
         );
     }
 
-    // =========================================
-    // DEAL DAMAGE TO ENEMY
-    // =========================================
+    // =====================================
+    // DAMAGE ENEMY
+    // =====================================
 
     private void DealEnemyDamage(int damage)
     {
-        if (damage <= 0 || !CanDamageEnemy())
+        if (!CanDamageEnemy() || damage <= 0)
             return;
 
-        int originalDamage = damage;
+        // Shield nhận Damage trước.
+        int blocked = Mathf.Min(damage, enemyShield);
 
-        // =====================================
-        // 1. ENEMY SHIELD
-        // =====================================
+        enemyShield -= blocked;
+        int hpDamage = damage - blocked;
 
-        int damageToShield = Mathf.Min(
-            damage,
-            enemyShield
-        );
-
-        enemyShield -= damageToShield;
-
-        int hpDamage = damage - damageToShield;
-
-        // =====================================
-        // 2. ENEMY HP + BATTLE STATS
-        // =====================================
-
-        if (hpDamage > 0 &&
-            currentEnemyHealth != null)
-        {
-            int enemyHPBefore =
-                Mathf.Max(0, currentEnemyHealth.CurrentHP);
-
-            // Không tính Damage vượt quá HP.
-            int actualDamage = Mathf.Min(
-                hpDamage,
-                enemyHPBefore
-            );
-
-            // =====================================
-            // NEW: ADD DAMAGE DEALT
-            // =====================================
-
-            // Ghi trước TakeDamage vì TakeDamage
-            // có thể gọi OnDied và kết thúc Round.
-            if (battleStats != null)
-            {
-                battleStats.AddDamageDealt(actualDamage);
-            }
-
-            currentEnemyHealth.TakeDamage(hpDamage);
-        }
+        if (hpDamage > 0)
+            DamageEnemyHP(hpDamage);
 
         UpdateUI();
-
-        Debug.Log(
-            $"Card Damage: {originalDamage} | " +
-            $"Shield: {damageToShield} | " +
-            $"HP Damage: {hpDamage}"
-        );
     }
 
-    // =========================================
-    // ENEMY DAMAGE TO PLAYER
-    // =========================================
+    // Dùng chung cho Damage và Poison.
+    private void DamageEnemyHP(int damage)
+    {
+        if (!CanDamageEnemy() || damage <= 0)
+            return;
+
+        // Thống kê lượng HP thực tế bị trừ.
+        int actualDamage = Mathf.Min(
+            damage,
+            Mathf.Max(0, currentEnemyHealth.CurrentHP)
+        );
+
+        // Ghi trước TakeDamage vì Enemy có thể chết.
+        if (battleStats != null)
+            battleStats.AddDamageDealt(actualDamage);
+
+        currentEnemyHealth.TakeDamage(damage);
+        UpdateUI();
+    }
+
+    // =====================================
+    // DAMAGE PLAYER
+    // =====================================
 
     public void TakeDamage(int damage)
     {
@@ -935,130 +629,55 @@ public class CardEffectManager : MonoBehaviour
             return;
         }
 
-        int originalDamage = damage;
+        // Shield nhận Damage trước.
+        int blocked = Mathf.Min(damage, playerShield);
 
-        // =====================================
-        // 1. PLAYER SHIELD
-        // =====================================
+        playerShield -= blocked;
 
-        int damageToShield = Mathf.Min(
-            damage,
-            playerShield
+        temporaryGuardShield = Mathf.Max(
+            0,
+            temporaryGuardShield - blocked
         );
-
-        playerShield -= damageToShield;
-
-        // Guard Shield đã bị tiêu hao.
-        int guardConsumed = Mathf.Min(
-            damageToShield,
-            temporaryGuardShield
-        );
-
-        temporaryGuardShield -= guardConsumed;
-
-        int hpDamage = damage - damageToShield;
-
-        // =====================================
-        // 2. PLAYER HP
-        // =====================================
-
-        int oldHP = playerHP;
-
-        if (hpDamage > 0)
-        {
-            playerHP = Mathf.Max(
-                0,
-                playerHP - hpDamage
-            );
-        }
-
-        // Damage thực tế nhận vào HP.
-        int actualDamage = oldHP - playerHP;
-
-        // =====================================
-        // NEW: ADD DAMAGE RECEIVED
-        // =====================================
-
-        if (battleStats != null)
-        {
-            battleStats.AddDamageReceived(actualDamage);
-        }
 
         UpdateUI();
 
-        Debug.Log(
-            $"Enemy Damage: {originalDamage} | " +
-            $"Shield: {damageToShield} | " +
-            $"Damage Received: {actualDamage} | " +
-            $"Player HP: {playerHP}/{maxPlayerHP}"
-        );
-
-        // =====================================
-        // 3. PLAYER ANIMATION
-        // =====================================
-
-        if (playerHP <= 0)
-        {
-            CheckPlayerDead();
-        }
-        else if (actualDamage > 0)
-        {
-            playerAnimation?.PlayHurt();
-        }
+        DamagePlayerHP(damage - blocked);
     }
 
-    // =========================================
-    // STATUS DAMAGE TO PLAYER
-    // =========================================
-
+    // Poison / Burn bỏ qua Shield.
     public void TakeStatusDamage(int damage)
+    {
+        DamagePlayerHP(damage);
+    }
+
+    // Dùng chung cho Enemy Attack và Status.
+    private void DamagePlayerHP(int damage)
     {
         if (damage <= 0 || playerDefeated)
             return;
 
-        // =====================================
-        // 1. PLAYER HP
-        // =====================================
-
-        int oldHP = playerHP;
-
-        // Poison / Burn bỏ qua Shield.
-        playerHP = Mathf.Max(
-            0,
-            playerHP - damage
+        int actualDamage = Mathf.Min(
+            damage,
+            playerHP
         );
 
-        int actualDamage = oldHP - playerHP;
+        playerHP = Mathf.Max(0, playerHP - damage);
 
-        // =====================================
-        // NEW: ADD DAMAGE RECEIVED
-        // =====================================
-
+        // Ghi Damage Received.
         if (battleStats != null)
-        {
             battleStats.AddDamageReceived(actualDamage);
-        }
 
         UpdateUI();
 
-        Debug.Log(
-            $"Player nhận {actualDamage} Status Damage." +
-            $" HP: {playerHP}/{maxPlayerHP}"
-        );
-
         if (playerHP <= 0)
-        {
             CheckPlayerDead();
-        }
         else if (actualDamage > 0)
-        {
             playerAnimation?.PlayHurt();
-        }
     }
 
-    // =========================================
-    // PLAYER DEFEATED
-    // =========================================
+    // =====================================
+    // PLAYER DEATH
+    // =====================================
 
     private void CheckPlayerDead()
     {
@@ -1066,10 +685,6 @@ public class CardEffectManager : MonoBehaviour
             return;
 
         playerDefeated = true;
-
-        Debug.Log(
-            "CardEffectManager: Player đã bị hạ!"
-        );
 
         playerAnimation?.PlayDeath();
 
@@ -1080,68 +695,28 @@ public class CardEffectManager : MonoBehaviour
             );
         }
 
-        // Chờ Death Animation trước khi hiện Result.
-        StartCoroutine(
-            PlayerDeathCoroutine()
-        );
+        StartCoroutine(PlayerDeathCoroutine());
     }
-
-    // =========================================
-    // PLAYER DEATH COROUTINE
-    // =========================================
 
     private IEnumerator PlayerDeathCoroutine()
     {
-        float duration = Mathf.Max(
-            0f,
-            deathAnimationDuration
+        yield return new WaitForSecondsRealtime(
+            Mathf.Max(0f, deathAnimationDuration)
         );
 
-        if (duration > 0f)
-        {
-            yield return new WaitForSecondsRealtime(
-                duration
-            );
-        }
-
         if (roundManager != null)
-        {
             roundManager.PlayerDefeated();
-        }
-        else
-        {
-            Debug.LogError(
-                "CardEffectManager: Chưa gán RoundManager!"
-            );
-        }
     }
 
-    // =========================================
-    // LEGACY METHOD
-    // =========================================
-
-    public void NextRoundEnemyHP()
-    {
-        // EnemyHP được EnemyHealth quản lý.
-        // Giữ hàm để tương thích code cũ.
-    }
-
-    // =========================================
-    // UPDATE UI
-    // =========================================
+    // =====================================
+    // UI
+    // =====================================
 
     private void UpdateUI()
     {
-        // Player HP Bar.
         if (playerHPBar != null)
-        {
-            playerHPBar.SetHP(
-                playerHP,
-                maxPlayerHP
-            );
-        }
+            playerHPBar.SetHP(playerHP, maxPlayerHP);
 
-        // Enemy HP Bar.
         if (enemyHPBar != null)
         {
             if (currentEnemyHealth != null)
@@ -1158,41 +733,25 @@ public class CardEffectManager : MonoBehaviour
         }
     }
 
-    // =========================================
-    // GETTERS
-    // =========================================
+    // =====================================
+    // GETTERS / COMPATIBILITY
+    // =====================================
 
-    public int GetPlayerHP()
-    {
-        return playerHP;
-    }
-
-    public int GetMaxPlayerHP()
-    {
-        return maxPlayerHP;
-    }
-
-    public int GetPlayerShield()
-    {
-        return playerShield;
-    }
+    public int GetPlayerHP() => playerHP;
+    public int GetMaxPlayerHP() => maxPlayerHP;
+    public int GetPlayerShield() => playerShield;
 
     public int GetEnemyHP()
     {
-        if (currentEnemyHealth == null)
-            return 0;
-
-        return currentEnemyHealth.CurrentHP;
+        return currentEnemyHealth != null
+            ? currentEnemyHealth.CurrentHP
+            : 0;
     }
 
-    public int GetEnemyShield()
-    {
-        return enemyShield;
-    }
+    public int GetEnemyShield() => enemyShield;
 
-    // =========================================
-    // CLEANUP
-    // =========================================
+    // Giữ để script cũ không bị lỗi.
+    public void NextRoundEnemyHP() { }
 
     private void OnDestroy()
     {

@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHP: 50
-  animator: {fileID: 0}
+  animator: {fileID: 8152008238309124246}
   hurtTrigger: Hurt
   deathTrigger: Death
   deathAnimationClip: {fileID: 0}

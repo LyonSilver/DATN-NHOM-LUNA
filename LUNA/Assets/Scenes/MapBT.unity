@@ -4544,11 +4544,12 @@ MonoBehaviour:
   enemyShield: 0
   roundManager: {fileID: 884404677}
   battleStateMachine: {fileID: 1688428706}
-  battleStats: {fileID: 0}
+  battleStats: {fileID: 67436343}
   playerHPBar: {fileID: 1975799299}
   enemyHPBar: {fileID: 308863035}
   playerAnimation: {fileID: 531574974}
   deathAnimationDuration: 1
+  cardSkillVFX: {fileID: 2021347878}
   slashGoodBonus: 2
   poisonDamagePerTurn: 2
   negativeEffectChance: 30
@@ -6459,6 +6460,7 @@ Transform:
   - {fileID: 884404678}
   - {fileID: 2015851939}
   - {fileID: 510366731}
+  - {fileID: 2021347877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511851467
@@ -8840,6 +8842,60 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2021347876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2021347877}
+  - component: {fileID: 2021347878}
+  m_Layer: 0
+  m_Name: CardSkillVFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2021347877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021347876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1507204815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2021347878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021347876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 560b4f608d417d7448eca812128afbd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardSkillVFX
+  player: {fileID: 531574977}
+  enemySpawner: {fileID: 371778800}
+  cardEffects:
+  - card: {fileID: 11400000, guid: c624bca4ce2c0a940ad48f2cb3dfcf34, type: 2}
+    vfxPrefab: {fileID: 5915784643951298052, guid: e7f92ba49adac23429f9c61306aa66ac, type: 3}
+    target: 1
+    offset: {x: 0, y: 0, z: 0}
+    lifetime: 1
+    repeatCount: 1
+    repeatDelay: 0
 --- !u!1 &2022740345
 GameObject:
   m_ObjectHideFlags: 0
@@ -8858,7 +8914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2022740346
 RectTransform:
   m_ObjectHideFlags: 0
