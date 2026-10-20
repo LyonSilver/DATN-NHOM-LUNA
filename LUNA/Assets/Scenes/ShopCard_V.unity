@@ -8110,10 +8110,10 @@ MonoBehaviour:
   gachaPopupPanel: {fileID: 1060928591}
   modalOverlayImage: {fileID: 250851734}
   okButton: {fileID: 312144553}
-  rewardIconImage: {fileID: 0}
-  rewardNameText: {fileID: 0}
-  rewardAmountText: {fileID: 0}
-  compensationText: {fileID: 0}
+  rewardIconImage: {fileID: 381343189}
+  rewardNameText: {fileID: 633076908}
+  rewardAmountText: {fileID: 111819103}
+  compensationText: {fileID: 71809421}
   coinSprite: {fileID: 21300000, guid: e298402e1f2a87242944f68e4587e699, type: 3}
   gemSprite: {fileID: 21300000, guid: e6741847f1d95b04e957d10bf2411ce8, type: 3}
   storePanel: {fileID: 870085303}
