@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
+    public event System.Action OnCurrencyChanged;
+
     [Header("Player Currency")]
     [SerializeField] private int money = 1000;
     [SerializeField] private int energy = 100;
@@ -36,6 +38,7 @@ public class CurrencyManager : MonoBehaviour
         if (money >= amount)
         {
             money -= amount;
+            OnCurrencyChanged?.Invoke();
         }
     }
 
@@ -49,6 +52,7 @@ public class CurrencyManager : MonoBehaviour
         if (energy >= amount)
         {
             energy -= amount;
+            OnCurrencyChanged?.Invoke();
         }
     }
 
@@ -57,6 +61,7 @@ public class CurrencyManager : MonoBehaviour
         if (amount > 0)
         {
             money += amount;
+            OnCurrencyChanged?.Invoke();
         }
     }
 
@@ -65,6 +70,7 @@ public class CurrencyManager : MonoBehaviour
         if (amount > 0)
         {
             energy += amount;
+            OnCurrencyChanged?.Invoke();
         }
     }
 }
