@@ -95,6 +95,7 @@ public class CardUI : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     public void UpdateCardState()
     {
         if (cardData == null) return;
