@@ -4021,7 +4021,7 @@ MonoBehaviour:
   cardManager: {fileID: 1418680897}
   playerCardCinematic: {fileID: 1254170767}
   battleStats: {fileID: 67436343}
-  testStage: {fileID: 0}
+  testStage: {fileID: 11400000, guid: e660e0f08f1b6064fa0b8f25bf767bee, type: 2}
   spawnDelay: 2
   roundText: {fileID: 63872809}
   battleHUD: {fileID: 851991815}
