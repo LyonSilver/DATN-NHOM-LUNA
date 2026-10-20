@@ -29,6 +29,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ShopCard_V.unity
     guid: db74c7435db594b47b398204cd7bfc6a
+  - enabled: 1
+    path: Assets/Scenes/SelectMap.unity
+    guid: ce27338900bcddf4c866163b6d242130
+  - enabled: 1
+    path: Assets/Scenes/MapBT.unity
+    guid: ec27f9d9898a2984fa02dc30f4ee83b1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

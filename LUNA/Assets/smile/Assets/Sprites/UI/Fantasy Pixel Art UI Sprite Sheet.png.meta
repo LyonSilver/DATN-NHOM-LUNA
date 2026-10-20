@@ -1,0 +1,579 @@
+fileFormatVersion: 2
+guid: 2a74caa8d1ee1554eac29d77199ee875
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 805
+        width: 796
+        height: 281
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f7a782a621ab8d4eb29a1dc5f00e692
+      internalID: 72985938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 873
+        width: 164
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd4376ce6780cfa438a31b1d578d59b3
+      internalID: -95577099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 875
+        width: 138
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d861fc81beabe644f9c0212e40e341ea
+      internalID: 153924485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 1268
+        y: 875
+        width: 118
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5abe9968e2c385d4c99bfb365c6b3e1b
+      internalID: 387716694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 450
+        width: 835
+        height: 348
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eebf2bdbef7693a44bffc26a8320bc62
+      internalID: -1258124428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 743
+        width: 90
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a6892481c74beb4d80697e688c92811
+      internalID: 463029487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1111
+        y: 743
+        width: 98
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdb221cdf5846164687c970493e05b8e
+      internalID: 1585161911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1268
+        y: 729
+        width: 118
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 368eebb3659a937488f29d60a2e1d7d9
+      internalID: -520433605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 553
+        width: 142
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b40e54e1d38f94439d7e617833afa95
+      internalID: -1588279644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 565
+        width: 141
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c96fc7fc07dac4a49ad8bb9beeb15aa6
+      internalID: -66460945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 1256
+        y: 559
+        width: 138
+        height: 146
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15574b51bfe623b4b8d0fc9dcc07902e
+      internalID: 692717101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 175
+        width: 827
+        height: 273
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b4d1a3789641514e85378057b1d06e1
+      internalID: -24917213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 388
+        width: 140
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c88764b430acd4d8d61b3d3836c2ea
+      internalID: -588463367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 387
+        width: 113
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac5050dd3f542fe44a004a474ce7a032
+      internalID: -503173311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 1270
+        y: 387
+        width: 144
+        height: 151
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69be1a338a44ca343a6d33fd1e9e1608
+      internalID: 1762816280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 168
+        width: 498
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1855f3176c26bac4d9773faf0c1e2cbe
+      internalID: -1277045526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 34
+        width: 353
+        height: 115
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79a84f6ba90f8fa4386eb68d9ffeab84
+      internalID: -1655919073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 39
+        width: 355
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c692e7efd90c1b4ea1f0f523026c70e
+      internalID: -1158326965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 28
+        width: 127
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92ba6e72b3e750142b31bca4954c90e9
+      internalID: 1711396173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy Pixel Art UI Sprite Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 1173
+        y: 30
+        width: 121
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7f36294d3e964845b53930c62b2da81
+      internalID: -2117493160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c57def8d358e8044fbde3feb4f2447d5
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Fantasy Pixel Art UI Sprite Sheet_0: 72985938
+      Fantasy Pixel Art UI Sprite Sheet_1: -95577099
+      Fantasy Pixel Art UI Sprite Sheet_10: 692717101
+      Fantasy Pixel Art UI Sprite Sheet_11: -24917213
+      Fantasy Pixel Art UI Sprite Sheet_12: -588463367
+      Fantasy Pixel Art UI Sprite Sheet_13: -503173311
+      Fantasy Pixel Art UI Sprite Sheet_14: 1762816280
+      Fantasy Pixel Art UI Sprite Sheet_15: -1277045526
+      Fantasy Pixel Art UI Sprite Sheet_16: -1655919073
+      Fantasy Pixel Art UI Sprite Sheet_17: -1158326965
+      Fantasy Pixel Art UI Sprite Sheet_18: 1711396173
+      Fantasy Pixel Art UI Sprite Sheet_19: -2117493160
+      Fantasy Pixel Art UI Sprite Sheet_2: 153924485
+      Fantasy Pixel Art UI Sprite Sheet_3: 387716694
+      Fantasy Pixel Art UI Sprite Sheet_4: -1258124428
+      Fantasy Pixel Art UI Sprite Sheet_5: 463029487
+      Fantasy Pixel Art UI Sprite Sheet_6: 1585161911
+      Fantasy Pixel Art UI Sprite Sheet_7: -520433605
+      Fantasy Pixel Art UI Sprite Sheet_8: -1588279644
+      Fantasy Pixel Art UI Sprite Sheet_9: -66460945
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
