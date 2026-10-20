@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-//sửa code
 using System.Collections;
 
 public class GachaUIManager : MonoBehaviour
@@ -18,7 +17,7 @@ public class GachaUIManager : MonoBehaviour
     [SerializeField] private Button upgradeButton;
     [SerializeField] private CanvasGroup upgradeButtonGroup;
 
-    [Header("Currency UI - Khong bat buoc")]
+    [Header("Currency UI")]
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private TMP_Text gemText;
 
@@ -27,7 +26,7 @@ public class GachaUIManager : MonoBehaviour
     [SerializeField] private GameObject modalOverlayImage;
     [SerializeField] private Button okButton;
 
-    [Header("Reward UI - Cac object ban da tao")]
+    [Header("Reward UI")]
     [SerializeField] private Image rewardIconImage;
     [SerializeField] private TMP_Text rewardNameText;
     [SerializeField] private TMP_Text rewardAmountText;
@@ -37,11 +36,13 @@ public class GachaUIManager : MonoBehaviour
     [SerializeField] private Sprite coinSprite;
     [SerializeField] private Sprite gemSprite;
 
-    //sửa code 
     [Header("Gacha Animation")]
     [SerializeField] private RectTransform storePanel;
     [SerializeField] private RectTransform zoomTarget;
     [SerializeField] private GameObject gachaOpenVFX;
+
+    [Header("Portal Rotation")]
+    [SerializeField] private PortalRotationUI portalRotationUI;
 
     [SerializeField] private float zoomScale = 1.6f;
     [SerializeField] private float zoomDuration = 0.5f;
@@ -49,26 +50,21 @@ public class GachaUIManager : MonoBehaviour
 
     private Vector3 originalScale;
     private Vector2 originalPosition;
+
     private bool isRolling = false;
-
-    //--//
-
     private bool isPopupOpen = false;
 
     private void Awake()
     {
-        // An popup khi bat dau.
         if (gachaPopupPanel != null)
             gachaPopupPanel.SetActive(false);
 
         if (modalOverlayImage != null)
             modalOverlayImage.SetActive(false);
 
-        // An dong thong bao bu Coin ban dau.
         if (compensationText != null)
             compensationText.gameObject.SetActive(false);
 
-        // Tu dong ket noi cac button.
         if (rollButton != null)
             rollButton.onClick.AddListener(OnRollButtonClicked);
 
@@ -78,20 +74,14 @@ public class GachaUIManager : MonoBehaviour
         if (okButton != null)
             okButton.onClick.AddListener(OnOKButtonClicked);
 
-        //sửa code
-        // Lưu trạng thái ban đầu của giao diện
         if (storePanel != null)
         {
             originalScale = storePanel.localScale;
             originalPosition = storePanel.anchoredPosition;
         }
 
-        // Tắt VFX khi bắt đầu
         if (gachaOpenVFX != null)
-        {
             gachaOpenVFX.SetActive(false);
-        }
-        //--//
     }
 
     private void OnEnable()
@@ -126,8 +116,6 @@ public class GachaUIManager : MonoBehaviour
 
     private void Update()
     {
-        // Cap nhat trang thai nut neu tien thay doi
-        // truc tiep trong Inspector khi dang Play.
         RefreshButtonStates();
     }
 
@@ -161,8 +149,7 @@ public class GachaUIManager : MonoBehaviour
                 gachaManager.GetUpgradeGemCost()
             );
 
-        // Khoa hai nut khi popup dang mo.
-        if (isPopupOpen)
+        if (isPopupOpen || isRolling)
         {
             canRoll = false;
             canUpgrade = false;
@@ -184,26 +171,6 @@ public class GachaUIManager : MonoBehaviour
             group.alpha = canUse ? 1f : 0.4f;
     }
 
-    // public void OnRollButtonClicked()
-    // {
-    //     if (gachaManager == null || isPopupOpen)
-    //         return;
-
-    //     GachaResult result = gachaManager.TryRoll();
-
-    //     if (result == GachaResult.Success)
-    //     {
-    //         ShowReward(gachaManager.LastReward);
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Gacha quay không thành công: " + result);
-    //     }
-
-    //     RefreshCurrencyUI();
-    // }
-
-    //sửa code
     public void OnRollButtonClicked()
     {
         if (gachaManager == null || isPopupOpen || isRolling)
@@ -222,13 +189,13 @@ public class GachaUIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Gacha quay khong thanh cong: " + result);
+            Debug.Log("Gacha quay không thành công: " + result);
         }
     }
-    //--//
+
     public void OnUpgradeButtonClicked()
     {
-        if (gachaManager == null || isPopupOpen)
+        if (gachaManager == null || isPopupOpen || isRolling)
             return;
 
         GachaResult result = gachaManager.UpgradeRareRate();
@@ -242,15 +209,11 @@ public class GachaUIManager : MonoBehaviour
                 break;
 
             case GachaResult.NotEnoughGem:
-                ShowMessage(
-                    "Nâng cấp thất bại!\nKhông đủ Gem."
-                );
+                ShowMessage("Nâng cấp thất bại!\nKhông đủ Gem.");
                 break;
 
             case GachaResult.UpgradeAlreadyPurchased:
-                ShowMessage(
-                    "Bạn đã nâng cấp tỉ lệ thẻ hiếm rồi!"
-                );
+                ShowMessage("Bạn đã nâng cấp tỉ lệ thẻ hiếm rồi!");
                 break;
 
             case GachaResult.InvalidConfiguration:
@@ -272,25 +235,9 @@ public class GachaUIManager : MonoBehaviour
         if (reward == null)
             return;
 
-        // Hien lai cac thanh phan phan thuong
         if (rewardIconImage != null)
+        {
             rewardIconImage.gameObject.SetActive(true);
-
-        if (rewardNameText != null)
-            rewardNameText.gameObject.SetActive(true);
-
-        if (rewardAmountText != null)
-            rewardAmountText.gameObject.SetActive(true);
-
-        // An thong bao cu
-        if (compensationText != null)
-        {
-            compensationText.text = "";
-            compensationText.gameObject.SetActive(false);
-        }
-
-        if (rewardIconImage != null)
-        {
             rewardIconImage.sprite = null;
             rewardIconImage.enabled = true;
 
@@ -314,6 +261,8 @@ public class GachaUIManager : MonoBehaviour
 
         if (rewardNameText != null)
         {
+            rewardNameText.gameObject.SetActive(true);
+
             if (reward.rewardType == GachaRewardType.Card)
             {
                 rewardNameText.text = reward.card != null
@@ -332,24 +281,31 @@ public class GachaUIManager : MonoBehaviour
 
         if (rewardAmountText != null)
         {
+            rewardAmountText.gameObject.SetActive(true);
+
             if (reward.rewardType == GachaRewardType.Card)
                 rewardAmountText.text = "x" + reward.amount;
             else
                 rewardAmountText.text = "+" + reward.amount;
         }
 
-        // Chi hien thong bao neu the quay duoc da full.
-        if (reward.wasCompensation && compensationText != null)
+        if (compensationText != null)
         {
-            string cardName = reward.replacedCard != null
-                ? reward.replacedCard.cardName
-                : "Lá bài";
+            compensationText.text = "";
+            compensationText.gameObject.SetActive(false);
 
-            compensationText.text =
-                "Đã full lượt sở hữu của " + cardName +
-                ". Nhận bù +" + reward.amount + " Coin.";
+            if (reward.wasCompensation)
+            {
+                string cardName = reward.replacedCard != null
+                    ? reward.replacedCard.cardName
+                    : "Lá bài";
 
-            compensationText.gameObject.SetActive(true);
+                compensationText.text =
+                    "Đã full lượt sở hữu của " + cardName +
+                    ". Nhận bù +" + reward.amount + " Coin.";
+
+                compensationText.gameObject.SetActive(true);
+            }
         }
 
         isPopupOpen = true;
@@ -378,7 +334,6 @@ public class GachaUIManager : MonoBehaviour
 
     private void ShowMessage(string message)
     {
-        // An thong tin phan thuong cua lan quay truoc
         if (rewardIconImage != null)
         {
             rewardIconImage.sprite = null;
@@ -392,14 +347,12 @@ public class GachaUIManager : MonoBehaviour
         if (rewardAmountText != null)
             rewardAmountText.gameObject.SetActive(false);
 
-        // Dung compesationText de hien thi thong bao
         if (compensationText != null)
         {
             compensationText.text = message;
             compensationText.gameObject.SetActive(true);
         }
 
-        // Mo popup
         isPopupOpen = true;
 
         if (modalOverlayImage != null)
@@ -411,17 +364,14 @@ public class GachaUIManager : MonoBehaviour
         RefreshButtonStates();
     }
 
-    //sửa code
     private IEnumerator PlayGachaAnimation()
     {
-        // Lưu lại trạng thái ban đầu trước mỗi lần quay
         if (storePanel != null)
         {
             originalScale = storePanel.localScale;
             originalPosition = storePanel.anchoredPosition;
         }
 
-        // Bật hiệu ứng cổng không gian
         if (gachaOpenVFX != null)
         {
             gachaOpenVFX.SetActive(true);
@@ -436,32 +386,42 @@ public class GachaUIManager : MonoBehaviour
             }
         }
 
-        // Zoom về phía cổng không gian
-        if (storePanel != null && zoomTarget != null)
+        bool canZoom = storePanel != null && zoomTarget != null;
+
+        if (canZoom)
         {
+            // Tăng tốc xoay khi bắt đầu zoom.
+            if (portalRotationUI != null)
+                portalRotationUI.StartZoomRotation();
+
             yield return StartCoroutine(
                 ZoomStoreToTarget(zoomScale, zoomDuration)
             );
         }
 
-        // Giữ hiệu ứng trong thời gian đã thiết lập
-        yield return new WaitForSeconds(effectDuration);
+        // Giữ hiệu ứng tại vị trí zoom.
+        yield return new WaitForSecondsRealtime(
+            Mathf.Max(0f, effectDuration)
+        );
 
-        // Trả giao diện về trạng thái ban đầu
+        // Thu giao diện về vị trí ban đầu.
         yield return StartCoroutine(RestoreStoreAnimated());
 
-        // Tắt VFX
-        if (gachaOpenVFX != null)
-        {
-            gachaOpenVFX.SetActive(false);
-        }
+        // Khôi phục tốc độ xoay ban đầu.
+        if (portalRotationUI != null)
+            portalRotationUI.ResetRotationSpeed();
 
-        // Chỉ mở popup sau khi animation kết thúc
+        if (gachaOpenVFX != null)
+            gachaOpenVFX.SetActive(false);
+
         isRolling = false;
+
         ShowReward(gachaManager.LastReward);
     }
 
-    private IEnumerator ZoomStoreToTarget(float targetScale, float duration)
+    private IEnumerator ZoomStoreToTarget(
+        float targetScale,
+        float duration)
     {
         if (storePanel == null || zoomTarget == null)
             yield break;
@@ -471,14 +431,13 @@ public class GachaUIManager : MonoBehaviour
         if (parentRect == null)
             yield break;
 
-        // Lấy tọa độ tâm cổng trong hệ tọa độ của StorePanel
+        // Xác định vị trí tâm cổng trong hệ tọa độ StorePanel.
         Vector3 targetLocal =
             storePanel.InverseTransformPoint(zoomTarget.position);
 
         Vector2 startPosition = storePanel.anchoredPosition;
         Vector3 startScale = storePanel.localScale;
 
-        // Với parent có tâm tại (0, 0), đưa tâm cổng về tâm màn hình
         Vector2 targetPosition = new Vector2(
             -targetLocal.x * targetScale,
             -targetLocal.y * targetScale
@@ -495,7 +454,7 @@ public class GachaUIManager : MonoBehaviour
 
             float t = Mathf.Clamp01(timer / duration);
 
-            // Làm chuyển động mượt hơn
+            // Chuyển động tăng tốc rồi giảm tốc mượt.
             t = t * t * (3f - 2f * t);
 
             storePanel.localScale =
@@ -541,5 +500,4 @@ public class GachaUIManager : MonoBehaviour
         storePanel.localScale = originalScale;
         storePanel.anchoredPosition = originalPosition;
     }
-    //--//
 }

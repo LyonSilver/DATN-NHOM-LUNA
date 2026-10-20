@@ -2306,7 +2306,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 9, y: -20}
+  m_AnchoredPosition: {x: 16, y: 32}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &423392463
@@ -3643,7 +3643,7 @@ MonoBehaviour:
   storeManager: {fileID: 1419647150}
   currencyManager: {fileID: 973526140}
   storePanel: {fileID: 423392462}
-  storeCardPrefab: {fileID: 3161654776697838061, guid: b8c0bb84b86f22343908b04814adfe4b, type: 3}
+  storeCardPrefab: {fileID: 2997509876283000121, guid: 4b25b7b0c273ef141ac4c3110c484aa5, type: 3}
   cardsPerRefresh: 4
   moneyText: {fileID: 499169072}
   energyText: {fileID: 1714481720}
@@ -7135,9 +7135,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838689429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eece5d60ec877644b50cdefdf930f41, type: 3}
+  m_Script: {fileID: 11500000, guid: 5341b6962848c9b42b1d5877920cf866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalRotationUI
+  rotationSpeed: -12
+  zoomRotationSpeed: -180
+  accelerationSpeed: 5
 --- !u!1 &1878106243
 GameObject:
   m_ObjectHideFlags: 0
@@ -8117,6 +8120,7 @@ MonoBehaviour:
   storePanel: {fileID: 870085303}
   zoomTarget: {fileID: 1838689430}
   gachaOpenVFX: {fileID: 0}
+  portalRotationUI: {fileID: 1838689433}
   zoomScale: 2.5
   zoomDuration: 0.5
   effectDuration: 2.5
