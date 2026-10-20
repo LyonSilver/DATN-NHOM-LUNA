@@ -4089,7 +4089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CurrencyManager
   money: 1000
-  energy: 100
+  energy: 10000
 --- !u!1 &1047144395
 GameObject:
   m_ObjectHideFlags: 0
@@ -8047,6 +8047,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2119212719}
+  - component: {fileID: 2119212721}
+  - component: {fileID: 2119212720}
   m_Layer: 0
   m_Name: GachaManager
   m_TagString: Untagged
@@ -8069,6 +8071,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1137320032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2119212720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119212718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9484fdabb718b4b498b9a9a4a1908993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GachaManager
+  config: {fileID: 11400000, guid: fe523b6ff9a68f841aadc41e54f74c52, type: 2}
+  cardInventory: {fileID: 891679601}
+  currencyManager: {fileID: 973526140}
+  rareRateUpgraded: 0
+--- !u!114 &2119212721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119212718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af981cde52ad9c14ea43dc6c7f860e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GachaUIManager
+  gachaManager: {fileID: 2119212720}
+  currencyManager: {fileID: 973526140}
+  rollButton: {fileID: 321688529}
+  rollButtonGroup: {fileID: 321688528}
+  upgradeButton: {fileID: 347987195}
+  upgradeButtonGroup: {fileID: 347987194}
+  coinText: {fileID: 499169072}
+  gemText: {fileID: 1714481720}
+  gachaPopupPanel: {fileID: 1060928591}
+  modalOverlayImage: {fileID: 250851734}
+  okButton: {fileID: 312144553}
+  rewardIconImage: {fileID: 0}
+  rewardNameText: {fileID: 0}
+  rewardAmountText: {fileID: 0}
+  compensationText: {fileID: 0}
+  coinSprite: {fileID: 21300000, guid: e298402e1f2a87242944f68e4587e699, type: 3}
+  gemSprite: {fileID: 21300000, guid: e6741847f1d95b04e957d10bf2411ce8, type: 3}
+  storePanel: {fileID: 870085303}
+  zoomTarget: {fileID: 1838689430}
+  gachaOpenVFX: {fileID: 0}
+  zoomScale: 2.5
+  zoomDuration: 0.5
+  effectDuration: 2.5
 --- !u!1 &2121667029
 GameObject:
   m_ObjectHideFlags: 0
