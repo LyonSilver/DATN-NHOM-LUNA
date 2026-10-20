@@ -40,87 +40,115 @@ public class StoreUI : MonoBehaviour
 
     // Chọn ngẫu nhiên các card mới.
     // Hàm này được gọi lúc mở Shop và khi nhấn Reset.
-    public void RefreshStore()
+       public void RefreshStore()
+{
+    if (cardDatabase == null)
     {
-        if (cardDatabase == null)
-        {
-            Debug.LogError("StoreUI: CardDatabase chưa được gán.");
-            return;
-        }
-
-        if (storePanel == null || storeCardPrefab == null)
-        {
-            Debug.LogError("StoreUI: Chưa gán Store Panel hoặc Card Prefab.");
-            return;
-        }
-
-        List<CardData> availableCards =
-            new List<CardData>();
-
-        List<CardData> databaseCards =
-            cardDatabase.GetStoreCards();
-
-        for (int i = 0; i < databaseCards.Count; i++)
-        {
-            CardData card = databaseCards[i];
-
-            if (card != null && !availableCards.Contains(card))
-            {
-                availableCards.Add(card);
-            }
-        }
-
-        // Xóa danh sách card đang hiển thị cũ.
-        ClearStore();
-        currentStoreCards.Clear();
-
-        int targetCount =
-            Mathf.Min(cardsPerRefresh, availableCards.Count);
-
-        // Chọn ngẫu nhiên, không chọn trùng card.
-        for (int i = 0; i < targetCount; i++)
-        {
-            int randomIndex =
-                Random.Range(0, availableCards.Count);
-
-            CardData selectedCard =
-                availableCards[randomIndex];
-
-            currentStoreCards.Add(selectedCard);
-            availableCards.RemoveAt(randomIndex);
-        }
-
-        // Tạo UI cho các card được chọn.
-        for (int i = 0; i < currentStoreCards.Count; i++)
-        {
-            CardData card = currentStoreCards[i];
-
-            GameObject cardObject =
-                Instantiate(storeCardPrefab, storePanel);
-
-            StoreCardUI cardUI =
-                cardObject.GetComponent<StoreCardUI>();
-
-            if (cardUI == null)
-            {
-                Debug.LogError(
-                    "StoreUI: Prefab thiếu StoreCardUI."
-                );
-
-                Destroy(cardObject);
-                continue;
-            }
-
-            cardUI.Setup(
-                card,
-                this,
-                storeManager,
-                cardInventory
-            );
-        }
-
-        UpdateVisibleCardStates();
+        Debug.LogError("StoreUI: CardDatabase chưa được gán.");
+        return;
     }
+
+    if (storePanel == null || storeCardPrefab == null)
+    {
+        Debug.LogError(
+            "StoreUI: Chưa gán Store Panel hoặc Card Prefab."
+        );
+        return;
+    }
+
+    if (storeManager == null || cardInventory == null)
+    {
+        Debug.LogError(
+            "StoreUI: Chưa gán StoreManager hoặc CardInventory."
+        );
+        return;
+    }
+
+    // Lấy danh sách card từ database.
+    List<CardData> databaseCards = cardDatabase.GetStoreCards();
+
+    if (databaseCards == null || databaseCards.Count == 0)
+    {
+        Debug.LogWarning("StoreUI: Không có card trong database.");
+        return;
+    }
+
+    // Lọc card null và loại bỏ card trùng.
+    List<CardData> availableCards = new List<CardData>();
+
+    for (int i = 0; i < databaseCards.Count; i++)
+    {
+        CardData card = databaseCards[i];
+
+        if (card != null && !availableCards.Contains(card))
+        {
+            availableCards.Add(card);
+        }
+    }
+
+    if (availableCards.Count == 0)
+    {
+        Debug.LogWarning("StoreUI: Không có card hợp lệ.");
+        return;
+    }
+
+    // Xóa giao diện Shop cũ.
+    ClearStore();
+    currentStoreCards.Clear();
+
+    // Chọn tối đa số card được cấu hình.
+    int targetCount = Mathf.Min(
+        cardsPerRefresh,
+        availableCards.Count
+    );
+
+    // Chọn ngẫu nhiên, không chọn trùng.
+    for (int i = 0; i < targetCount; i++)
+    {
+        int randomIndex = Random.Range(
+            0,
+            availableCards.Count
+        );
+
+        CardData selectedCard = availableCards[randomIndex];
+
+        currentStoreCards.Add(selectedCard);
+        availableCards.RemoveAt(randomIndex);
+    }
+
+    // Tạo prefab Card 3 sử dụng CardUI.
+    for (int i = 0; i < currentStoreCards.Count; i++)
+    {
+        CardData card = currentStoreCards[i];
+
+        GameObject cardObject = Instantiate(
+            storeCardPrefab,
+            storePanel
+        );
+
+        CardUI cardUI = cardObject.GetComponent<CardUI>();
+
+        if (cardUI == null)
+        {
+            Debug.LogError(
+                "StoreUI: Prefab Shop cần có CardUI trên GameObject gốc."
+            );
+
+            Destroy(cardObject);
+            continue;
+        }
+
+        cardUI.SetupForStore(
+            card,
+            this,
+            storeManager,
+            cardInventory
+        );
+    }
+
+    UpdateVisibleCardStates();
+}
+    
 
     // Xóa các card UI cũ nhưng không xóa dữ liệu mua trong trận.
     private void ClearStore()
@@ -137,23 +165,21 @@ public class StoreUI : MonoBehaviour
     }
 
     // Cập nhật trạng thái card mà không chọn lại card.
-    private void UpdateVisibleCardStates()
+     private void UpdateVisibleCardStates()
+{
+    if (storePanel == null)
+        return;
+
+    for (int i = 0; i < storePanel.childCount; i++)
     {
-        if (storePanel == null)
-        {
-            return;
-        }
+        CardUI cardUI =
+            storePanel.GetChild(i).GetComponent<CardUI>();
 
-        for (int i = 0; i < storePanel.childCount; i++)
+        if (cardUI != null)
         {
-            StoreCardUI cardUI =
-                storePanel.GetChild(i).GetComponent<StoreCardUI>();
-
-            if (cardUI != null)
-            {
-                cardUI.UpdateCardState();
-            }
+            cardUI.UpdateCardState();
         }
+    }
     }
 
     public void BuyCard(CardData card)
@@ -251,13 +277,9 @@ public class StoreUI : MonoBehaviour
         }
     }
     public void ResetShop()
-    {
-        // Reset giới hạn mua của tất cả card
-        storeManager.ResetPurchaseLimits();
+{
+    RefreshStore();
+}
 
-        // Chọn và hiển thị lại 4 card ngẫu nhiên
-        RefreshStore();
-    }
 
-    
 }
