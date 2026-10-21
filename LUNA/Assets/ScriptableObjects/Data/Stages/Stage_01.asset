@@ -18,7 +18,7 @@ MonoBehaviour:
   requiredPlayerLevel: 1
   isBossStage: 0
   sceneToLoad: MapBT
-  enemyIndices: 0000000000000000
+  enemyIndices: 0000000001000000
   rewardCoin: 100
   rewardExp: 50
   description: 

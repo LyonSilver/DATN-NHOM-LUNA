@@ -5,7 +5,7 @@ public class StageSelectHud : MonoBehaviour
 {
     [SerializeField] StageSelectManager manager;
     [SerializeField] TMP_Text hudText;
-    [SerializeField] int maxStars = 15;
+    [SerializeField] int maxStars = 9;
 
     void OnEnable()
     {

@@ -101,9 +101,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1302
-        width: 254
-        height: 234
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -122,10 +122,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_1
       rect:
         serializedVersion: 2
-        x: 253
-        y: 1300
-        width: 257
-        height: 235
+        x: 256
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,10 +144,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_2
       rect:
         serializedVersion: 2
-        x: 498
-        y: 1010
-        width: 293
-        height: 521
+        x: 512
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +166,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_3
       rect:
         serializedVersion: 2
-        x: 616
-        y: 1519
-        width: 25
-        height: 17
+        x: 768
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,10 +188,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_4
       rect:
         serializedVersion: 2
-        x: 780
-        y: 1304
-        width: 244
-        height: 232
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +210,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_5
       rect:
         serializedVersion: 2
-        x: 912
-        y: 1523
-        width: 19
-        height: 13
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +232,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_6
       rect:
         serializedVersion: 2
-        x: 780
-        y: 1426
-        width: 7
-        height: 6
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +254,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_7
       rect:
         serializedVersion: 2
-        x: 25
-        y: 1403
-        width: 5
-        height: 4
+        x: 768
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +276,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_8
       rect:
         serializedVersion: 2
-        x: 9
-        y: 1354
-        width: 7
-        height: 4
+        x: 0
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -298,10 +298,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_9
       rect:
         serializedVersion: 2
-        x: 25
-        y: 1352
-        width: 4
-        height: 6
+        x: 256
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -320,10 +320,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_10
       rect:
         serializedVersion: 2
-        x: 246
-        y: 1354
-        width: 8
-        height: 6
+        x: 512
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,10 +342,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_11
       rect:
         serializedVersion: 2
-        x: 263
-        y: 1354
-        width: 5
-        height: 5
+        x: 768
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -364,10 +364,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_12
       rect:
         serializedVersion: 2
-        x: 775
-        y: 1352
-        width: 4
-        height: 6
+        x: 0
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -386,10 +386,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_13
       rect:
         serializedVersion: 2
-        x: 1007
-        y: 1352
-        width: 5
-        height: 6
+        x: 256
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -408,10 +408,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_14
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1017
-        width: 276
-        height: 283
+        x: 512
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -430,10 +430,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_15
       rect:
         serializedVersion: 2
-        x: 259
-        y: 1033
-        width: 241
-        height: 269
+        x: 768
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -452,10 +452,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_16
       rect:
         serializedVersion: 2
-        x: 758
-        y: 1208
-        width: 12
-        height: 11
+        x: 0
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -474,10 +474,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_17
       rect:
         serializedVersion: 2
-        x: 775
-        y: 1208
-        width: 6
-        height: 8
+        x: 256
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -496,10 +496,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_18
       rect:
         serializedVersion: 2
-        x: 781
-        y: 900
-        width: 243
-        height: 399
+        x: 512
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -518,10 +518,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_19
       rect:
         serializedVersion: 2
-        x: 256
-        y: 1136
-        width: 5
-        height: 4
+        x: 768
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -540,10 +540,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_20
       rect:
         serializedVersion: 2
-        x: 10
-        y: 1087
-        width: 6
-        height: 5
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -562,10 +562,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_21
       rect:
         serializedVersion: 2
-        x: 779
-        y: 1091
-        width: 7
-        height: 5
+        x: 256
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -584,10 +584,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_22
       rect:
         serializedVersion: 2
-        x: 15
-        y: 1080
-        width: 4
-        height: 6
+        x: 512
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -606,10 +606,10 @@ TextureImporter:
       name: Ability Icons_ Color and Grayscale_23
       rect:
         serializedVersion: 2
-        x: 315
-        y: 1036
-        width: 5
-        height: 4
+        x: 768
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -620,1458 +620,6 @@ TextureImporter:
       bones: []
       spriteID: c1d1fad2c9a12794b91a12d5fe7b8bf0
       internalID: -1112129600
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_24
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 515
-        width: 277
-        height: 516
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bd1331b612e4694488493c3182e73c2e
-      internalID: 1911185790
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_25
-      rect:
-        serializedVersion: 2
-        x: 260
-        y: 781
-        width: 238
-        height: 252
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f694407f4530a94a8a065d92b7c91af
-      internalID: 445156210
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_26
-      rect:
-        serializedVersion: 2
-        x: 608
-        y: 1028
-        width: 10
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8093dfab1d5ca3b44941006e000a0548
-      internalID: 517057853
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_27
-      rect:
-        serializedVersion: 2
-        x: 777
-        y: 769
-        width: 243
-        height: 259
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 14a91ac1a4d14264d84f886edff90b66
-      internalID: 1536995363
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_28
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 1022
-        width: 7
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9912aa8a65c2ee44dbad3ae5b9ed874c
-      internalID: 781326553
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_29
-      rect:
-        serializedVersion: 2
-        x: 481
-        y: 9
-        width: 305
-        height: 1018
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 07b357e8b8a2dd34987f46ce8d229d3a
-      internalID: -1569365594
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_30
-      rect:
-        serializedVersion: 2
-        x: 610
-        y: 1021
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d7308b3379cbd3d4d94b50c06eb94a84
-      internalID: -659876343
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_31
-      rect:
-        serializedVersion: 2
-        x: 994
-        y: 1020
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a1348eda495174f48a6819ca8d2beac9
-      internalID: 1606949558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_32
-      rect:
-        serializedVersion: 2
-        x: 259
-        y: 934
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d109cb1377077354bb9eff84b2294fbb
-      internalID: -36362878
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_33
-      rect:
-        serializedVersion: 2
-        x: 486
-        y: 884
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe6d61fea28d9fa408155a0ea1b3fcaa
-      internalID: -1427750933
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_34
-      rect:
-        serializedVersion: 2
-        x: 765
-        y: 876
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2505f373b4b642d49911fdbe2a3caa6e
-      internalID: -1248314682
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_35
-      rect:
-        serializedVersion: 2
-        x: 67
-        y: 541
-        width: 18
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7bd82fc6627b6ae439e3095e96026162
-      internalID: 1247076411
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_36
-      rect:
-        serializedVersion: 2
-        x: 83
-        y: 547
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 777ff6155b82c9841a040d384922e068
-      internalID: 2033628879
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_37
-      rect:
-        serializedVersion: 2
-        x: 143
-        y: 543
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a747ee1ac1bbaa243bb2244e80bc2650
-      internalID: 1370859049
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_38
-      rect:
-        serializedVersion: 2
-        x: 169
-        y: 546
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3b5eaa2a2da89a743928b437f8e125a1
-      internalID: -1815261723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_39
-      rect:
-        serializedVersion: 2
-        x: 189
-        y: 548
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ce26fe4098bb9946a853d90994314a2
-      internalID: -656632947
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_40
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 9
-        width: 301
-        height: 774
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e12f5bd796087de4dab074aaff4c248b
-      internalID: -280402359
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_41
-      rect:
-        serializedVersion: 2
-        x: 752
-        y: 3
-        width: 272
-        height: 765
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d82d4ed599e3e20429ed1461e824408b
-      internalID: 1981684468
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_42
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 304
-        width: 245
-        height: 235
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 37b650fcf2d43fb47a153fe9f7d66ee5
-      internalID: 68292172
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_43
-      rect:
-        serializedVersion: 2
-        x: 94
-        y: 536
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db3514b2325d9bf46a0f022592d3ab7c
-      internalID: 1916147053
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_44
-      rect:
-        serializedVersion: 2
-        x: 105
-        y: 538
-        width: 5
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c5ecdedfc83f9ab4ab342a574f998433
-      internalID: -1185512794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_45
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 537
-        width: 11
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4ce9efd01d2a0e2408650d386a4be882
-      internalID: -1464708533
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_46
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 538
-        width: 6
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5d2e5a2d7966bc749925056cf57342b4
-      internalID: 1965402740
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_47
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 537
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a5f17ec427ecabb448782975bbd06adf
-      internalID: 1584484399
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_48
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 538
-        width: 6
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e5573134e2257354c83eace643517011
-      internalID: 1201797184
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_49
-      rect:
-        serializedVersion: 2
-        x: 151
-        y: 538
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d3785d37f840c8445964a7b677bd8ee7
-      internalID: 1294429176
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_50
-      rect:
-        serializedVersion: 2
-        x: 161
-        y: 538
-        width: 14
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63f63b0c29088a44c9449a0ad852dcbe
-      internalID: 488432557
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_51
-      rect:
-        serializedVersion: 2
-        x: 29
-        y: 468
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ba1862c4d66f9c34faa5f7f52fa2194b
-      internalID: -1509405437
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_52
-      rect:
-        serializedVersion: 2
-        x: 19
-        y: 444
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 58c083b62d314614b9f91e42fab5679b
-      internalID: 173803987
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_53
-      rect:
-        serializedVersion: 2
-        x: 249
-        y: 444
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 868945a96408ff941a868ab28c933eb7
-      internalID: -1135258525
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_54
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 416
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d56337c7eb095647a52cb113dd82702
-      internalID: 983623433
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_55
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 416
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2394bf69ea7ec154391f3f1f9bc24ab4
-      internalID: 2060136354
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_56
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 416
-        width: 7
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0d67f9e8eeb853a4eaeb572eb0a470ca
-      internalID: 1846425635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_57
-      rect:
-        serializedVersion: 2
-        x: 246
-        y: 416
-        width: 8
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f64ef0bdfeee1aa428c1ea2490dc7443
-      internalID: 501728079
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_58
-      rect:
-        serializedVersion: 2
-        x: 1008
-        y: 368
-        width: 9
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 08caba4ea813b514cb10961de66fea6b
-      internalID: -623071928
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_59
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 9
-        width: 236
-        height: 295
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 529483a4f29f96a49867904326e353e0
-      internalID: -1958270063
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_60
-      rect:
-        serializedVersion: 2
-        x: 115
-        y: 300
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a22d65cbe98b96448487bb91cee3cde
-      internalID: 1898800955
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_61
-      rect:
-        serializedVersion: 2
-        x: 147
-        y: 300
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3d1755b5cc7bbe44aaecf6c88f58120e
-      internalID: -300378903
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_62
-      rect:
-        serializedVersion: 2
-        x: 31
-        y: 218
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39c9365797e62ef409dae847a73ee276
-      internalID: -846383596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_63
-      rect:
-        serializedVersion: 2
-        x: 233
-        y: 202
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 443a153dc764c804894fd0fd92bc95d8
-      internalID: 567972121
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_64
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 108
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 105c21d5c183b834a8e7eb877c7d8f71
-      internalID: 566170924
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_65
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 108
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 684ad4bc298a90c428eb6a829d262b6e
-      internalID: 1907780751
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_66
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 108
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f387dc3b1703aff4fa79398d5da15422
-      internalID: 894904740
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_67
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 107
-        width: 7
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d32156cb1671b9b49b126f3663136c6b
-      internalID: -727888869
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_68
-      rect:
-        serializedVersion: 2
-        x: 242
-        y: 108
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 725fdb7e21f3485419f7dcba035aaebe
-      internalID: -227023548
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_69
-      rect:
-        serializedVersion: 2
-        x: 515
-        y: 108
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c3fefa423861db4d969d566e557a26f
-      internalID: 1731150761
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_70
-      rect:
-        serializedVersion: 2
-        x: 36
-        y: 83
-        width: 7
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 463ccb6f389b10f48821583bbb52f3a2
-      internalID: -891543940
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_71
-      rect:
-        serializedVersion: 2
-        x: 1006
-        y: 83
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 11139a45ad2ab7e479ee7ad0ca84e066
-      internalID: 722137328
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_72
-      rect:
-        serializedVersion: 2
-        x: 578
-        y: 60
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1dd1c6794291ebf4eafb4ce4003f848e
-      internalID: -1221213489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_73
-      rect:
-        serializedVersion: 2
-        x: 585
-        y: 60
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9867eb2b86a7da3449f66b6df463a257
-      internalID: 1791262278
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_74
-      rect:
-        serializedVersion: 2
-        x: 617
-        y: 60
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9103f1da78e929343af07ba191e6b819
-      internalID: 571449660
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_75
-      rect:
-        serializedVersion: 2
-        x: 625
-        y: 60
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: befb28e4be8c9f14cb07ae96ec5b1418
-      internalID: 443159206
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_76
-      rect:
-        serializedVersion: 2
-        x: 631
-        y: 60
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c46264d9d793e141b20c86c97c52ade
-      internalID: -1361725674
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_77
-      rect:
-        serializedVersion: 2
-        x: 636
-        y: 60
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8070a043a955e1241aa5d01c7d739f3d
-      internalID: -857326408
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_78
-      rect:
-        serializedVersion: 2
-        x: 641
-        y: 60
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0b04bdd37bf964c4d9b34b025b309a4c
-      internalID: 643338875
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_79
-      rect:
-        serializedVersion: 2
-        x: 647
-        y: 59
-        width: 9
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9df7f4027414a64c805c068131bb1d9
-      internalID: 351825968
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_80
-      rect:
-        serializedVersion: 2
-        x: 663
-        y: 57
-        width: 17
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: da915f81c53a9a9418cc0ce46b595737
-      internalID: 1521587046
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_81
-      rect:
-        serializedVersion: 2
-        x: 681
-        y: 60
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 55d8fe0f3bde8e546bf576b9594678f6
-      internalID: -981528503
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_82
-      rect:
-        serializedVersion: 2
-        x: 354
-        y: 42
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 389655495a8aace4590049872464be5e
-      internalID: 2100056577
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_83
-      rect:
-        serializedVersion: 2
-        x: 887
-        y: 46
-        width: 7
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 58b1b29539745934bb21cf26812e1e3a
-      internalID: 1872210245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_84
-      rect:
-        serializedVersion: 2
-        x: 83
-        y: 32
-        width: 6
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc06b7a87d0c6eb43bfe579d946f77fd
-      internalID: -878363454
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_85
-      rect:
-        serializedVersion: 2
-        x: 841
-        y: 36
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04a228f4173c9cf488f5e1a3e6273136
-      internalID: -160698081
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_86
-      rect:
-        serializedVersion: 2
-        x: 867
-        y: 32
-        width: 5
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 732be8acdaf7bdb4a866db8d53cd6fa1
-      internalID: 2132274657
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_87
-      rect:
-        serializedVersion: 2
-        x: 872
-        y: 32
-        width: 13
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eb875ca0b4773d245a49a9f379f3505f
-      internalID: -1593275477
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_88
-      rect:
-        serializedVersion: 2
-        x: 367
-        y: 12
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 27ee52021c0a9814ab74a9cb0159fdba
-      internalID: -420895327
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ability Icons_ Color and Grayscale_89
-      rect:
-        serializedVersion: 2
-        x: 888
-        y: 12
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7afb3d4c3a1fc654f9f2f46616fd259e
-      internalID: -117718438
       vertices: []
       indices: 
       edges: []
@@ -2090,7 +638,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":6.0},"gridSpriteSize":{"x":256.0,"y":256.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Ability Icons_ Color and Grayscale_0: 1105451983
       Ability Icons_ Color and Grayscale_1: 826512803
@@ -2109,78 +657,12 @@ TextureImporter:
       Ability Icons_ Color and Grayscale_21: -758293189
       Ability Icons_ Color and Grayscale_22: -1294662437
       Ability Icons_ Color and Grayscale_23: -1112129600
-      Ability Icons_ Color and Grayscale_24: 1911185790
-      Ability Icons_ Color and Grayscale_25: 445156210
-      Ability Icons_ Color and Grayscale_26: 517057853
-      Ability Icons_ Color and Grayscale_27: 1536995363
-      Ability Icons_ Color and Grayscale_28: 781326553
-      Ability Icons_ Color and Grayscale_29: -1569365594
       Ability Icons_ Color and Grayscale_3: 903674016
-      Ability Icons_ Color and Grayscale_30: -659876343
-      Ability Icons_ Color and Grayscale_31: 1606949558
-      Ability Icons_ Color and Grayscale_32: -36362878
-      Ability Icons_ Color and Grayscale_33: -1427750933
-      Ability Icons_ Color and Grayscale_34: -1248314682
-      Ability Icons_ Color and Grayscale_35: 1247076411
-      Ability Icons_ Color and Grayscale_36: 2033628879
-      Ability Icons_ Color and Grayscale_37: 1370859049
-      Ability Icons_ Color and Grayscale_38: -1815261723
-      Ability Icons_ Color and Grayscale_39: -656632947
       Ability Icons_ Color and Grayscale_4: -1352181666
-      Ability Icons_ Color and Grayscale_40: -280402359
-      Ability Icons_ Color and Grayscale_41: 1981684468
-      Ability Icons_ Color and Grayscale_42: 68292172
-      Ability Icons_ Color and Grayscale_43: 1916147053
-      Ability Icons_ Color and Grayscale_44: -1185512794
-      Ability Icons_ Color and Grayscale_45: -1464708533
-      Ability Icons_ Color and Grayscale_46: 1965402740
-      Ability Icons_ Color and Grayscale_47: 1584484399
-      Ability Icons_ Color and Grayscale_48: 1201797184
-      Ability Icons_ Color and Grayscale_49: 1294429176
       Ability Icons_ Color and Grayscale_5: -998589496
-      Ability Icons_ Color and Grayscale_50: 488432557
-      Ability Icons_ Color and Grayscale_51: -1509405437
-      Ability Icons_ Color and Grayscale_52: 173803987
-      Ability Icons_ Color and Grayscale_53: -1135258525
-      Ability Icons_ Color and Grayscale_54: 983623433
-      Ability Icons_ Color and Grayscale_55: 2060136354
-      Ability Icons_ Color and Grayscale_56: 1846425635
-      Ability Icons_ Color and Grayscale_57: 501728079
-      Ability Icons_ Color and Grayscale_58: -623071928
-      Ability Icons_ Color and Grayscale_59: -1958270063
       Ability Icons_ Color and Grayscale_6: -1056544417
-      Ability Icons_ Color and Grayscale_60: 1898800955
-      Ability Icons_ Color and Grayscale_61: -300378903
-      Ability Icons_ Color and Grayscale_62: -846383596
-      Ability Icons_ Color and Grayscale_63: 567972121
-      Ability Icons_ Color and Grayscale_64: 566170924
-      Ability Icons_ Color and Grayscale_65: 1907780751
-      Ability Icons_ Color and Grayscale_66: 894904740
-      Ability Icons_ Color and Grayscale_67: -727888869
-      Ability Icons_ Color and Grayscale_68: -227023548
-      Ability Icons_ Color and Grayscale_69: 1731150761
       Ability Icons_ Color and Grayscale_7: 982601378
-      Ability Icons_ Color and Grayscale_70: -891543940
-      Ability Icons_ Color and Grayscale_71: 722137328
-      Ability Icons_ Color and Grayscale_72: -1221213489
-      Ability Icons_ Color and Grayscale_73: 1791262278
-      Ability Icons_ Color and Grayscale_74: 571449660
-      Ability Icons_ Color and Grayscale_75: 443159206
-      Ability Icons_ Color and Grayscale_76: -1361725674
-      Ability Icons_ Color and Grayscale_77: -857326408
-      Ability Icons_ Color and Grayscale_78: 643338875
-      Ability Icons_ Color and Grayscale_79: 351825968
       Ability Icons_ Color and Grayscale_8: -727261010
-      Ability Icons_ Color and Grayscale_80: 1521587046
-      Ability Icons_ Color and Grayscale_81: -981528503
-      Ability Icons_ Color and Grayscale_82: 2100056577
-      Ability Icons_ Color and Grayscale_83: 1872210245
-      Ability Icons_ Color and Grayscale_84: -878363454
-      Ability Icons_ Color and Grayscale_85: -160698081
-      Ability Icons_ Color and Grayscale_86: 2132274657
-      Ability Icons_ Color and Grayscale_87: -1593275477
-      Ability Icons_ Color and Grayscale_88: -420895327
-      Ability Icons_ Color and Grayscale_89: -117718438
       Ability Icons_ Color and Grayscale_9: 332904697
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

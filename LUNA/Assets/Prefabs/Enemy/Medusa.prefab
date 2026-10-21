@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a8b115d26431a4c93e71d5a34b7ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoisonSkill
-  intentIcon: {fileID: 1913479405, guid: d7c40fe99b76fdd4488e2045910f0142, type: 3}
+  intentIcon: {fileID: -998589496, guid: d7c40fe99b76fdd4488e2045910f0142, type: 3}
   skillTrigger: Skill
   poisonDamage: 5
   poisonDuration: 3
