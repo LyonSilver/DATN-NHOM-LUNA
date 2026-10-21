@@ -134,7 +134,7 @@ MonoBehaviour:
   animator: {fileID: 8152008238309124246}
   hurtTrigger: Hurt
   deathTrigger: Death
-  deathAnimationClip: {fileID: 0}
+  deathAnimationClip: {fileID: 7400000, guid: 66bb4506a5fbc6e43939daba957fd97a, type: 2}
   defaultDeathDuration: 1
 --- !u!114 &4856126401480409177
 MonoBehaviour:
@@ -186,4 +186,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDashMovement
   dashDuration: 0.25
   returnDuration: 0.3
-  stoppingDistance: 1.5
+  stoppingDistance: 2
