@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PortalRotationUI : MonoBehaviour
+public class PortalRotationUIMinh : MonoBehaviour
 {
     [Header("Portal Rotation Settings")]
     [SerializeField] private float rotationSpeed = -12f;

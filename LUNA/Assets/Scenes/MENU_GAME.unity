@@ -997,10 +997,7 @@ MonoBehaviour:
   bgmSource: {fileID: 521051834}
   sfxSource: {fileID: 1603965600}
   defaultBGM: {fileID: 8300000, guid: ce2f85d0798a2c944be4b50d07fcc20b, type: 3}
-  soundEffects:
-  - soundName: Nen Menu
-    clip: {fileID: 8300000, guid: ce2f85d0798a2c944be4b50d07fcc20b, type: 3}
-    volume: 1
+  soundEffects: []
 --- !u!4 &782923911
 Transform:
   m_ObjectHideFlags: 0
