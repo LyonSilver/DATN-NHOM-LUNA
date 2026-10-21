@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5521d0c29d092234aa402b26067f0d2c, type: 3}
   m_Name: CardData_ChaosDraw
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardID: 
-  cardName: 
-  cardType: 0
-  description: 
-  artwork: {fileID: 0}
+  cardID: chaos_draw
+  cardName: CHAOS DRAW
+  cardType: 3
+  description: "Draw 1 extra Card.\rMay trigger a random negative effect."
+  artwork: {fileID: 21300000, guid: 03b906872c286d44e876fc42f6f85f88, type: 3}
   typeIcon: {fileID: 0}
   cardSprite: {fileID: 0}
   cost: 0
-  effectType: 0
+  effectType: 6
   baseDamage: 0
   shieldValue: 0
   healValue: 0
   statusEffect: 0
   statusDuration: 0
-  extraValue: 0
+  extraValue: 1
   rarity: 0
-  purchaseType: 0
-  moneyCost: 0
-  energyCost: 0
+  purchaseType: 2
+  moneyCost: 400
+  energyCost: 50
   baseValue: 0
   maxQuantity: 3

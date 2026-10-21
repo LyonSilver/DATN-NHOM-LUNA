@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5521d0c29d092234aa402b26067f0d2c, type: 3}
   m_Name: CardData_PoisonDart
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardID: 
-  cardName: 
-  cardType: 0
-  description: 
-  artwork: {fileID: 0}
+  cardID: poison_dart
+  cardName: POISON DART
+  cardType: 1
+  description: Deal 5 Damage and apply Poison for 3 turns.
+  artwork: {fileID: 21300000, guid: 4dc81bfad6ea4fd459d29985f9b0e5f3, type: 3}
   typeIcon: {fileID: 0}
   cardSprite: {fileID: 0}
-  cost: 0
-  effectType: 0
-  baseDamage: 0
+  cost: 2
+  effectType: 3
+  baseDamage: 5
   shieldValue: 0
   healValue: 0
-  statusEffect: 0
-  statusDuration: 0
+  statusEffect: 1
+  statusDuration: 3
   extraValue: 0
-  rarity: 0
-  purchaseType: 0
-  moneyCost: 0
-  energyCost: 0
-  baseValue: 0
-  maxQuantity: 3
+  rarity: 2
+  purchaseType: 2
+  moneyCost: 350
+  energyCost: 50
+  baseValue: 30
+  maxQuantity: 2

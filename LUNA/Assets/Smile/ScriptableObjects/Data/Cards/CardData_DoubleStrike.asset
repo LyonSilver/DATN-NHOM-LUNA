@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5521d0c29d092234aa402b26067f0d2c, type: 3}
   m_Name: CardData_DoubleStrike
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardID: 
-  cardName: 
+  cardID: double_strike
+  cardName: DOUBLE STRIKE
   cardType: 0
-  description: 
-  artwork: {fileID: 0}
+  description: "Deal 6 Damage, twice.\rEach hit has its own Timing."
+  artwork: {fileID: 21300000, guid: ad2435365c7cf5947bfd2968d78b725b, type: 3}
   typeIcon: {fileID: 0}
   cardSprite: {fileID: 0}
-  cost: 0
-  effectType: 0
-  baseDamage: 0
+  cost: 2
+  effectType: 5
+  baseDamage: 6
   shieldValue: 0
   healValue: 0
   statusEffect: 0
   statusDuration: 0
-  extraValue: 0
+  extraValue: 2
   rarity: 0
   purchaseType: 0
-  moneyCost: 0
+  moneyCost: 100
   energyCost: 0
-  baseValue: 0
+  baseValue: 10
   maxQuantity: 2

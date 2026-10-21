@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5521d0c29d092234aa402b26067f0d2c, type: 3}
   m_Name: CardData_HeavyHit
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardID: 
-  cardName: 
+  cardID: heavy_hit
+  cardName: HEAVY HIT
   cardType: 0
-  description: 
-  artwork: {fileID: 0}
+  description: "Deal 14 Damage.\rPERFECT Timing: Apply Break."
+  artwork: {fileID: 21300000, guid: b3076c34f3d48034f9fe2a6571214021, type: 3}
   typeIcon: {fileID: 0}
   cardSprite: {fileID: 0}
-  cost: 0
+  cost: 2
   effectType: 0
-  baseDamage: 0
+  baseDamage: 14
   shieldValue: 0
   healValue: 0
-  statusEffect: 0
-  statusDuration: 0
+  statusEffect: 2
+  statusDuration: 1
   extraValue: 0
-  rarity: 0
-  purchaseType: 0
-  moneyCost: 0
-  energyCost: 0
-  baseValue: 0
-  maxQuantity: 2
+  rarity: 1
+  purchaseType: 2
+  moneyCost: 300
+  energyCost: 20
+  baseValue: 25
+  maxQuantity: 1
