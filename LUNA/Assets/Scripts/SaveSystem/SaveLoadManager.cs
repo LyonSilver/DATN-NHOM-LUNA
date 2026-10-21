@@ -1,4 +1,3 @@
-
 using System;
 using System.IO;
 using UnityEngine;
@@ -12,8 +11,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public string CurrentPlayerId => currentPlayerId;
 
-    private string SaveRoot =>
-        Path.Combine(Application.persistentDataPath, "PlayerSaves");
+    private string SaveRoot => Path.Combine(Application.persistentDataPath, "PlayerSaves");
 
     private void Awake()
     {
@@ -22,12 +20,10 @@ public class SaveLoadManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
-    // Gọi khi đăng nhập hoặc xác định được Player ID
     public bool SetPlayerId(string playerId)
     {
         if (string.IsNullOrWhiteSpace(playerId))
@@ -35,70 +31,68 @@ public class SaveLoadManager : MonoBehaviour
             Debug.LogError("[Save] Player ID không hợp lệ!");
             return false;
         }
-
         currentPlayerId = playerId.Trim();
-        Debug.Log("[Save] Player ID: " + currentPlayerId);
+        Debug.Log("[Save] Player ID set: " + currentPlayerId);
         return true;
+    }
+
+    private string GetSafeId(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return "default";
+        string safe = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(id))
+            .TrimEnd('=').Replace('/', '_').Replace('+', '-');
+        return safe;
     }
 
     private string GetPlayerFolder()
     {
         if (string.IsNullOrWhiteSpace(currentPlayerId))
         {
-            Debug.LogError("[Save] Chưa thiết lập Player ID!");
-            return null;
+            Debug.LogWarning("[Save] Chưa có Player ID, dùng folder default");
+            return Path.Combine(SaveRoot, "default");
         }
-
-        // Mã hóa ID để tránh ký tự gây lỗi đường dẫn
-        string safeId = Convert.ToBase64String(
-            System.Text.Encoding.UTF8.GetBytes(currentPlayerId)
-        ).TrimEnd('=').Replace('/', '_').Replace('+', '-');
-
-        return Path.Combine(SaveRoot, safeId);
+        return Path.Combine(SaveRoot, GetSafeId(currentPlayerId));
     }
 
     private string GetSlotPath(int slotIndex)
     {
         if (slotIndex < 0 || slotIndex > 3)
         {
-            Debug.LogError("[Save] Slot không hợp lệ!");
+            Debug.LogError("[Save] Slot không hợp lệ: " + slotIndex);
             return null;
         }
 
         string folder = GetPlayerFolder();
-        if (string.IsNullOrEmpty(folder))
-            return null;
-
-        string fileName = slotIndex == 0
-            ? "autosave.json"
-            : $"manual_slot_{slotIndex:00}.json";
-
+        string fileName = slotIndex == 0 ? "autosave.json" : $"manual_slot_{slotIndex:00}.json";
         return Path.Combine(folder, fileName);
     }
 
     public bool HasSave(int slotIndex)
     {
         string path = GetSlotPath(slotIndex);
-        return !string.IsNullOrEmpty(path) && File.Exists(path);
+        bool exists = !string.IsNullOrEmpty(path) && File.Exists(path);
+        Debug.Log($"[Save] HasSave slot {slotIndex}: {exists} | Path: {path}");
+        return exists;
     }
 
     public void SaveGame(SaveData data, int slotIndex)
     {
         if (data == null)
         {
-            Debug.LogError("[Save] SaveData không tồn tại!");
+            Debug.LogError("[Save] SaveData null!");
             return;
         }
 
         string path = GetSlotPath(slotIndex);
-        if (string.IsNullOrEmpty(path))
-            return;
+        if (string.IsNullOrEmpty(path)) return;
 
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            string dir = Path.GetDirectoryName(path);
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
 
-            data.playerId = currentPlayerId;
+            data.playerId = string.IsNullOrEmpty(currentPlayerId) ? "unknown" : currentPlayerId;
             data.slotType = slotIndex == 0 ? "Auto" : "Manual";
             data.lastSavedTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
@@ -112,11 +106,11 @@ public class SaveLoadManager : MonoBehaviour
 
             File.Move(tempPath, path);
 
-            Debug.Log($"[Save] Player {currentPlayerId}, Slot {slotIndex}");
+            Debug.Log($"[Save] Thành công | Slot {slotIndex} | Path: {path}");
         }
         catch (Exception e)
         {
-            Debug.LogError("[Save] Lỗi: " + e.Message);
+            Debug.LogError("[Save] Lỗi ghi file: " + e.Message + "\nPath: " + path);
         }
     }
 
@@ -124,26 +118,46 @@ public class SaveLoadManager : MonoBehaviour
     {
         string path = GetSlotPath(slotIndex);
 
-        if (string.IsNullOrEmpty(path) || !File.Exists(path))
+        if (string.IsNullOrEmpty(path))
+        {
+            Debug.LogError("[Save] Path null");
             return null;
+        }
+
+        if (!File.Exists(path))
+        {
+            Debug.LogWarning($"[Save] File không tồn tại: {path}");
+            return null;
+        }
 
         try
         {
-            SaveData data = JsonUtility.FromJson<SaveData>(
-                File.ReadAllText(path)
-            );
-
-            if (data == null || data.playerId != currentPlayerId)
+            string json = File.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(json))
             {
-                Debug.LogError("[Save] Player ID không khớp!");
+                Debug.LogError("[Save] File rỗng: " + path);
                 return null;
             }
 
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+            if (data == null)
+            {
+                Debug.LogError("[Save] Parse JSON thất bại: " + path);
+                return null;
+            }
+
+            // Không chặn load nếu Player ID khác (chỉ cảnh báo)
+            if (!string.IsNullOrEmpty(currentPlayerId) && data.playerId != currentPlayerId)
+            {
+                Debug.LogWarning($"[Save] Player ID khác nhau. File: {data.playerId} | Hiện tại: {currentPlayerId}");
+            }
+
+            Debug.Log($"[Save] Load thành công | Slot {slotIndex} | Path: {path}");
             return data;
         }
         catch (Exception e)
         {
-            Debug.LogError("[Save] Lỗi đọc dữ liệu: " + e.Message);
+            Debug.LogError("[Save] Lỗi đọc: " + e.Message + "\nPath: " + path);
             return null;
         }
     }
@@ -151,8 +165,19 @@ public class SaveLoadManager : MonoBehaviour
     public void DeleteSave(int slotIndex)
     {
         string path = GetSlotPath(slotIndex);
-
         if (!string.IsNullOrEmpty(path) && File.Exists(path))
+        {
             File.Delete(path);
+            Debug.Log("[Save] Đã xóa: " + path);
+        }
+    }
+
+    // Debug: in ra toàn bộ đường dẫn save
+    [ContextMenu("Log All Save Paths")]
+    public void LogAllPaths()
+    {
+        Debug.Log("Save Root: " + SaveRoot);
+        for (int i = 0; i <= 3; i++)
+            Debug.Log($"Slot {i}: {GetSlotPath(i)} | Exists: {HasSave(i)}");
     }
 }
