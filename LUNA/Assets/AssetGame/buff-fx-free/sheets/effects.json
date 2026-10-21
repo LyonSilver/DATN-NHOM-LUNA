@@ -1,0 +1,207 @@
+{
+ "effects": [
+  {
+   "name": "gold_buff",
+   "element": "gold",
+   "shape": "buff",
+   "anchor": [
+    0.5,
+    0.9
+   ],
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "columns": 8,
+   "rows": 3,
+   "cell": {
+    "256": [
+     256,
+     256
+    ],
+    "128": [
+     128,
+     128
+    ],
+    "pixel": [
+     64,
+     64
+    ]
+   },
+   "file": "gold/gold_buff.png"
+  },
+  {
+   "name": "gold_pickup",
+   "element": "gold",
+   "shape": "pickup",
+   "anchor": [
+    0.5,
+    0.5
+   ],
+   "frames": 16,
+   "fps": 30,
+   "loop": false,
+   "columns": 8,
+   "rows": 2,
+   "cell": {
+    "256": [
+     256,
+     256
+    ],
+    "128": [
+     128,
+     128
+    ],
+    "pixel": [
+     64,
+     64
+    ]
+   },
+   "file": "gold/gold_pickup.png"
+  },
+  {
+   "name": "gold_powerup",
+   "element": "gold",
+   "shape": "powerup",
+   "anchor": [
+    0.5,
+    0.5
+   ],
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "columns": 8,
+   "rows": 3,
+   "cell": {
+    "256": [
+     256,
+     256
+    ],
+    "128": [
+     128,
+     128
+    ],
+    "pixel": [
+     64,
+     64
+    ]
+   },
+   "file": "gold/gold_powerup.png"
+  },
+  {
+   "name": "green_heal",
+   "element": "green",
+   "shape": "heal",
+   "anchor": [
+    0.5,
+    0.9
+   ],
+   "frames": 24,
+   "fps": 24,
+   "loop": false,
+   "columns": 8,
+   "rows": 3,
+   "cell": {
+    "256": [
+     256,
+     256
+    ],
+    "128": [
+     128,
+     128
+    ],
+    "pixel": [
+     64,
+     64
+    ]
+   },
+   "file": "green/green_heal.png"
+  },
+  {
+   "name": "blue_shield",
+   "element": "blue",
+   "shape": "shield",
+   "anchor": [
+    0.5,
+    0.5
+   ],
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "columns": 8,
+   "rows": 3,
+   "cell": {
+    "256": [
+     256,
+     256
+    ],
+    "128": [
+     128,
+     128
+    ],
+    "pixel": [
+     64,
+     64
+    ]
+   },
+   "file": "blue/blue_shield.png"
+  },
+  {
+   "name": "white_sparkle",
+   "element": "white",
+   "shape": "sparkle",
+   "anchor": [
+    0.5,
+    0.5
+   ],
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "columns": 8,
+   "rows": 3,
+   "cell": {
+    "256": [
+     256,
+     256
+    ],
+    "128": [
+     128,
+     128
+    ],
+    "pixel": [
+     64,
+     64
+    ]
+   },
+   "file": "white/white_sparkle.png"
+  },
+  {
+   "name": "white_beam",
+   "element": "white",
+   "shape": "beam",
+   "anchor": [
+    0.5,
+    0.95
+   ],
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "columns": 8,
+   "rows": 3,
+   "cell": {
+    "256": [
+     128,
+     256
+    ],
+    "128": [
+     64,
+     128
+    ],
+    "pixel": [
+     32,
+     64
+    ]
+   },
+   "file": "white/white_beam.png"
+  }
+ ]
+}
