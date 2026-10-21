@@ -666,18 +666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67961da221d582c4ba1a7edbea617963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandHoverEffect
-  islandTitle: "\u0110\u1EA3o B\u0103ng"
-  description: "M\u1ED9t v\xF9ng \u0111\u1EA5t b\u0103ng gi\xE1 b\xED \u1EA9n."
-  difficulty: 3 / 5
-  glowColor:
-    r: 0
-    g: 1
-    b: 1
-    a: 1
-  riseDistance: 18
-  hoverScale: 1.08
-  animationSpeed: 5
-  infoPanel: {fileID: 0}
 --- !u!114 &75725633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -937,7 +925,6 @@ GameObject:
   - component: {fileID: 113670099}
   - component: {fileID: 113670098}
   - component: {fileID: 113670097}
-  - component: {fileID: 113670102}
   - component: {fileID: 113670103}
   m_Layer: 5
   m_Name: Island_Dong_bang
@@ -992,18 +979,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67961da221d582c4ba1a7edbea617963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandHoverEffect
-  islandTitle: "\u0110\u1EA3o B\u0103ng"
-  description: "M\u1ED9t v\xF9ng \u0111\u1EA5t b\u0103ng gi\xE1 b\xED \u1EA9n."
-  difficulty: 3 / 5
-  glowColor:
-    r: 0
-    g: 1
-    b: 1
-    a: 1
-  riseDistance: 18
-  hoverScale: 1.08
-  animationSpeed: 5
-  infoPanel: {fileID: 0}
 --- !u!114 &113670099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,19 +1022,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 113670100}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 113670102}
-        m_TargetAssemblyTypeName: IslandSceneLoader, Assembly-CSharp
-        m_MethodName: GoToScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &113670100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1098,19 +1061,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113670095}
   m_CullTransparentMesh: 1
---- !u!114 &113670102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 113670095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 250095b5e8c835943a08a790bfff8439, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IslandSceneLoader
-  sceneName: BattleTest 1
 --- !u!114 &113670103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,10 +1073,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d872383329e5e58419bcae1bdb188be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandHoverEffect
-  islandTitle: "\u0110\u1EA3o B\u0103ng"
-  description: "M\u1ED9t v\xF9ng \u0111\u1EA5t b\u0103ng gi\xE1 b\xED \u1EA9n."
+  islandTitle: "\u0110a\u0309o \u0110\xF4\u0300ng B\u0103\u0300ng"
+  description: "M\u1ED9t n\u01A1i cu\u0309a khu t\u01B0\u0323 tri\u0323"
   difficulty: 3 / 5
-  glowColor: {r: 0, g: 1, b: 1, a: 1}
+  glowColor: {r: 0.35302734, g: 1, b: 0, a: 1}
   riseDistance: 18
   hoverScale: 1.08
   animationSpeed: 5
@@ -1433,18 +1383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67961da221d582c4ba1a7edbea617963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandHoverEffect
-  islandTitle: "\u0110\u1EA3o B\u0103ng"
-  description: "M\u1ED9t v\xF9ng \u0111\u1EA5t b\u0103ng gi\xE1 b\xED \u1EA9n."
-  difficulty: 3 / 5
-  glowColor:
-    r: 0
-    g: 1
-    b: 1
-    a: 1
-  riseDistance: 18
-  hoverScale: 1.08
-  animationSpeed: 5
-  infoPanel: {fileID: 0}
 --- !u!114 &245341565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1843,18 +1781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67961da221d582c4ba1a7edbea617963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandHoverEffect
-  islandTitle: "\u0110\u1EA3o B\u0103ng"
-  description: "M\u1ED9t v\xF9ng \u0111\u1EA5t b\u0103ng gi\xE1 b\xED \u1EA9n."
-  difficulty: 3 / 5
-  glowColor:
-    r: 0
-    g: 1
-    b: 1
-    a: 1
-  riseDistance: 18
-  hoverScale: 1.08
-  animationSpeed: 5
-  infoPanel: {fileID: 0}
 --- !u!114 &370233798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6150,7 +6076,7 @@ MonoBehaviour:
   - island: {fileID: 1676820791}
     sceneName: ShopLevel
   - island: {fileID: 113670103}
-    sceneName: GrassLevel
+    sceneName: SelectMap
   - island: {fileID: 245341569}
     sceneName: OceanLevel
   - island: {fileID: 75725636}
@@ -7126,18 +7052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67961da221d582c4ba1a7edbea617963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandHoverEffect
-  islandTitle: "\u0110\u1EA3o B\u0103ng"
-  description: "M\u1ED9t v\xF9ng \u0111\u1EA5t b\u0103ng gi\xE1 b\xED \u1EA9n."
-  difficulty: 3 / 5
-  glowColor:
-    r: 0
-    g: 1
-    b: 1
-    a: 1
-  riseDistance: 18
-  hoverScale: 1.08
-  animationSpeed: 5
-  infoPanel: {fileID: 0}
 --- !u!114 &1676820788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8065,7 +7979,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1991047173}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: IslandSceneLoader, Assembly-CSharp
+        m_MethodName: GoToScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1991047173
 MonoBehaviour:
   m_ObjectHideFlags: 0
