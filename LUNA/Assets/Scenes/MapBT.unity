@@ -5380,6 +5380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCardCinematic
   player: {fileID: 531574977}
   playerAnimator: {fileID: 531574975}
+  playerAnimation: {fileID: 0}
   enemySpawner: {fileID: 371778800}
   cardEffectManager: {fileID: 1156435792}
   battleCamera: {fileID: 625186432}
@@ -5392,8 +5393,10 @@ MonoBehaviour:
   returnDuration: 0.4
   stoppingDistance: 1.5
   runningParameter: IsRunning
+  attackTrigger: Attack
   healTrigger: 
   shieldTrigger: 
+  buffTrigger: 
   attackDuration: 0.8
   buffDuration: 0.7
 --- !u!1 &1255376230
@@ -8893,6 +8896,20 @@ MonoBehaviour:
     vfxPrefab: {fileID: 5915784643951298052, guid: e7f92ba49adac23429f9c61306aa66ac, type: 3}
     target: 1
     offset: {x: 0, y: 0, z: 0}
+    lifetime: 1
+    repeatCount: 1
+    repeatDelay: 0
+  - card: {fileID: 11400000, guid: 7e954c6bfa2ba1a41a2125a46326f57c, type: 2}
+    vfxPrefab: {fileID: 6797414937601817783, guid: 783f54fb23faace448cc129ea94268d5, type: 3}
+    target: 0
+    offset: {x: 0, y: -0.5, z: 0}
+    lifetime: 1
+    repeatCount: 1
+    repeatDelay: 0
+  - card: {fileID: 11400000, guid: 416c9773eb0015549b302c044d07b07b, type: 2}
+    vfxPrefab: {fileID: 6210940545064433372, guid: 7a9e0bcd6c3592a4c81a0f8140ebbb10, type: 3}
+    target: 0
+    offset: {x: 0, y: -0.5, z: 0}
     lifetime: 1
     repeatCount: 1
     repeatDelay: 0
