@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ShopCard_V.unity
     guid: db74c7435db594b47b398204cd7bfc6a
+  - enabled: 1
+    path: Assets/Scenes/LienketLobby.unity
+    guid: 3c31c06b0a2bbc04aa7069ec81d1c776
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

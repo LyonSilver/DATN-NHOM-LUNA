@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.16153, y: 1.30381, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHP: 50
-  animator: {fileID: 0}
+  animator: {fileID: 8152008238309124246}
   hurtTrigger: Hurt
   deathTrigger: Death
   deathAnimationClip: {fileID: 0}
@@ -148,14 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50149f3b5aa6cba4a9c8fa103b12c011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  damage: 10
+  damage: 20
   animator: {fileID: 8152008238309124246}
   attackTrigger: Attack
   shieldTrigger: Shield
   cardEffectManager: {fileID: 0}
   skills:
   - {fileID: 4662893735527120451}
-  skillChance: 50
+  skillChance: 30
 --- !u!114 &4662893735527120451
 MonoBehaviour:
   m_ObjectHideFlags: 0

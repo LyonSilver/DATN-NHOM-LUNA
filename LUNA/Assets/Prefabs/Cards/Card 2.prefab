@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: -117109847166238510}
   - component: {fileID: 8085103637193569656}
   - component: {fileID: 2016009220808969566}
+  - component: {fileID: 3703788853780002169}
   m_Layer: 5
   m_Name: Card 2
   m_TagString: Untagged
@@ -445,6 +446,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardInputHandler
   collapsedHeight: 0
   animationDuration: 0.15
+--- !u!114 &3703788853780002169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997509876283000121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f61b87e4929dd499726eb9cd2c462d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDissolveUI
+  dissolveMaterial: {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
+  sourceImage: {fileID: 6239382686552589522}
+  fullCardTexture: {fileID: 0}
+  battleCamera: {fileID: 0}
+  distanceFromCamera: 3
+  dissolveProperty: _Dissolve
+  startValue: 0
+  endValue: 1
+  dissolveDuration: 0.8
+  reduceMetallic: 1
 --- !u!1 &3413847561350165180
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,8 +1158,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Attack
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1216,6 +1239,7 @@ GameObject:
   - component: {fileID: 502970467023927009}
   - component: {fileID: 1941640496650252454}
   - component: {fileID: 4987032848862119821}
+  - component: {fileID: 3606811558384859217}
   m_Layer: 5
   m_Name: CardBorder
   m_TagString: Untagged
@@ -1262,7 +1286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: e2101dbe546fe9043bbe591acd055800, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1280,6 +1304,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3606811558384859217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6397988900344297863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ae74d97ee0809469b4d6f0fd361cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardOutlineGlow
+  targetImage: {fileID: 4987032848862119821}
+  glowColor: {r: 0.94716984, g: 0.825139, b: 0.2627056, a: 1}
+  minIntensity: 0.4
+  maxIntensity: 3.2
+  pulseSpeed: 2.8
+  thickness: 2.8
+  playOnStart: 1
 --- !u!1 &6496986550893967259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,8 +1467,8 @@ MonoBehaviour:
 
     GOOD Timing: +2 Damage.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
