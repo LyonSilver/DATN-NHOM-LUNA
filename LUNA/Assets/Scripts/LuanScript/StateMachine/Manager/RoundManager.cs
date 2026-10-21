@@ -1,156 +1,170 @@
 
-using UnityEngine;
-using TMPro;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class RoundManager : MonoBehaviour
 {
-    [Header("Round")]
-    [SerializeField] private int currentRound = 1;
-    [SerializeField] private int maxRound = 2;
-
-    [Header("Managers")]
+    [Header("Battle Systems")]
     [SerializeField] private BattleStateMachine battleStateMachine;
     [SerializeField] private EnemySpawner enemySpawner;
-
-    [Header("Enemy Intent")]
     [SerializeField] private EnemyIntentManager enemyIntentManager;
+    [SerializeField] private CardManager cardManager;
+    [SerializeField] private PlayerCardCinematic playerCardCinematic;
+    [SerializeField] private BattleResultTracker battleStats;
 
-    [Header("Enemy Spawn")]
+    [Header("Stage Test - Optional")]
+    [Tooltip("Dùng khi chạy trực tiếp MapBT mà không qua SelectMap")]
+    [SerializeField] private StageData testStage;
+
+    [Header("Round")]
     [SerializeField] private float spawnDelay = 2f;
 
-    [Header("Round UI")]
+    [Header("Gameplay UI")]
     [SerializeField] private TMP_Text roundText;
 
-    [Header("Gameplay UI")]
-    [SerializeField] private GameObject roundUI;
-    [SerializeField] private GameObject cardUI;
-    [SerializeField] private GameObject playerUI;
-    [SerializeField] private GameObject enemyUI;
+    [FormerlySerializedAs("cardUI")]
+    [SerializeField] private GameObject battleHUD;
 
-    [Header("Result Panel")]
+    [Header("Result UI")]
     [SerializeField] private GameObject finishPanel;
     [SerializeField] private TMP_Text resultTitleText;
+    [SerializeField] private ResultRewardUI resultRewardUI;
 
-    [Header("Result Buttons")]
-    [SerializeField] private GameObject homeButton;
-    [SerializeField] private GameObject againButton;
-    [SerializeField] private GameObject nextButton;
+    // =====================================
+    // STAGE DATA
+    // =====================================
 
-    [Header("Result Text")]
-    [SerializeField] private string victoryText = "VICTORY";
-    [SerializeField] private string defeatText = "DEFEAT";
+    private StageData activeStage;
+    private Difficulty activeDifficulty;
 
-    [Header("Reward UI")]
-    [SerializeField] private TMP_Text coinText;
-    [SerializeField] private TMP_Text expText;
+    private int currentRound = 1;
+    private int maxRound = 1;
 
-    [Header("Reward Settings")]
-    [SerializeField] private int currentCoin = 0;
-    [SerializeField] private int currentExp = 0;
+    private int currentCoin;
+    private int currentExp;
 
-    [SerializeField] private int coinPerRound = 50;
-    [SerializeField] private int expPerRound = 100;
+    // =====================================
+    // BATTLE STATES
+    // =====================================
 
-    [Header("Scene Transition")]
-    [SerializeField] private string nextSceneName;
-    [SerializeField] private float transitionDelay = 0.5f;
+    private bool battleFinished;
+    private bool isChangingRound;
+    private bool enemyRewardClaimed;
+    private bool resultPanelShown;
+    private bool stageRewardsSaved;
+    private bool playerWon;
 
-    [Header("Reward Panel Controller")]
-[SerializeField] private ResultRewardUI resultRewardUI;
+    // =====================================
+    // PUBLIC PROPERTIES
+    // =====================================
 
-    private bool isTransitioning = false;
-    private bool isChangingRound = false;
-    private bool battleFinished = false;
-    private bool currentEnemyRewardClaimed = false;
-    private bool isLoadingScene = false;
-    private bool playerWon = false;
-    private bool resultPanelShown = false;
+    public int CurrentRound => currentRound;
+    public bool BattleFinished => battleFinished;
 
-    // =========================================
+    public StageData ActiveStage => activeStage;
+    public Difficulty ActiveDifficulty => activeDifficulty;
+
+    // =====================================
     // START
-    // =========================================
+    // =====================================
 
     private void Start()
     {
         Time.timeScale = 1f;
 
-        maxRound = Mathf.Max(1, maxRound);
-        currentRound = Mathf.Clamp(
-            currentRound, 1, maxRound
-        );
-
-        isTransitioning = false;
-        isChangingRound = false;
         battleFinished = false;
-        currentEnemyRewardClaimed = false;
-        isLoadingScene = false;
-        playerWon = false;
+        isChangingRound = false;
+        enemyRewardClaimed = false;
         resultPanelShown = false;
+        stageRewardsSaved = false;
+        playerWon = false;
 
-        // Ẩn ResultPanel khi bắt đầu trận.
+        currentCoin = 0;
+        currentExp = 0;
+
+        // Lấy Stage từ SelectMap.
+        // Nếu chạy trực tiếp MapBT thì dùng Test Stage.
+        activeStage = GameSession.CurrentStage;
+
+        if (activeStage == null)
+            activeStage = testStage;
+
+        activeDifficulty = GameSession.CurrentDifficulty;
+
+        if (activeStage == null)
+        {
+            Debug.LogError(
+                "RoundManager: Chưa có StageData! " +
+                "Hãy chọn Stage ở SelectMap hoặc gán Test Stage."
+            );
+            return;
+        }
+
+        maxRound = activeStage.RoundCount;
+        currentRound = 1;
+
+        if (maxRound <= 0)
+        {
+            Debug.LogError(
+                "RoundManager: Enemy Indices đang trống!"
+            );
+            return;
+        }
+
+        if (battleStateMachine == null || enemySpawner == null)
+        {
+            Debug.LogError(
+                "RoundManager: Thiếu FSM hoặc EnemySpawner!"
+            );
+            return;
+        }
+
+        // Reset thống kê trận đấu.
+        if (battleStats != null)
+            battleStats.ResetStats();
+
+        // Reset UI.
         if (finishPanel != null)
-        {
             finishPanel.SetActive(false);
-        }
 
-        // Hiển thị Gameplay.
         SetGameplayUI(true);
-
         UpdateRoundUI();
-        UpdateRewardUI();
 
-        if (battleStateMachine == null ||
-            enemySpawner == null)
-        {
-            Debug.LogError(
-                "RoundManager: Thiếu BattleStateMachine " +
-                "hoặc EnemySpawner!"
-            );
-
-            return;
-        }
-
-        // Spawn Enemy đầu tiên.
+        // Bắt đầu Round 1.
         if (!SpawnRoundEnemy(currentRound))
-        {
-            Debug.LogError(
-                "RoundManager: Không thể bắt đầu trận!"
-            );
-
             return;
-        }
 
-        // Bắt đầu Player Turn.
         battleStateMachine.StartPlayerTurn();
-
-        // Enemy chuẩn bị hành động trước.
         PrepareEnemyIntent();
 
         Debug.Log(
-            $"========== ROUND {currentRound}/{maxRound} =========="
+            $"START STAGE: {activeStage.displayName} | " +
+            $"Difficulty: {activeDifficulty} | " +
+            $"Rounds: {maxRound}"
         );
     }
 
-    // =========================================
+    // =====================================
     // SPAWN ENEMY
-    // =========================================
+    // =====================================
 
     private bool SpawnRoundEnemy(int round)
     {
-        if (enemySpawner == null)
+        if (enemySpawner == null || activeStage == null)
+            return false;
+
+        int enemyIndex = activeStage.GetEnemyIndex(round);
+
+        if (enemyIndex < 0)
         {
             Debug.LogError(
-                "RoundManager: Chưa gán EnemySpawner!"
+                $"RoundManager: Enemy Index không hợp lệ ở Round {round}!"
             );
-
             return false;
         }
-
-        // Round 1 = Index 0.
-        // Round 2 = Index 1.
-        int enemyIndex = round - 1;
 
         enemySpawner.SpawnEnemy(enemyIndex);
 
@@ -166,182 +180,132 @@ public class RoundManager : MonoBehaviour
                 $"RoundManager: Enemy Round {round} " +
                 "thiếu EnemyHealth hoặc EnemyAttack!"
             );
-
             return false;
         }
 
         Debug.Log(
-            $"RoundManager: Spawn Enemy Round {round} | " +
+            $"ROUND {round}/{maxRound} | " +
+            $"Enemy Index: {enemyIndex} | " +
             $"HP: {health.CurrentHP}/{health.MaxHP}"
         );
 
         return true;
     }
 
-    // =========================================
+    // =====================================
     // ENEMY INTENT
-    // =========================================
+    // =====================================
 
     private void PrepareEnemyIntent()
     {
-        if (enemyIntentManager == null)
+        if (battleFinished || isChangingRound)
+            return;
+
+        if (enemyIntentManager != null)
         {
-            Debug.LogWarning(
-                "RoundManager: Chưa gán EnemyIntentManager!"
-            );
-
-            return;
-        }
-
-        if (battleFinished || isTransitioning)
-            return;
-
-        bool success =
             enemyIntentManager.PrepareIntent();
-
-        if (success)
-        {
-            Debug.Log(
-                "RoundManager: Enemy đã chuẩn bị Intent!"
-            );
-        }
-        else
-        {
-            Debug.LogWarning(
-                "RoundManager: Chuẩn bị Intent thất bại!"
-            );
         }
     }
 
     private void ClearEnemyIntent()
     {
         if (enemyIntentManager != null)
-        {
             enemyIntentManager.ClearIntent();
+    }
+
+    // =====================================
+    // CHECK CARD ACTION
+    // =====================================
+
+    private bool IsCardActionPlaying()
+    {
+        if (cardManager != null && cardManager.IsUsingCard)
+            return true;
+
+        if (playerCardCinematic != null &&
+            playerCardCinematic.IsPlaying)
+            return true;
+
+        return false;
+    }
+
+    // =====================================
+    // WAIT FOR ENEMY DEATH + CINEMATIC
+    // =====================================
+
+    private IEnumerator WaitForBattleAction()
+    {
+        float deathDuration = 0f;
+
+        if (enemySpawner != null)
+        {
+            EnemyHealth enemy =
+                enemySpawner.GetCurrentEnemyHealth();
+
+            if (enemy != null)
+            {
+                deathDuration = Mathf.Max(
+                    0f,
+                    enemy.DeathAnimationDuration
+                );
+            }
+        }
+
+        float endTime = Time.unscaledTime + deathDuration;
+
+        while (Time.unscaledTime < endTime ||
+               IsCardActionPlaying())
+        {
+            yield return null;
         }
     }
 
-    // =========================================
+    // =====================================
     // ENEMY DEFEATED
-    // =========================================
+    // =====================================
 
     public void EnemyDefeated()
     {
-        // Không xử lý trùng.
+        // Ngăn một Enemy được tính nhiều lần.
         if (battleFinished ||
-            currentEnemyRewardClaimed ||
-            isChangingRound)
+            isChangingRound ||
+            enemyRewardClaimed)
         {
             return;
         }
 
-        currentEnemyRewardClaimed = true;
+        enemyRewardClaimed = true;
 
         ClearEnemyIntent();
 
-        Debug.Log(
-            "RoundManager: Enemy đã bị đánh bại!"
-        );
-
-        // =====================================
-        // REWARD
-        // =====================================
-
-        currentCoin += coinPerRound;
-        currentExp += expPerRound;
-
-        UpdateRewardUI();
+        // Ghi Kill Count.
+        if (battleStats != null)
+            battleStats.AddKill();
 
         Debug.Log(
-            $"Reward: +{coinPerRound} Coin | " +
-            $"+{expPerRound} EXP"
+            $"Enemy Defeated | Round {currentRound}/{maxRound}"
         );
 
-        // =====================================
-        // CHECK LAST ROUND
-        // =====================================
-
+        // Đã đánh hết Round.
         if (currentRound >= maxRound)
         {
             WinBattle();
             return;
         }
 
-        // =====================================
-        // NEXT ROUND
-        // =====================================
-
+        // Chuyển Round tiếp theo.
         isChangingRound = true;
-
         StartCoroutine(NextRoundCoroutine());
     }
 
-    // =========================================
-    // WAIT ENEMY DEATH ANIMATION
-    // =========================================
-
-    private IEnumerator WaitForEnemyDeathAnimation()
-    {
-        if (enemySpawner == null)
-            yield break;
-
-        EnemyHealth enemy =
-            enemySpawner.GetCurrentEnemyHealth();
-
-        if (enemy == null)
-        {
-            Debug.LogWarning(
-                "RoundManager: Không tìm thấy EnemyHealth!"
-            );
-
-            yield break;
-        }
-
-        float duration = Mathf.Max(
-            0f,
-            enemy.DeathAnimationDuration
-        );
-
-        Debug.Log(
-            $"RoundManager: Chờ Death Animation " +
-            $"{duration} giây."
-        );
-
-        if (duration > 0f)
-        {
-            yield return new WaitForSeconds(duration);
-        }
-
-        Debug.Log(
-            "RoundManager: Death Animation hoàn tất!"
-        );
-    }
-
-    // =========================================
+    // =====================================
     // NEXT ROUND
-    // =========================================
+    // =====================================
 
     private IEnumerator NextRoundCoroutine()
     {
-        Debug.Log(
-            "RoundManager: Đang chuyển Round..."
-        );
-
-        // Chuyển FSM sang NextRound.
-        if (battleStateMachine != null)
-        {
-            battleStateMachine.ChangeState(
-                BattleStateMachine.BattleState.NextRound
-            );
-        }
-
-        ClearEnemyIntent();
-
-        // =====================================
-        // WAIT DEATH ANIMATION
-        // =====================================
-
-        yield return WaitForEnemyDeathAnimation();
+        // Đợi Player đánh xong và Enemy chết.
+        yield return WaitForBattleAction();
 
         if (battleFinished)
         {
@@ -349,40 +313,21 @@ public class RoundManager : MonoBehaviour
             yield break;
         }
 
-        // =====================================
-        // HIDE OLD UI
-        // =====================================
-
-        if (cardUI != null)
+        if (battleStateMachine != null)
         {
-            cardUI.SetActive(false);
-        }
-
-        if (enemyUI != null)
-        {
-            enemyUI.SetActive(false);
-        }
-
-        // =====================================
-        // DESPAWN ENEMY
-        // =====================================
-
-        if (enemySpawner == null)
-        {
-            Debug.LogError(
-                "RoundManager: Thiếu EnemySpawner!"
+            battleStateMachine.ChangeState(
+                BattleStateMachine.BattleState.NextRound
             );
-
-            isChangingRound = false;
-            yield break;
         }
 
+        // Ẩn HUD tạm thời.
+        if (battleHUD != null)
+            battleHUD.SetActive(false);
+
+        // Xóa Enemy cũ.
         enemySpawner.DespawnCurrentEnemy();
 
-        // =====================================
-        // SPAWN DELAY
-        // =====================================
-
+        // Đợi trước khi Spawn Enemy mới.
         yield return new WaitForSecondsRealtime(
             Mathf.Max(0f, spawnDelay)
         );
@@ -393,53 +338,32 @@ public class RoundManager : MonoBehaviour
             yield break;
         }
 
-        // =====================================
-        // SPAWN NEXT ENEMY
-        // =====================================
-
         int nextRound = currentRound + 1;
 
         if (!SpawnRoundEnemy(nextRound))
         {
             Debug.LogError(
-                "RoundManager: Spawn Enemy mới thất bại!"
+                "RoundManager: Không thể Spawn Enemy mới!"
             );
 
             isChangingRound = false;
             yield break;
         }
 
-        // Chỉ tăng Round sau khi Spawn thành công.
         currentRound = nextRound;
 
         UpdateRoundUI();
 
-        // =====================================
-        // RESTORE UI
-        // =====================================
-
-        if (enemyUI != null)
-        {
-            enemyUI.SetActive(true);
-        }
-
-        if (cardUI != null)
-        {
-            cardUI.SetActive(true);
-        }
-
-        // Cho phép Enemy mới nhận Reward.
-        currentEnemyRewardClaimed = false;
+        enemyRewardClaimed = false;
         isChangingRound = false;
 
-        // =====================================
-        // START PLAYER TURN
-        // =====================================
+        // Hiện lại HUD.
+        if (battleHUD != null)
+            battleHUD.SetActive(true);
 
+        // Bắt đầu lượt Player.
         if (battleStateMachine != null)
-        {
             battleStateMachine.StartPlayerTurn();
-        }
 
         PrepareEnemyIntent();
 
@@ -448,9 +372,9 @@ public class RoundManager : MonoBehaviour
         );
     }
 
-    // =========================================
+    // =====================================
     // PLAYER DEFEATED
-    // =========================================
+    // =====================================
 
     public void PlayerDefeated()
     {
@@ -462,11 +386,6 @@ public class RoundManager : MonoBehaviour
 
         ClearEnemyIntent();
 
-        Debug.Log(
-            "========== PLAYER DEFEATED =========="
-        );
-
-        // Chuyển FSM sang Defeat.
         if (battleStateMachine != null)
         {
             battleStateMachine.ChangeState(
@@ -474,41 +393,23 @@ public class RoundManager : MonoBehaviour
             );
         }
 
-        // =====================================
-        // SHOW DEFEAT PANEL
-        // =====================================
-
-        // Home: hiện.
-        // Again: hiện.
-        // Next: ẩn.
-        ShowFinishPanel(defeatText, false);
+        ShowFinishPanel(false);
     }
 
-    // =========================================
+    // =====================================
     // VICTORY
-    // =========================================
+    // =====================================
 
     private void WinBattle()
     {
-        if (battleFinished || isTransitioning)
+        if (battleFinished)
             return;
 
         battleFinished = true;
-        isTransitioning = true;
         playerWon = true;
 
         ClearEnemyIntent();
 
-        Debug.Log(
-            "========== VICTORY =========="
-        );
-
-        Debug.Log(
-            $"TOTAL REWARD: " +
-            $"{currentCoin} Coin / {currentExp} EXP"
-        );
-
-        // Chuyển FSM sang Victory.
         if (battleStateMachine != null)
         {
             battleStateMachine.ChangeState(
@@ -516,261 +417,218 @@ public class RoundManager : MonoBehaviour
             );
         }
 
-        // Chờ Enemy phát Death rồi hiện Panel.
-        StartCoroutine(ShowVictoryPanelAfterDeath());
+        // Tính thưởng theo Stage và độ khó.
+        currentCoin =
+            activeStage.GetRewardCoin(activeDifficulty);
+
+        currentExp =
+            activeStage.GetRewardExp(activeDifficulty);
+
+        StartCoroutine(ShowVictoryCoroutine());
     }
 
-    // =========================================
-    // SHOW VICTORY PANEL AFTER DEATH
-    // =========================================
+    // =====================================
+    // SHOW VICTORY
+    // =====================================
 
-    private IEnumerator ShowVictoryPanelAfterDeath()
+    private IEnumerator ShowVictoryCoroutine()
     {
-        // Chờ Death Animation của Enemy cuối.
-        yield return WaitForEnemyDeathAnimation();
+        // Đợi Enemy Death và Card Cinematic.
+        yield return WaitForBattleAction();
 
-        // Xóa Enemy cuối cùng.
         if (enemySpawner != null)
-        {
             enemySpawner.DespawnCurrentEnemy();
+
+        // Lưu kết quả trận thắng một lần.
+        SaveStageVictory();
+
+        // Hiện Result.
+        ShowFinishPanel(true);
+    }
+
+    // =====================================
+    // SAVE STAGE VICTORY
+    // =====================================
+
+    private void SaveStageVictory()
+    {
+        if (stageRewardsSaved || activeStage == null)
+            return;
+
+        stageRewardsSaved = true;
+
+        _SaveData save = _SaveSystem.Load();
+
+        // Cộng Coin và EXP.
+        save.coin += Mathf.Max(0, currentCoin);
+        save.exp += Mathf.Max(0, currentExp);
+
+        // Xử lý lên Level theo hệ thống hiện tại.
+        save.playerLevel = Mathf.Max(
+            1,
+            save.playerLevel
+        );
+
+        int safety = 0;
+
+        while (safety < 1000)
+        {
+            int requiredExp = 50 * save.playerLevel;
+
+            if (save.exp < requiredExp)
+                break;
+
+            save.exp -= requiredExp;
+            save.playerLevel++;
+
+            safety++;
         }
 
-        // Cập nhật Reward.
-        UpdateRewardUI();
+        // Tạm thời Victory = 2 sao.
+        // Score thật sẽ xử lý sau.
+        int stars = 2;
+        int score = 0;
 
-        // =====================================
-        // SHOW VICTORY PANEL
-        // =====================================
-
-        // Home: hiện.
-        // Again: ẩn.
-        // Next: hiện.
-        ShowFinishPanel(victoryText, true);
+        // ReportStageResult đã gọi Save()
+        // bên trong _SaveSystem.
+        _SaveSystem.ReportStageResult(
+            activeStage.stageId,
+            stars,
+            score
+        );
 
         Debug.Log(
-            "RoundManager: Đã hiển thị Victory Panel!"
+            $"SAVED STAGE: {activeStage.stageId} | " +
+            $"Coin +{currentCoin} | EXP +{currentExp}"
         );
     }
 
-    // =========================================
-    // SHOW RESULT PANEL
-    // =========================================
+    // =====================================
+    // RESULT PANEL
+    // =====================================
 
-    private void ShowFinishPanel(
-        string result,
-        bool isVictory)
+    private void ShowFinishPanel(bool isVictory)
     {
-        // Không hiện nhiều lần.
         if (resultPanelShown)
             return;
 
-        resultPanelShown = true;
-
-        // =====================================
-        // RESULT TITLE
-        // =====================================
-
-        if (resultTitleText != null)
-        {
-            resultTitleText.text = result;
-        }
-
-        // =====================================
-        // BUTTON SETTINGS
-        // =====================================
-
-        // Home luôn được hiển thị.
-        if (homeButton != null)
-        {
-            homeButton.SetActive(true);
-        }
-
-        // Thua: hiển thị Again.
-        // Thắng: ẩn Again.
-        if (againButton != null)
-        {
-            againButton.SetActive(!isVictory);
-        }
-
-        // Thắng: hiển thị Next.
-        // Thua: ẩn Next.
-        if (nextButton != null)
-        {
-            nextButton.SetActive(isVictory);
-        }
-
-        // =====================================
-        // UPDATE REWARD
-        // =====================================
-
-        UpdateRewardUI();
-
-        // =====================================
-        // HIDE GAMEPLAY UI
-        // =====================================
-
-        SetGameplayUI(false);
-
-        // =====================================
-        // SHOW RESULT PANEL
-        // =====================================
-
-        if (finishPanel != null)
-        {
-            finishPanel.SetActive(true);
-        }
-        else
+        if (finishPanel == null)
         {
             Debug.LogError(
                 "RoundManager: Chưa gán ResultPanel!"
             );
-        }
-
-        Debug.Log(
-            isVictory
-                ? "ResultPanel: VICTORY!"
-                : "ResultPanel: DEFEAT!"
-        );
-
-        // Dừng Gameplay sau khi hiện Panel.
-        Time.timeScale = 0f;
-    }
-
-    // =========================================
-    // CONTINUE TO NEXT SCENE
-    // =========================================
-
-    public void ContinueToNextScene()
-    {
-        // Chỉ cho Next khi đã thắng.
-        if (!battleFinished ||
-            !playerWon ||
-            !resultPanelShown ||
-            isLoadingScene)
-        {
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(nextSceneName))
+        resultPanelShown = true;
+
+        // Tiêu đề.
+        if (resultTitleText != null)
         {
-            Debug.LogError(
-                "RoundManager: Chưa nhập Next Scene Name!"
+            resultTitleText.text =
+                isVictory ? "VICTORY" : "DEFEAT";
+        }
+
+        // Kết quả, sao, phần thưởng, Button.
+        // Chỉ ResultRewardUI xử lý giao diện.
+        if (resultRewardUI != null)
+        {
+            resultRewardUI.SetBattleOutcome(isVictory);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "RoundManager: Chưa gán ResultRewardUI!"
             );
-
-            return;
         }
 
-        StartCoroutine(LoadNextSceneAfterDelay());
-    }
+        SetGameplayUI(false);
+        finishPanel.SetActive(true);
 
-    // =========================================
-    // LOAD NEXT SCENE
-    // =========================================
-
-    private IEnumerator LoadNextSceneAfterDelay()
-    {
-        isLoadingScene = true;
-
-        // Realtime để chạy khi TimeScale = 0.
-        yield return new WaitForSecondsRealtime(
-            Mathf.Max(0f, transitionDelay)
-        );
-
-        Time.timeScale = 1f;
+        Time.timeScale = 0f;
 
         Debug.Log(
-            $"RoundManager: Load Scene {nextSceneName}"
+            isVictory ? "BATTLE VICTORY" : "BATTLE DEFEAT"
         );
-
-        SceneManager.LoadScene(nextSceneName);
     }
 
-    // =========================================
-    // GAMEPLAY UI
-    // =========================================
+    // =====================================
+    // SHOW / HIDE GAMEPLAY UI
+    // =====================================
 
-    private void SetGameplayUI(bool isActive)
+    private void SetGameplayUI(bool active)
     {
-        if (roundUI != null)
-        {
-            roundUI.SetActive(isActive);
-        }
+        if (battleHUD != null)
+            battleHUD.SetActive(active);
 
-        if (cardUI != null)
-        {
-            cardUI.SetActive(isActive);
-        }
-
-        if (playerUI != null)
-        {
-            playerUI.SetActive(isActive);
-        }
-
-        if (enemyUI != null)
-        {
-            enemyUI.SetActive(isActive);
-        }
+        if (roundText != null)
+            roundText.gameObject.SetActive(active);
     }
 
-    // =========================================
-    // ROUND UI
-    // =========================================
+    // =====================================
+    // UPDATE ROUND TEXT
+    // =====================================
 
     private void UpdateRoundUI()
     {
         if (roundText != null)
         {
             roundText.text =
-                "ROUND:\n" +
-                currentRound + "/" + maxRound;
+                $"ROUND:\n{currentRound}/{maxRound}";
         }
     }
 
-    // =========================================
-    // REWARD UI
-    // =========================================
+    // =====================================
+    // RESULT BUTTONS - SCENE NAVIGATION
+    // =====================================
 
-    private void UpdateRewardUI()
+    // Next: sau Victory trở về SelectMap.
+    public void ContinueToNextScene()
     {
-        if (coinText != null)
+        if (!battleFinished ||
+            !playerWon ||
+            !resultPanelShown)
         {
-            coinText.text =
-                "Coin: " + currentCoin;
+            return;
         }
 
-        if (expText != null)
+        ReturnToSelectMap();
+    }
+
+    // Again: chơi lại Stage hiện tại.
+    public void RetryBattle()
+    {
+        LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Home: trở về SelectMap.
+    public void ReturnToSelectMap()
+    {
+        LoadScene("SelectMap");
+    }
+
+    private void LoadScene(string sceneName)
+    {
+        if (!Application.CanStreamedLevelBeLoaded(sceneName))
         {
-            expText.text =
-                "EXP: " + currentExp;
+            Debug.LogError(
+                $"RoundManager: Scene '{sceneName}' " +
+                "chưa được thêm vào Build Profiles!"
+            );
+            return;
         }
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(sceneName);
     }
 
-    // =========================================
-    // GETTERS
-    // =========================================
+    // =====================================
+    // GETTERS - GIỮ TƯƠNG THÍCH SCRIPT CŨ
+    // =====================================
 
-    public int GetCurrentCoin()
-    {
-        return currentCoin;
-    }
-
-    public int GetCurrentExp()
-    {
-        return currentExp;
-    }
-
-    public int GetCurrentRound()
-    {
-        return currentRound;
-    }
-
-    public bool IsBattleFinished()
-    {
-        return battleFinished;
-    }
-
-    public bool IsChangingRound()
-    {
-        return isChangingRound;
-    }
+    public int GetCurrentCoin() => currentCoin;
+    public int GetCurrentExp() => currentExp;
+    public int GetCurrentRound() => currentRound;
+    public bool IsBattleFinished() => battleFinished;
+    public bool IsChangingRound() => isChangingRound;
 }

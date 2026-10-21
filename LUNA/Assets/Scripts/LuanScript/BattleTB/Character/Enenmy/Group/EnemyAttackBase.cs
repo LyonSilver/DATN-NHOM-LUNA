@@ -9,7 +9,6 @@ public abstract class EnemyAttackBase : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] protected Animator animator;
-
     [SerializeField] protected string attackTrigger = "Attack";
     [SerializeField] protected string shieldTrigger = "Shield";
 
@@ -18,39 +17,55 @@ public abstract class EnemyAttackBase : MonoBehaviour
 
     public event Action<int> OnDamageCalculated;
 
+    // =====================================
+    // AWAKE
+    // =====================================
+
     protected virtual void Awake()
     {
         if (animator == null)
-        {
             animator = GetComponentInChildren<Animator>(true);
+
+        if (animator == null)
+        {
+            Debug.LogWarning(
+                $"{gameObject.name}: Không tìm thấy Animator!"
+            );
         }
     }
 
-    // =========================================
+    // =====================================
     // SET MANAGER
-    // =========================================
+    // =====================================
 
     public void SetCardEffectManager(CardEffectManager manager)
     {
         cardEffectManager = manager;
     }
 
-    // =========================================
+    // =====================================
     // ATTACK ANIMATION
-    // =========================================
+    // =====================================
 
     public virtual void PlayAttackAnimation()
     {
-        if (animator != null &&
-            !string.IsNullOrEmpty(attackTrigger))
+        if (animator == null)
         {
-            animator.SetTrigger(attackTrigger);
+            Debug.LogWarning(
+                $"{gameObject.name}: Chưa gán Animator!"
+            );
+            return;
         }
+
+        if (string.IsNullOrEmpty(attackTrigger))
+            return;
+
+        animator.SetTrigger(attackTrigger);
     }
 
-    // =========================================
+    // =====================================
     // SHIELD ANIMATION
-    // =========================================
+    // =====================================
 
     public virtual void PlayShieldAnimation()
     {
@@ -61,23 +76,27 @@ public abstract class EnemyAttackBase : MonoBehaviour
         }
     }
 
-    // =========================================
-    // ATTACK WITHOUT TIMING
-    // =========================================
+    // =====================================
+    // NORMAL ATTACK
+    // =====================================
 
     public virtual void AttackWithoutTiming()
     {
-        Debug.Log(
-            $"{gameObject.name} Attack | " +
-            $"Không có Timing | Damage: {damage}"
-        );
+        // 1. Phát Animation Attack.
+        PlayAttackAnimation();
 
+        // 2. Gây Damage.
         DealDamage(damage);
+
+        Debug.Log(
+            $"{gameObject.name} Normal Attack | " +
+            $"Damage: {damage}"
+        );
     }
 
-    // =========================================
+    // =====================================
     // ATTACK WITH TIMING
-    // =========================================
+    // =====================================
 
     public virtual void ApplyTimingDamage(float multiplier)
     {
@@ -86,19 +105,22 @@ public abstract class EnemyAttackBase : MonoBehaviour
             Mathf.RoundToInt(damage * multiplier)
         );
 
-        Debug.Log(
-            $"{gameObject.name} Attack | " +
-            $"Base Damage: {damage} | " +
-            $"Multiplier: {multiplier} | " +
-            $"Final Damage: {finalDamage}"
-        );
+        // Không gọi Animation ở đây vì
+        // Timing có thể đã được phát sau Animation
+        // bởi hệ thống Cinematic.
 
         DealDamage(finalDamage);
+
+        Debug.Log(
+            $"{gameObject.name} Timing Attack | " +
+            $"Multiplier: {multiplier} | " +
+            $"Damage: {finalDamage}"
+        );
     }
 
-    // =========================================
+    // =====================================
     // DEAL DAMAGE
-    // =========================================
+    // =====================================
 
     protected virtual void DealDamage(int finalDamage)
     {
@@ -107,18 +129,20 @@ public abstract class EnemyAttackBase : MonoBehaviour
             Debug.LogWarning(
                 $"{gameObject.name}: Chưa gán CardEffectManager!"
             );
-
             return;
         }
+
+        if (finalDamage <= 0)
+            return;
 
         cardEffectManager.TakeDamage(finalDamage);
 
         OnDamageCalculated?.Invoke(finalDamage);
     }
 
-    // =========================================
+    // =====================================
     // GET DAMAGE
-    // =========================================
+    // =====================================
 
     public int GetDamage()
     {

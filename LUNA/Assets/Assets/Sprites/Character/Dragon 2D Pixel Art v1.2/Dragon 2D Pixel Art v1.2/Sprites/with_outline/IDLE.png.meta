@@ -34,12 +34,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -100,10 +100,10 @@ TextureImporter:
       name: IDLE_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 14
-        width: 93
-        height: 67
+        x: 0
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -122,10 +122,10 @@ TextureImporter:
       name: IDLE_1
       rect:
         serializedVersion: 2
-        x: 187
-        y: 14
-        width: 93
-        height: 66
+        x: 144
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,10 +144,10 @@ TextureImporter:
       name: IDLE_2
       rect:
         serializedVersion: 2
-        x: 331
-        y: 14
-        width: 92
-        height: 65
+        x: 288
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +166,10 @@ TextureImporter:
       name: IDLE_3
       rect:
         serializedVersion: 2
-        x: 475
-        y: 14
-        width: 91
-        height: 64
+        x: 432
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,10 +188,10 @@ TextureImporter:
       name: IDLE_4
       rect:
         serializedVersion: 2
-        x: 619
-        y: 14
-        width: 91
-        height: 64
+        x: 576
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +210,10 @@ TextureImporter:
       name: IDLE_5
       rect:
         serializedVersion: 2
-        x: 760
-        y: 14
-        width: 94
-        height: 64
+        x: 720
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +232,10 @@ TextureImporter:
       name: IDLE_6
       rect:
         serializedVersion: 2
-        x: 902
-        y: 14
-        width: 96
-        height: 65
+        x: 864
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +254,10 @@ TextureImporter:
       name: IDLE_7
       rect:
         serializedVersion: 2
-        x: 1045
-        y: 14
-        width: 98
-        height: 66
+        x: 1008
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +276,10 @@ TextureImporter:
       name: IDLE_8
       rect:
         serializedVersion: 2
-        x: 1189
-        y: 56
-        width: 4
-        height: 4
+        x: 1152
+        y: 0
+        width: 144
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,30 +288,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebaf77e2a0e9516479ee966144877335
+      spriteID: 4d033b2359cb3944f9172b6b77ddec24
       internalID: -811452181
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDLE_9
-      rect:
-        serializedVersion: 2
-        x: 1195
-        y: 14
-        width: 93
-        height: 67
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7495a1980ea194845b43ff6aba9ece0b
-      internalID: -914258519
       vertices: []
       indices: 
       edges: []
@@ -330,7 +308,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":9.0,"y":1.0},"gridSpriteSize":{"x":144.0,"y":96.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       IDLE_0: 66977707
       IDLE_1: 1937963440
@@ -341,7 +319,6 @@ TextureImporter:
       IDLE_6: -533656691
       IDLE_7: 74376648
       IDLE_8: -811452181
-      IDLE_9: -914258519
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

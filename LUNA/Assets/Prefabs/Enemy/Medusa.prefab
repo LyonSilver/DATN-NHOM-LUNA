@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.16153, y: 1.30381, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,10 +131,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHP: 50
-  animator: {fileID: 0}
+  animator: {fileID: 8152008238309124246}
   hurtTrigger: Hurt
   deathTrigger: Death
-  deathAnimationClip: {fileID: 0}
+  deathAnimationClip: {fileID: 7400000, guid: 66bb4506a5fbc6e43939daba957fd97a, type: 2}
   defaultDeathDuration: 1
 --- !u!114 &4856126401480409177
 MonoBehaviour:
@@ -148,14 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50149f3b5aa6cba4a9c8fa103b12c011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  damage: 10
+  damage: 20
   animator: {fileID: 8152008238309124246}
   attackTrigger: Attack
   shieldTrigger: Shield
   cardEffectManager: {fileID: 0}
   skills:
   - {fileID: 4662893735527120451}
-  skillChance: 50
+  skillChance: 30
 --- !u!114 &4662893735527120451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a8b115d26431a4c93e71d5a34b7ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoisonSkill
-  intentIcon: {fileID: 1913479405, guid: d7c40fe99b76fdd4488e2045910f0142, type: 3}
+  intentIcon: {fileID: -998589496, guid: d7c40fe99b76fdd4488e2045910f0142, type: 3}
   skillTrigger: Skill
   poisonDamage: 5
   poisonDuration: 3
@@ -186,4 +186,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDashMovement
   dashDuration: 0.25
   returnDuration: 0.3
-  stoppingDistance: 1.5
+  stoppingDistance: 2
