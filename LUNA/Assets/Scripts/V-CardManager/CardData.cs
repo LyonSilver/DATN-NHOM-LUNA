@@ -1,54 +1,54 @@
-using UnityEngine;
+// using UnityEngine;
 
-public enum CardType
-{
-    Attack,
-    Guard,
-    Effect,
-    Support,
-    Chaos
-}
+// public enum CardType1
+// {
+//     Attack,
+//     Guard,
+//     Effect,
+//     Support,
+//     Chaos
+// }
 
-public enum CardRarity
-{
-    Common,
-    Rare,
-    Epic,
-    Legendary
-}
+// public enum CardRarity
+// {
+//     Common,
+//     Rare,
+//     Epic,
+//     Legendary
+// }
 
-public enum PurchaseType
-{
-    Money,
-    Energy,
-    MoneyAndEnergy
-}
+// public enum PurchaseType
+// {
+//     Money,
+//     Energy,
+//     MoneyAndEnergy
+// }
 
-[CreateAssetMenu(fileName = "NewCard", menuName = "Card System/Card Data")]
-public class CardData : ScriptableObject
-{
-    [Header("Card Information")]
-    public string cardID;
-    public string cardName;
+// [CreateAssetMenu(fileName = "NewCard", menuName = "Card System/Card Data")]
+// public class CardData1 : ScriptableObject
+// {
+//     [Header("Card Information")]
+//     public string cardID;
+//     public string cardName;
 
-    public CardType cardType;
-    public CardRarity rarity;
+//     public CardType cardType;
+//     public CardRarity rarity;
 
-    [TextArea(2, 5)]
-    public string description;
+//     [TextArea(2, 5)]
+//     public string description;
 
-    [Header("Card Value")]
-    public int baseValue;
+//     [Header("Card Value")]
+//     public int baseValue;
 
-    [Header("Purchase")]
-    public PurchaseType purchaseType;
+//     [Header("Purchase")]
+//     public PurchaseType purchaseType;
 
-    public int moneyCost;
-    public int energyCost;
+//     public int moneyCost;
+//     public int energyCost;
 
-    [Header("Inventory")]
-    public int maxQuantity;
+//     [Header("Inventory")]
+//     public int maxQuantity;
 
-    [Header("Visual")]
-    public Sprite cardSprite;
-}
+//     [Header("Visual")]
+//     public Sprite cardSprite;
+// }

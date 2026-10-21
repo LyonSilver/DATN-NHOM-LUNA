@@ -368,7 +368,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -806, y: 166}
+  m_AnchoredPosition: {x: -806, y: 214}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &65942809
@@ -824,7 +824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -806, y: 62}
+  m_AnchoredPosition: {x: -806, y: 110}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &143690177
@@ -2306,7 +2306,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: 32}
+  m_AnchoredPosition: {x: 17, y: 53}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &423392463
@@ -2329,7 +2329,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 280}
+  m_CellSize: {x: 250, y: 450}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 4
@@ -3643,7 +3643,7 @@ MonoBehaviour:
   storeManager: {fileID: 1419647150}
   currencyManager: {fileID: 973526140}
   storePanel: {fileID: 423392462}
-  storeCardPrefab: {fileID: 2997509876283000121, guid: 4b25b7b0c273ef141ac4c3110c484aa5, type: 3}
+  storeCardPrefab: {fileID: 2997509876283000121, guid: 02fd9ae42ad77c04380a0ca9c15a7f3a, type: 3}
   cardsPerRefresh: 4
   moneyText: {fileID: 499169072}
   energyText: {fileID: 1714481720}
@@ -4932,7 +4932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 326, y: -217}
+  m_AnchoredPosition: {x: 410, y: -217}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1341178330
@@ -5108,7 +5108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -806, y: -44}
+  m_AnchoredPosition: {x: -806, y: 4}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1380139493
@@ -5240,8 +5240,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -247, y: -352}
-  m_SizeDelta: {x: 740, y: 280}
+  m_AnchoredPosition: {x: -247, y: -321}
+  m_SizeDelta: {x: 950, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1381151186
 MonoBehaviour:
@@ -5575,7 +5575,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -791, y: -278}
+  m_AnchoredPosition: {x: -847, y: -278}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1438089982
@@ -7280,8 +7280,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -248, y: -97}
-  m_SizeDelta: {x: 900, y: 850}
+  m_AnchoredPosition: {x: -248, y: -50}
+  m_SizeDelta: {x: 1100, y: 950}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1931396346
 MonoBehaviour:
@@ -8115,8 +8115,8 @@ MonoBehaviour:
   rewardNameText: {fileID: 633076908}
   rewardAmountText: {fileID: 111819103}
   compensationText: {fileID: 71809421}
-  coinSprite: {fileID: 21300000, guid: e298402e1f2a87242944f68e4587e699, type: 3}
-  gemSprite: {fileID: 21300000, guid: e6741847f1d95b04e957d10bf2411ce8, type: 3}
+  coinSprite: {fileID: 1557816961, guid: 4dfc92dba97adb04fbe94d35b19c955e, type: 3}
+  gemSprite: {fileID: 1363157726, guid: 4dfc92dba97adb04fbe94d35b19c955e, type: 3}
   storePanel: {fileID: 870085303}
   zoomTarget: {fileID: 1838689430}
   gachaOpenVFX: {fileID: 0}

@@ -28,7 +28,6 @@ public class CurrencyManager : MonoBehaviour
             NotifyCurrencyChanged();
         }
     }
-
     private void NotifyCurrencyChanged()
     {
         lastMoney = money;
