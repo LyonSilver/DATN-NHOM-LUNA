@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d804724b8ef150a44a0329651456823e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardUI
-  cardData: {fileID: 0}
+  cardData: {fileID: 11400000, guid: f3f048fee22452743a411b71c426b77c, type: 2}
   cardBackgroundImage: {fileID: 484187117117157391}
   cardBorderImage: {fileID: 4987032848862119821}
   costBadgeImage: {fileID: 5293306971318286732}
@@ -459,15 +459,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardDissolveUI
   dissolveMaterial: {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
-  sourceImage: {fileID: 6239382686552589522}
-  fullCardTexture: {fileID: 0}
-  battleCamera: {fileID: 0}
-  distanceFromCamera: 3
   dissolveProperty: _Dissolve
+  dissolveDuration: 0.8
   startValue: 0
   endValue: 1
-  dissolveDuration: 0.8
-  reduceMetallic: 1
+  startOffset: {x: 0, y: -0.5, z: 0}
+  endOffset: {x: 0, y: 1.1, z: 0}
+  fadeOtherGraphics: 1
+  otherGraphicsFadeEnd: 0.65
 --- !u!1 &3413847561350165180
 GameObject:
   m_ObjectHideFlags: 0

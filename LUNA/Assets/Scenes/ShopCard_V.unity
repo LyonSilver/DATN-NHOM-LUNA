@@ -3702,11 +3702,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9f51d661819bb4ebf59217b6b2a812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreUI
-  cardDatabase: {fileID: 11400000, guid: fcb241e98f4d38441b9869ba25181498, type: 2}
+  cardDatabase: {fileID: 11400000, guid: 620a13fa4cdcbc64d9a642cf0b1d080f, type: 2}
   storeManager: {fileID: 1419647150}
   currencyManager: {fileID: 973526140}
   storePanel: {fileID: 423392462}
-  storeCardPrefab: {fileID: 2997509876283000121, guid: 02fd9ae42ad77c04380a0ca9c15a7f3a, type: 3}
+  storeCardPrefab: {fileID: 2997509876283000121, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
   cardsPerRefresh: 4
   moneyText: {fileID: 499169072}
   energyText: {fileID: 1714481720}
@@ -4245,7 +4245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1060928592
 RectTransform:
   m_ObjectHideFlags: 0
