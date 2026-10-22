@@ -1773,7 +1773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefabs:
-  - {fileID: 5745417962724113562, guid: 7963d069cd5a6ae4ea266c50d1f48c3b, type: 3}
+  - {fileID: 6072092392641848297, guid: dabb50c75e351b34e8f3f24463d6a802, type: 3}
   - {fileID: 5745417962724113562, guid: 7963d069cd5a6ae4ea266c50d1f48c3b, type: 3}
   spawnPoint: {fileID: 806305796}
   cardEffectManager: {fileID: 1156435792}
