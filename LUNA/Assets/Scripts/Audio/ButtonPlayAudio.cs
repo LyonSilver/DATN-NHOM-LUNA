@@ -1,28 +1,52 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))]
-public class ButtonPlayAudio : MonoBehaviour, IPointerClickHandler
+[RequireComponent(typeof(AudioSource))]
+public class ButtonClickAudio : MonoBehaviour
 {
-    [Header("Âm thanh khi nhấn")]
-    [SerializeField] private ObjectAudio audioObject;
+    [Header("Button cần nhấn")]
+    [SerializeField] private Button targetButton;
 
-    public void OnPointerClick(PointerEventData eventData)
+    [Header("File âm thanh khi nhấn")]
+    [SerializeField] private AudioClip clickSound;
+
+    [Header("Âm lượng")]
+    [Range(0f, 2f)]
+    [SerializeField] private float volume = 1.5f;
+
+    private AudioSource audioSource;
+
+    private void Awake()
     {
-        PlayClickSound();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+
+        if (targetButton == null)
+            targetButton = GetComponent<Button>();
+
+        if (targetButton != null)
+            targetButton.onClick.AddListener(PlayClickSound);
     }
 
-    public void PlayClickSound()
+    private void PlayClickSound()
     {
-        if (audioObject != null)
+        if (clickSound == null)
         {
-            audioObject.PlaySound();
+            Debug.LogWarning(
+                "Chưa gán file âm thanh cho Button: " + gameObject.name
+            );
+            return;
         }
-        else
-        {
-            Debug.LogWarning("Chưa gắn ObjectAudio vào Button: " + gameObject.name);
-        }
+
+        audioSource.PlayOneShot(clickSound, volume);
+    }
+
+    private void OnDestroy()
+    {
+        if (targetButton != null)
+            targetButton.onClick.RemoveListener(PlayClickSound);
     }
 }
