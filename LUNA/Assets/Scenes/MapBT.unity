@@ -1972,6 +1972,7 @@ GameObject:
   - component: {fileID: 531574976}
   - component: {fileID: 531574975}
   - component: {fileID: 531574974}
+  - component: {fileID: 531574978}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -2091,6 +2092,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &531574978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531574973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce19eb89086cdd34db54afd139ec4995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundPlayer
+  soundType: 0
+  audioClip: {fileID: 0}
+  volume: 1
+  playOnStart: 0
 --- !u!1 &557670366
 GameObject:
   m_ObjectHideFlags: 0
@@ -6202,6 +6219,8 @@ MonoBehaviour:
   maxAngle: 30
   arcHeight: 25
   cardPositionY: 20
+  cardClickClip: {fileID: 8300000, guid: 8a1e154c9c68e88498402b31d2e2bcf3, type: 3}
+  cardClickVolume: 1
 --- !u!4 &1463073213
 Transform:
   m_ObjectHideFlags: 0
