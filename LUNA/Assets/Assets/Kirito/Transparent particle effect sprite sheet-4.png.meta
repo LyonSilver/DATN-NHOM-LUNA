@@ -1,0 +1,901 @@
+fileFormatVersion: 2
+guid: b65bb7f16093f584fa27f35235dbde70
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 978
+        width: 268
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9518d2bb2e86f214a99a3a53112fb0b7
+      internalID: -847225924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_1
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 978
+        width: 268
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4003338fa6b1a74d99b72119a2fb223
+      internalID: 1413892909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_2
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 978
+        width: 268
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3199daa98d135ea4bb0279413f3fab94
+      internalID: 1878134539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_3
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 978
+        width: 268
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e1f35aebdc9d684c928737abac8d9f6
+      internalID: 522313233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 705
+        width: 268
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c03f82e370512f6458f5fa233e1f847d
+      internalID: -1928353551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_5
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 705
+        width: 268
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46d5b918229d8bd4aaa87a10dd32004a
+      internalID: -1326072103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_6
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 705
+        width: 268
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6f40643245e65f4db0b7a17da2ceacf
+      internalID: -979376654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_7
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 909
+        width: 38
+        height: 330
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b440a8da89f2474d84b30bd0fecd7d0
+      internalID: 1392653588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_8
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 909
+        width: 38
+        height: 330
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a8e25e78c1144e49847d9f80f8f2497
+      internalID: -628164661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_9
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 714
+        width: 35
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c1607a0a78857a428df4d3ef0f0bde4
+      internalID: 1484605186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_10
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 807
+        width: 50
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 237353a8c4ebb9445be7217aa8204f65
+      internalID: -1711573387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_11
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 807
+        width: 50
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0bd5135507bc5b47a32a4f839e895ff
+      internalID: 2096649187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_12
+      rect:
+        serializedVersion: 2
+        x: 1004
+        y: 807
+        width: 50
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa9fe486347cf1941ad323c974f670e5
+      internalID: -1352376886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_13
+      rect:
+        serializedVersion: 2
+        x: 1066
+        y: 727
+        width: 50
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0da59155088388e41a801049c53b72e1
+      internalID: 1213311073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_14
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 726
+        width: 50
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 350902a6dd1f1ef4c9e36cca5afb5166
+      internalID: 49451843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_15
+      rect:
+        serializedVersion: 2
+        x: 1183
+        y: 726
+        width: 50
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e10cc380ecd2d7441a9b93b55bb05512
+      internalID: 823802688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_16
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 302
+        width: 83
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcf8356e0c65ff2498be16daf32c2bb7
+      internalID: -1526085079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_17
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 302
+        width: 83
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d29117a5c47bcc4ba28ecc0c95466d1
+      internalID: 1862057771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_18
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 302
+        width: 83
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 891ecd47e731894438c50f73ab6df3a4
+      internalID: -1420265965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_19
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 302
+        width: 83
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5f4a895c807f3e47adcb5ce6518aedf
+      internalID: -1868535049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_20
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 303
+        width: 83
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68de4ee59243d1240b0c27a511756925
+      internalID: 1591658142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_21
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 303
+        width: 83
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ccee2dfb54a92a44849f748296d8531
+      internalID: 503861991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_22
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 548
+        width: 96
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1122c3560bae2c6499e93fe0429be266
+      internalID: -1990746380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_23
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 548
+        width: 96
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8e86872aa45da4449eefd851d777fab
+      internalID: 482843334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_24
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 548
+        width: 96
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23c3a5a4d277b3d49ac5eca25c6a7db4
+      internalID: -130607633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_25
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 548
+        width: 96
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b192a791d68373418c2e6794fd5638c
+      internalID: 44817603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_26
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 337
+        width: 53
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e92dd2503e95b444bba7aa999d1e56b7
+      internalID: -1387389941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_27
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 337
+        width: 53
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d072bf17a9ab9074cb4f254617349dac
+      internalID: -749858850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_28
+      rect:
+        serializedVersion: 2
+        x: 707
+        y: 337
+        width: 53
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6155c30dabf6ade4194815156cbe8bca
+      internalID: -1716704185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_29
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 337
+        width: 53
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cec5abfc8a10e1a49a463531a01f9110
+      internalID: -651541373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_30
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 337
+        width: 53
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2625cc34337f6e74bb3088a24e5584a6
+      internalID: 2086061650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_31
+      rect:
+        serializedVersion: 2
+        x: 886
+        y: 337
+        width: 53
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66f27304fe49c514a8a5e1baed2c0c04
+      internalID: 1703944261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_32
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 310
+        width: 64
+        height: 377
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 056fcf8a9c2d06a4fb1e6bda962048f4
+      internalID: -1432535909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent particle effect sprite sheet-4_33
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 310
+        width: 64
+        height: 377
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 293191d0d08e8884793a92d31b88de76
+      internalID: 289079181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 84a4f3fd5f4ebad40b197ceafec3d095
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Transparent particle effect sprite sheet-4_0: -847225924
+      Transparent particle effect sprite sheet-4_1: 1413892909
+      Transparent particle effect sprite sheet-4_10: -1711573387
+      Transparent particle effect sprite sheet-4_11: 2096649187
+      Transparent particle effect sprite sheet-4_12: -1352376886
+      Transparent particle effect sprite sheet-4_13: 1213311073
+      Transparent particle effect sprite sheet-4_14: 49451843
+      Transparent particle effect sprite sheet-4_15: 823802688
+      Transparent particle effect sprite sheet-4_16: -1526085079
+      Transparent particle effect sprite sheet-4_17: 1862057771
+      Transparent particle effect sprite sheet-4_18: -1420265965
+      Transparent particle effect sprite sheet-4_19: -1868535049
+      Transparent particle effect sprite sheet-4_2: 1878134539
+      Transparent particle effect sprite sheet-4_20: 1591658142
+      Transparent particle effect sprite sheet-4_21: 503861991
+      Transparent particle effect sprite sheet-4_22: -1990746380
+      Transparent particle effect sprite sheet-4_23: 482843334
+      Transparent particle effect sprite sheet-4_24: -130607633
+      Transparent particle effect sprite sheet-4_25: 44817603
+      Transparent particle effect sprite sheet-4_26: -1387389941
+      Transparent particle effect sprite sheet-4_27: -749858850
+      Transparent particle effect sprite sheet-4_28: -1716704185
+      Transparent particle effect sprite sheet-4_29: -651541373
+      Transparent particle effect sprite sheet-4_3: 522313233
+      Transparent particle effect sprite sheet-4_30: 2086061650
+      Transparent particle effect sprite sheet-4_31: 1703944261
+      Transparent particle effect sprite sheet-4_32: -1432535909
+      Transparent particle effect sprite sheet-4_33: 289079181
+      Transparent particle effect sprite sheet-4_4: -1928353551
+      Transparent particle effect sprite sheet-4_5: -1326072103
+      Transparent particle effect sprite sheet-4_6: -979376654
+      Transparent particle effect sprite sheet-4_7: 1392653588
+      Transparent particle effect sprite sheet-4_8: -628164661
+      Transparent particle effect sprite sheet-4_9: 1484605186
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
