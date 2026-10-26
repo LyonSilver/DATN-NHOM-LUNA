@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
+    [Header("Mission System")]
+    [SerializeField] private MissionRewardManager missionRewardManager;
+
     [Header("Managers")]
     public TurnManager turnManager;
     public HandManager handManager;
@@ -394,6 +397,25 @@ public class CardManager : MonoBehaviour
         if (deckManager != null)
         {
             deckManager.PlayCard(card);
+        }
+
+        // Mission 2: ghi nhận loại thẻ sau khi thẻ được sử dụng thành công.
+        if (missionRewardManager != null && card != null)
+        {
+            switch (card.cardType)
+            {
+                case CardType.Attack:
+                    missionRewardManager.RegisterCardUsed(MissionCardType.Attack);
+                    break;
+
+                case CardType.Defense:
+                    missionRewardManager.RegisterCardUsed(MissionCardType.Guard);
+                    break;
+
+                case CardType.Support:
+                    missionRewardManager.RegisterCardUsed(MissionCardType.Support);
+                    break;
+            }
         }
 
         // =====================================
