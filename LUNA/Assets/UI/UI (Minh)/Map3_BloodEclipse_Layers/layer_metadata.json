@@ -1,0 +1,80 @@
+{
+  "canvas_size": [
+    1672,
+    941
+  ],
+  "layers": [
+    {
+      "name": "00_Background_Reconstructed.png",
+      "trimmed_name": "00_Background_Reconstructed_trimmed.png",
+      "bbox": [
+        0,
+        0,
+        1672,
+        941
+      ],
+      "size": [
+        1672,
+        941
+      ]
+    },
+    {
+      "name": "01_Foreground_Facade.png",
+      "trimmed_name": "01_Foreground_Facade_trimmed.png",
+      "bbox": [
+        170,
+        733,
+        1503,
+        941
+      ],
+      "size": [
+        1333,
+        208
+      ]
+    },
+    {
+      "name": "02_Battle_Floor.png",
+      "trimmed_name": "02_Battle_Floor_trimmed.png",
+      "bbox": [
+        248,
+        511,
+        1425,
+        815
+      ],
+      "size": [
+        1177,
+        304
+      ]
+    },
+    {
+      "name": "03_Left_ForegroundCluster.png",
+      "trimmed_name": "03_Left_ForegroundCluster_trimmed.png",
+      "bbox": [
+        0,
+        0,
+        271,
+        941
+      ],
+      "size": [
+        271,
+        941
+      ]
+    },
+    {
+      "name": "04_Right_ForegroundCluster.png",
+      "trimmed_name": "04_Right_ForegroundCluster_trimmed.png",
+      "bbox": [
+        1402,
+        0,
+        1672,
+        941
+      ],
+      "size": [
+        270,
+        941
+      ]
+    }
+  ],
+  "recompose_pixel_match": 1,
+  "different_pixels": 0
+}

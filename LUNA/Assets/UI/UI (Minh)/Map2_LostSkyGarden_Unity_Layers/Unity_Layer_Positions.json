@@ -1,0 +1,62 @@
+{
+  "source_resolution": [
+    1672,
+    941
+  ],
+  "pixel_per_unit_suggestion": 100,
+  "origin": "top-left",
+  "layers_bottom_to_top": [
+    "00_Background_Reconstructed.png",
+    "01_Foreground_StoneBridge.png",
+    "02_Battle_Floor.png",
+    "03_Left_Guardian.png",
+    "04_Right_Guardian.png"
+  ],
+  "sprites_cropped": [
+    {
+      "file": "Sprites_Cropped/01_Foreground_StoneBridge.png",
+      "top_left_pixel": [
+        0,
+        784
+      ],
+      "size_px": [
+        1672,
+        157
+      ]
+    },
+    {
+      "file": "Sprites_Cropped/02_Battle_Floor.png",
+      "top_left_pixel": [
+        160,
+        502
+      ],
+      "size_px": [
+        1348,
+        295
+      ]
+    },
+    {
+      "file": "Sprites_Cropped/03_Left_Guardian.png",
+      "top_left_pixel": [
+        0,
+        383
+      ],
+      "size_px": [
+        123,
+        270
+      ]
+    },
+    {
+      "file": "Sprites_Cropped/04_Right_Guardian.png",
+      "top_left_pixel": [
+        1545,
+        383
+      ],
+      "size_px": [
+        127,
+        273
+      ]
+    }
+  ],
+  "notes": "All top-level PNGs use the same 1672x941 canvas. The background is a reconstructed approximation only where the arena/guardians obscure the original image. Static composite matches the original precisely. Source is flattened: no hidden original pixels or perfect semantic masks exist."
+}
