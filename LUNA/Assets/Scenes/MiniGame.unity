@@ -6288,8 +6288,10 @@ MonoBehaviour:
   fishingButton: {fileID: 1961707273}
   statusText: {fileID: 2130312676}
   fragmentText: {fileID: 1582760468}
+  attemptsText: {fileID: 0}
   minWaitTime: 2
   maxWaitTime: 5
+  maxFishingAttempts: 5
   goodReward: 1
   greatReward: 2
   perfectReward: 3
