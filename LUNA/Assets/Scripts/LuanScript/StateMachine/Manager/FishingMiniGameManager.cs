@@ -13,10 +13,14 @@ public class FishingMiniGameManager : MonoBehaviour
     [SerializeField] private Button fishingButton;
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private TMP_Text fragmentText;
+    [SerializeField] private TMP_Text attemptsText;
 
     [Header("Fishing Settings")]
     [SerializeField] private float minWaitTime = 2f;
     [SerializeField] private float maxWaitTime = 5f;
+
+    [Header("Fishing Attempts")]
+    [SerializeField] private int maxFishingAttempts = 5;
 
     [Header("Card Fragment Reward")]
     [SerializeField] private int goodReward = 1;
@@ -27,13 +31,20 @@ public class FishingMiniGameManager : MonoBehaviour
     {
         Idle,
         Waiting,
-        Timing
+        Timing,
+        Finished
     }
 
     private FishingState currentState = FishingState.Idle;
 
     private int totalFragments = 0;
+    private int remainingAttempts;
     private Coroutine fishingCoroutine;
+
+    private void Awake()
+    {
+        remainingAttempts = Mathf.Max(0, maxFishingAttempts);
+    }
 
     private void OnEnable()
     {
@@ -50,15 +61,23 @@ public class FishingMiniGameManager : MonoBehaviour
             timingManager.StopTiming();
         }
 
-        currentState = FishingState.Idle;
+        currentState = remainingAttempts > 0
+            ? FishingState.Idle
+            : FishingState.Finished;
 
         UpdateFragmentUI();
-        SetStatus("Nhan Fishing de bat dau cau ca!");
+        UpdateAttemptsUI();
 
-        if (fishingButton != null)
+        if (remainingAttempts > 0)
         {
-            fishingButton.interactable = true;
+            SetStatus("Nhan Fishing de bat dau cau ca!");
         }
+        else
+        {
+            SetStatus("Da het luot cau!");
+        }
+
+        UpdateFishingButton();
     }
 
     private void OnDisable()
@@ -74,9 +93,17 @@ public class FishingMiniGameManager : MonoBehaviour
             StopCoroutine(fishingCoroutine);
             fishingCoroutine = null;
         }
+
+        if (currentState == FishingState.Waiting ||
+            currentState == FishingState.Timing)
+        {
+            currentState = remainingAttempts > 0
+                ? FishingState.Idle
+                : FishingState.Finished;
+        }
     }
 
-    // Gan ham nay vao Button Fishing
+    // Bat dau mot luot cau
     public void StartFishing()
     {
         if (currentState != FishingState.Idle)
@@ -88,12 +115,19 @@ public class FishingMiniGameManager : MonoBehaviour
             return;
         }
 
-        currentState = FishingState.Waiting;
-
-        if (fishingButton != null)
+        if (remainingAttempts <= 0)
         {
-            fishingButton.interactable = false;
+            FinishFishing();
+            return;
         }
+
+        // Tru 1 luot ngay khi bat dau cau
+        remainingAttempts--;
+
+        UpdateAttemptsUI();
+
+        currentState = FishingState.Waiting;
+        UpdateFishingButton();
 
         SetStatus("Dang tha cau... Hay doi ca can!");
 
@@ -135,30 +169,29 @@ public class FishingMiniGameManager : MonoBehaviour
         if (currentState != FishingState.Timing)
             return;
 
-        currentState = FishingState.Idle;
-
         int reward = 0;
+        string resultMessage = "";
 
         switch (result)
         {
             case TimingManager.TimingResult.MISS:
                 reward = 0;
-                SetStatus("MISS! Ca da thoat!");
+                resultMessage = "MISS! Ca da thoat!";
                 break;
 
             case TimingManager.TimingResult.GOOD:
                 reward = goodReward;
-                SetStatus("GOOD! Nhan 1 manh the!");
+                resultMessage = "GOOD! Nhan " + reward + " manh the!";
                 break;
 
             case TimingManager.TimingResult.GREAT:
                 reward = greatReward;
-                SetStatus("GREAT! Nhan 2 manh the!");
+                resultMessage = "GREAT! Nhan " + reward + " manh the!";
                 break;
 
             case TimingManager.TimingResult.PERFECT:
                 reward = perfectReward;
-                SetStatus("PERFECT! Nhan 3 manh the!");
+                resultMessage = "PERFECT! Nhan " + reward + " manh the!";
                 break;
         }
 
@@ -169,23 +202,76 @@ public class FishingMiniGameManager : MonoBehaviour
         Debug.Log(
             $"Fishing Result: {result} | " +
             $"Reward: {reward} | " +
-            $"Total: {totalFragments}"
+            $"Total: {totalFragments} | " +
+            $"Remaining: {remainingAttempts}"
         );
 
-        if (fishingButton != null)
+        if (remainingAttempts <= 0)
         {
-            fishingButton.interactable = true;
+            FinishFishing(resultMessage);
+        }
+        else
+        {
+            currentState = FishingState.Idle;
+            SetStatus(resultMessage);
+            UpdateFishingButton();
         }
     }
 
+    // Ket thuc khi het 5 luot
+    private void FinishFishing(string lastResult = "")
+    {
+        currentState = FishingState.Finished;
+
+        string message = "DA HET 5 LUOT CAU!\n" +
+                         "Tong manh the: " + totalFragments;
+
+        if (!string.IsNullOrEmpty(lastResult))
+        {
+            message = lastResult + "\n" + message;
+        }
+
+        SetStatus(message);
+        UpdateFishingButton();
+
+        Debug.Log(
+            "Fishing Finished! Total Fragments: " + totalFragments
+        );
+    }
+
+    // Cap nhat nut Fishing
+    private void UpdateFishingButton()
+    {
+        if (fishingButton != null)
+        {
+            fishingButton.interactable =
+                currentState == FishingState.Idle &&
+                remainingAttempts > 0;
+        }
+    }
+
+    // Cap nhat so manh the
     private void UpdateFragmentUI()
     {
         if (fragmentText != null)
         {
-            fragmentText.text = "Card Fragments: " + totalFragments;
+            fragmentText.text =
+                "Card Fragments: " + totalFragments;
         }
     }
 
+    // Cap nhat so luot cau
+    private void UpdateAttemptsUI()
+    {
+        if (attemptsText != null)
+        {
+            attemptsText.text =
+                "Luot cau: " + remainingAttempts +
+                "/" + Mathf.Max(0, maxFishingAttempts);
+        }
+    }
+
+    // Cap nhat trang thai
     private void SetStatus(string message)
     {
         if (statusText != null)
