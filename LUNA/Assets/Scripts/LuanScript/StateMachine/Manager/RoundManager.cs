@@ -30,8 +30,9 @@ public class RoundManager : MonoBehaviour
 
     [Header("Result UI")]
     [SerializeField] private GameObject finishPanel;
-    [SerializeField] private TMP_Text resultTitleText;
-    [SerializeField] private ResultRewardUI resultRewardUI;
+
+    [Header("Mission System")]
+    [SerializeField] private MissionRewardManager missionRewardManager;
 
     // =====================================
     // STAGE DATA
@@ -276,6 +277,10 @@ public class RoundManager : MonoBehaviour
 
         enemyRewardClaimed = true;
 
+        // Mission 1: ghi nhận theo Round trước khi chuyển Round.
+        if (missionRewardManager != null)
+            missionRewardManager.RegisterEnemyDefeated(currentRound);
+
         ClearEnemyIntent();
 
         // Ghi Kill Count.
@@ -439,6 +444,10 @@ public class RoundManager : MonoBehaviour
         if (enemySpawner != null)
             enemySpawner.DespawnCurrentEnemy();
 
+        // Chốt kết quả Mission trước khi lưu số sao của Stage.
+        if (missionRewardManager != null)
+            missionRewardManager.RegisterBattleEnded(true, currentRound);
+
         // Lưu kết quả trận thắng một lần.
         SaveStageVictory();
 
@@ -484,9 +493,11 @@ public class RoundManager : MonoBehaviour
             safety++;
         }
 
-        // Tạm thời Victory = 2 sao.
-        // Score thật sẽ xử lý sau.
-        int stars = 2;
+        // Số sao lấy từ kết quả Mission thay vì hardcode 2 sao.
+        int stars = missionRewardManager != null &&
+                    missionRewardManager.FinalReward != null
+            ? missionRewardManager.FinalReward.stars
+            : 0;
         int score = 0;
 
         // ReportStageResult đã gọi Save()
@@ -522,23 +533,16 @@ public class RoundManager : MonoBehaviour
 
         resultPanelShown = true;
 
-        // Tiêu đề.
-        if (resultTitleText != null)
+        // Chốt kết quả Mission; hàm có cơ chế chống gọi lặp.
+        // MissionRewardManager sẽ chuyển dữ liệu sang MissionResultUI.
+        if (missionRewardManager != null)
         {
-            resultTitleText.text =
-                isVictory ? "VICTORY" : "DEFEAT";
-        }
-
-        // Kết quả, sao, phần thưởng, Button.
-        // Chỉ ResultRewardUI xử lý giao diện.
-        if (resultRewardUI != null)
-        {
-            resultRewardUI.SetBattleOutcome(isVictory);
+            missionRewardManager.RegisterBattleEnded(isVictory, currentRound);
         }
         else
         {
             Debug.LogWarning(
-                "RoundManager: Chưa gán ResultRewardUI!"
+                "RoundManager: Chưa gán MissionRewardManager!"
             );
         }
 
