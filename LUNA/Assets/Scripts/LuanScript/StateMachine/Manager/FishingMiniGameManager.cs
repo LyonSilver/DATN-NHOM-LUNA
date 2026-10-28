@@ -6,8 +6,8 @@ using TMPro;
 
 public class FishingMiniGameManager : MonoBehaviour
 {
-    [Header("Timing System")]
-    [SerializeField] private TimingManager timingManager;
+    [Header("Fishing Tracking System")]
+    [SerializeField] private FishingTrackingBar fishingTrackingBar;
 
     [Header("Fishing UI")]
     [SerializeField] private Button fishingButton;
@@ -23,15 +23,13 @@ public class FishingMiniGameManager : MonoBehaviour
     [SerializeField] private int maxFishingAttempts = 5;
 
     [Header("Card Fragment Reward")]
-    [SerializeField] private int goodReward = 1;
-    [SerializeField] private int greatReward = 2;
-    [SerializeField] private int perfectReward = 3;
+    [SerializeField] private int fragmentsPerCatch = 3;
 
     private enum FishingState
     {
         Idle,
         Waiting,
-        Timing,
+        Tracking,
         Finished
     }
 
@@ -39,7 +37,12 @@ public class FishingMiniGameManager : MonoBehaviour
 
     private int totalFragments = 0;
     private int remainingAttempts;
+
     private Coroutine fishingCoroutine;
+
+    // ===================================
+    // KHOI TAO
+    // ===================================
 
     private void Awake()
     {
@@ -48,17 +51,17 @@ public class FishingMiniGameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (timingManager != null)
+        if (fishingTrackingBar != null)
         {
-            timingManager.OnTimingResult += HandleTimingResult;
+            fishingTrackingBar.OnFishingFinished += HandleFishingResult;
         }
     }
 
     private void Start()
     {
-        if (timingManager != null)
+        if (fishingTrackingBar != null)
         {
-            timingManager.StopTiming();
+            fishingTrackingBar.StopFishing();
         }
 
         currentState = remainingAttempts > 0
@@ -67,6 +70,7 @@ public class FishingMiniGameManager : MonoBehaviour
 
         UpdateFragmentUI();
         UpdateAttemptsUI();
+        UpdateFishingButton();
 
         if (remainingAttempts > 0)
         {
@@ -76,16 +80,14 @@ public class FishingMiniGameManager : MonoBehaviour
         {
             SetStatus("Da het luot cau!");
         }
-
-        UpdateFishingButton();
     }
 
     private void OnDisable()
     {
-        if (timingManager != null)
+        if (fishingTrackingBar != null)
         {
-            timingManager.OnTimingResult -= HandleTimingResult;
-            timingManager.StopTiming();
+            fishingTrackingBar.OnFishingFinished -= HandleFishingResult;
+            fishingTrackingBar.StopFishing();
         }
 
         if (fishingCoroutine != null)
@@ -95,7 +97,7 @@ public class FishingMiniGameManager : MonoBehaviour
         }
 
         if (currentState == FishingState.Waiting ||
-            currentState == FishingState.Timing)
+            currentState == FishingState.Tracking)
         {
             currentState = remainingAttempts > 0
                 ? FishingState.Idle
@@ -103,15 +105,28 @@ public class FishingMiniGameManager : MonoBehaviour
         }
     }
 
-    // Bat dau mot luot cau
+    // ===================================
+    // BAT DAU CAU CA
+    // ===================================
+
     public void StartFishing()
     {
         if (currentState != FishingState.Idle)
             return;
 
-        if (timingManager == null)
+        if (fishingTrackingBar == null)
         {
-            Debug.LogWarning("Chua gan TimingManager!");
+            Debug.LogWarning(
+                "FishingMiniGameManager: Chua gan FishingTrackingBar!"
+            );
+            return;
+        }
+
+        if (!fishingTrackingBar.isActiveAndEnabled)
+        {
+            Debug.LogWarning(
+                "FishingTrackingBar dang bi Disable!"
+            );
             return;
         }
 
@@ -121,18 +136,22 @@ public class FishingMiniGameManager : MonoBehaviour
             return;
         }
 
-        // Tru 1 luot ngay khi bat dau cau
+        // Tru mot luot cau
         remainingAttempts--;
 
-        UpdateAttemptsUI();
-
         currentState = FishingState.Waiting;
+
+        UpdateAttemptsUI();
         UpdateFishingButton();
 
-        SetStatus("Dang tha cau... Hay doi ca can!");
+        SetStatus("Dang tha cau... Cho ca can!");
 
         fishingCoroutine = StartCoroutine(WaitForFish());
     }
+
+    // ===================================
+    // CHO CA CAN CAU
+    // ===================================
 
     private IEnumerator WaitForFish()
     {
@@ -151,61 +170,92 @@ public class FishingMiniGameManager : MonoBehaviour
         FishBite();
     }
 
-    // Ca can cau
+    // ===================================
+    // CA CAN CAU
+    // ===================================
+
     private void FishBite()
     {
-        currentState = FishingState.Timing;
+        if (fishingTrackingBar == null ||
+            !fishingTrackingBar.isActiveAndEnabled)
+        {
+            CancelFailedStart();
+            return;
+        }
 
-        SetStatus("CA CAN CAU! Nhan SPACE de bat!");
+        currentState = FishingState.Tracking;
 
-        timingManager.StartTiming();
+        SetStatus("CA CAN CAU! Giu SPACE de bat ca!");
+
+        // Bat dau Timing moi
+        fishingTrackingBar.StartFishing();
+
+        // Neu thanh Tracking khong khoi dong duoc
+        if (!fishingTrackingBar.IsPlaying)
+        {
+            CancelFailedStart();
+        }
     }
 
-    // Nhan ket qua tu TimingManager
-    private void HandleTimingResult(
-        TimingManager.TimingResult result,
-        float multiplier)
+    // Hoan tra luot neu Tracking bi loi
+    private void CancelFailedStart()
     {
-        if (currentState != FishingState.Timing)
+        remainingAttempts++;
+
+        currentState = FishingState.Idle;
+
+        UpdateAttemptsUI();
+        UpdateFishingButton();
+
+        SetStatus("Khong the bat dau Fishing Tracking!");
+
+        Debug.LogWarning("Fishing Tracking khong khoi dong!");
+    }
+
+    // ===================================
+    // NHAN KET QUA BAT CA
+    // ===================================
+
+    private void HandleFishingResult(bool success)
+    {
+        if (currentState != FishingState.Tracking)
             return;
 
         int reward = 0;
-        string resultMessage = "";
+        string resultMessage;
 
-        switch (result)
+        if (success)
         {
-            case TimingManager.TimingResult.MISS:
-                reward = 0;
-                resultMessage = "MISS! Ca da thoat!";
-                break;
+            reward = Mathf.Max(0, fragmentsPerCatch);
 
-            case TimingManager.TimingResult.GOOD:
-                reward = goodReward;
-                resultMessage = "GOOD! Nhan " + reward + " manh the!";
-                break;
+            totalFragments += reward;
 
-            case TimingManager.TimingResult.GREAT:
-                reward = greatReward;
-                resultMessage = "GREAT! Nhan " + reward + " manh the!";
-                break;
+            resultMessage =
+                "SUCCESS! Bat ca thanh cong!\n" +
+                "Nhan " + reward + " manh the!";
 
-            case TimingManager.TimingResult.PERFECT:
-                reward = perfectReward;
-                resultMessage = "PERFECT! Nhan " + reward + " manh the!";
-                break;
+            Debug.Log(
+                "Fishing Success! Reward: " + reward
+            );
+        }
+        else
+        {
+            resultMessage =
+                "FAILED! Ca da thoat!\n" +
+                "Khong nhan duoc manh the!";
+
+            Debug.Log("Fishing Failed!");
         }
 
-        totalFragments += reward;
-
         UpdateFragmentUI();
+        UpdateAttemptsUI();
 
         Debug.Log(
-            $"Fishing Result: {result} | " +
-            $"Reward: {reward} | " +
-            $"Total: {totalFragments} | " +
-            $"Remaining: {remainingAttempts}"
+            $"Total Fragments: {totalFragments} | " +
+            $"Remaining Attempts: {remainingAttempts}"
         );
 
+        // Het luot cau
         if (remainingAttempts <= 0)
         {
             FinishFishing(resultMessage);
@@ -213,18 +263,24 @@ public class FishingMiniGameManager : MonoBehaviour
         else
         {
             currentState = FishingState.Idle;
+
             SetStatus(resultMessage);
             UpdateFishingButton();
         }
     }
 
-    // Ket thuc khi het 5 luot
+    // ===================================
+    // KET THUC MINI GAME
+    // ===================================
+
     private void FinishFishing(string lastResult = "")
     {
         currentState = FishingState.Finished;
 
-        string message = "DA HET 5 LUOT CAU!\n" +
-                         "Tong manh the: " + totalFragments;
+        string message =
+            "DA HET " + Mathf.Max(0, maxFishingAttempts) +
+            " LUOT CAU!\n" +
+            "Tong manh the: " + totalFragments;
 
         if (!string.IsNullOrEmpty(lastResult))
         {
@@ -235,22 +291,61 @@ public class FishingMiniGameManager : MonoBehaviour
         UpdateFishingButton();
 
         Debug.Log(
-            "Fishing Finished! Total Fragments: " + totalFragments
+            "Fishing Finished! Total: " + totalFragments
         );
     }
 
-    // Cap nhat nut Fishing
-    private void UpdateFishingButton()
+    // ===================================
+    // CHOI LAI MINI GAME
+    // ===================================
+
+    public void ResetFishingGame()
     {
-        if (fishingButton != null)
+        if (fishingCoroutine != null)
         {
-            fishingButton.interactable =
-                currentState == FishingState.Idle &&
-                remainingAttempts > 0;
+            StopCoroutine(fishingCoroutine);
+            fishingCoroutine = null;
         }
+
+        if (fishingTrackingBar != null)
+        {
+            fishingTrackingBar.StopFishing();
+        }
+
+        totalFragments = 0;
+        remainingAttempts = Mathf.Max(0, maxFishingAttempts);
+
+        currentState = remainingAttempts > 0
+            ? FishingState.Idle
+            : FishingState.Finished;
+
+        UpdateFragmentUI();
+        UpdateAttemptsUI();
+        UpdateFishingButton();
+
+        SetStatus("Nhan Fishing de bat dau cau ca!");
+
+        Debug.Log("Fishing MiniGame Reset!");
     }
 
-    // Cap nhat so manh the
+    // ===================================
+    // CAP NHAT BUTTON
+    // ===================================
+
+    private void UpdateFishingButton()
+    {
+        if (fishingButton == null)
+            return;
+
+        fishingButton.interactable =
+            currentState == FishingState.Idle &&
+            remainingAttempts > 0;
+    }
+
+    // ===================================
+    // CAP NHAT FRAGMENTS
+    // ===================================
+
     private void UpdateFragmentUI()
     {
         if (fragmentText != null)
@@ -260,7 +355,10 @@ public class FishingMiniGameManager : MonoBehaviour
         }
     }
 
-    // Cap nhat so luot cau
+    // ===================================
+    // CAP NHAT LUOT CAU
+    // ===================================
+
     private void UpdateAttemptsUI()
     {
         if (attemptsText != null)
@@ -271,7 +369,10 @@ public class FishingMiniGameManager : MonoBehaviour
         }
     }
 
-    // Cap nhat trang thai
+    // ===================================
+    // CAP NHAT STATUS
+    // ===================================
+
     private void SetStatus(string message)
     {
         if (statusText != null)
