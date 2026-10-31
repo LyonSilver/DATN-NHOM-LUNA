@@ -2,43 +2,82 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    [Header("Test Damage")]
-    [SerializeField] private float baseDamage = 100f;
+    [Header("Enemy Stats")]
+    public int enemyMaxHP = 50;
+    public int enemyHP;
+    public int enemyShield;
+    public bool enemyBroken;
+    public int enemyPoisonTurns;
 
-    [Header("Reference")]
-    [SerializeField] private TimingManager timingManager;
+    [Header("Player Stats")]
+    public int playerMaxHP = 50;
+    public int playerHP;
+    public int playerShield;
+
+    // Sự kiện thông báo cho HUD và các hệ thống khác khi chỉ số thay đổi
+    public event System.Action OnBattleStateChanged;
 
     private void Start()
     {
-        // Đăng ký nhận Event từ TimingManager
-        if (timingManager != null)
-        {
-            timingManager.OnTimingResult += HandleTimingResult;
-        }
+        ResetBattle();
     }
 
-    private void OnDestroy()
+    public void ResetBattle()
     {
-        // Hủy đăng ký Event
-        if (timingManager != null)
-        {
-            timingManager.OnTimingResult -= HandleTimingResult;
-        }
+        enemyHP = enemyMaxHP;
+        enemyShield = 0;
+        enemyBroken = false;
+        enemyPoisonTurns = 0;
+
+        playerHP = playerMaxHP;
+        playerShield = 0;
+
+        OnBattleStateChanged?.Invoke();
     }
 
-    private void HandleTimingResult(
-        TimingManager.TimingResult result,
-        float multiplier
-    )
+    public void DamageEnemy(int amount)
     {
-        // Tính Damage sau khi áp dụng hệ số Timing
-        float finalDamage = baseDamage * multiplier;
+        int remaining = amount;
 
-        Debug.Log(
-            $"BattleManager | Timing: {result} | " +
-            $"Base Damage: {baseDamage} | " +
-            $"Multiplier: {multiplier:F2}x | " +
-            $"Final Damage: {finalDamage:F0}"
-        );
+        if (enemyShield > 0)
+        {
+            int absorbed = Mathf.Min(enemyShield, remaining);
+            enemyShield -= absorbed;
+            remaining -= absorbed;
+        }
+
+        enemyHP = Mathf.Max(0, enemyHP - remaining);
+        OnBattleStateChanged?.Invoke();
+    }
+
+    public void ShieldPlayer(int amount)
+    {
+        playerShield += amount;
+        OnBattleStateChanged?.Invoke();
+    }
+
+    public void HealPlayer(int amount)
+    {
+        playerHP = Mathf.Min(playerMaxHP, playerHP + amount);
+        OnBattleStateChanged?.Invoke();
+    }
+
+    public void PoisonEnemy(int stacks, int turns)
+    {
+        enemyPoisonTurns = Mathf.Max(enemyPoisonTurns, turns);
+        OnBattleStateChanged?.Invoke();
+    }
+
+    public void BreakEnemy()
+    {
+        enemyBroken = true;
+        OnBattleStateChanged?.Invoke();
+    }
+
+    [ContextMenu("TEST - Reset Battle State")]
+    private void TestReset()
+    {
+        ResetBattle();
+        Debug.Log("BattleManager TEST: Đã reset Enemy/Player về trạng thái ban đầu.");
     }
 }
