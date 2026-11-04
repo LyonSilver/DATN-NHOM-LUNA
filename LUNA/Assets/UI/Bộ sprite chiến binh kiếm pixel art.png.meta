@@ -1,0 +1,882 @@
+fileFormatVersion: 2
+guid: ed8c998806faa70458c768f93ec83a81
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_0"
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 736
+        width: 199
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8dd58e1d16a4aa439f1ab2267393799
+      internalID: 61089319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_1"
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 960
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 579faaaebb1557a4ba12df844dcdcc8f
+      internalID: -1549901183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_2"
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 738
+        width: 199
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86015f805cad7a648b60c51f856f1082
+      internalID: 2103159557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_3"
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 738
+        width: 178
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7265205bcd2872b44badb5e7a0b25a5b
+      internalID: -451284599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_4"
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 733
+        width: 187
+        height: 274
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 516205b7f81174c41b5a0a247b0ea8c6
+      internalID: 391580156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_5"
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 741
+        width: 205
+        height: 262
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a25e1e8f1cc43f248938823fe5bfeb3a
+      internalID: 1165024461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_6"
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 736
+        width: 204
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe6bcdf33e4dcb143ba0defa9641a209
+      internalID: 1612989886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_7"
+      rect:
+        serializedVersion: 2
+        x: 1297
+        y: 720
+        width: 201
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 1, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df4747c467ac4a744a9782cd1edff261
+      internalID: 627346682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_8"
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 928
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c4fdee1e6b92164a91047ba76cc5607
+      internalID: 2111073729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_9"
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 894
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 009d9f2e05f636d4bb4ec5141e8a2391
+      internalID: 1816187854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_10"
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 896
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14717171f3e329a45b7cc2e70049cf8e
+      internalID: 306558579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_11"
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 816
+        width: 5
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab5a92d84f54b644cb072d09986223ed
+      internalID: 966713667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_12"
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 510
+        width: 199
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89407e4ab79c7e04f8e5fd887cabb441
+      internalID: -512349425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_13"
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 508
+        width: 319
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6a6a9eaca950d845ac4646c08db75cf
+      internalID: 1040410033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_14"
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 621
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6fc0c0ca71159149a18b168031ec4e1
+      internalID: -845387928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_15"
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 514
+        width: 312
+        height: 219
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48f7d133043b01f40ba4afe8ace3f3b9
+      internalID: 408996366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_16"
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 294
+        width: 209
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1db6d3039e21e5747b1840a67574d6c7
+      internalID: 244281952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_17"
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 462
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03194902b94c1ae48927d93274e0d720
+      internalID: 1784021580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_18"
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 297
+        width: 288
+        height: 210
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a8aa58d06d132a45bef2196370fb420
+      internalID: 1324396296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_19"
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 455
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e888d8da3546184daabb8652bbc5d03
+      internalID: 1983652609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_20"
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 299
+        width: 327
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0f572dbad0232343989d48a526dccaa
+      internalID: 38710865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_21"
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 288
+        width: 315
+        height: 222
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e51d7aba51add5b469c3365ec1d01fab
+      internalID: -1217287759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_22"
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 355
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5c4c95f1df18dd4e98b46c05c1d3200
+      internalID: -1406012684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_24"
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 332
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6579d0e0fcdaf044e9959661d2b7bbef
+      internalID: -229794614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_25"
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 326
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b95579ba2866a244bb41b51d714ad76
+      internalID: -1817745125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_27"
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 167
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2168fed59fe1a2f4bac94e8cb6fb3c86
+      internalID: -28522937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_28"
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 0
+        width: 237
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac5759378ab8d644b8c67ced4c3e27eb
+      internalID: -393215471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_29"
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 0
+        width: 219
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4af4df9358cb68942a50cce6c17534d2
+      internalID: -1475184849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_30"
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 0
+        width: 309
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51263d5136634a541b44c70000c5d7af
+      internalID: 2119552063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_31"
+      rect:
+        serializedVersion: 2
+        x: 1026
+        y: 0
+        width: 264
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c3a3e3186cacd347add235f00533eff
+      internalID: -822109292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_34"
+      rect:
+        serializedVersion: 2
+        x: 1017
+        y: 65
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 482620420ac2c6b4a9448decb3ba2eaa
+      internalID: -1734189763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_35"
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 736
+        width: 199
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce37a6261b1df2f4c9e22a9cd659f43c
+      internalID: -1695089508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_36"
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 512
+        width: 322
+        height: 221
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db6e7218521bdd74cbb0710e95c22f03
+      internalID: -1282436951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_0": 61089319
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_1": -1549901183
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_10": 306558579
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_11": 966713667
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_12": -512349425
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_13": 1040410033
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_14": -845387928
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_15": 408996366
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_16": 244281952
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_17": 1784021580
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_18": 1324396296
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_19": 1983652609
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_2": 2103159557
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_20": 38710865
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_21": -1217287759
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_22": -1406012684
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_23": 1072473213
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_24": -229794614
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_25": -1817745125
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_26": 1332470063
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_27": -28522937
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_28": -393215471
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_29": -1475184849
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_3": -451284599
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_30": 2119552063
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_31": -822109292
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_32": -619785681
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_33": -1108825485
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_34": -1734189763
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_35": -1695089508
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_36": -1282436951
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_4": 391580156
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_5": 1165024461
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_6": 1612989886
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_7": 627346682
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_8": 2111073729
+      "B\u1ED9 sprite chi\u1EBFn binh ki\u1EBFm pixel art_9": 1816187854
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
