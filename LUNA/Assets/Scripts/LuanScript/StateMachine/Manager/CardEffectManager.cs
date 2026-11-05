@@ -17,6 +17,10 @@ public class CardEffectManager : MonoBehaviour
     private const int MULTI_HIT = 5;
     private const int DRAW = 6;
 
+    // effectType mới (Khớp thứ tự enum CardEffectType trong CardData)
+    private const int APPLY_STATUS = 7;
+    private const int DRAW_CARD = 8;
+    private const int CLEANSE = 9;
     private const int POISON_STATUS = 1;
     private const int BREAK_STATUS = 2;
 
@@ -60,7 +64,9 @@ public class CardEffectManager : MonoBehaviour
 
     [Header("Skill VFX")]
     [SerializeField] private CardSkillVFX cardSkillVFX;
-
+    
+    [Header("Ngũ hành & trạng thái (Tùy chọn, để trống = Hành vi cũ)")]
+    [SerializeField] private CardCombatExtension combatExtension;
     // =====================================
     // CARD SETTINGS
     // =====================================
@@ -88,6 +94,9 @@ public class CardEffectManager : MonoBehaviour
 
     private int focusBonus;
     private int pendingDrawCards;
+
+    // Thẻ đang xử lý, để tính tương khắc trong DealEnemyDamage
+    private CardData activeCard;
 
     private TimingGrade firstTiming = TimingGrade.None;
     private TimingGrade secondTiming = TimingGrade.None;
@@ -137,6 +146,9 @@ public class CardEffectManager : MonoBehaviour
         enemyShield = 0;
         enemyPoisonTurns = 0;
         enemyBreakTurns = 0;
+
+        if (combatExtension != null)
+            combatExtension.ClearAll();
 
         enemyDefeated = enemy == null || enemy.IsDead;
 
@@ -211,7 +223,8 @@ public class CardEffectManager : MonoBehaviour
         bool isAttackCard =
             effect == DAMAGE ||
             effect == POISON ||
-            effect == MULTI_HIT;
+            effect == MULTI_HIT ||
+            effect == APPLY_STATUS;
 
         if (isAttackCard && !CanDamageEnemy())
             return;
@@ -240,6 +253,7 @@ public class CardEffectManager : MonoBehaviour
         // =================================
         // APPLY CARD EFFECT
         // =================================
+        activeCard = card;
 
         switch (effect)
         {
@@ -271,12 +285,25 @@ public class CardEffectManager : MonoBehaviour
                 ApplyChaosDraw(card);
                 break;
 
+            case APPLY_STATUS:
+                ApplyStatusCard(card, timing1);
+                break;
+
+            case DRAW_CARD:
+                pendingDrawCards += Mathf.Max(0, card.extraValue);
+                break;
+
+            case CLEANSE:
+                Debug.LogWarning("Cleanse chưa hỗ trợ (Enemy chưa gắn trạng thái lên Player).");
+                break;
+
             default:
                 Debug.LogWarning(
                     "Card Effect chưa được hỗ trợ: " + effect
                 );
                 break;
         }
+        activeCard = null;
     }
 
     // =====================================
@@ -385,9 +412,63 @@ public class CardEffectManager : MonoBehaviour
         }
     }
 
+    // =====================================
+    // APPLY STATUS (Thẻ nhóm Effect)
+    // =====================================
+
+    private void ApplyStatusCard(CardData card, TimingGrade timing)
+    {
+        if (card == null || !CanDamageEnemy())
+            return;
+
+        // 1) Sát thương trước (có Timing và tương khắc)
+        int damage = CalculateTimingDamage(
+            Mathf.Max(0, card.baseDamage),
+            timing
+        );
+
+        DealEnemyDamage(damage);
+
+        // Enemy đã chết thì không gắn trạng thái nữa.
+        if (!CanDamageEnemy())
+            return;
+
+        // 2) Rồi mới gắn trạng thái
+        int duration = Mathf.Max(1, card.statusDuration);
+
+        switch (card.statusEffect)
+        {
+            case StatusEffectType.Poison:
+                enemyPoisonTurns = Mathf.Max(enemyPoisonTurns, duration);
+                break;
+
+            case StatusEffectType.Break:
+                ApplyBreak(duration);
+                break;
+
+            case StatusEffectType.Burn:
+            case StatusEffectType.Weak:
+            case StatusEffectType.Stun:
+                if (combatExtension != null)
+                    combatExtension.ApplyStatus(card.statusEffect, duration);
+                else
+                    Debug.LogWarning("Chưa gán CombatExtension, không thể gắn " + card.statusEffect);
+                break;
+        }
+    }
+
     // Poison gây Damage đầu Enemy Turn.
     public void ProcessEnemyTurnStatuses()
     {
+        // Burn gây sát thương, bỏ qua Shield như Poison
+        if (combatExtension != null)
+        {
+            int burn = combatExtension.GetBurnTickDamage();
+
+            if (burn > 0)
+                DamageEnemyHP(burn);
+        }
+
         if (!CanDamageEnemy() || enemyPoisonTurns <= 0)
             return;
 
@@ -467,6 +548,9 @@ public class CardEffectManager : MonoBehaviour
     // Guard hết hạn ở đầu lượt Player kế tiếp.
     public void OnPlayerTurnStarted()
     {
+        if (combatExtension != null)
+            combatExtension.OnPlayerTurnStart();
+
         if (temporaryGuardShield <= 0)
             return;
 
@@ -583,6 +667,9 @@ public class CardEffectManager : MonoBehaviour
     {
         if (!CanDamageEnemy() || damage <= 0)
             return;
+        
+        if (combatExtension != null && activeCard != null)
+            damage = combatExtension.ModifyCardDamage(activeCard, damage);
 
         // Shield nhận Damage trước.
         int blocked = Mathf.Min(damage, enemyShield);
@@ -622,6 +709,9 @@ public class CardEffectManager : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (combatExtension != null)
+            damage = combatExtension.ModifyOutgoingDamage(damage);
+        
         if (damage <= 0 ||
             playerDefeated ||
             enemyDefeated)

@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\LuanScript\VuongScript\Reward_Result_System\Reward\ResultRewardUI.cs" />
     <Compile Include="Assets\Assets\ShaderGraph_Dissolve\Utility\Scripts\Follow.cs" />
     <Compile Include="Assets\Scripts\LuanScript\VuongScript\Reward_Result_System\DemoBattle\BattleDemoController.cs" />
+    <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\Combat_Script\_EnemyCombatDisplay.cs" />
     <Compile Include="Assets\Scripts\LuanScript\BattleTB\Character\Enenmy\Medusa\MedusaAttack.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\LuanScript\BattleTB\Character\Enenmy\Skill\FreezeSkill.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\UI_Script\BattleHUDDisplay.cs" />
     <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\UI_Script\CardUI.cs" />
+    <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\Combat_Script\CardCombatExtension.cs" />
     <Compile Include="Assets\Scripts\LuanScript\Menu\ModeButton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\UI_Script\StagePanel.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\StageSelect_Script\StageSelectAudio.cs" />
     <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\Data_Script\StageData.cs" />
+    <Compile Include="Assets\Scripts\LuanScript\MinhThoScript\Combat_Script\_EnemyCombatState.cs" />
     <Compile Include="Assets\Scripts\LuanScript\BattleTB\Character\Player\PlayerHPBar.cs" />
     <Compile Include="Assets\Scripts\LuanScript\BattleTB\IslandSceneLoader.cs" />
     <Compile Include="Assets\Scripts\LuanScript\Effect\FloatingIsland.cs" />

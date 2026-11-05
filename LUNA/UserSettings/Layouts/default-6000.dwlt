@@ -709,7 +709,7 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -1336
+      - m_Data: -1390
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1522,9 +1522,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.021608058, y: 0.004296385, z: -0.000091781556, w: -0.99976134}
   m_Size:
-    m_Target: 10
+    m_Target: 10.022512
     speed: 2
-    m_Value: 10
+    m_Value: 10.022512
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1607,7 +1607,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Editor
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1617,7 +1617,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Editor
+  - Assets
   m_LastFoldersGridSize: 96
   m_LastProjectPath: D:\GitHub\DATN-NHOM-LUNA\LUNA
   m_LockTracker:
@@ -1626,24 +1626,24 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 95}
     m_SelectedIDs:
-    - m_Data: 49192
+    - m_Data: 49604
     m_LastClickedID:
-      m_Data: 49192
+      m_Data: 49604
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49096
-    - m_Data: 49098
-    - m_Data: 49100
-    - m_Data: 49102
-    - m_Data: 49104
-    - m_Data: 49106
-    - m_Data: 49108
-    - m_Data: 49110
-    - m_Data: 49112
-    - m_Data: 49114
-    - m_Data: 49116
-    - m_Data: 49118
-    - m_Data: 49120
+    - m_Data: 49130
+    - m_Data: 49132
+    - m_Data: 49134
+    - m_Data: 49136
+    - m_Data: 49138
+    - m_Data: 49140
+    - m_Data: 49142
+    - m_Data: 49144
+    - m_Data: 49146
+    - m_Data: 49148
+    - m_Data: 49150
+    - m_Data: 49152
+    - m_Data: 49154
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1676,19 +1676,19 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49096
-    - m_Data: 49098
-    - m_Data: 49100
-    - m_Data: 49102
-    - m_Data: 49104
-    - m_Data: 49106
-    - m_Data: 49108
-    - m_Data: 49110
-    - m_Data: 49112
-    - m_Data: 49114
-    - m_Data: 49116
-    - m_Data: 49118
-    - m_Data: 49120
+    - m_Data: 49130
+    - m_Data: 49132
+    - m_Data: 49134
+    - m_Data: 49136
+    - m_Data: 49138
+    - m_Data: 49140
+    - m_Data: 49142
+    - m_Data: 49144
+    - m_Data: 49146
+    - m_Data: 49148
+    - m_Data: 49150
+    - m_Data: 49152
+    - m_Data: 49154
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1750,7 +1750,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 210.33331}
     m_GridSize: 96
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 137.33333
