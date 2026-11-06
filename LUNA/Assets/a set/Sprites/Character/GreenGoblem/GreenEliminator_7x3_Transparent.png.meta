@@ -1,0 +1,557 @@
+fileFormatVersion: 2
+guid: d82a58faa8e783f40b97c28029279452
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_0
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 865
+        width: 269
+        height: 281
+      alignment: 9
+      pivot: {x: 0.5897805, y: 0.33956724}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc375c0c6073403488813fcb53822313
+      internalID: -1677697108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_1
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 869
+        width: 266
+        height: 283
+      alignment: 9
+      pivot: {x: 0.5897805, y: 0.3395672}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d82b2ca6e2cdb274eab33717ca969efa
+      internalID: -1107588003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_2
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 871
+        width: 263
+        height: 281
+      alignment: 9
+      pivot: {x: 0.5897805, y: 0.3395672}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13e6443f972307143ba3dabf35197513
+      internalID: -201785720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_3
+      rect:
+        serializedVersion: 2
+        x: 1211
+        y: 873
+        width: 265
+        height: 262
+      alignment: 9
+      pivot: {x: 0.5897805, y: 0.3395672}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 722c865e5e6617f4aa40182d6998cfb7
+      internalID: -1317192150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_4
+      rect:
+        serializedVersion: 2
+        x: 1594
+        y: 863
+        width: 268
+        height: 286
+      alignment: 9
+      pivot: {x: 0.5897805, y: 0.3395672}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 713103c7d3fe6c648884d87907bc35cd
+      internalID: -514739090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_5
+      rect:
+        serializedVersion: 2
+        x: 1983
+        y: 869
+        width: 258
+        height: 280
+      alignment: 9
+      pivot: {x: 0.5897805, y: 0.3395672}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eec4db75b7cecf74ab691ba55cd923c1
+      internalID: -151566254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_6
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 484
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.61353016, y: 0.33111274}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbb1698f06caad14b8b7971557d9e3b2
+      internalID: 1458834942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_7
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 485
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.6135302, y: 0.3311127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aed375cd818b02b4ab30b283bef4522e
+      internalID: -704096637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_8
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 464
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.6135302, y: 0.3311127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55601ed4e3a639b43ac75502e5a2a4ca
+      internalID: 465240926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_9
+      rect:
+        serializedVersion: 2
+        x: 1193
+        y: 479
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.6135302, y: 0.3311127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bf4878e4c4b6a842aefbd1d6ff985fe
+      internalID: -188176968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_10
+      rect:
+        serializedVersion: 2
+        x: 1583
+        y: 478
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.6135302, y: 0.3311127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2453ae318850166489511e3593a17b78
+      internalID: -1807309389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_11
+      rect:
+        serializedVersion: 2
+        x: 1969
+        y: 478
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.6135302, y: 0.3311127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4294c8886ed82f42b6a2451d9fbc063
+      internalID: 1118485763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_12
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 56
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.3090633, y: 0.33111247}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93c0654cfe36126408e89f0775b496ea
+      internalID: -747452467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_13
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 75
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.3090633, y: 0.3311125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25c50e1095281f7499b274fecd906d8d
+      internalID: -840420694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_14
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 68
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.3090633, y: 0.3311125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a58920512d5ffcf4891ee042392cf628
+      internalID: 1138642027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_15
+      rect:
+        serializedVersion: 2
+        x: 1223
+        y: 49
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.3090633, y: 0.3311125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0af952807b240494d8eec57b9fe3679c
+      internalID: 932839575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_16
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 64
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.3090633, y: 0.72518367}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b683bf73e228b14b8334673b4405c89
+      internalID: -918302545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_17
+      rect:
+        serializedVersion: 2
+        x: 1967
+        y: 99
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.3090633, y: 0.3311125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f572af6880ef4c14ba01bc33421c7197
+      internalID: -1698520832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenEliminator_7x3_Transparent_18
+      rect:
+        serializedVersion: 2
+        x: 2358
+        y: 102
+        width: 312
+        height: 286
+      alignment: 9
+      pivot: {x: 0.3090633, y: 0.3311125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72e0e709e82342243869ed62b41e47c1
+      internalID: -1202186111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 986475cbe363744488cdde0bcb2e68a4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":7.0,"y":3.0},"gridSpriteSize":{"x":384.0,"y":384.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      GreenEliminator_7x3_Transparent_0: -1677697108
+      GreenEliminator_7x3_Transparent_1: -1107588003
+      GreenEliminator_7x3_Transparent_10: -1807309389
+      GreenEliminator_7x3_Transparent_11: 1118485763
+      GreenEliminator_7x3_Transparent_12: -747452467
+      GreenEliminator_7x3_Transparent_13: -840420694
+      GreenEliminator_7x3_Transparent_14: 1138642027
+      GreenEliminator_7x3_Transparent_15: 932839575
+      GreenEliminator_7x3_Transparent_16: -918302545
+      GreenEliminator_7x3_Transparent_17: -1698520832
+      GreenEliminator_7x3_Transparent_18: -1202186111
+      GreenEliminator_7x3_Transparent_19: 739739787
+      GreenEliminator_7x3_Transparent_2: -201785720
+      GreenEliminator_7x3_Transparent_3: -1317192150
+      GreenEliminator_7x3_Transparent_4: -514739090
+      GreenEliminator_7x3_Transparent_5: -151566254
+      GreenEliminator_7x3_Transparent_6: 1458834942
+      GreenEliminator_7x3_Transparent_7: -704096637
+      GreenEliminator_7x3_Transparent_8: 465240926
+      GreenEliminator_7x3_Transparent_9: -188176968
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class PlayerCardCinematic : MonoBehaviour
 {
+    // =====================================
+    // CARD ZOOM SETTINGS
+    // =====================================
+
+    [System.Serializable]
+    public class CardZoomSetting
+    {
+        [Tooltip("CardData muốn tùy chỉnh Zoom")]
+        public CardData card;
+
+        [Tooltip("Bật hoặc tắt Camera Zoom cho Card này")]
+        public bool useZoom = true;
+    }
+
     [Header("References")]
     [SerializeField] private Transform player;
     [SerializeField] private Animator playerAnimator;
@@ -11,21 +25,59 @@ public class PlayerCardCinematic : MonoBehaviour
     [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private CardEffectManager cardEffectManager;
 
+    [Header("One Card Per Turn")]
+    [SerializeField] private OneCardTurnController oneCardTurnController;
+
+    // =====================================
+    // CAMERA
+    // =====================================
+
     [Header("Camera")]
     [SerializeField] private Camera battleCamera;
+
     [SerializeField] private float zoomSize = 3f;
     [SerializeField] private float zoomDuration = 0.4f;
     [SerializeField] private float cameraFollowSpeed = 7f;
+
     [SerializeField] private Vector2 cameraFocusOffset =
         new Vector2(0f, 0.5f);
 
+    // =====================================
+    // PER-CARD ZOOM
+    // =====================================
+
+    [Header("Zoom Settings Per Card")]
+
+    [Tooltip("Dùng cho Card chưa có trong danh sách bên dưới")]
+    [SerializeField] private bool defaultUseZoom = true;
+
+    [Tooltip("Mỗi Card có thể bật hoặc tắt Zoom riêng")]
+    [SerializeField]
+    private CardZoomSetting[] cardZoomSettings =
+        new CardZoomSetting[0];
+
+    [Tooltip("Ẩn Battle UI khi dùng Card không Zoom")]
+    [SerializeField] private bool hideUIWithoutZoom = false;
+
+    // =====================================
+    // UI
+    // =====================================
+
     [Header("UI")]
     [SerializeField] private CanvasGroup battleUI;
+
+    // =====================================
+    // MOVEMENT
+    // =====================================
 
     [Header("Movement")]
     [SerializeField] private float dashDuration = 0.4f;
     [SerializeField] private float returnDuration = 0.4f;
     [SerializeField] private float stoppingDistance = 1.5f;
+
+    // =====================================
+    // ANIMATION
+    // =====================================
 
     [Header("Animation Parameters")]
     [SerializeField] private string runningParameter = "IsRunning";
@@ -38,6 +90,10 @@ public class PlayerCardCinematic : MonoBehaviour
     [SerializeField] private float attackDuration = 0.8f;
     [SerializeField] private float buffDuration = 0.7f;
 
+    // =====================================
+    // RUNTIME STATE
+    // =====================================
+
     private Vector3 originalPlayerPosition;
     private Vector3 originalCameraPosition;
     private float originalCameraSize;
@@ -45,6 +101,9 @@ public class PlayerCardCinematic : MonoBehaviour
     private float originalUIAlpha;
     private bool originalUIInteractable;
     private bool originalUIRaycasts;
+
+    private bool zoomThisCard;
+    private bool uiHiddenThisCard;
 
     public bool IsPlaying { get; private set; }
 
@@ -57,21 +116,49 @@ public class PlayerCardCinematic : MonoBehaviour
         if (battleCamera == null)
             battleCamera = Camera.main;
 
-        if (player != null)
-        {
-            if (playerAnimator == null)
-            {
-                playerAnimator =
-                    player.GetComponentInChildren<Animator>(true);
-            }
+        if (player == null)
+            return;
 
-            if (playerAnimation == null)
+        if (playerAnimator == null)
+        {
+            playerAnimator =
+                player.GetComponentInChildren<Animator>(true);
+        }
+
+        if (playerAnimation == null)
+        {
+            playerAnimation =
+                player.GetComponentInChildren<
+                    PlayerAnimationController>(true);
+        }
+    }
+
+    // =====================================
+    // DETERMINE ZOOM FOR CARD
+    // =====================================
+
+    private bool ShouldZoom(CardData card)
+    {
+        if (card == null)
+            return defaultUseZoom;
+
+        if (cardZoomSettings != null)
+        {
+            foreach (CardZoomSetting setting in cardZoomSettings)
             {
-                playerAnimation =
-                    player.GetComponentInChildren<
-                        PlayerAnimationController>(true);
+                if (setting == null || setting.card == null)
+                    continue;
+
+                // So sánh đúng CardData asset.
+                if (setting.card == card)
+                {
+                    return setting.useZoom;
+                }
             }
         }
+
+        // Card chưa cấu hình sẽ dùng giá trị mặc định.
+        return defaultUseZoom;
     }
 
     // =====================================
@@ -80,13 +167,32 @@ public class PlayerCardCinematic : MonoBehaviour
 
     public bool PlayCard(CardData card)
     {
-        if (IsPlaying || card == null)
+        if (!isActiveAndEnabled || IsPlaying || card == null)
             return false;
+
+        if (oneCardTurnController == null)
+        {
+            Debug.LogError(
+                "PlayerCardCinematic: " +
+                "Chưa gán OneCardTurnController!"
+            );
+            return false;
+        }
+
+        // Chỉ cho phép sử dụng 1 Card mỗi lượt.
+        if (!oneCardTurnController.CanUseCard())
+        {
+            Debug.Log(
+                "PlayerCardCinematic: " +
+                "Không thể dùng thêm Card trong lượt này!"
+            );
+            return false;
+        }
 
         if (player == null ||
             battleCamera == null ||
-            cardEffectManager == null ||
-            battleUI == null)
+            battleUI == null ||
+            cardEffectManager == null)
         {
             Debug.LogError(
                 "PlayerCardCinematic: Thiếu Reference!"
@@ -102,8 +208,6 @@ public class PlayerCardCinematic : MonoBehaviour
             return false;
         }
 
-        // Slash, Heavy Hit, Poison Dart, Double Strike
-        // đều cần Enemy còn sống.
         if (IsAttackCard(card))
         {
             EnemyHealth enemy = GetEnemy();
@@ -117,9 +221,20 @@ public class PlayerCardCinematic : MonoBehaviour
             }
         }
 
+        // Lấy cấu hình Zoom của Card vừa chọn.
+        zoomThisCard = ShouldZoom(card);
+
         IsPlaying = true;
+
+        Debug.Log(
+            $"PlayerCardCinematic: {card.cardName} | " +
+            $"Zoom: {zoomThisCard}"
+        );
+
         StartCoroutine(PlayCardSequence(card));
 
+        // CardManager sẽ gọi NotifyCardStarted()
+        // sau khi PlayCard trả về true.
         return true;
     }
 
@@ -132,13 +247,11 @@ public class PlayerCardCinematic : MonoBehaviour
         if (card == null)
             return false;
 
-        // Theo thứ tự CardEffectType trong CardData:
+        int type = (int)card.effectType;
+
         // 0 = Damage
         // 3 = Poison
         // 5 = MultiHit
-
-        int type = (int)card.effectType;
-
         return type == 0 ||
                type == 3 ||
                type == 5;
@@ -158,28 +271,54 @@ public class PlayerCardCinematic : MonoBehaviour
     private IEnumerator PlayCardSequence(CardData card)
     {
         SaveOriginalState();
-        HideBattleUI();
 
-        // 1. Zoom vào Player.
-        yield return ZoomCamera(true);
+        // Chỉ ẩn UI khi Zoom hoặc khi được bật tùy chọn.
+        uiHiddenThisCard =
+            zoomThisCard || hideUIWithoutZoom;
 
-        // 2. Thực thi Card.
+        if (uiHiddenThisCard)
+            HideBattleUI();
+
+        // 1. Zoom nếu Card được phép Zoom.
+        if (zoomThisCard)
+        {
+            yield return ZoomCamera(true);
+        }
+
+        // 2. Thực hiện Card.
         if (IsAttackCard(card))
+        {
             yield return ExecuteAttackCard(card);
+        }
         else
+        {
             yield return ExecuteBuffCard(card);
+        }
 
-        // 3. Zoom về Camera ban đầu.
-        yield return ZoomCamera(false);
+        // 3. Trở về Camera ban đầu nếu đã Zoom.
+        if (zoomThisCard)
+        {
+            yield return ZoomCamera(false);
+        }
 
         // 4. Khôi phục UI.
-        RestoreBattleUI();
+        SetRunning(false);
 
+        if (uiHiddenThisCard)
+            RestoreBattleUI();
+
+        // 5. Kết thúc Cinematic.
         IsPlaying = false;
+        zoomThisCard = false;
+        uiHiddenThisCard = false;
 
         Debug.Log(
-            "PlayerCardCinematic: Card hoàn tất!"
+            "PlayerCardCinematic: Hoàn tất " +
+            card.cardName
         );
+
+        // OneCardTurnController sẽ chuyển Enemy Turn
+        // sau khi CardManager hoàn tất.
     }
 
     // =====================================
@@ -193,7 +332,6 @@ public class PlayerCardCinematic : MonoBehaviour
         if (enemy == null || enemy.IsDead)
             yield break;
 
-        // Xác định vị trí Player cần chạy tới.
         Vector3 targetPosition = originalPlayerPosition;
 
         float distanceX =
@@ -209,12 +347,13 @@ public class PlayerCardCinematic : MonoBehaviour
                 direction * stoppingDistance;
         }
 
-        // Giữ nguyên Y và Z.
         targetPosition.y = originalPlayerPosition.y;
         targetPosition.z = originalPlayerPosition.z;
 
         // 1. Player chạy tới Enemy.
-        if (Vector3.Distance(player.position, targetPosition) > 0.01f)
+        if (Vector3.Distance(
+                player.position,
+                targetPosition) > 0.01f)
         {
             SetRunning(true);
 
@@ -226,19 +365,19 @@ public class PlayerCardCinematic : MonoBehaviour
             SetRunning(false);
         }
 
-        // 2. PLAYER ATTACK ANIMATION.
+        // 2. Phát Attack Animation.
         PlayAttackAnimation();
 
-        // 3. DAMAGE + SKILL VFX.
-        // Chỉ gọi ExecuteCardEffect một lần.
+        // 3. Damage và Skill VFX.
+        // Chỉ gọi một lần.
         cardEffectManager.ExecuteCardEffect(card);
 
-        // 4. Đợi Attack Animation.
+        // 4. Chờ Animation.
         yield return new WaitForSeconds(
             Mathf.Max(0f, attackDuration)
         );
 
-        // 5. Player chạy về.
+        // 5. Player chạy về vị trí ban đầu.
         if (Vector3.Distance(
                 player.position,
                 originalPlayerPosition) > 0.01f)
@@ -277,6 +416,7 @@ public class PlayerCardCinematic : MonoBehaviour
                 break;
         }
 
+        // Buff vẫn hoạt động dù không Zoom.
         cardEffectManager.ExecuteCardEffect(card);
 
         yield return new WaitForSeconds(
@@ -296,19 +436,11 @@ public class PlayerCardCinematic : MonoBehaviour
             return;
         }
 
-        // Dự phòng nếu chưa gán
-        // PlayerAnimationController.
-        Debug.LogWarning(
-            "PlayerCardCinematic: " +
-            "Chưa gán PlayerAnimationController, " +
-            "thử phát trực tiếp qua Animator."
-        );
-
         SetTriggerIfExists(attackTrigger);
     }
 
     // =====================================
-    // MOVEMENT
+    // PLAYER MOVEMENT
     // =====================================
 
     private IEnumerator MovePlayer(
@@ -316,12 +448,17 @@ public class PlayerCardCinematic : MonoBehaviour
         float duration)
     {
         Vector3 start = player.position;
+
         duration = Mathf.Max(0f, duration);
 
         if (duration <= 0f)
         {
             player.position = target;
-            FollowPlayerCamera();
+
+            // Chỉ Follow Camera nếu Card đang Zoom.
+            if (zoomThisCard)
+                FollowPlayerCamera();
+
             yield break;
         }
 
@@ -343,17 +480,21 @@ public class PlayerCardCinematic : MonoBehaviour
                 t
             );
 
-            FollowPlayerCamera();
+            // Card không Zoom: Camera đứng yên.
+            if (zoomThisCard)
+                FollowPlayerCamera();
 
             yield return null;
         }
 
         player.position = target;
-        FollowPlayerCamera();
+
+        if (zoomThisCard)
+            FollowPlayerCamera();
     }
 
     // =====================================
-    // CAMERA
+    // CAMERA ZOOM
     // =====================================
 
     private IEnumerator ZoomCamera(bool zoomIn)
@@ -361,7 +502,8 @@ public class PlayerCardCinematic : MonoBehaviour
         Vector3 startPosition =
             battleCamera.transform.position;
 
-        float startSize = battleCamera.orthographicSize;
+        float startSize =
+            battleCamera.orthographicSize;
 
         Vector3 targetPosition = zoomIn
             ? GetCameraFocusPosition()
@@ -412,9 +554,17 @@ public class PlayerCardCinematic : MonoBehaviour
             targetSize;
     }
 
+    // =====================================
+    // CAMERA FOLLOW
+    // =====================================
+
     private void FollowPlayerCamera()
     {
-        float t = 1f - Mathf.Exp(
+        // Khi Card không Zoom, không di chuyển Camera.
+        if (!zoomThisCard)
+            return;
+
+        float smooth = 1f - Mathf.Exp(
             -cameraFollowSpeed * Time.deltaTime
         );
 
@@ -422,7 +572,7 @@ public class PlayerCardCinematic : MonoBehaviour
             Vector3.Lerp(
                 battleCamera.transform.position,
                 GetCameraFocusPosition(),
-                t
+                smooth
             );
     }
 
@@ -474,26 +624,25 @@ public class PlayerCardCinematic : MonoBehaviour
 
     private void SetRunning(bool running)
     {
-        if (!HasParameter(
+        if (HasParameter(
                 runningParameter,
                 AnimatorControllerParameterType.Bool))
         {
-            return;
+            playerAnimator.SetBool(
+                runningParameter,
+                running
+            );
         }
-
-        playerAnimator.SetBool(runningParameter, running);
     }
 
     private void SetTriggerIfExists(string triggerName)
     {
-        if (!HasParameter(
+        if (HasParameter(
                 triggerName,
                 AnimatorControllerParameterType.Trigger))
         {
-            return;
+            playerAnimator.SetTrigger(triggerName);
         }
-
-        playerAnimator.SetTrigger(triggerName);
     }
 
     private bool HasParameter(
@@ -533,7 +682,8 @@ public class PlayerCardCinematic : MonoBehaviour
         if (player != null)
             player.position = originalPlayerPosition;
 
-        if (battleCamera != null)
+        // Chỉ khôi phục Camera nếu Cinematic có Zoom.
+        if (battleCamera != null && zoomThisCard)
         {
             battleCamera.transform.position =
                 originalCameraPosition;
@@ -542,9 +692,11 @@ public class PlayerCardCinematic : MonoBehaviour
                 originalCameraSize;
         }
 
-        if (battleUI != null)
+        if (battleUI != null && uiHiddenThisCard)
             RestoreBattleUI();
 
         IsPlaying = false;
+        zoomThisCard = false;
+        uiHiddenThisCard = false;
     }
 }

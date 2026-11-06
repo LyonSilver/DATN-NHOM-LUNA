@@ -730,6 +730,7 @@ MonoBehaviour:
   zoomMultiplier: 3
   loadNextScene: 1
   nextSceneName: LienketLobby
+  isTransitioning: 0
 --- !u!1 &133024131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,6 +1802,18 @@ MonoBehaviour:
   buttonText: {fileID: 0}
   idleBrightness: 0.3
   fadeDuration: 0.2
+  originalImageColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  originalTextColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  currentBrightness: 0
+  targetBrightness: 0
 --- !u!114 &628360864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2743,7 +2756,7 @@ SpriteRenderer:
   m_Size: {x: 1.33875, y: 1.83625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1220793220
 Transform:
