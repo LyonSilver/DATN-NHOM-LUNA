@@ -415,8 +415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c765742082f77194db526cec91295a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChaosButtonHover
-  buttonImage: {fileID: 510753858}
-  buttonText: {fileID: 1827720901}
+  buttonImage: {fileID: 0}
+  buttonText: {fileID: 0}
   idleBrightness: 0.3
   fadeDuration: 0.2
 --- !u!114 &510753857
@@ -704,7 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0558cea01325f0242a0c58534e5c5741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingIslandUI
-  floatHeight: 0
+  floatHeight: 15
   floatSpeed: 0.7
   startOffset: 0
 --- !u!114 &591732997
@@ -927,7 +927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloatingIslandUI
   floatHeight: 15
   floatSpeed: 0.7
-  startOffset: 0.1
+  startOffset: 0
 --- !u!114 &882027205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1019,8 +1019,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c765742082f77194db526cec91295a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChaosButtonHover
-  buttonImage: {fileID: 902980779}
-  buttonText: {fileID: 542604321}
+  buttonImage: {fileID: 0}
+  buttonText: {fileID: 0}
   idleBrightness: 0.3
   fadeDuration: 0.2
 --- !u!114 &902980778
@@ -1346,7 +1346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0558cea01325f0242a0c58534e5c5741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingIslandUI
-  floatHeight: 5
+  floatHeight: 15
   floatSpeed: 0.7
   startOffset: 0
 --- !u!1 &1444733631
@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0558cea01325f0242a0c58534e5c5741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingIslandUI
-  floatHeight: 10
+  floatHeight: 15
   floatSpeed: 0.7
   startOffset: 0
 --- !u!1 &1451337713
@@ -1493,9 +1493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c765742082f77194db526cec91295a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChaosButtonHover
-  buttonImage: {fileID: 1451337717}
-  buttonText: {fileID: 1157854019}
-  idleBrightness: 0.8
+  buttonImage: {fileID: 0}
+  buttonText: {fileID: 0}
+  idleBrightness: 0.3
   fadeDuration: 0.2
 --- !u!114 &1451337716
 MonoBehaviour:
@@ -2006,7 +2006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloatingIslandUI
   floatHeight: 15
   floatSpeed: 0.7
-  startOffset: 0.1
+  startOffset: 0
 --- !u!114 &1855953086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2367,11 +2367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuTransition
   logo: {fileID: 368643709}
-  menuButtons:
-  - {fileID: 1451337714}
-  - {fileID: 902980776}
-  - {fileID: 0}
-  - {fileID: 510753855}
+  menuButtons: []
   backgroundRoot: {fileID: 1823271972}
   portalFocus: {fileID: 1273377103}
   slideDuration: 0.7
