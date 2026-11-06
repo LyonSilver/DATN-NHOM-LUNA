@@ -2052,22 +2052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486b58e413e63d34bb079dee967b41b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandDistanceEffect
-  islands:
-  - island: {fileID: 1259035869}
-    distance: 0.3
-  - island: {fileID: 561411402}
-    distance: 0.4
-  - island: {fileID: 940286261}
-    distance: 0.4
-  - island: {fileID: 1071466505}
-    distance: 0.5
-  - island: {fileID: 1937977986}
-    distance: 0.3
-  - island: {fileID: 1310388172}
-    distance: 0.5
-  fogColor: {r: 0.78, g: 0.87, b: 1, a: 1}
-  fogStrength: 0.6
-  maxFade: 0.4
 --- !u!1 &528203296
 GameObject:
   m_ObjectHideFlags: 0
@@ -2704,7 +2688,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -87245735
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -700158766, guid: 6894848249c19b24ea8b035ac2f4696b, type: 3}
@@ -6688,8 +6672,8 @@ MonoBehaviour:
 
     1/2'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 509bf6389d2a77249901a9a1e010431b, type: 2}
-  m_sharedMaterial: {fileID: -2822488912605606277, guid: 509bf6389d2a77249901a9a1e010431b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7565,10 +7549,6 @@ MonoBehaviour:
   timingBar: {fileID: 47099144}
   cursor: {fileID: 1072583369}
   cursorSpeed: 1
-  missMultiplier: 1.5
-  goodMultiplier: 1
-  greatMultiplier: 0.75
-  perfectMultiplier: 0.5
 --- !u!1 &1653803496
 GameObject:
   m_ObjectHideFlags: 0
@@ -9674,7 +9654,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -87245735
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 895455015, guid: a7db8635194bc6c4b913fe648fc506dd, type: 3}
