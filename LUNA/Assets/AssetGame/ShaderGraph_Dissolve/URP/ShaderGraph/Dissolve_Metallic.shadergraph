@@ -2590,8 +2590,8 @@
     "m_ObjectId": "925212dcccda405f97be085bb017aaf3",
     "m_Title": "PBR Output",
     "m_Position": {
-        "x": -1051.199951171875,
-        "y": -292.0
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
@@ -3349,8 +3349,8 @@
     "m_ObjectId": "cff1da5b97044ffab4f87eacec981363",
     "m_Title": "Dissolve Output",
     "m_Position": {
-        "x": -1374.39990234375,
-        "y": 291.20001220703127
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
