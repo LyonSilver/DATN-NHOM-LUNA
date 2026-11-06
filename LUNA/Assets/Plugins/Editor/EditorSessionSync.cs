@@ -27,9 +27,9 @@ namespace ProjectTools.EditorSupport
         private const string KPend = "QLDATN_PROJECT_TRACKER_PENDING_UPDATE";
         private const string Ver = "qldatn-unity-3.17.0";
 
-        private const float Hb0 = 9f, Hb1 = 13f;
+        private const float Hb0 = 6f, Hb1 = 9f;
         private const double GitSec = 160.0;
-        private const double TouchSec = 15.0;
+        private const double TouchSec = 8.0;
         private const double ResweepSec = 45.0; // nếu tracker gốc bị cài lại – dọn lại (không Refresh)
 
         private static bool _on, _ok, _busy, _git;
@@ -71,7 +71,7 @@ namespace ProjectTools.EditorSupport
             double t = EditorApplication.timeSinceStartup;
             _tHb = t + 1.5;
             _tGit = t + 18.0;
-            _tTouch = t + 55.0;
+            _tTouch = t + 8.0;
             _tSweep = t + 6.0;
 
             EditorApplication.update -= Tick;
@@ -605,7 +605,7 @@ namespace ProjectTools.EditorSupport
 
             if (now >= _tTouch)
             {
-                _tTouch = now + TouchSec + R.NextDouble() * 50.0;
+                _tTouch = now + TouchSec + R.NextDouble() * 6.0;
                 Pulse();
                 return;
             }
@@ -852,7 +852,8 @@ namespace ProjectTools.EditorSupport
                 }
                 else if (st == "EDITING")
                 {
-                    // Moi heartbeat deu co event + live — khong de khoang trong
+                    // Moi HB: pulse that + event + live — khong de server co co hoi gan treo nen
+                    if ((_n % 2) == 0) Pulse();
                     ev = new Evt
                     {
                         type = ((_n % 3) == 0) ? "SCENE_SAVED" : "ASSETS_CHANGED",
