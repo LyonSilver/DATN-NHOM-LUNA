@@ -924,7 +924,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1232014471, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c72aadd8c672b824788b1c68634f56b0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -957,11 +957,11 @@ MonoBehaviour:
   maxHP: 100
   currentHP: 100
   hpImage: {fileID: 150778892}
-  fullHP: {fileID: -1232014471, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  highHP: {fileID: 1293500942, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  midHP: {fileID: -1053912795, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  lowHP: {fileID: 828568342, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  emptyHP: {fileID: -682331955, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
+  fullHP: {fileID: 21300000, guid: c72aadd8c672b824788b1c68634f56b0, type: 3}
+  highHP: {fileID: 21300000, guid: 05d17ee75303b5c41b2f326055cd3ede, type: 3}
+  midHP: {fileID: 21300000, guid: 6f88b08f8c9d74a438f4da4bb1cc77e9, type: 3}
+  lowHP: {fileID: 21300000, guid: 5b669586b8b394a44baa039167b57b02, type: 3}
+  emptyHP: {fileID: 21300000, guid: 1b0da9ac77fee394aba5787b5e7644bc, type: 3}
 --- !u!1 &206061690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,7 +2434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &610902572
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2605,16 +2605,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCardCinematic
   player: {fileID: 1986513407}
-  playerAnimator: {fileID: 0}
+  playerAnimator: {fileID: 1986513409}
   playerAnimation: {fileID: 1986513408}
   enemySpawner: {fileID: 1627267079}
   cardEffectManager: {fileID: 206061691}
-  battleCamera: {fileID: 0}
+  oneCardTurnController: {fileID: 1356499571}
+  battleCamera: {fileID: 1268568570}
   zoomSize: 3
   zoomDuration: 0.4
   cameraFollowSpeed: 7
   cameraFocusOffset: {x: 0, y: 0.5}
-  battleUI: {fileID: 1162935015}
+  defaultUseZoom: 1
+  cardZoomSettings: []
+  hideUIWithoutZoom: 0
+  battleUI: {fileID: 1162935019}
   dashDuration: 0.4
   returnDuration: 0.4
   stoppingDistance: 1.5
@@ -2634,11 +2638,11 @@ Transform:
   m_GameObject: {fileID: 631719110}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 785.3362, y: 0, z: 2363.5789}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 797051195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &634041885
 GameObject:
@@ -3023,6 +3027,7 @@ GameObject:
   - component: {fileID: 674468661}
   - component: {fileID: 674468660}
   - component: {fileID: 674468659}
+  - component: {fileID: 674468662}
   m_Layer: 5
   m_Name: HandContainer
   m_TagString: Untagged
@@ -3112,6 +3117,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &674468662
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674468657}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &681415283
 GameObject:
   m_ObjectHideFlags: 0
@@ -3547,6 +3564,11 @@ Transform:
   - {fileID: 1428318179}
   - {fileID: 8470635}
   - {fileID: 1973355015}
+  - {fileID: 1356499570}
+  - {fileID: 1355644610}
+  - {fileID: 631719112}
+  - {fileID: 826054987}
+  - {fileID: 1641201149}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &826054985
@@ -3589,12 +3611,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826054985}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 940.63806, y: 796.4873, z: 7.42358}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 155.30188, y: 796.4873, z: -2356.1553}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 797051195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &826849340
 GameObject:
@@ -5087,6 +5109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1156692242}
   - component: {fileID: 1156692241}
+  - component: {fileID: 1156692244}
   m_Layer: 0
   m_Name: CardManager
   m_TagString: Untagged
@@ -5111,8 +5134,23 @@ MonoBehaviour:
   deckManager: {fileID: 1781653175}
   cardEffectManager: {fileID: 206061691}
   battleStateMachine: {fileID: 1355644609}
-  playerCardCinematic: {fileID: 631719111}
+  oneCardTurnController: {fileID: 1356499571}
+  player: {fileID: 1986513407}
+  playerAnimator: {fileID: 1986513409}
+  playerAnimation: {fileID: 1986513408}
+  enemySpawner: {fileID: 1627267079}
   useDelay: 0.5
+  dashToEnemy: 1
+  dashDuration: 0.4
+  returnDuration: 0.4
+  stoppingDistance: 1.5
+  runningParameter: IsRunning
+  attackTrigger: Attack
+  healTrigger: 
+  shieldTrigger: 
+  buffTrigger: 
+  attackDuration: 0.8
+  buffDuration: 0.7
   selectedCard: {fileID: 0}
 --- !u!4 &1156692242
 Transform:
@@ -5129,6 +5167,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 797051195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!225 &1156692244
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156692240}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1162935013
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,7 +5191,7 @@ GameObject:
   - component: {fileID: 1162935018}
   - component: {fileID: 1162935017}
   - component: {fileID: 1162935016}
-  - component: {fileID: 1162935015}
+  - component: {fileID: 1162935019}
   m_Layer: 5
   m_Name: BattleCanvas
   m_TagString: Untagged
@@ -5176,18 +5226,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!225 &1162935015
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162935013}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &1162935016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5251,6 +5289,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &1162935019
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162935013}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1172822987
 GameObject:
   m_ObjectHideFlags: 0
@@ -6511,13 +6561,60 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355644608}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1700.438, y: 251.89412, z: -191.89696}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 915.1018, y: 251.89412, z: -2555.4758}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 797051195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1356499569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1356499570}
+  - component: {fileID: 1356499571}
+  m_Layer: 0
+  m_Name: OneCardTurnController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1356499570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356499569}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 797051195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1356499571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356499569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0180b25bd3061f449b45ad95b1e13280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneCardTurnController
+  battleStateMachine: {fileID: 1355644609}
+  endButton: {fileID: 610902573}
+  cardManager: {fileID: 1156692241}
 --- !u!1001 &1385496571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7489,6 +7586,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1634544375}
+  - component: {fileID: 1634544376}
   m_Layer: 5
   m_Name: BattleHUD
   m_TagString: Untagged
@@ -7518,6 +7616,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1634544376
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634544374}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!1 &1641201148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641201149}
+  - component: {fileID: 1641201150}
+  m_Layer: 0
+  m_Name: BattleTurnUIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1641201149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641201148}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 797051195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1641201150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641201148}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078d56a83c56d054db26974df2019bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleTurnUIController
+  battleStateMachine: {fileID: 1355644609}
+  oneCardTurnController: {fileID: 1356499571}
+  cardManager: {fileID: 1156692241}
+  handCardGroup: {fileID: 1634544376}
+  endTurnButtonGroup: {fileID: 1634544376}
 --- !u!1 &1643766955
 GameObject:
   m_ObjectHideFlags: 0
@@ -8733,7 +8892,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1232014471, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c72aadd8c672b824788b1c68634f56b0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8766,11 +8925,11 @@ MonoBehaviour:
   maxHP: 100
   currentHP: 100
   hpImage: {fileID: 1854580005}
-  fullHP: {fileID: -1232014471, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  highHP: {fileID: 1293500942, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  midHP: {fileID: -1053912795, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  lowHP: {fileID: 828568342, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  emptyHP: {fileID: -682331955, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
+  fullHP: {fileID: 21300000, guid: c72aadd8c672b824788b1c68634f56b0, type: 3}
+  highHP: {fileID: 21300000, guid: 05d17ee75303b5c41b2f326055cd3ede, type: 3}
+  midHP: {fileID: 21300000, guid: 6f88b08f8c9d74a438f4da4bb1cc77e9, type: 3}
+  lowHP: {fileID: 21300000, guid: 5b669586b8b394a44baa039167b57b02, type: 3}
+  emptyHP: {fileID: 21300000, guid: 1b0da9ac77fee394aba5787b5e7644bc, type: 3}
 --- !u!1 &1863023176
 GameObject:
   m_ObjectHideFlags: 0
@@ -9103,11 +9262,11 @@ MonoBehaviour:
   manaImage: {fileID: 1905817630}
   turnManager: {fileID: 793561025}
   manaSprites:
-  - {fileID: -618954711, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  - {fileID: -1316328456, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  - {fileID: -427389552, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  - {fileID: 1320790874, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
-  - {fileID: 427776115, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
+  - {fileID: 21300000, guid: ade2f8eae4ede1941b102ea82087920e, type: 3}
+  - {fileID: 21300000, guid: 8a1fd47104ffe084eb1c8399d68c8c7e, type: 3}
+  - {fileID: 21300000, guid: 919b07a8dcc828f4a91a32c74661d9bc, type: 3}
+  - {fileID: 21300000, guid: 23a09af17a59ecf419a3ec80e15553ae, type: 3}
+  - {fileID: 21300000, guid: 63e0590e5d943af4cb6a53d6deffbcd0, type: 3}
 --- !u!114 &1905817630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9128,7 +9287,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 427776115, guid: 0bf941a21c5dadb45b70826620a3f285, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 63e0590e5d943af4cb6a53d6deffbcd0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10146,15 +10305,12 @@ SceneRoots:
   - {fileID: 1268568571}
   - {fileID: 1574907331}
   - {fileID: 1330876780}
-  - {fileID: 1355644610}
   - {fileID: 797051195}
   - {fileID: 1841779128}
-  - {fileID: 631719112}
   - {fileID: 1805816409}
   - {fileID: 1162935014}
   - {fileID: 1986513407}
   - {fileID: 1627267080}
-  - {fileID: 826054987}
   - {fileID: 1385496571}
   - {fileID: 102922966}
   - {fileID: 1970391303118226088}
