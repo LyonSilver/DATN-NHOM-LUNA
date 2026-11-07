@@ -317,6 +317,8 @@ GameObject:
   - component: {fileID: -117109847166238510}
   - component: {fileID: 8085103637193569656}
   - component: {fileID: 2016009220808969566}
+  - component: {fileID: 1371111344697612180}
+  - component: {fileID: 91135929229002610}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -404,7 +406,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d804724b8ef150a44a0329651456823e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardUI
-  cardData: {fileID: 0}
+  cardData: {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
+  visualLibrary: {fileID: 11400000, guid: e1fe6b4e0f9de264493fde48d3374783, type: 2}
   cardBackgroundImage: {fileID: 484187117117157391}
   cardBorderImage: {fileID: 4987032848862119821}
   costBadgeImage: {fileID: 5293306971318286732}
@@ -445,6 +448,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardInputHandler
   collapsedHeight: 0
   animationDuration: 0.15
+--- !u!114 &1371111344697612180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997509876283000121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f66604c73ee4e47ae1929598747e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardAnimator
+  followSpeed: 14
+  hoverScale: 1.08
+  hoverMoveY: 40
+  selectedScale: 1.1
+  selectedMoveY: 40
+  playTargetPosition: {x: 0, y: 170}
+  playScale: 0.85
+  playFadeAlpha: 0.8
+  playDuration: 0.3
+  playHoldTime: 0.15
+  discardTargetPosition: {x: 900, y: 200}
+  discardScale: 0.5
+  discardDuration: 0.35
+--- !u!114 &91135929229002610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997509876283000121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f61b87e4929dd499726eb9cd2c462d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDissolveUI
+  dissolveMaterial: {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
+  dissolveProperty: _Dissolve
+  dissolveDuration: 0.6
+  startValue: 0
+  endValue: 1
+  startOffset: {x: 0, y: -0.5, z: 0}
+  endOffset: {x: 0, y: 1.1, z: 0}
+  fadeOtherGraphics: 1
+  otherGraphicsFadeEnd: 0.65
 --- !u!1 &3413847561350165180
 GameObject:
   m_ObjectHideFlags: 0
