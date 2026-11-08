@@ -44,32 +44,83 @@ public class HandManager : MonoBehaviour
 
     public void RefreshHand()
     {
+        if (deckManager == null ||
+            cardPrefab == null ||
+            handContainer == null)
+        {
+            Debug.LogError(
+                "HandManager: Thiếu DeckManager, CardPrefab hoặc HandContainer!",
+                this
+            );
+            return;
+        }
+
         ClearSpawnedCards();
 
-        List<CardData> hand = deckManager.hand;
-        int count = hand.Count;
+        // Lọc các CardData hợp lệ
+        List<CardData> validCards = new List<CardData>();
+
+        for (int i = 0; i < deckManager.hand.Count; i++)
+        {
+            CardData data = deckManager.hand[i];
+
+            if (data == null)
+            {
+                Debug.LogError(
+                    $"HandManager: Hand[{i}] đang NULL!",
+                    this
+                );
+                continue;
+            }
+
+            validCards.Add(data);
+        }
+
+        int count = validCards.Count;
 
         for (int i = 0; i < count; i++)
         {
-            GameObject cardGO = Instantiate(cardPrefab, handContainer);
+            GameObject cardGO = Instantiate(
+                cardPrefab,
+                handContainer
+            );
+
             CardUI cardUI = cardGO.GetComponent<CardUI>();
 
             if (cardUI == null)
             {
-                Debug.LogError("HandManager: cardPrefab không có component CardUI. Kiểm tra lại Card.prefab.");
+                Debug.LogError(
+                    "HandManager: CardPrefab thiếu CardUI!",
+                    cardGO
+                );
+
+                Destroy(cardGO);
                 continue;
             }
 
-            cardUI.Setup(hand[i]);
+            // Truyền dữ liệu Card
+            cardUI.Setup(validCards[i]);
 
-            CardInputHandler inputHandler = cardGO.GetComponent<CardInputHandler>();
+            CardInputHandler inputHandler =
+                cardGO.GetComponent<CardInputHandler>();
+
             if (inputHandler != null)
+            {
                 inputHandler.Init(cardManager);
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "HandManager: CardPrefab thiếu CardInputHandler!",
+                    cardGO
+                );
+            }
 
-            RectTransform rt = cardGO.GetComponent<RectTransform>();
+            RectTransform rt =
+                cardGO.GetComponent<RectTransform>();
+
             LayoutCard(rt, i, count);
 
-            // Sắp xếp thứ tự vẽ (lá bên phải đè lên bên trái)
             rt.SetSiblingIndex(i);
 
             spawnedCards.Add(cardUI);

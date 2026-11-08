@@ -406,13 +406,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d804724b8ef150a44a0329651456823e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardUI
-  cardData: {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
+  cardData: {fileID: 0}
   visualLibrary: {fileID: 11400000, guid: e1fe6b4e0f9de264493fde48d3374783, type: 2}
   cardBackgroundImage: {fileID: 484187117117157391}
   cardBorderImage: {fileID: 4987032848862119821}
   costBadgeImage: {fileID: 5293306971318286732}
   typeIconImage: {fileID: 2115565187870797890}
   typeLabelImage: {fileID: 6042096237952228283}
+  frameTintImageTargets: []
+  frameTintGroupTargets: []
   costText: {fileID: 3896041435543289676}
   cardNameText: {fileID: 5400530074349795910}
   typeLabelText: {fileID: 2427916610524586189}

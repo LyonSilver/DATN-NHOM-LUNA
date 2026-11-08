@@ -22,13 +22,48 @@ public class DeckManager : MonoBehaviour
         hand.Clear();
         discardPile.Clear();
 
-        drawPile.AddRange(masterDeck);
+        // Kiểm tra dữ liệu Card trước khi thêm vào Deck
+        for (int i = 0; i < masterDeck.Count; i++)
+        {
+            CardData card = masterDeck[i];
+
+            if (card == null)
+            {
+                Debug.LogError(
+                    $"DeckManager: MasterDeck[{i}] đang NULL! " +
+                    "Kiểm tra CardData asset trong Inspector.",
+                    this
+                );
+
+                continue;
+            }
+
+            drawPile.Add(card);
+        }
+
         ShuffleDeck();
 
-        for (int i = 0; i < handLimit; i++)
+        // Rút bài khởi đầu, chưa gọi RefreshHand
+        int drawCount = Mathf.Min(
+            Mathf.Max(0, handLimit),
+            drawPile.Count
+        );
+
+        for (int i = 0; i < drawCount; i++)
         {
-            DrawCard();
+            CardData card = drawPile[0];
+            drawPile.RemoveAt(0);
+            hand.Add(card);
         }
+
+        // Chỉ cập nhật Hand một lần sau khi khởi tạo
+        OnHandChanged?.Invoke();
+
+        Debug.Log(
+            $"DeckManager: Khởi tạo thành công. " +
+            $"Hand: {hand.Count}/{handLimit} | " +
+            $"DrawPile: {drawPile.Count}"
+        );
     }
 
     public void ShuffleDeck()
