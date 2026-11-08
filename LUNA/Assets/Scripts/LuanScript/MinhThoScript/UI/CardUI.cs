@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -16,6 +17,13 @@ public class CardUI : MonoBehaviour
     public Image costBadgeImage;
     public Image typeIconImage;
     public Image typeLabelImage;
+
+    [Header("Khung đổi màu bằng Shader theo phương hệ")]
+    [Tooltip("Từng Image riêng lẻ: khung loại thẻ (BannerType), ruy băng tên (TypeLabel)...")]
+    public Image[] frameTintImageTargets;
+
+    [Tooltip("Object chứa nhiều Image con (ví dụ OutlineDecor): mọi Image bên trong đều được nhuộm.")]
+    public Transform[] frameTintGroupTargets;
 
     [Header("Text")]
     public TMP_Text costText;
@@ -39,7 +47,12 @@ public class CardUI : MonoBehaviour
     private Material defaultArtworkMaterial;
     private bool defaultsCached;
 
-    // Phương hệ và mức độ đang HIỂN THỊ (Mặc định lấy từ CardData, nút TEST có thể đổi tạm)
+    // Các Image của khung đổi màu bằng Shader, kèm Material và màu gốc để khôi phục
+    private readonly List<Image> frameImages = new List<Image>();
+    private readonly Dictionary<Image, Material> frameDefaultMaterials = new Dictionary<Image, Material>();
+    private readonly Dictionary<Image, Color> frameDefaultColors = new Dictionary<Image, Color>();
+
+    // Phương hệ và mức độ đang HIỂN THỊ (mặc định lấy từ CardData, nút TEST có thể đổi tạm)
     private CardElement shownElement;
     private CardTier shownTier;
 
@@ -59,7 +72,39 @@ public class CardUI : MonoBehaviour
             defaultArtworkMaterial = artworkImage.material;
         }
 
+        // Cache từng Image riêng lẻ
+        if (frameTintImageTargets != null)
+        {
+            foreach (Image image in frameTintImageTargets)
+            {
+                RegisterFrameImage(image);
+            }
+        }
+
+        // Cache toàn bộ Image bên trong các Group
+        if (frameTintGroupTargets != null)
+        {
+            foreach (Transform group in frameTintGroupTargets)
+            {
+                if (group == null) continue;
+
+                foreach (Image image in group.GetComponentsInChildren<Image>(true))
+                {
+                    RegisterFrameImage(image);
+                }
+            }
+        }
+
         defaultsCached = true;
+    }
+
+    private void RegisterFrameImage(Image image)
+    {
+        if (image == null || frameDefaultMaterials.ContainsKey(image)) return;
+
+        frameImages.Add(image);
+        frameDefaultMaterials[image] = image.material;
+        frameDefaultColors[image] = image.color;
     }
 
     private void Start()
@@ -108,14 +153,15 @@ public class CardUI : MonoBehaviour
 
         ApplyArtwork();
         ApplyIconAndAccent();
+        ApplyFrameTint(); // chạy SAU ApplyIconAndAccent: Image nằm trong danh sách Shader sẽ bị đặt màu trắng
     }
 
     private void ApplyArtwork()
     {
         if (artworkImage == null) return;
 
-        // Thẻ có Tier: Lấy art theo (yếu tố, mức độ) từ thư viện.
-        // Thẻ Tier = None, hoặc ô thư viện còn trống: Dùng artwork riêng trong CardData.
+        // Thẻ có Tier: lấy art theo (yếu tố, mức độ) từ thư viện.
+        // Thẻ Tier = None, hoặc ô thư viện còn trống: dùng artwork riêng trong CardData.
         Sprite art = cardData.artwork;
 
         if (shownTier != CardTier.None && visualLibrary != null)
@@ -127,7 +173,7 @@ public class CardUI : MonoBehaviour
         artworkImage.sprite = art;
         artworkImage.enabled = art != null;
 
-        // Thẻ có phương hệ: Dùng Material đổi màu. Thẻ không hệ: Trả về Material gốc của prefab.
+        // Thẻ có phương hệ: dùng Material đổi màu. Thẻ không hệ: trả về Material gốc của prefab.
         Material elementMaterial = null;
 
         if (shownElement != CardElement.None && visualLibrary != null)
@@ -140,7 +186,7 @@ public class CardUI : MonoBehaviour
 
     private void ApplyIconAndAccent()
     {
-        // Thẻ có phương hệ: Màu theo phương hệ. Thẻ không hệ (Chaos): Màu theo loại thẻ như trước.
+        // Thẻ có phương hệ: màu theo phương hệ. Thẻ không hệ (Chaos, Starter cũ): màu theo loại thẻ như trước.
         Color accent = shownElement != CardElement.None
             ? ElementRules.GetColor(shownElement)
             : GetColorForType(cardData.cardType);
@@ -163,6 +209,36 @@ public class CardUI : MonoBehaviour
             }
 
             typeIconImage.color = accent;
+        }
+    }
+
+    // Khung (BannerType, TypeLabel, OutlineDecor...): dùng Material đổi màu của phương hệ và Color trắng.
+    // Thẻ không phương hệ: trả về Material và màu gốc của prefab.
+    private void ApplyFrameTint()
+    {
+        if (frameImages.Count == 0) return;
+
+        Material elementMaterial = null;
+
+        if (shownElement != CardElement.None && visualLibrary != null)
+        {
+            elementMaterial = visualLibrary.GetElementMaterial(shownElement);
+        }
+
+        foreach (Image image in frameImages)
+        {
+            if (image == null) continue;
+
+            if (elementMaterial != null)
+            {
+                image.material = elementMaterial;
+                image.color = Color.white;
+            }
+            else
+            {
+                image.material = frameDefaultMaterials[image];
+                image.color = frameDefaultColors[image];
+            }
         }
     }
 
