@@ -22,6 +22,8 @@ public class UIAudioManager : MonoBehaviour
 
         Instance = this;
         audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     public void PlayHover()
@@ -41,7 +43,9 @@ public class UIAudioManager : MonoBehaviour
 
     private void PlaySound(AudioClip clip)
     {
-        if (clip != null)
-            audioSource.PlayOneShot(clip);
+        if (audioSource == null || clip == null)
+            return;
+
+        audioSource.PlayOneShot(clip);
     }
 }

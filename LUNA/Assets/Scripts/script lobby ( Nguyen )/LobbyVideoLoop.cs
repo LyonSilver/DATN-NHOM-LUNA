@@ -10,6 +10,11 @@ public class LobbyVideoLoop : MonoBehaviour
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
+        if (videoPlayer == null)
+        {
+            Debug.LogWarning("[LobbyVideoLoop] VideoPlayer component not found. Adding one.");
+            videoPlayer = gameObject.AddComponent<VideoPlayer>();
+        }
 
         videoPlayer.playOnAwake = false;
         videoPlayer.isLooping = true;
@@ -18,11 +23,15 @@ public class LobbyVideoLoop : MonoBehaviour
 
     private void Start()
     {
-        videoPlayer.Play();
+        if (videoPlayer != null)
+            videoPlayer.Play();
     }
 
     private void OnVideoEnded(VideoPlayer source)
     {
+        if (source == null)
+            return;
+
         source.time = 0;
         source.Play();
     }
