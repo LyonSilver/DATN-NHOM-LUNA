@@ -3225,6 +3225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d001d6ea61de3b64cac9b79464e81460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultSystem
+  minScore: 100
+  maxScore: 600
+  twoStarScore: 200
+  threeStarScore: 400
 --- !u!114 &1096848052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3237,6 +3241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 357604b7c2c76b5418d9d7782136614f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleDemoController
+  damageDealtInput: {fileID: 0}
+  damageReceivedInput: {fileID: 0}
+  killCountInput: {fileID: 0}
+  goldEarnedInput: {fileID: 0}
+  demoPanel: {fileID: 0}
+  resultPanel: {fileID: 0}
+  resultSystem: {fileID: 0}
+  resultUI: {fileID: 0}
 --- !u!114 &1096848053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3249,6 +3261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f15edcf9ff3d63b40abc79246b01e4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RewardSystem
+  baseExp: 100
+  baseGold: 50
 --- !u!1 &1129019748
 GameObject:
   m_ObjectHideFlags: 0

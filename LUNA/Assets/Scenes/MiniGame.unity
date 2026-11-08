@@ -638,7 +638,7 @@ Camera:
   m_GameObject: {fileID: 279760335}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 4
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -6800,11 +6800,15 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   enemySpawner: {fileID: 0}
   cardEffectManager: {fileID: 1442459104}
+  oneCardTurnController: {fileID: 0}
   battleCamera: {fileID: 279760336}
   zoomSize: 3
   zoomDuration: 0.4
   cameraFollowSpeed: 7
   cameraFocusOffset: {x: 0, y: 0.5}
+  defaultUseZoom: 1
+  cardZoomSettings: []
+  hideUIWithoutZoom: 0
   battleUI: {fileID: 484443448}
   dashDuration: 0.4
   returnDuration: 0.4
@@ -7894,8 +7898,23 @@ MonoBehaviour:
   deckManager: {fileID: 393114622}
   cardEffectManager: {fileID: 1442459104}
   battleStateMachine: {fileID: 294011845}
-  playerCardCinematic: {fileID: 1638976887}
+  oneCardTurnController: {fileID: 0}
+  player: {fileID: 0}
+  playerAnimator: {fileID: 0}
+  playerAnimation: {fileID: 0}
+  enemySpawner: {fileID: 0}
   useDelay: 0.5
+  dashToEnemy: 1
+  dashDuration: 0.4
+  returnDuration: 0.4
+  stoppingDistance: 1.5
+  runningParameter: IsRunning
+  attackTrigger: Attack
+  healTrigger: 
+  shieldTrigger: 
+  buffTrigger: 
+  attackDuration: 0.8
+  buffDuration: 0.7
   selectedCard: {fileID: 0}
 --- !u!4 &1874232286
 Transform:
