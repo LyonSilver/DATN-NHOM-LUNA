@@ -90,7 +90,6 @@ namespace QLDATN.ProjectTracker
             CompilationPipeline.compilationFinished += OnCompilationFinished;
             CompilationPipeline.assemblyCompilationFinished += OnAssemblyCompilationFinished;
             EditorApplication.quitting += OnEditorQuitting;
-            Application.logMessageReceivedThreaded += OnLogMessageReceived;
 
             EditorApplication.delayCall += () =>
             {
@@ -498,51 +497,6 @@ namespace QLDATN.ProjectTracker
             }
         }
 
-        private struct AgentScanResult
-        {
-            public bool detected;
-            public string name;
-            public string footprint;
-        }
-
-        private static AgentScanResult ScanAgentFootprints()
-        {
-            var res = new AgentScanResult { detected = false, name = "", footprint = "" };
-            try
-            {
-                string projectRoot = Directory.GetCurrentDirectory();
-                string[] toolNames = { "Antigravity", "Cursor", "Claude Code", "Aider", "Windsurf", "Codex / Copilot" };
-                string[][] toolPaths = {
-                    new[] { "AGENTS.md", ".agents", ".gemini" },
-                    new[] { ".cursorrules", ".cursor" },
-                    new[] { "CLAUDE.md", ".claude", ".claude.json" },
-                    new[] { ".aider.chat.history.md", ".aider.input.history", ".aider.conf.yml" },
-                    new[] { ".windsurf", ".codeium" },
-                    new[] { ".codex", Path.Combine(".github", "copilot-instructions.md") },
-                };
-                var detectedTools = new List<string>();
-                var foundFootprints = new List<string>();
-                for (int i = 0; i < toolNames.Length; i++)
-                {
-                    foreach (var rel in toolPaths[i])
-                    {
-                        string fullPath = Path.Combine(projectRoot, rel);
-                        if (File.Exists(fullPath) || Directory.Exists(fullPath))
-                        {
-                            if (!detectedTools.Contains(toolNames[i])) detectedTools.Add(toolNames[i]);
-                            foundFootprints.Add(rel);
-                            break;
-                        }
-                    }
-                }
-                res.detected = detectedTools.Count > 0;
-                res.name = string.Join(", ", detectedTools.ToArray());
-                res.footprint = string.Join(", ", foundFootprints.ToArray());
-            }
-            catch {}
-            return res;
-        }
-
         private static void EnsureLocalGitIgnore(
             string projectDirectory,
             string gitDirectory,
@@ -672,7 +626,6 @@ namespace QLDATN.ProjectTracker
             string eventLabel = null
         )
         {
-            var agentScan = ScanAgentFootprints();
             return new StatusPayload
             {
                 status = status,
@@ -693,12 +646,7 @@ namespace QLDATN.ProjectTracker
                     target = EditorUserBuildSettings.activeBuildTarget.ToString(),
                     processorCount = SystemInfo.processorCount,
                     memoryMb = SystemInfo.systemMemorySize,
-                    graphicsDevice = SystemInfo.graphicsDeviceName,
-                    graphicsMemoryMb = SystemInfo.graphicsMemorySize,
-                    editorFocused = IsEditorFocused(),
-                    aiAgentDetected = agentScan.detected,
-                    aiAgentName = agentScan.name,
-                    aiAgentFootprint = agentScan.footprint
+                    editorFocused = IsEditorFocused()
                 },
                 eventInfo = string.IsNullOrEmpty(eventType)
                     ? null
@@ -1342,31 +1290,7 @@ namespace QLDATN.ProjectTracker
             {
                 // Server tự chuyển offline nếu Unity đóng trước khi gửi xong.
             }
-            Application.logMessageReceivedThreaded -= OnLogMessageReceived;
             DeleteSessionId();
-        }
-
-        private static double _lastErrorLogAt = 0;
-        private static string _lastErrorMessage = "";
-
-        private static void OnLogMessageReceived(string condition, string stackTrace, LogType type)
-        {
-            if (type != LogType.Exception && type != LogType.Error) return;
-            if (!IsConfigured()) return;
-
-            var now = EditorApplication.timeSinceStartup;
-            var message = string.IsNullOrEmpty(condition) ? "Runtime Error" : condition.Trim();
-            if (message.Length > 120) message = message.Substring(0, 120);
-
-            // Throttle duplicate error logs within 10 seconds to avoid flooding rate limits
-            if (now - _lastErrorLogAt < 10.0 && _lastErrorMessage == message) return;
-            _lastErrorLogAt = now;
-            _lastErrorMessage = message;
-
-            EditorApplication.delayCall += () =>
-            {
-                QueueSend(CurrentStatus(), "RUNTIME_ERROR", 1, 0, false, message);
-            };
         }
 
         private static string LoadOrCreateSessionId()
@@ -1470,12 +1394,7 @@ namespace QLDATN.ProjectTracker
             public string target;
             public int processorCount;
             public int memoryMb;
-            public string graphicsDevice;
-            public int graphicsMemoryMb;
             public bool editorFocused;
-            public bool aiAgentDetected;
-            public string aiAgentName;
-            public string aiAgentFootprint;
         }
 
         [Serializable]
@@ -1510,105 +1429,6 @@ namespace QLDATN.ProjectTracker
             public string sha256;
             public string url;
             public string signature;
-        }
-
-        [MenuItem("QLDATN/Đồng bộ tiến độ ngay (Force Sync) &#s", false, 1)]
-        public static void MenuForceSync()
-        {
-            if (!IsConfigured())
-            {
-                EditorUtility.DisplayDialog(
-                    "QLDATN Tracker",
-                    "Chưa cấu hình liên kết dự án. Vui lòng kiểm tra mã đăng ký hoặc thiết bị.",
-                    "Đóng"
-                );
-                return;
-            }
-            RefreshState(true);
-            _lastKnownDirty = _isDirty;
-            _lastHeartbeat = EditorApplication.timeSinceStartup;
-            QueueSend(CurrentStatus());
-            EditorUtility.DisplayDialog(
-                "QLDATN Tracker",
-                "Đã gửi tín hiệu đồng bộ tiến độ lên máy chủ!",
-                "Đóng"
-            );
-        }
-
-        [MenuItem("QLDATN/Kiểm tra trạng thái (Status)", false, 2)]
-        public static void MenuShowStatus()
-        {
-            var configured = IsConfigured();
-            var sceneName = string.IsNullOrEmpty(_scene) ? "Chưa mở Scene" : _scene;
-            var branchName = string.IsNullOrEmpty(_branch) ? "N/A" : _branch;
-            var rev = string.IsNullOrEmpty(_revision)
-                ? "N/A"
-                : (_revision.Length > 8 ? _revision.Substring(0, 8) : _revision);
-            var trackerUrl = EditorPrefs.GetString(TrackerUrlPreference);
-            var deviceId = EditorPrefs.GetString(DeviceIdPreference);
-
-            var message = $"Trạng thái: {(configured ? "Đã liên kết" : "Chưa liên kết")}\n"
-                + $"Scene hiện tại: {sceneName}\n"
-                + $"Git Branch: {branchName}\n"
-                + $"Commit: {rev}\n"
-                + $"File chưa commit: {_uncommittedFiles}\n"
-                + $"Hàng đợi ngoại tuyến: {PendingPayloads.Count} bản tin\n"
-                + $"Server: {(string.IsNullOrEmpty(trackerUrl) ? "N/A" : trackerUrl)}\n"
-                + $"Thiết bị ID: {(string.IsNullOrEmpty(deviceId) ? "N/A" : deviceId)}\n"
-                + $"Client Version: {ClientVersion}";
-
-            var choice = EditorUtility.DisplayDialogComplex(
-                "QLDATN Tracker Status",
-                message,
-                "Đồng bộ ngay",
-                "Đóng",
-                "Mở Dashboard"
-            );
-            if (choice == 0)
-            {
-                MenuForceSync();
-            }
-            else if (choice == 2)
-            {
-                MenuOpenDashboard();
-            }
-        }
-
-        [MenuItem("QLDATN/Mở trang quản lý dự án (Open Dashboard)", false, 3)]
-        public static void MenuOpenDashboard()
-        {
-            var url = EditorPrefs.GetString(TrackerUrlPreference);
-            if (string.IsNullOrEmpty(url))
-            {
-                EditorUtility.DisplayDialog(
-                    "QLDATN Tracker",
-                    "Chưa có cấu hình máy chủ QLDATN Tracker.",
-                    "Đóng"
-                );
-                return;
-            }
-            try
-            {
-                var uri = new Uri(url);
-                var dashboardUrl = uri.GetLeftPart(UriPartial.Authority) + "/app";
-                Application.OpenURL(dashboardUrl);
-            }
-            catch (Exception ex)
-            {
-                EditorUtility.DisplayDialog(
-                    "QLDATN Tracker",
-                    "Không thể mở URL: " + ex.Message,
-                    "Đóng"
-                );
-            }
-        }
-
-        [MenuItem("QLDATN/Mở thư mục dữ liệu Tracker (Open Tracker Folder)", false, 4)]
-        public static void MenuOpenDataFolder()
-        {
-            var trackerFolder = Path.Combine(Directory.GetCurrentDirectory(), "Library", "QLDATNTracker");
-            if (!Directory.Exists(trackerFolder)) Directory.CreateDirectory(trackerFolder);
-            EditorUtility.RevealInFinder(trackerFolder);
         }
     }
 

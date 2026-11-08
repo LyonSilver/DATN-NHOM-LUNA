@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:LUNA/Assets/HQP STUDIOS.meta
 guid: d5017ee875b4dbf49bd80d8e656b274e
 folderAsset: yes
+========
+guid: ec27f9d9898a2984fa02dc30f4ee83b1
+>>>>>>>> c42f8161b063172eb53e93d19ddf1c58df721909:LUNA/Assets/Scenes/MapBT.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

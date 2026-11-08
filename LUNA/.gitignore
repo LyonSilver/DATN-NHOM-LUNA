@@ -5,10 +5,12 @@ Assets/Editor/QLDATNSceneTracker.cs.meta
 Assets/Editor/QLDATNSceneTracker.cs.download
 qldatn-vscode-install_*.mjs
 qldatn-vscode-install_*.ps1
+.qldatn/
+# Unity Generated Files
 [Ll]ibrary/
 [Tt]emp/
-[Ll]ogs/
-[Uu]serSettings/
-[Mm]emoryCaptures/
+[Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
