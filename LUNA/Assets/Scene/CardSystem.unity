@@ -1771,6 +1771,7 @@ GameObject:
   - component: {fileID: 1458438212}
   - component: {fileID: 1458438211}
   - component: {fileID: 1458438213}
+  - component: {fileID: 1458438214}
   m_Layer: 5
   m_Name: StopButton
   m_TagString: Untagged
@@ -1879,7 +1880,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1458438211}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1458438214}
+        m_TargetAssemblyTypeName: Reset, Assembly-CSharp
+        m_MethodName: ResetDeck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1458438214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458438209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4584528214dd02b4a925c3076b6a8109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Reset
+  deckManager: {fileID: 1986724452}
 --- !u!1 &1541367708
 GameObject:
   m_ObjectHideFlags: 0
@@ -2126,6 +2152,7 @@ MonoBehaviour:
   playerAnimation: {fileID: 0}
   deathAnimationDuration: 1
   cardSkillVFX: {fileID: 0}
+  combatExtension: {fileID: 0}
   slashGoodBonus: 2
   poisonDamagePerTurn: 2
   negativeEffectChance: 30
@@ -2388,12 +2415,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e94b6f14d77f8043bd230b52f2703f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombatState
-  battleManager: {fileID: 1089108934}
   element: 0
   burnDamagePerTurn: 4
-  poisonDamagePerTurn: 3
   weakOutgoingMultiplier: 0.75
-  breakIncomingMultiplier: 1.5
 --- !u!1 &1986724450
 GameObject:
   m_ObjectHideFlags: 0
