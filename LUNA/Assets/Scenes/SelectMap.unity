@@ -7162,7 +7162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4047b0a34eabb0046b17a293e19bae8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneNav
-  menuScene: MainMenu
+  menuScene: LienketLobby
 --- !u!4 &407844757
 Transform:
   m_ObjectHideFlags: 0
