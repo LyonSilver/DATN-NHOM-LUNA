@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ShopCard_V.unity
     guid: db74c7435db594b47b398204cd7bfc6a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/SelectMap.unity
     guid: ce27338900bcddf4c866163b6d242130
   - enabled: 0
@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChaosCardSelectHero.unity
     guid: 13890eb8e4da8c74aa178e8d50ec4cd0
+  - enabled: 1
+    path: Assets/Scenes/TutorialScene.unity
+    guid: 01b6125cbee747f4cacf0ed056924e38
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
