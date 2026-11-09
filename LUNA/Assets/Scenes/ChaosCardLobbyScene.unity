@@ -3354,7 +3354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5902c01ddd7fee4e86fa5d9fe56e4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoSceneLoader
-  sceneName: ShopCard_V
+  sceneName: shop
 --- !u!1 &1767559237
 GameObject:
   m_ObjectHideFlags: 0
