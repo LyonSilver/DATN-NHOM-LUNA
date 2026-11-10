@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052661719380dfd40ba44f2124f7beb9, type: 3}
+  m_Name: CardData_Focus_Fire_Extreme
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  cardID: focus_fire_extreme
+  cardName: Ember Absolute
+  cardType: 4
+  rarity: 2
+  cost: 3
+  element: 1
+  tier: 3
+  description: Expand the Timing zone by 50%.
+  artwork: {fileID: 21300000, guid: d024ee46a768b37459dcd5128785d3be, type: 3}
+  typeIcon: {fileID: 21300000, guid: 259872b4eeacb9746ada4cd7d3c92793, type: 3}
+  effectType: 4
+  baseDamage: 0
+  shieldValue: 0
+  healValue: 0
+  statusEffect: 0
+  statusDuration: 0
+  baseValue: 0
+  extraValue: 50
+  purchaseType: 0
+  moneyCost: 0
+  gemCost: 0
+  quantityLimit: 3
+  cardSprite: {fileID: 0}

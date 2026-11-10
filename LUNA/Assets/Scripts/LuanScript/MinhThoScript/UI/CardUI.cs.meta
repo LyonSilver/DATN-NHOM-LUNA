@@ -1,2 +1,27 @@
 fileFormatVersion: 2
 guid: d804724b8ef150a44a0329651456823e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cardData: {instanceID: 0}
+  - visualLibrary: {fileID: 11400000, guid: e1fe6b4e0f9de264493fde48d3374783, type: 2}
+  - cardBackgroundImage: {instanceID: 0}
+  - cardBorderImage: {instanceID: 0}
+  - costBadgeImage: {instanceID: 0}
+  - typeIconImage: {instanceID: 0}
+  - typeLabelImage: {instanceID: 0}
+  - costText: {instanceID: 0}
+  - cardNameText: {instanceID: 0}
+  - typeLabelText: {instanceID: 0}
+  - descriptionText: {instanceID: 0}
+  - artworkImage: {instanceID: 0}
+  - hoverHighlight: {instanceID: 0}
+  - selectionHighlight: {instanceID: 0}
+  - disabledOverlay: {instanceID: 0}
+  - testDataOnStart: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -186,8 +186,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 129.8}
-  m_SizeDelta: {x: 378.1, y: 308.3}
+  m_AnchoredPosition: {x: 0, y: 147.9}
+  m_SizeDelta: {x: 378.1, y: 367}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7487785593109490223
 CanvasRenderer:
@@ -389,10 +389,10 @@ GameObject:
   - component: {fileID: 2618658961025079876}
   - component: {fileID: 354471999417675982}
   - component: {fileID: 6239382686552589522}
-  - component: {fileID: -117109847166238510}
   - component: {fileID: 8085103637193569656}
   - component: {fileID: 2016009220808969566}
   - component: {fileID: 3703788853780002169}
+  - component: {fileID: -1448578306458901828}
   m_Layer: 5
   m_Name: Card 2
   m_TagString: Untagged
@@ -469,39 +469,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-117109847166238510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2997509876283000121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d804724b8ef150a44a0329651456823e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardUI
-  cardData: {fileID: 0}
-  visualLibrary: {fileID: 11400000, guid: e1fe6b4e0f9de264493fde48d3374783, type: 2}
-  cardBackgroundImage: {fileID: 484187117117157391}
-  cardBorderImage: {fileID: 4987032848862119821}
-  costBadgeImage: {fileID: 5293306971318286732}
-  typeIconImage: {fileID: 2115565187870797890}
-  typeLabelImage: {fileID: 6042096237952228283}
-  frameTintImageTargets:
-  - {fileID: 0}
-  - {fileID: 0}
-  frameTintGroupTargets:
-  - {fileID: 0}
-  costText: {fileID: 3896041435543289676}
-  cardNameText: {fileID: 5400530074349795910}
-  typeLabelText: {fileID: 2427916610524586189}
-  descriptionText: {fileID: 5150534204927004421}
-  artworkImage: {fileID: 5696185894347824639}
-  hoverHighlight: {fileID: 5214673556302499722}
-  selectionHighlight: {fileID: 5277646278186081886}
-  disabledOverlay: {fileID: 7739307824165983541}
-  testDataOnStart: {fileID: 0}
 --- !u!225 &8085103637193569656
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -549,6 +516,40 @@ MonoBehaviour:
   endOffset: {x: 0, y: 1.1, z: 0}
   fadeOtherGraphics: 1
   otherGraphicsFadeEnd: 0.65
+--- !u!114 &-1448578306458901828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997509876283000121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d804724b8ef150a44a0329651456823e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardUI
+  cardData: {fileID: 0}
+  visualLibrary: {fileID: 11400000, guid: e1fe6b4e0f9de264493fde48d3374783, type: 2}
+  cardBackgroundImage: {fileID: 484187117117157391}
+  cardBorderImage: {fileID: 4987032848862119821}
+  costBadgeImage: {fileID: 5293306971318286732}
+  typeIconImage: {fileID: 2115565187870797890}
+  typeLabelImage: {fileID: 6042096237952228283}
+  frameTintImageTargets:
+  - {fileID: 8017871448045893512}
+  - {fileID: 6042096237952228283}
+  frameTintGroupTargets:
+  - {fileID: 3801988718433524795}
+  costText: {fileID: 3896041435543289676}
+  cardNameText: {fileID: 5400530074349795910}
+  typeLabelText: {fileID: 2427916610524586189}
+  descriptionText: {fileID: 5150534204927004421}
+  artworkImage: {fileID: 5696185894347824639}
+  tintArtworkByElement: 0
+  hoverHighlight: {fileID: 5214673556302499722}
+  selectionHighlight: {fileID: 5277646278186081886}
+  disabledOverlay: {fileID: 7739307824165983541}
+  testDataOnStart: {fileID: 0}
 --- !u!1 &3413847561350165180
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +712,7 @@ GameObject:
   - component: {fileID: 2453876276205382785}
   - component: {fileID: 6016795384174212307}
   - component: {fileID: 5400530074349795910}
+  - component: {fileID: 570141349363576235}
   m_Layer: 5
   m_Name: CardName
   m_TagString: Untagged
@@ -734,7 +736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -9}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6016795384174212307
@@ -792,8 +794,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -837,6 +839,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &570141349363576235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3582321852745082869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cd16ffaae3a3e9499a913eeae8cc6b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CurvedCardName
+  waveAmplitude: 23
+  waveCycles: 0.25
+  wavePhase: 0
+  rotateCharacters: 0
 --- !u!1 &3873980607674918196
 GameObject:
   m_ObjectHideFlags: 0

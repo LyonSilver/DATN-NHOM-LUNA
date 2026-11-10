@@ -2,7 +2,8 @@ public enum CardType
 {
     Attack,
     Defense,
-    Effect,
-    Support,
+    Heal,
+    Poison,
+    Focus,
     Chaos
 }

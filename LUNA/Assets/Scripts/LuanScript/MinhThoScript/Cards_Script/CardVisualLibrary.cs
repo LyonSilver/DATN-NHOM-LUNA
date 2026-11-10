@@ -1,5 +1,7 @@
+using System.Text;
 using UnityEngine;
 
+// Art cho 1 hệ: 3 mức độ
 [System.Serializable]
 public class CardArtSet
 {
@@ -19,20 +21,78 @@ public class CardArtSet
     }
 }
 
+// Art cho 1 nhóm thẻ: art chung (3) + art riêng từng hệ (5 x 3)
+// Tên normal/high/extreme của art chung GIỐNG bản cũ để giữ dữ liệu đã gán.
+[System.Serializable]
+public class CardGroupArt
+{
+    [Header("Art chung của nhóm (Dùng khi hệ chưa có art riêng)")]
+    public Sprite normal;
+    public Sprite high;
+    public Sprite extreme;
+
+    [Header("Art riêng từng hệ (Không bắt buộc, ô trống sẽ dùng art chung)")]
+    public CardArtSet earth;
+    public CardArtSet fire;
+    public CardArtSet metal;
+    public CardArtSet water;
+    public CardArtSet wood;
+
+    public Sprite GetShared(CardTier tier)
+    {
+        switch (tier)
+        {
+            case CardTier.Normal:  return normal;
+            case CardTier.High:    return high;
+            case CardTier.Extreme: return extreme;
+            default:               return null;
+        }
+    }
+
+    public Sprite GetOwn(CardElement element, CardTier tier)
+    {
+        CardArtSet set = GetElementSet(element);
+        return set != null ? set.Get(tier) : null;
+    }
+
+    // Ưu tiên art riêng của hệ
+    public Sprite Get(CardElement element, CardTier tier)
+    {
+        Sprite own = GetOwn(element, tier);
+        return own != null ? own : GetShared(tier);
+    }
+
+    private CardArtSet GetElementSet(CardElement element)
+    {
+        switch (element)
+        {
+            case CardElement.Earth: return earth;
+            case CardElement.Fire:  return fire;
+            case CardElement.Metal: return metal;
+            case CardElement.Water: return water;
+            case CardElement.Wood:  return wood;
+            default:                return null;
+        }
+    }
+}
+
 [CreateAssetMenu(fileName = "CardVisualLibrary_Main", menuName = "Chaos Card/Card Visual Library")]
 public class CardVisualLibrary : ScriptableObject
 {
-    [Header("Art gốc: 4 yếu tố x 3 mức độ = 12 sprite")]
-    public CardArtSet attackArt;
-    public CardArtSet defenseArt;
-    public CardArtSet supportArt;
-    public CardArtSet effectArt;
+    [Header("6 nhóm thẻ: Mỗi nhóm 5 hệ x 3 mức độ")]
+    public CardGroupArt attackArt;
+    public CardGroupArt defenseArt;
+    public CardGroupArt healArt;
+    public CardGroupArt poisonArt;
+    public CardGroupArt focusArt;
+    public CardGroupArt chaosArt;
 
-    [Header("Icon loại thẻ (nên là hình trắng/xám để nhuộm theo màu phương hệ)")]
+    [Header("Icon loại thẻ")]
     public Sprite attackIcon;
     public Sprite defenseIcon;
-    public Sprite supportIcon;
-    public Sprite effectIcon;
+    public Sprite healIcon;
+    public Sprite poisonIcon;
+    public Sprite focusIcon;
     public Sprite chaosIcon;
 
     [Header("Material đổi màu theo phương hệ (shader UI/CardElementTint)")]
@@ -42,16 +102,42 @@ public class CardVisualLibrary : ScriptableObject
     public Material woodMaterial;
     public Material earthMaterial;
 
-    public Sprite GetArt(CardType type, CardTier tier)
+    private static readonly CardType[] NewGroups =
+    {
+        CardType.Attack, CardType.Defense, CardType.Heal,
+        CardType.Poison, CardType.Focus, CardType.Chaos
+    };
+
+    private static readonly CardTier[] AllTiers =
+    {
+        CardTier.Normal, CardTier.High, CardTier.Extreme
+    };
+
+    private CardGroupArt GetGroup(CardType type)
     {
         switch (type)
         {
-            case CardType.Attack:  return attackArt != null ? attackArt.Get(tier) : null;
-            case CardType.Defense: return defenseArt != null ? defenseArt.Get(tier) : null;
-            case CardType.Support: return supportArt != null ? supportArt.Get(tier) : null;
-            case CardType.Effect:  return effectArt != null ? effectArt.Get(tier) : null;
+            case CardType.Attack:  return attackArt;
+            case CardType.Defense: return defenseArt;
+            case CardType.Heal:    return healArt;
+            case CardType.Poison:  return poisonArt;
+            case CardType.Focus:   return focusArt;
+            case CardType.Chaos:   return chaosArt;
             default:               return null;
         }
+    }
+
+    // Art theo (Nhóm, hệ, mức độ). Ưu tiên art riêng của hệ.
+    public Sprite GetArt(CardType type, CardElement element, CardTier tier)
+    {
+        CardGroupArt group = GetGroup(type);
+        return group != null ? group.Get(element, tier) : null;
+    }
+
+    // Giữ chữ ký cũ để script khác (nếu có) vẫn biên dịch được. Chỉ trả art chung.
+    public Sprite GetArt(CardType type, CardTier tier)
+    {
+        return GetArt(type, CardElement.None, tier);
     }
 
     public Sprite GetTypeIcon(CardType type)
@@ -60,8 +146,9 @@ public class CardVisualLibrary : ScriptableObject
         {
             case CardType.Attack:  return attackIcon;
             case CardType.Defense: return defenseIcon;
-            case CardType.Support: return supportIcon;
-            case CardType.Effect:  return effectIcon;
+            case CardType.Heal:    return healIcon;
+            case CardType.Poison:  return poisonIcon;
+            case CardType.Focus:   return focusIcon;
             case CardType.Chaos:   return chaosIcon;
             default:               return null;
         }
@@ -80,39 +167,72 @@ public class CardVisualLibrary : ScriptableObject
         }
     }
 
-    [ContextMenu("TEST - Kiểm tra thư viện")]
-    private void TestValidate()
+    [ContextMenu("TEST - Báo cáo thư viện (6 nhóm x 5 hệ x 3 mức độ)")]
+    private void TestReport()
     {
-        int missing = 0;
+        StringBuilder sb = new StringBuilder("CardVisualLibrary: Báo cáo art\n");
 
-        foreach (CardType type in new[] { CardType.Attack, CardType.Defense, CardType.Support, CardType.Effect })
+        int total = 0;
+        int ownTotal = 0;
+        int sharedTotal = 0;
+        int missingTotal = 0;
+
+        foreach (CardType type in NewGroups)
         {
-            foreach (CardTier tier in new[] { CardTier.Normal, CardTier.High, CardTier.Extreme })
+            CardGroupArt group = GetGroup(type);
+
+            int own = 0;
+            int shared = 0;
+            int missing = 0;
+
+            foreach (CardElement element in ElementRules.AllElements)
             {
-                if (GetArt(type, tier) == null)
+                foreach (CardTier tier in AllTiers)
                 {
-                    Debug.LogWarning("CardVisualLibrary: Thiếu art " + type + " / " + tier);
-                    missing++;
+                    total++;
+
+                    if (group != null && group.GetOwn(element, tier) != null)
+                    {
+                        own++;
+                    }
+                    else if (group != null && group.GetShared(tier) != null)
+                    {
+                        shared++;
+                    }
+                    else
+                    {
+                        missing++;
+                    }
                 }
             }
+
+            ownTotal += own;
+            sharedTotal += shared;
+            missingTotal += missing;
+
+            sb.AppendLine(type + ": art riêng " + own + "/15 | dùng art chung " + shared +
+                          "/15 | THIẾU " + missing + "/15");
         }
+
+        sb.AppendLine("TỔNG " + total + " ô: riêng " + ownTotal + " | chung " + sharedTotal +
+                      " | THIẾU " + missingTotal);
 
         foreach (CardElement element in ElementRules.AllElements)
         {
             if (GetElementMaterial(element) == null)
             {
-                Debug.LogWarning("CardVisualLibrary: Thiếu Material " + element);
-                missing++;
+                sb.AppendLine("THIẾU Material " + element);
             }
         }
 
-        if (missing == 0)
+        foreach (CardType type in NewGroups)
         {
-            Debug.Log("CardVisualLibrary: Đủ 12 art và 5 Material.");
+            if (GetTypeIcon(type) == null)
+            {
+                sb.AppendLine("(Tùy chọn) Chưa có icon cho " + type);
+            }
         }
-        else
-        {
-            Debug.LogWarning("CardVisualLibrary: Còn thiếu " + missing + " mục.");
-        }
+
+        Debug.Log(sb.ToString());
     }
 }

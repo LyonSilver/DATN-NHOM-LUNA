@@ -13,28 +13,157 @@ MonoBehaviour:
   m_Name: CardVisualLibrary_Main
   m_EditorClassIdentifier: Assembly-CSharp::CardVisualLibrary
   attackArt:
-    normal: {fileID: 0}
-    high: {fileID: 0}
-    extreme: {fileID: 0}
+    normal: {fileID: 21300000, guid: b316578020cf74a44bb99b6b5ea97b1b, type: 3}
+    high: {fileID: 21300000, guid: ad2435365c7cf5947bfd2968d78b725b, type: 3}
+    extreme: {fileID: 21300000, guid: b3076c34f3d48034f9fe2a6571214021, type: 3}
+    earth:
+      normal: {fileID: 21300000, guid: 858e7774eec70fd40901be07c45c3811, type: 3}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    fire:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    metal:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    water:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    wood:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
   defenseArt:
-    normal: {fileID: 0}
-    high: {fileID: 0}
-    extreme: {fileID: 0}
-  supportArt:
-    normal: {fileID: 0}
-    high: {fileID: 0}
-    extreme: {fileID: 0}
-  effectArt:
-    normal: {fileID: 0}
-    high: {fileID: 0}
-    extreme: {fileID: 0}
+    normal: {fileID: 21300000, guid: 05611b989b5d731488f2c2eaf6a92211, type: 3}
+    high: {fileID: 21300000, guid: 04e18a60082486f478ccb3697e8d5c20, type: 3}
+    extreme: {fileID: 21300000, guid: 286d79b0bc489fc4a888887fa436a9ef, type: 3}
+    earth:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    fire:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    metal:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    water:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    wood:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+  healArt:
+    normal: {fileID: 21300000, guid: d3478ff259b922a4295ab56eead86f0e, type: 3}
+    high: {fileID: 21300000, guid: ab5bca77a7a259c4f86ef535b42782c8, type: 3}
+    extreme: {fileID: 21300000, guid: b7851b581df50414ebc247aa79f0bbed, type: 3}
+    earth:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    fire:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    metal:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    water:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    wood:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+  poisonArt:
+    normal: {fileID: 21300000, guid: 551f92d54a60cf747b190b7275995744, type: 3}
+    high: {fileID: 21300000, guid: eb57816b83a34f746991aabf1c08196c, type: 3}
+    extreme: {fileID: 21300000, guid: 90bd80f38b479dc4c8ddd02f6facf553, type: 3}
+    earth:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    fire:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    metal:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    water:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    wood:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+  focusArt:
+    normal: {fileID: 21300000, guid: 858e7774eec70fd40901be07c45c3811, type: 3}
+    high: {fileID: 21300000, guid: 725dd64c6ec307247a7c73c5e8b93886, type: 3}
+    extreme: {fileID: 21300000, guid: d024ee46a768b37459dcd5128785d3be, type: 3}
+    earth:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    fire:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    metal:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    water:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    wood:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+  chaosArt:
+    normal: {fileID: 21300000, guid: 00a9a1e44bfd28642805561fecc8c07a, type: 3}
+    high: {fileID: 21300000, guid: a106f72b001b2a74685e8c9693ce80a9, type: 3}
+    extreme: {fileID: 21300000, guid: 45ab5f3f87cb4214380842643cb45b87, type: 3}
+    earth:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    fire:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    metal:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    water:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
+    wood:
+      normal: {fileID: 0}
+      high: {fileID: 0}
+      extreme: {fileID: 0}
   attackIcon: {fileID: 0}
   defenseIcon: {fileID: 0}
-  supportIcon: {fileID: 0}
-  effectIcon: {fileID: 0}
+  healIcon: {fileID: 0}
+  poisonIcon: {fileID: 0}
+  focusIcon: {fileID: 0}
   chaosIcon: {fileID: 0}
-  fireMaterial: {fileID: 0}
-  waterMaterial: {fileID: 0}
-  metalMaterial: {fileID: 0}
-  woodMaterial: {fileID: 0}
-  earthMaterial: {fileID: 0}
+  fireMaterial: {fileID: 2100000, guid: 84eea576736028c4ca61009f662ceb1b, type: 2}
+  waterMaterial: {fileID: 2100000, guid: 89cc9a2f7f7006044a8367b7f5f827e9, type: 2}
+  metalMaterial: {fileID: 2100000, guid: 52b9593138675e14cba5192c05c657f3, type: 2}
+  woodMaterial: {fileID: 2100000, guid: ce4d238c93816794ca4f58b3d6a8d67e, type: 2}
+  earthMaterial: {fileID: 2100000, guid: ecce3610a610df0499547a1cce05d5b5, type: 2}

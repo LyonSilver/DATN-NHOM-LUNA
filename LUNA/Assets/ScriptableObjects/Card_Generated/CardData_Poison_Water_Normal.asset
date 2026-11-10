@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052661719380dfd40ba44f2124f7beb9, type: 3}
+  m_Name: CardData_Poison_Water_Normal
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  cardID: poison_water_normal
+  cardName: Tidal Venom
+  cardType: 3
+  rarity: 0
+  cost: 1
+  element: 2
+  tier: 1
+  description: 'Deal 4 initial damage.
+
+    Apply Poison for 2 turns.'
+  artwork: {fileID: 21300000, guid: 551f92d54a60cf747b190b7275995744, type: 3}
+  typeIcon: {fileID: 21300000, guid: 551f92d54a60cf747b190b7275995744, type: 3}
+  effectType: 3
+  baseDamage: 4
+  shieldValue: 0
+  healValue: 0
+  statusEffect: 1
+  statusDuration: 2
+  baseValue: 0
+  extraValue: 0
+  purchaseType: 0
+  moneyCost: 0
+  gemCost: 0
+  quantityLimit: 3
+  cardSprite: {fileID: 0}
