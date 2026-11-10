@@ -2309,7 +2309,6 @@ GameObject:
   - component: {fileID: 1089452048}
   - component: {fileID: 1089452052}
   - component: {fileID: 1089452053}
-  - component: {fileID: 1089452054}
   m_Layer: 0
   m_Name: MenuGroup
   m_TagString: Untagged
@@ -2389,7 +2388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2433,7 +2432,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2489,23 +2488,6 @@ MonoBehaviour:
   pressScale: 0.9
   pressSpeed: 18
   clickCooldown: 0.18
---- !u!114 &1089452054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1089452046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621f9c4b38042924882af82cf70e118c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SoftGlow
-  targetImage: {fileID: 1089452050}
-  glowColor: {r: 0.6, g: 0.85, b: 1, a: 1}
-  speed: 1.8
-  minIntensity: 0.65
-  maxIntensity: 1
 --- !u!1 &1106643057
 GameObject:
   m_ObjectHideFlags: 0
@@ -3374,7 +3356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1767559238
 RectTransform:
   m_ObjectHideFlags: 0
