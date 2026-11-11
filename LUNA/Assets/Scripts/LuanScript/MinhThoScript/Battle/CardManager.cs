@@ -175,18 +175,46 @@ public class CardManager : MonoBehaviour
 
     private bool CanUseCard()
     {
-        if (turnManager == null ||
-            handManager == null ||
-            deckManager == null ||
-            cardEffectManager == null ||
-            battleStateMachine == null ||
-            oneCardTurnController == null)
+        bool missingReference = false;
+
+        if (turnManager == null)
         {
-            Debug.LogError(
-                "CardManager: Thiếu Manager Reference!"
-            );
-            return false;
+            Debug.LogError("CardManager: Thiếu TurnManager!");
+            missingReference = true;
         }
+
+        if (handManager == null)
+        {
+            Debug.LogError("CardManager: Thiếu HandManager!");
+            missingReference = true;
+        }
+
+        if (deckManager == null)
+        {
+            Debug.LogError("CardManager: Thiếu DeckManager!");
+            missingReference = true;
+        }
+
+        if (cardEffectManager == null)
+        {
+            Debug.LogError("CardManager: Thiếu CardEffectManager!");
+            missingReference = true;
+        }
+
+        if (battleStateMachine == null)
+        {
+            Debug.LogError("CardManager: Thiếu BattleStateMachine!");
+            missingReference = true;
+        }
+
+        if (oneCardTurnController == null)
+        {
+            Debug.LogError("CardManager: Thiếu OneCardTurnController!");
+            missingReference = true;
+        }
+
+        if (missingReference)
+            return false;
 
         if (Time.timeScale <= 0f || isUsingCard)
             return false;
