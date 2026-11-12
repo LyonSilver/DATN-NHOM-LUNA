@@ -1,0 +1,72 @@
+[
+  {
+    "piece": "fx-slash",
+    "about": "violet moon-blade sword swings (sideways, down, spin) with a white edge, and a gold impact spark",
+    "animations": [
+      {
+        "name": "slash",
+        "frames": 8,
+        "loop": false,
+        "cell": [
+          80,
+          64
+        ],
+        "ms": 411,
+        "about": "a sideways swing: a white-edged violet crescent with a dithered afterimage sweeps over the top from left to right (plays once, ends empty)"
+      },
+      {
+        "name": "slash-down",
+        "frames": 8,
+        "loop": false,
+        "cell": [
+          80,
+          64
+        ],
+        "ms": 411,
+        "about": "a downward chop on the right: the crescent sweeps from top to bottom (plays once, ends empty)"
+      },
+      {
+        "name": "slash-spin",
+        "frames": 10,
+        "loop": false,
+        "cell": [
+          80,
+          64
+        ],
+        "ms": 511,
+        "about": "a spin attack: the crescent runs once round a flat ellipse (plays once, ends empty)"
+      },
+      {
+        "name": "hit",
+        "frames": 6,
+        "loop": false,
+        "cell": [
+          80,
+          64
+        ],
+        "ms": 330,
+        "about": "an impact spark: a three-pointed gold-white flash with a hot burst, then a scatter of sparks (plays once, ends empty)"
+      }
+    ],
+    "no_halo": true,
+    "recipes": [
+      "recipe/fx-slash.fx.json"
+    ],
+    "pixelbolt": "0.13.0",
+    "previews": [
+      "previews/fx-slash-slash-4x.gif",
+      "previews/fx-slash-slash-down-4x.gif",
+      "previews/fx-slash-slash-spin-4x.gif",
+      "previews/fx-slash-hit-4x.gif"
+    ],
+    "sounds": [
+      "sounds/fx-slash-swing.wav"
+    ],
+    "sound_for": {
+      "sounds/fx-slash-swing.wav": [
+        "slash",
+        "slash-down"
+      ]
+    }
+  }
+]
