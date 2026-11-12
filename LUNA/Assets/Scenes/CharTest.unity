@@ -767,6 +767,7 @@ GameObject:
   - component: {fileID: 707673745}
   - component: {fileID: 707673744}
   - component: {fileID: 707673743}
+  - component: {fileID: 707673746}
   m_Layer: 0
   m_Name: GreenGoblem
   m_TagString: Untagged
@@ -870,6 +871,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &707673746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707673742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6752bfc1af61b44a9850fe6de6adc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationInputController
+  animator: {fileID: 707673743}
+  animations:
+  - animationClip: {fileID: 7400000, guid: 14f75f9e04cfff549b4565001731fd77, type: 2}
+    key: 15
+  - animationClip: {fileID: 7400000, guid: f60c2cd7e821dd24785f63021eea8cb2, type: 2}
+    key: 33
+  - animationClip: {fileID: 7400000, guid: 997ca5027c556c041bc31d3327264c24, type: 2}
+    key: 18
+  - animationClip: {fileID: 7400000, guid: 3a71ae4d6e21b4c4c96891e155eae3d3, type: 2}
+    key: 20
+  - animationClip: {fileID: 7400000, guid: 53a2d38238a02af41a53e353856c6973, type: 2}
+    key: 21
 --- !u!1 &728258568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,6 +1885,7 @@ GameObject:
   - component: {fileID: 1309353558}
   - component: {fileID: 1309353557}
   - component: {fileID: 1309353556}
+  - component: {fileID: 1309353559}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -1963,6 +1989,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1309353559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309353555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6752bfc1af61b44a9850fe6de6adc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationInputController
+  animator: {fileID: 1309353556}
+  animations:
+  - animationClip: {fileID: 7400000, guid: aaca1d1ee3f158c4d808d098fc8211c2, type: 2}
+    key: 15
+  - animationClip: {fileID: 7400000, guid: c0c988ae5df031b47a70ecdcb248d6bd, type: 2}
+    key: 33
+  - animationClip: {fileID: 7400000, guid: bcd51cdaf39fe944ca0ff99402e4ab8d, type: 2}
+    key: 18
+  - animationClip: {fileID: 7400000, guid: 5bbdd4d42e499654eb89e824622ea69a, type: 2}
+    key: 20
+  - animationClip: {fileID: 7400000, guid: b2c55fdad7699d847b2f8e5b80ee1008, type: 2}
+    key: 21
 --- !u!1 &1427912081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,6 +2206,7 @@ GameObject:
   - component: {fileID: 1704473775}
   - component: {fileID: 1704473774}
   - component: {fileID: 1704473773}
+  - component: {fileID: 1704473776}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -2259,6 +2310,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1704473776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704473772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6752bfc1af61b44a9850fe6de6adc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationInputController
+  animator: {fileID: 1704473773}
+  animations:
+  - animationClip: {fileID: 7400000, guid: f070b974f02fd594b8bf7846fe96d720, type: 2}
+    key: 15
+  - animationClip: {fileID: 7400000, guid: d0c44caf05ef6ce4e9c4db4991b146a8, type: 2}
+    key: 33
+  - animationClip: {fileID: 7400000, guid: 5f07597d6f6511449b3fb4cd7b201ce9, type: 2}
+    key: 18
+  - animationClip: {fileID: 7400000, guid: 76640ebf31e9a5844b9c799ddedf0b49, type: 2}
+    key: 20
 --- !u!1 &1878040186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,6 +2343,7 @@ GameObject:
   - component: {fileID: 1878040189}
   - component: {fileID: 1878040188}
   - component: {fileID: 1878040187}
+  - component: {fileID: 1878040190}
   m_Layer: 0
   m_Name: Qua
   m_TagString: Untagged
@@ -2373,6 +2447,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1878040190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878040186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6752bfc1af61b44a9850fe6de6adc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationInputController
+  animator: {fileID: 1878040187}
+  animations:
+  - animationClip: {fileID: 7400000, guid: 185a9eb9b9d77e44fa697eb6493e9abd, type: 2}
+    key: 15
+  - animationClip: {fileID: 7400000, guid: 29bb53614e5b7dc409db27bb500b6179, type: 2}
+    key: 33
+  - animationClip: {fileID: 7400000, guid: a7a1fb61a8ca2d340b8bff940034a8dd, type: 2}
+    key: 18
+  - animationClip: {fileID: 7400000, guid: cae7300601f985247a3e75e677a8b3db, type: 2}
+    key: 20
+  - animationClip: {fileID: 7400000, guid: 69044ab9c46743340b79ddf0be5dc901, type: 2}
+    key: 21
 --- !u!1 &1927415437
 GameObject:
   m_ObjectHideFlags: 0
@@ -2475,6 +2573,7 @@ GameObject:
   - component: {fileID: 1995753519}
   - component: {fileID: 1995753518}
   - component: {fileID: 1995753517}
+  - component: {fileID: 1995753520}
   m_Layer: 0
   m_Name: MainCharacter
   m_TagString: Untagged
@@ -2578,6 +2677,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1995753520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995753516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6752bfc1af61b44a9850fe6de6adc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationInputController
+  animator: {fileID: 1995753517}
+  animations:
+  - animationClip: {fileID: 7400000, guid: d511a3580e89dc24f8cf1d8d86a6cbab, type: 2}
+    key: 15
+  - animationClip: {fileID: 7400000, guid: 634de3d15f58eb448ac8c410de451987, type: 2}
+    key: 33
+  - animationClip: {fileID: 7400000, guid: 934c78341c7fc9b44a0f4ae9e4b699c5, type: 2}
+    key: 18
+  - animationClip: {fileID: 7400000, guid: 0ce5feac10325a6479b910cc13d8ae32, type: 2}
+    key: 20
+  - animationClip: {fileID: 7400000, guid: c57332bffe69ef54fa656629a7744ff3, type: 2}
+    key: 21
 --- !u!1 &2132723945
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,6 +2712,7 @@ GameObject:
   - component: {fileID: 2132723948}
   - component: {fileID: 2132723947}
   - component: {fileID: 2132723946}
+  - component: {fileID: 2132723949}
   m_Layer: 0
   m_Name: BlackWolf
   m_TagString: Untagged
@@ -2692,6 +2816,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2132723949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132723945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6752bfc1af61b44a9850fe6de6adc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationInputController
+  animator: {fileID: 2132723946}
+  animations:
+  - animationClip: {fileID: 7400000, guid: d847269d15204e64a98835995b16e763, type: 2}
+    key: 15
+  - animationClip: {fileID: 7400000, guid: bbc87825e7d39034486bb3f70c932e61, type: 2}
+    key: 33
+  - animationClip: {fileID: 7400000, guid: d942d6750270da649b29de6606ae278a, type: 2}
+    key: 18
+  - animationClip: {fileID: 7400000, guid: 34c7540f8e705134d8235eb25f39f94e, type: 2}
+    key: 20
 --- !u!1 &2145233562
 GameObject:
   m_ObjectHideFlags: 0
