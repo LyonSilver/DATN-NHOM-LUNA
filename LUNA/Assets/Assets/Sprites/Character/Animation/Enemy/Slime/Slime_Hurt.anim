@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Death
+  m_Name: Slime_Hurt
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -1568107772, guid: 8ce5786c453ef0a43b2412f8a5860fa4, type: 3}
+      value: {fileID: -1705809757, guid: 49d1765b08f2d3846847eb026c4d2f2c, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,7 +44,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -1568107772, guid: 8ce5786c453ef0a43b2412f8a5860fa4, type: 3}
+    - {fileID: -1705809757, guid: 49d1765b08f2d3846847eb026c4d2f2c, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
