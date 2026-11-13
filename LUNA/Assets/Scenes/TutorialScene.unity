@@ -2196,7 +2196,7 @@ MonoBehaviour:
   turnManager: {fileID: 793561025}
   cardManager: {fileID: 1156692241}
   handContainer: {fileID: 674468658}
-  cardPrefab: {fileID: 2997509876283000121, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+  cardPrefab: {fileID: 2997509876283000121, guid: 68cb8f8de0fd7bf49b36b4b3e27941d9, type: 3}
   cardSpacing: 300
   maxAngle: 0
   arcHeight: 0
