@@ -2930,7 +2930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943046458}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 988.4233, y: 579.21594, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5431,7 +5431,7 @@ MonoBehaviour:
   turnManager: {fileID: 1157774676}
   cardManager: {fileID: 1463294829}
   handContainer: {fileID: 571833687}
-  cardPrefab: {fileID: 2997509876283000121, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+  cardPrefab: {fileID: 2997509876283000121, guid: 68cb8f8de0fd7bf49b36b4b3e27941d9, type: 3}
   cardSpacing: 300
   maxAngle: 0
   arcHeight: 0
@@ -8181,8 +8181,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1861920895}
   - {fileID: 1582713761}
-  - {fileID: 847745521}
   - {fileID: 943046461}
+  - {fileID: 847745521}
   - {fileID: 1949868741}
   - {fileID: 1812381668}
   - {fileID: 1514665225}
