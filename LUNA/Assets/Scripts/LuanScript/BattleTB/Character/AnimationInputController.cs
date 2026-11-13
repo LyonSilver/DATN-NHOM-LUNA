@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
+using TMPro;
 
 public class AnimationInputController : MonoBehaviour
 {
@@ -24,12 +25,22 @@ public class AnimationInputController : MonoBehaviour
     [SerializeField]
     private List<AnimationSetting> animations = new();
 
+    [Header("Animation UI")]
+    [SerializeField] private TMP_Text animationText;
+
+    [SerializeField]
+    private string textPrefix = "Animation: ";
+
     private PlayableGraph playableGraph;
 
     private void Awake()
     {
         if (animator == null)
             animator = GetComponent<Animator>();
+
+        // Text ban đầu
+        if (animationText != null)
+            animationText.text = textPrefix + "None";
     }
 
     private void Update()
@@ -54,23 +65,29 @@ public class AnimationInputController : MonoBehaviour
     {
         if (animator == null || clip == null)
         {
-            Debug.LogWarning("Thiếu Animator hoặc AnimationClip!");
+            Debug.LogWarning(
+                "Thiếu Animator hoặc AnimationClip!"
+            );
             return;
         }
 
-        // Dừng animation đang chạy
+        // Dừng animation cũ
         StopAnimation();
 
-        // Tạo PlayableGraph mới
-        playableGraph = PlayableGraph.Create("AnimationGraph");
+        // Tạo PlayableGraph
+        playableGraph = PlayableGraph.Create(
+            "AnimationGraph"
+        );
 
         playableGraph.SetTimeUpdateMode(
             DirectorUpdateMode.GameTime
         );
 
-        // Phát trực tiếp AnimationClip
+        // Phát AnimationClip
         AnimationClipPlayable clipPlayable =
-            AnimationClipPlayable.Create(playableGraph, clip);
+            AnimationClipPlayable.Create(
+                playableGraph, clip
+            );
 
         AnimationPlayableOutput output =
             AnimationPlayableOutput.Create(
@@ -84,7 +101,19 @@ public class AnimationInputController : MonoBehaviour
         // Chạy animation
         playableGraph.Play();
 
+        // Cập nhật TextMeshPro
+        UpdateAnimationText(clip.name);
+
         Debug.Log("Playing Animation: " + clip.name);
+    }
+
+    private void UpdateAnimationText(string animationName)
+    {
+        if (animationText != null)
+        {
+            animationText.text =
+                textPrefix + animationName;
+        }
     }
 
     public void StopAnimation()
