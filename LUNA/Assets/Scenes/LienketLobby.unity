@@ -489,6 +489,7 @@ GameObject:
   - component: {fileID: 67303712}
   - component: {fileID: 67303711}
   - component: {fileID: 67303710}
+  - component: {fileID: 67303714}
   m_Layer: 5
   m_Name: ButtonPlay
   m_TagString: Untagged
@@ -597,6 +598,19 @@ RectTransform:
   m_AnchoredPosition: {x: -106.28, y: -118.27}
   m_SizeDelta: {x: 212.5674, y: 79.9406}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &67303714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67303709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5902c01ddd7fee4e86fa5d9fe56e4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSceneLoader
+  sceneName: 
 --- !u!1 &75725629
 GameObject:
   m_ObjectHideFlags: 0
