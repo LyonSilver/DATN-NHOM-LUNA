@@ -1001,7 +1001,7 @@ MonoBehaviour:
   battleStats: {fileID: 826054986}
   playerHPBar: {fileID: 1854580007}
   enemyHPBar: {fileID: 150778894}
-  playerAnimation: {fileID: 1986513408}
+  playerAnimation: {fileID: 859119008}
   deathAnimationDuration: 1
   cardSkillVFX: {fileID: 1973355014}
   slashGoodBonus: 2
@@ -2604,9 +2604,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a9b8617b3d1b049a09f4a58d406ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCardCinematic
-  player: {fileID: 1986513407}
-  playerAnimator: {fileID: 1986513409}
-  playerAnimation: {fileID: 1986513408}
+  player: {fileID: 859119007}
+  playerAnimator: {fileID: 859119005}
+  playerAnimation: {fileID: 859119008}
   enemySpawner: {fileID: 1627267079}
   cardEffectManager: {fileID: 206061691}
   oneCardTurnController: {fileID: 1356499571}
@@ -2719,7 +2719,7 @@ SpriteRenderer:
   m_Size: {x: 2.66, y: 2.21}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &634041887
 Transform:
@@ -2924,6 +2924,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648196153}
   m_CullTransparentMesh: 1
+--- !u!1001 &655471748
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6224105497870893462, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214131139221750200, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+      propertyPath: m_Name
+      value: MainCharacter
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
 --- !u!1 &658127399
 GameObject:
   m_ObjectHideFlags: 0
@@ -3736,6 +3797,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826849340}
   m_CullTransparentMesh: 1
+--- !u!95 &859119005 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 389744125579623206, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+  m_PrefabInstance: {fileID: 655471748}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &859119007 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3181238565796311397, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+  m_PrefabInstance: {fileID: 655471748}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &859119008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8536897295801789153, guid: ff0a585ff5f80b843beb949236197c4b, type: 3}
+  m_PrefabInstance: {fileID: 655471748}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1d8764596a45e942ac102cc57b19333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationController
 --- !u!1 &896652469
 GameObject:
   m_ObjectHideFlags: 0
@@ -5135,9 +5217,9 @@ MonoBehaviour:
   cardEffectManager: {fileID: 206061691}
   battleStateMachine: {fileID: 1355644609}
   oneCardTurnController: {fileID: 1356499571}
-  player: {fileID: 1986513407}
-  playerAnimator: {fileID: 1986513409}
-  playerAnimation: {fileID: 1986513408}
+  player: {fileID: 859119007}
+  playerAnimator: {fileID: 859119005}
+  playerAnimation: {fileID: 859119008}
   enemySpawner: {fileID: 1627267079}
   useDelay: 0.5
   dashToEnemy: 1
@@ -7675,6 +7757,7 @@ MonoBehaviour:
   battleStateMachine: {fileID: 1355644609}
   oneCardTurnController: {fileID: 1356499571}
   cardManager: {fileID: 1156692241}
+  playerCardCinematic: {fileID: 0}
   handCardGroup: {fileID: 1634544376}
   endTurnButtonGroup: {fileID: 1634544376}
 --- !u!1 &1643766955
@@ -8552,14 +8635,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
   masterDeck:
-  - {fileID: 11400000, guid: f3f048fee22452743a411b71c426b77c, type: 2}
-  - {fileID: 11400000, guid: c624bca4ce2c0a940ad48f2cb3dfcf34, type: 2}
-  - {fileID: 11400000, guid: 416c9773eb0015549b302c044d07b07b, type: 2}
-  - {fileID: 11400000, guid: 7e954c6bfa2ba1a41a2125a46326f57c, type: 2}
-  - {fileID: 11400000, guid: 0c6ca0636dce3d443b7efaaf95c90a81, type: 2}
-  - {fileID: 11400000, guid: 820e6d5ae07308d4abbd808aa0997def, type: 2}
-  - {fileID: 11400000, guid: 502065cb19b102d4bbcd1aae6e7b7d90, type: 2}
-  - {fileID: 11400000, guid: 1fe771851d6e1a0499d4fdbfee8148d0, type: 2}
+  - {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
+  - {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
+  - {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
+  - {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
+  - {fileID: 11400000, guid: d4db3cd6807e6ea4fa9d6f9538a1afd4, type: 2}
+  - {fileID: 11400000, guid: 089ca909d7be96c44bf68c97d245cdb5, type: 2}
+  - {fileID: 11400000, guid: bc45ba74374bfbf438824a88660a3142, type: 2}
+  - {fileID: 11400000, guid: 2997a4689915a57448b5fd7add001b66, type: 2}
   handLimit: 4
   drawPile:
   - {fileID: 11400000, guid: 0c6ca0636dce3d443b7efaaf95c90a81, type: 2}
@@ -8612,7 +8695,7 @@ Transform:
   m_GameObject: {fileID: 1805816408}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.7, y: -0.77, z: 0}
+  m_LocalPosition: {x: 4.83, y: -1.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9558,7 +9641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 560b4f608d417d7448eca812128afbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardSkillVFX
-  player: {fileID: 1986513407}
+  player: {fileID: 859119007}
   enemySpawner: {fileID: 1627267079}
   cardEffects:
   - card: {fileID: 11400000, guid: c624bca4ce2c0a940ad48f2cb3dfcf34, type: 2}
@@ -10293,6 +10376,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kirito
       objectReference: {fileID: 0}
+    - target: {fileID: 6776426483649785816, guid: e7d85221def78274a819b605c2c1a240, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10315,3 +10402,4 @@ SceneRoots:
   - {fileID: 102922966}
   - {fileID: 1970391303118226088}
   - {fileID: 634041887}
+  - {fileID: 655471748}

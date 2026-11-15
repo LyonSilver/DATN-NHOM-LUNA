@@ -5543,14 +5543,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
   masterDeck:
-  - {fileID: 11400000, guid: f3f048fee22452743a411b71c426b77c, type: 2}
-  - {fileID: 11400000, guid: c624bca4ce2c0a940ad48f2cb3dfcf34, type: 2}
-  - {fileID: 11400000, guid: 416c9773eb0015549b302c044d07b07b, type: 2}
-  - {fileID: 11400000, guid: 7e954c6bfa2ba1a41a2125a46326f57c, type: 2}
-  - {fileID: 11400000, guid: 0c6ca0636dce3d443b7efaaf95c90a81, type: 2}
-  - {fileID: 11400000, guid: 820e6d5ae07308d4abbd808aa0997def, type: 2}
-  - {fileID: 11400000, guid: 502065cb19b102d4bbcd1aae6e7b7d90, type: 2}
-  - {fileID: 11400000, guid: 1fe771851d6e1a0499d4fdbfee8148d0, type: 2}
+  - {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
+  - {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
+  - {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
+  - {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
+  - {fileID: 11400000, guid: d4db3cd6807e6ea4fa9d6f9538a1afd4, type: 2}
+  - {fileID: 11400000, guid: 089ca909d7be96c44bf68c97d245cdb5, type: 2}
+  - {fileID: 11400000, guid: bc45ba74374bfbf438824a88660a3142, type: 2}
+  - {fileID: 11400000, guid: 2997a4689915a57448b5fd7add001b66, type: 2}
   handLimit: 4
   drawPile:
   - {fileID: 11400000, guid: 0c6ca0636dce3d443b7efaaf95c90a81, type: 2}
@@ -5627,11 +5627,15 @@ MonoBehaviour:
   playerAnimation: {fileID: 531574974}
   enemySpawner: {fileID: 371778800}
   cardEffectManager: {fileID: 1156435792}
+  oneCardTurnController: {fileID: 0}
   battleCamera: {fileID: 625186432}
   zoomSize: 3
   zoomDuration: 0.4
   cameraFollowSpeed: 7
   cameraFocusOffset: {x: 0, y: 0.5}
+  defaultUseZoom: 1
+  cardZoomSettings: []
+  hideUIWithoutZoom: 0
   battleUI: {fileID: 660923972}
   dashDuration: 0.4
   returnDuration: 0.4
@@ -6330,8 +6334,23 @@ MonoBehaviour:
   deckManager: {fileID: 1246191003}
   cardEffectManager: {fileID: 1156435792}
   battleStateMachine: {fileID: 1688428706}
-  playerCardCinematic: {fileID: 1254170767}
+  oneCardTurnController: {fileID: 0}
+  player: {fileID: 0}
+  playerAnimator: {fileID: 0}
+  playerAnimation: {fileID: 0}
+  enemySpawner: {fileID: 0}
   useDelay: 0.5
+  dashToEnemy: 1
+  dashDuration: 0.4
+  returnDuration: 0.4
+  stoppingDistance: 1.5
+  runningParameter: IsRunning
+  attackTrigger: Attack
+  healTrigger: 
+  shieldTrigger: 
+  buffTrigger: 
+  attackDuration: 0.8
+  buffDuration: 0.7
   selectedCard: {fileID: 0}
 --- !u!1 &1423229419
 GameObject:

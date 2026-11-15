@@ -4,21 +4,19 @@ using UnityEngine;
 public class BattleTurnUIController : MonoBehaviour
 {
     [Header("Battle Systems")]
-    [SerializeField]
-    private BattleStateMachine battleStateMachine;
-
-    [SerializeField]
-    private OneCardTurnController oneCardTurnController;
+    [SerializeField] private BattleStateMachine battleStateMachine;
+    [SerializeField] private OneCardTurnController oneCardTurnController;
 
     [Header("Card System")]
     [SerializeField] private CardManager cardManager;
+
+    [SerializeField] private PlayerCardCinematic playerCardCinematic;
 
     [Header("UI")]
     [SerializeField] private CanvasGroup handCardGroup;
     [SerializeField] private CanvasGroup endTurnButtonGroup;
 
-    // Chỉ ẩn Hand khi CardManager báo
-    // hiệu ứng Dissolve đã hoàn tất.
+    // Chỉ ẩn Hand sau khi Dissolve hoàn tất.
     private bool hideHandAfterDissolve;
 
     private void LateUpdate()
@@ -26,42 +24,64 @@ public class BattleTurnUIController : MonoBehaviour
         if (battleStateMachine == null ||
             oneCardTurnController == null ||
             cardManager == null)
+        {
             return;
+        }
 
+        // Kiểm tra Player Turn.
         bool isPlayerTurn =
             battleStateMachine.IsPlayerTurn() &&
             !battleStateMachine.IsBattleFinished();
 
+        // Kiểm tra khả năng sử dụng Card.
         bool canUseCard =
             isPlayerTurn &&
             oneCardTurnController.CanUseCard();
 
+        // Kiểm tra CardManager.
         bool isUsingCard = cardManager.IsUsingCard;
 
-        // Khi bắt đầu Player Turn mới
-        // hoặc Card trước bị hủy,
-        // mở lại Hand.
-        if (canUseCard && !isUsingCard)
+        // Kiểm tra Player Cinematic.
+        bool isPlayingCinematic =
+            playerCardCinematic != null &&
+            playerCardCinematic.IsPlaying;
+
+        // Khi Cinematic bắt đầu,
+        // đảm bảo Hand không xuất hiện lại sau đó.
+        if (isPlayingCinematic)
+        {
+            hideHandAfterDissolve = true;
+        }
+
+        // Khi Player Turn mới bắt đầu,
+        // mở lại Hand nếu không còn hành động nào đang chạy.
+        if (canUseCard &&
+            !isUsingCard &&
+            !isPlayingCinematic)
         {
             hideHandAfterDissolve = false;
         }
 
         // HAND CARD:
-        // Trong Dissolve vẫn hiện Hand.
-        // Chỉ ẩn khi Dissolve hoàn tất.
+        // Vẫn hiện trong lúc Dissolve.
+        // Ẩn sau Dissolve hoặc khi Cinematic chạy.
         bool showHand =
             isPlayerTurn &&
-            !hideHandAfterDissolve;
+            !hideHandAfterDissolve &&
+            !isPlayingCinematic;
 
         // END TURN:
-        // Ẩn ngay lúc đang dùng Card.
+        // Chỉ hiện khi Player có thể kết thúc lượt.
         bool showEndTurn =
-            canUseCard && !isUsingCard;
+            canUseCard &&
+            !isUsingCard &&
+            !isPlayingCinematic;
 
-        // Hand vẫn hiển thị trong Dissolve
-        // nhưng không cho click lá thứ hai.
+        // Không cho click Card khi đang sử dụng Card.
         bool handInteractable =
-            showHand && !isUsingCard;
+            showHand &&
+            !isUsingCard &&
+            !isPlayingCinematic;
 
         SetVisible(
             handCardGroup,
@@ -76,8 +96,7 @@ public class BattleTurnUIController : MonoBehaviour
         );
     }
 
-    // CardManager gọi hàm này sau
-    // khi Dissolve kết thúc thành công.
+    // CardManager gọi sau khi Dissolve hoàn tất thành công.
     public void NotifyDissolveFinished()
     {
         hideHandAfterDissolve = true;
@@ -85,14 +104,18 @@ public class BattleTurnUIController : MonoBehaviour
         SetVisible(handCardGroup, false, false);
 
         Debug.Log(
-            "BattleTurnUI: Dissolve xong, đã ẩn Hand."
+            "BattleTurnUI: Dissolve hoàn tất, đã ẩn Hand."
         );
     }
 
-    // Có thể dùng khi Card bị hủy.
+    // Gọi khi Card bị hủy.
     public void NotifyCardCancelled()
     {
         hideHandAfterDissolve = false;
+
+        Debug.Log(
+            "BattleTurnUI: Card bị hủy, mở lại Hand."
+        );
     }
 
     private void SetVisible(
