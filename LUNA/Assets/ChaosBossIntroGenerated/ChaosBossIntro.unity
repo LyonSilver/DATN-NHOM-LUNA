@@ -164,7 +164,7 @@ MonoBehaviour:
       m_Calls: []
   skyHold: 1.2
   lightningDuration: 0.55
-  explosionDuration: 0.8
+  explosionDuration: 2
   mapFadeDuration: 1.5
   finishHold: 0.3
   vortexDegreesPerSecond: -2
