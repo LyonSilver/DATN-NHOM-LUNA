@@ -15,41 +15,22 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private OneCardTurnController oneCardTurnController;
 
-    [Header("Player")]
-    [SerializeField] private Transform player;
-    [SerializeField] private Animator playerAnimator;
+    [Header("Cinematic")]
     [SerializeField]
-    private PlayerAnimationController playerAnimation;
+    private PlayerCardCinematic playerCardCinematic;
 
     [Header("Enemy")]
-    [SerializeField] private EnemySpawner enemySpawner;
+    [SerializeField]
+    private EnemySpawner enemySpawner;
 
     [Header("Card Settings")]
-    [SerializeField] private float useDelay = 0.1f;
-
-    [Header("Attack Movement")]
-    [SerializeField] private bool dashToEnemy = true;
-    [SerializeField] private float dashDuration = 0.4f;
-    [SerializeField] private float returnDuration = 0.4f;
-    [SerializeField] private float stoppingDistance = 1.5f;
-
-    [Header("Animation Parameters")]
-    [SerializeField] private string runningParameter = "IsRunning";
-    [SerializeField] private string attackTrigger = "Attack";
-    [SerializeField] private string healTrigger = "";
-    [SerializeField] private string shieldTrigger = "";
-    [SerializeField] private string buffTrigger = "";
-
-    [Header("Action Duration")]
-    [SerializeField] private float attackDuration = 0.8f;
-    [SerializeField] private float buffDuration = 0.7f;
+    [SerializeField]
+    private float useDelay = 0.1f;
 
     [Header("Runtime State")]
     public CardUI selectedCard;
 
     private bool isUsingCard;
-    private bool isMovingPlayer;
-    private Vector3 playerStartPosition;
 
     public bool IsUsingCard => isUsingCard;
 
@@ -59,20 +40,10 @@ public class CardManager : MonoBehaviour
 
     private void Awake()
     {
-        if (player == null)
-            return;
-
-        if (playerAnimator == null)
+        if (playerCardCinematic == null)
         {
-            playerAnimator =
-                player.GetComponentInChildren<Animator>(true);
-        }
-
-        if (playerAnimation == null)
-        {
-            playerAnimation =
-                player.GetComponentInChildren<
-                    PlayerAnimationController>(true);
+            playerCardCinematic =
+                FindFirstObjectByType<PlayerCardCinematic>();
         }
     }
 
@@ -89,12 +60,6 @@ public class CardManager : MonoBehaviour
 
         StopAllCoroutines();
 
-        SetRunning(false);
-
-        if (isMovingPlayer && player != null)
-            player.position = playerStartPosition;
-
-        isMovingPlayer = false;
         isUsingCard = false;
         selectedCard = null;
     }
@@ -105,6 +70,8 @@ public class CardManager : MonoBehaviour
 
     public void OnCardClicked(CardInputHandler clickedCard)
     {
+        Debug.Log("[CARD MANAGER] OnCardClicked được gọi!", this);
+
         if (clickedCard == null || !CanUseCard())
             return;
 
@@ -120,7 +87,11 @@ public class CardManager : MonoBehaviour
 
         CardData card = cardUI.cardData;
 
-        // Card tấn công phải có Enemy còn sống.
+        Debug.Log(
+            "[CARD MANAGER] Card được chọn: " + card.cardName
+        );
+
+        // Kiểm tra Enemy nếu là Attack Card.
         if (IsAttackCard(card) && !HasLivingEnemy())
         {
             Debug.LogWarning(
@@ -160,13 +131,16 @@ public class CardManager : MonoBehaviour
         if (dissolve.IsPlaying)
             return;
 
-        // Khóa click thêm Card ngay lập tức.
+        // Khóa click Card ngay lập tức.
         isUsingCard = true;
 
         selectedCard = cardUI;
+
         handManager.SetSelectedCard(cardUI);
 
-        StartCoroutine(UseCard(card, cardUI, dissolve));
+        StartCoroutine(
+            UseCard(card, cardUI, dissolve)
+        );
     }
 
     // =====================================
@@ -179,37 +153,57 @@ public class CardManager : MonoBehaviour
 
         if (turnManager == null)
         {
-            Debug.LogError("CardManager: Thiếu TurnManager!");
+            Debug.LogError(
+                "CardManager: Thiếu TurnManager!"
+            );
             missingReference = true;
         }
 
         if (handManager == null)
         {
-            Debug.LogError("CardManager: Thiếu HandManager!");
+            Debug.LogError(
+                "CardManager: Thiếu HandManager!"
+            );
             missingReference = true;
         }
 
         if (deckManager == null)
         {
-            Debug.LogError("CardManager: Thiếu DeckManager!");
+            Debug.LogError(
+                "CardManager: Thiếu DeckManager!"
+            );
             missingReference = true;
         }
 
         if (cardEffectManager == null)
         {
-            Debug.LogError("CardManager: Thiếu CardEffectManager!");
+            Debug.LogError(
+                "CardManager: Thiếu CardEffectManager!"
+            );
             missingReference = true;
         }
 
         if (battleStateMachine == null)
         {
-            Debug.LogError("CardManager: Thiếu BattleStateMachine!");
+            Debug.LogError(
+                "CardManager: Thiếu BattleStateMachine!"
+            );
             missingReference = true;
         }
 
         if (oneCardTurnController == null)
         {
-            Debug.LogError("CardManager: Thiếu OneCardTurnController!");
+            Debug.LogError(
+                "CardManager: Thiếu OneCardTurnController!"
+            );
+            missingReference = true;
+        }
+
+        if (playerCardCinematic == null)
+        {
+            Debug.LogError(
+                "CardManager: Thiếu PlayerCardCinematic!"
+            );
             missingReference = true;
         }
 
@@ -236,10 +230,15 @@ public class CardManager : MonoBehaviour
         CardDissolveUI dissolve)
     {
         Debug.Log(
-            "CardManager: Sử dụng " + card.cardName
+            "[CARD MANAGER] Bắt đầu sử dụng: " +
+            card.cardName,
+            this
         );
 
-        // 1. Chuẩn bị.
+        // =====================================
+        // 1. PREPARE
+        // =====================================
+
         if (useDelay > 0f)
             yield return new WaitForSeconds(useDelay);
 
@@ -251,20 +250,26 @@ public class CardManager : MonoBehaviour
             yield break;
         }
 
-        // 2. Trừ Mana.
+        // =====================================
+        // 2. SPEND ENERGY
+        // =====================================
+
         if (!turnManager.SpendEnergy(card.cost))
         {
             CancelCardUse(dissolve);
             yield break;
         }
 
-        // 3. Card Dissolve.
-        Debug.Log("CARD DISSOLVE: BẮT ĐẦU");
+        // =====================================
+        // 3. CARD DISSOLVE
+        // =====================================
+
+        Debug.Log("[CARD MANAGER] CARD DISSOLVE: BẮT ĐẦU");
 
         yield return dissolve.PlayDissolve();
 
         Debug.Log(
-            "CARD DISSOLVE: KẾT THÚC | Success = " +
+            "[CARD MANAGER] CARD DISSOLVE: KẾT THÚC | Success = " +
             dissolve.LastPlaySucceeded
         );
 
@@ -275,7 +280,10 @@ public class CardManager : MonoBehaviour
             yield break;
         }
 
-        // 4. Kiểm tra lại sau Dissolve.
+        // =====================================
+        // 4. VALIDATE AGAIN
+        // =====================================
+
         if (!IsCardValid(card, cardUI) ||
             !oneCardTurnController.CanUseCard())
         {
@@ -284,263 +292,82 @@ public class CardManager : MonoBehaviour
             yield break;
         }
 
-        // 5. Chính thức sử dụng Card.
-        // Từ thời điểm này, không dùng được Card thứ hai.
+        // =====================================
+        // 5. START CINEMATIC
+        // =====================================
+
+        Debug.Log(
+            "[CARD MANAGER] Đang gọi PlayerCardCinematic.PlayCard()"
+        );
+
+        bool cinematicStarted =
+            playerCardCinematic.PlayCard(card);
+
+        if (!cinematicStarted)
+        {
+            Debug.LogError(
+                "[CARD MANAGER] Không thể khởi chạy Cinematic!"
+            );
+
+            RefundEnergy(card);
+            CancelCardUse(dissolve);
+            yield break;
+        }
+
+        // Chỉ đánh dấu đã sử dụng Card
+        // sau khi Cinematic chấp nhận chạy thành công.
         oneCardTurnController.NotifyCardStarted();
 
-        // 6. Animation và hiệu ứng.
-        // KHÔNG di chuyển Camera, KHÔNG Zoom.
-        if (IsAttackCard(card))
+        Debug.Log(
+            "[CARD MANAGER] Cinematic đã bắt đầu!"
+        );
+
+        // =====================================
+        // 6. WAIT FOR CINEMATIC
+        // =====================================
+
+        while (playerCardCinematic != null &&
+               playerCardCinematic.IsPlaying)
         {
-            yield return ExecuteAttackCard(card);
-        }
-        else
-        {
-            yield return ExecuteBuffCard(card);
+            yield return null;
         }
 
-        // 7. Xóa Card đã dùng khỏi Hand.
+        Debug.Log(
+            "[CARD MANAGER] Cinematic hoàn tất!"
+        );
+
+        // =====================================
+        // 7. REMOVE CARD FROM HAND
+        // =====================================
+
         ResetSelection();
 
         deckManager.PlayCard(card);
 
-        // Xử lý các yêu cầu rút bài còn chờ,
-        // ví dụ Chaos Draw.
+        // =====================================
+        // 8. FLUSH PENDING DRAW
+        // =====================================
+
         cardEffectManager.FlushPendingCardDraws();
 
-        // 8. Kết thúc.
+        // =====================================
+        // 9. FINISH
+        // =====================================
+
         isUsingCard = false;
 
         Debug.Log(
-            "CardManager: Hoàn thành " +
+            "[CARD MANAGER] Hoàn thành Card: " +
             card.cardName +
             ". Chuyển sang Enemy Turn."
         );
 
-        // KHÔNG gọi EndTurn tại đây.
-        // OneCardTurnController sẽ tự xử lý.
+        // Không gọi EndTurn tại đây.
+        // OneCardTurnController tự xử lý.
     }
 
     // =====================================
-    // ATTACK CARD
-    // =====================================
-
-    private IEnumerator ExecuteAttackCard(CardData card)
-    {
-        EnemyHealth enemy =
-            enemySpawner != null
-                ? enemySpawner.GetCurrentEnemyHealth()
-                : null;
-
-        if (enemy == null || enemy.IsDead)
-            yield break;
-
-        Vector3 originalPosition = Vector3.zero;
-        bool moved = false;
-
-        if (player != null)
-        {
-            originalPosition = player.position;
-            playerStartPosition = originalPosition;
-        }
-
-        // 1. Player chạy tới Enemy nếu bật Dash.
-        if (dashToEnemy && player != null)
-        {
-            Vector3 targetPosition = originalPosition;
-
-            float distanceX =
-                enemy.transform.position.x -
-                originalPosition.x;
-
-            if (Mathf.Abs(distanceX) > stoppingDistance)
-            {
-                float direction = Mathf.Sign(distanceX);
-
-                targetPosition.x =
-                    enemy.transform.position.x -
-                    direction * stoppingDistance;
-            }
-
-            targetPosition.y = originalPosition.y;
-            targetPosition.z = originalPosition.z;
-
-            if (Vector3.Distance(
-                    player.position,
-                    targetPosition) > 0.01f)
-            {
-                moved = true;
-                isMovingPlayer = true;
-
-                SetRunning(true);
-
-                yield return MovePlayer(
-                    targetPosition,
-                    dashDuration
-                );
-
-                SetRunning(false);
-            }
-        }
-
-        // 2. Attack Animation.
-        PlayAttackAnimation();
-
-        // 3. Damage + VFX.
-        // Chỉ thực hiện Card một lần.
-        cardEffectManager.ExecuteCardEffect(card);
-
-        // 4. Chờ Animation.
-        yield return new WaitForSeconds(
-            Mathf.Max(0f, attackDuration)
-        );
-
-        // 5. Player trở về vị trí ban đầu.
-        if (moved && player != null)
-        {
-            SetRunning(true);
-
-            yield return MovePlayer(
-                originalPosition,
-                returnDuration
-            );
-
-            SetRunning(false);
-        }
-
-        isMovingPlayer = false;
-    }
-
-    // =====================================
-    // BUFF CARD
-    // =====================================
-
-    private IEnumerator ExecuteBuffCard(CardData card)
-    {
-        int type = (int)card.effectType;
-
-        switch (type)
-        {
-            case 1: // Shield / Guard
-                SetTriggerIfExists(shieldTrigger);
-                break;
-
-            case 2: // Heal
-                SetTriggerIfExists(healTrigger);
-                break;
-
-            default: // Focus / Chaos Draw
-                SetTriggerIfExists(buffTrigger);
-                break;
-        }
-
-        // Buff không Dash và không Zoom.
-        cardEffectManager.ExecuteCardEffect(card);
-
-        yield return new WaitForSeconds(
-            Mathf.Max(0f, buffDuration)
-        );
-    }
-
-    // =====================================
-    // MOVEMENT
-    // =====================================
-
-    private IEnumerator MovePlayer(
-        Vector3 target,
-        float duration)
-    {
-        if (player == null)
-            yield break;
-
-        Vector3 start = player.position;
-
-        if (duration <= 0f)
-        {
-            player.position = target;
-            yield break;
-        }
-
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-
-            float t = Mathf.SmoothStep(
-                0f,
-                1f,
-                Mathf.Clamp01(elapsed / duration)
-            );
-
-            player.position = Vector3.Lerp(
-                start,
-                target,
-                t
-            );
-
-            yield return null;
-        }
-
-        player.position = target;
-    }
-
-    // =====================================
-    // ANIMATION
-    // =====================================
-
-    private void PlayAttackAnimation()
-    {
-        if (playerAnimation != null)
-        {
-            playerAnimation.PlayAttack();
-            return;
-        }
-
-        SetTriggerIfExists(attackTrigger);
-    }
-
-    private void SetRunning(bool running)
-    {
-        if (HasParameter(
-                runningParameter,
-                AnimatorControllerParameterType.Bool))
-        {
-            playerAnimator.SetBool(runningParameter, running);
-        }
-    }
-
-    private void SetTriggerIfExists(string triggerName)
-    {
-        if (HasParameter(
-                triggerName,
-                AnimatorControllerParameterType.Trigger))
-        {
-            playerAnimator.SetTrigger(triggerName);
-        }
-    }
-
-    private bool HasParameter(
-        string name,
-        AnimatorControllerParameterType type)
-    {
-        if (playerAnimator == null ||
-            string.IsNullOrEmpty(name))
-            return false;
-
-        foreach (AnimatorControllerParameter parameter
-                 in playerAnimator.parameters)
-        {
-            if (parameter.name == name &&
-                parameter.type == type)
-                return true;
-        }
-
-        return false;
-    }
-
-    // =====================================
-    // CARD VALIDATION
+    // CARD CLASSIFICATION
     // =====================================
 
     private bool IsAttackCard(CardData card)
@@ -550,9 +377,18 @@ public class CardManager : MonoBehaviour
 
         int type = (int)card.effectType;
 
-        // Damage, Poison, MultiHit.
-        return type == 0 || type == 3 || type == 5;
+        // 0 = Damage
+        // 3 = Poison
+        // 5 = MultiHit
+
+        return type == 0 ||
+               type == 3 ||
+               type == 5;
     }
+
+    // =====================================
+    // ENEMY VALIDATION
+    // =====================================
 
     private bool HasLivingEnemy()
     {
@@ -564,6 +400,10 @@ public class CardManager : MonoBehaviour
 
         return enemy != null && !enemy.IsDead;
     }
+
+    // =====================================
+    // CARD VALIDATION
+    // =====================================
 
     private bool IsCardValid(
         CardData card,
@@ -604,12 +444,17 @@ public class CardManager : MonoBehaviour
             dissolve.ResetDissolve();
 
         ResetSelection();
+
         isUsingCard = false;
 
         Debug.Log(
-            "CardManager: Đã hủy sử dụng Card!"
+            "[CARD MANAGER] Đã hủy sử dụng Card!"
         );
     }
+
+    // =====================================
+    // SELECTION
+    // =====================================
 
     private void ResetSelection()
     {

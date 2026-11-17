@@ -1,0 +1,536 @@
+fileFormatVersion: 2
+guid: 8ce5786c453ef0a43b2412f8a5860fa4
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 653
+        width: 287
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 587d8c9f417de6b4891a96bd8c3f9b64
+      internalID: -357647619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 653
+        width: 287
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 724929a15223af348bcbfb82b1eb12f3
+      internalID: 1709883517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 654
+        width: 287
+        height: 171
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c73496c96f4e24459a3b65cac1b86a4
+      internalID: -1984569392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 653
+        width: 225
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eaf64bf5a95f2e439fea49a56e404dc
+      internalID: -142959067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1185
+        y: 662
+        width: 214
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a2a4727f059fb7479b00dc67a09832f
+      internalID: 428071931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1442
+        y: 665
+        width: 355
+        height: 171
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d46e454b2d765c48859fd8a09ee281a
+      internalID: -1568107772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 471
+        width: 302
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7119ee48b33821643b34e0d82f066a49
+      internalID: -1881865739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 469
+        width: 309
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6caff7e27bbb914d881e0336bef05bb
+      internalID: -18956685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 287
+        width: 295
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9323dd87d2b0b64e8d096e6f1672438
+      internalID: 456726760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 287
+        width: 325
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46ee3c4a23970574cacacc62200f86ce
+      internalID: -1333711784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 287
+        width: 300
+        height: 134
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5af220354af5a2488b2fef17b51a3d4
+      internalID: -17531948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 16
+        width: 311
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d740b06f4cb3e7418f0340d92ecb772
+      internalID: 765147295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 18
+        width: 283
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29b8c9ebdc0e4bc409f83e5574ceaae3
+      internalID: 317479336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 18
+        width: 283
+        height: 179
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9089941f84d8b343a060a5a1c01bf8b
+      internalID: 1799550995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 471
+        width: 302
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9134e4ff4f2a01941b34f8fb7e2f04c1
+      internalID: 1999703099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 471
+        width: 302
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed84601dc322ebf45b7003f9da4d3c15
+      internalID: -46443018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 479
+        width: 302
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97d8fe33d55506349be063210ac4a693
+      internalID: 431605389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Transparent Dire Wolf Sprite Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 461
+        width: 299
+        height: 157
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeeeb8d13a4d6a3478b3255869d076cd
+      internalID: 901233192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0c3a250bc42017a468d8645dcd2d1cc1
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Transparent Dire Wolf Sprite Sheet_0: 476800713
+      Transparent Dire Wolf Sprite Sheet_1: -357647619
+      Transparent Dire Wolf Sprite Sheet_10: -18956685
+      Transparent Dire Wolf Sprite Sheet_11: 456726760
+      Transparent Dire Wolf Sprite Sheet_12: -1333711784
+      Transparent Dire Wolf Sprite Sheet_13: -17531948
+      Transparent Dire Wolf Sprite Sheet_14: 431605389
+      Transparent Dire Wolf Sprite Sheet_15: 765147295
+      Transparent Dire Wolf Sprite Sheet_16: -1854546439
+      Transparent Dire Wolf Sprite Sheet_17: -2114216505
+      Transparent Dire Wolf Sprite Sheet_18: 317479336
+      Transparent Dire Wolf Sprite Sheet_19: 1799550995
+      Transparent Dire Wolf Sprite Sheet_2: 1709883517
+      Transparent Dire Wolf Sprite Sheet_20: 901233192
+      Transparent Dire Wolf Sprite Sheet_3: -1984569392
+      Transparent Dire Wolf Sprite Sheet_4: -142959067
+      Transparent Dire Wolf Sprite Sheet_5: 428071931
+      Transparent Dire Wolf Sprite Sheet_6: -1568107772
+      Transparent Dire Wolf Sprite Sheet_7: 1999703099
+      Transparent Dire Wolf Sprite Sheet_8: -46443018
+      Transparent Dire Wolf Sprite Sheet_9: -1881865739
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
