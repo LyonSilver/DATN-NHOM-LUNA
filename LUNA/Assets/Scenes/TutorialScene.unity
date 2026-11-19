@@ -9524,6 +9524,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardSkillVFX
   player: {fileID: 3181238564660939870}
   enemySpawner: {fileID: 1627267079}
+  playerVFXAnchor: {fileID: 1986513407}
+  enemyVFXAnchor: {fileID: 0}
   cardEffects:
   - card: {fileID: 11400000, guid: c624bca4ce2c0a940ad48f2cb3dfcf34, type: 2}
     vfxPrefab: {fileID: 5915784643951298052, guid: e7f92ba49adac23429f9c61306aa66ac, type: 3}
@@ -9532,20 +9534,38 @@ MonoBehaviour:
     lifetime: 1
     repeatCount: 1
     repeatDelay: 0
-  - card: {fileID: 11400000, guid: 7e954c6bfa2ba1a41a2125a46326f57c, type: 2}
-    vfxPrefab: {fileID: 6797414937601817783, guid: 783f54fb23faace448cc129ea94268d5, type: 3}
+    followTarget: 1
+    particlesFollowTarget: 1
+    scaleMultiplier: {x: 1, y: 1, z: 1}
+    overrideSorting: 0
+    sortingLayerName: Default
+    sortingOrder: 10
+  - card: {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
+    vfxPrefab: {fileID: 7147607975349699087, guid: 2b7250ab8b077df48b67f50067f16137, type: 3}
     target: 0
     offset: {x: 0, y: -0.5, z: 0}
     lifetime: 1
     repeatCount: 1
     repeatDelay: 0
-  - card: {fileID: 11400000, guid: 416c9773eb0015549b302c044d07b07b, type: 2}
-    vfxPrefab: {fileID: 6210940545064433372, guid: 7a9e0bcd6c3592a4c81a0f8140ebbb10, type: 3}
+    followTarget: 1
+    particlesFollowTarget: 1
+    scaleMultiplier: {x: 1, y: 1, z: 1}
+    overrideSorting: 0
+    sortingLayerName: Default
+    sortingOrder: 10
+  - card: {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
+    vfxPrefab: {fileID: 75980824688728569, guid: 26f0bc2a0ebc436458b67daf01339939, type: 3}
     target: 0
     offset: {x: 0, y: -0.5, z: 0}
     lifetime: 1
     repeatCount: 1
     repeatDelay: 0
+    followTarget: 1
+    particlesFollowTarget: 1
+    scaleMultiplier: {x: 1.5, y: 1.5, z: 1.5}
+    overrideSorting: 1
+    sortingLayerName: char
+    sortingOrder: 50
 --- !u!4 &1973355015
 Transform:
   m_ObjectHideFlags: 0
