@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1793493418429617649}
   - component: {fileID: 7259225385948756493}
   - component: {fileID: 1693005452982293896}
-  - component: {fileID: 8306732457106719636}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -154,18 +153,3 @@ MonoBehaviour:
   cardEffectManager: {fileID: 0}
   skills: []
   skillChance: 50
---- !u!114 &8306732457106719636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4116529009486008366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f575aa2f6e5844949934ddcee787841f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDashMovement
-  dashDuration: 0.25
-  returnDuration: 0.3
-  stoppingDistance: 1.5
