@@ -203,8 +203,13 @@ public class CardEffectManager : MonoBehaviour
 
     public void ExecuteCardEffect(CardData card)
     {
+        Debug.Log($"[CARD VFX DEBUG] ExecuteCardEffect ENTER | Card={(card != null ? card.cardName : "NULL")} | ID={(card != null ? card.cardID : "NULL")} | PlayerDefeated={playerDefeated}", this);
+
         if (card == null || playerDefeated)
+        {
+            Debug.LogWarning("[CARD VFX DEBUG] SKIPPED: Card NULL hoặc Player đã thua.", this);
             return;
+        }
 
         int effect = (int)card.effectType;
 
@@ -214,7 +219,10 @@ public class CardEffectManager : MonoBehaviour
             effect == MULTI_HIT;
 
         if (isAttackCard && !CanDamageEnemy())
+        {
+            Debug.LogWarning($"[CARD VFX DEBUG] SKIPPED: Enemy không hợp lệ | EnemyDefeated={enemyDefeated} | EnemyNull={currentEnemyHealth == null} | EnemyDead={(currentEnemyHealth != null && currentEnemyHealth.IsDead)}", this);
             return;
+        }
 
         // Lấy Timing cho lần sử dụng Card này.
         TimingGrade timing1 = firstTiming;
@@ -234,8 +242,11 @@ public class CardEffectManager : MonoBehaviour
         // Spawn VFX trước khi gây Damage.
         // Tránh mất Enemy Transform nếu Enemy
         // chết ngay sau khi nhận đòn.
+        Debug.Log($"[CARD VFX DEBUG] Before PlayCardVFX | Card={card.cardName} | ID={card.cardID} | VFXManager={(cardSkillVFX != null ? "OK" : "NULL")}", this);
         if (cardSkillVFX != null)
             cardSkillVFX.PlayCardVFX(card);
+        else
+            Debug.LogWarning("[CARD VFX DEBUG] CardSkillVFX chưa được gán trong CardEffectManager Inspector!", this);
 
         // =================================
         // APPLY CARD EFFECT

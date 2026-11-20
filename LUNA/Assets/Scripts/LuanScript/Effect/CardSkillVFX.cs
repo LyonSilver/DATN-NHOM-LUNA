@@ -14,6 +14,9 @@ public class CardSkillVFX : MonoBehaviour
         public CardData card;
         [Header("VFX Prefab")]
         public GameObject vfxPrefab;
+        [Range(0f, 100f)] public float chance = 100f;
+        [Min(0f)] public float startDelay = 0f;
+        public bool flipWithTarget = false;
         [Header("Spawn Target")]
         public EffectTarget target;
         [Header("Position")]
@@ -46,37 +49,30 @@ public class CardSkillVFX : MonoBehaviour
     public void PlayCardVFX(CardData card)
     {
         if (card == null) return;
-        CardVFXData effect = FindEffect(card);
-        if (effect == null)
-        {
-            Debug.LogWarning("CardSkillVFX: Chưa cấu hình VFX cho " + card.cardName, this);
-            return;
-        }
-        if (effect.vfxPrefab == null)
-        {
-            Debug.LogWarning("CardSkillVFX: Chưa gán VFX Prefab cho " + card.cardName, this);
-            return;
-        }
-        Transform target = GetTarget(effect.target);
-        if (target == null)
-        {
-            Debug.LogWarning("CardSkillVFX: Không tìm thấy mục tiêu VFX cho " + card.cardName, this);
-            return;
-        }
-        StartCoroutine(PlayEffectSequence(effect, target));
-    }
-
-    private CardVFXData FindEffect(CardData card)
-    {
-        if (cardEffects == null) return null;
+        bool found = false;
+        if (cardEffects == null) return;
         foreach (CardVFXData effect in cardEffects)
         {
             if (effect == null || effect.card == null) continue;
-            if (effect.card == card) return effect;
-            if (!string.IsNullOrEmpty(card.cardID) && effect.card.cardID == card.cardID)
-                return effect;
+            if (effect.card != card &&
+                (string.IsNullOrEmpty(card.cardID) || effect.card.cardID != card.cardID))
+                continue;
+            found = true;
+            if (effect.vfxPrefab == null)
+            {
+                Debug.LogWarning("CardSkillVFX: Missing prefab for " + card.cardName, this);
+                continue;
+            }
+            Transform target = GetTarget(effect.target);
+            if (target == null)
+            {
+                Debug.LogWarning("CardSkillVFX: Missing target for " + card.cardName, this);
+                continue;
+            }
+            if (UnityEngine.Random.value * 100f <= Mathf.Clamp(effect.chance, 0f, 100f))
+                StartCoroutine(PlayEffectSequence(effect, target));
         }
-        return null;
+        if (!found) Debug.LogWarning("CardSkillVFX: No VFX mapping for " + card.cardName, this);
     }
 
     private Transform GetTarget(EffectTarget target)
@@ -93,6 +89,7 @@ public class CardSkillVFX : MonoBehaviour
 
     private IEnumerator PlayEffectSequence(CardVFXData effect, Transform target)
     {
+        if (effect.startDelay > 0f) yield return new WaitForSeconds(effect.startDelay);
         int count = Mathf.Max(1, effect.repeatCount);
         for (int i = 0; i < count; i++)
         {
@@ -122,6 +119,16 @@ public class CardSkillVFX : MonoBehaviour
             instance.transform.localScale = Vector3.Scale(effect.vfxPrefab.transform.localScale, effect.scaleMultiplier);
         }
 
+        if (effect.flipWithTarget)
+        {
+            SpriteRenderer targetSprite = target.GetComponentInChildren<SpriteRenderer>();
+            if (targetSprite != null && targetSprite.flipX)
+            {
+                Vector3 local = instance.transform.localScale;
+                local.x *= -1f;
+                instance.transform.localScale = local;
+            }
+        }
         instance.name = effect.vfxPrefab.name + "_Runtime";
         instance.SetActive(true);
 
