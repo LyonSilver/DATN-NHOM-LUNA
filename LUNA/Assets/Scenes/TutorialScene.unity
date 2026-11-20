@@ -4669,16 +4669,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6776426483649785816, guid: e7d85221def78274a819b605c2c1a240, type: 3}
   m_PrefabInstance: {fileID: 1970391303118226088}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1112160900 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 662709844747905869, guid: e7d85221def78274a819b605c2c1a240, type: 3}
-  m_PrefabInstance: {fileID: 1970391303118226088}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1112160902 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 477288655262420281, guid: e7d85221def78274a819b605c2c1a240, type: 3}
-  m_PrefabInstance: {fileID: 1970391303118226088}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1112160903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4691,14 +4681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b9b0bad118bd14eb42263ad23128e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoCombatVFXSyncPRO.AutoCombatVFXSync
-  animator: {fileID: 1112160900}
-  anchor: {fileID: 1112160902}
-  facingRoot: {fileID: 1112160902}
-  flipWithFacing: 1
-  cues:
-  - {clip: {fileID: 7400000, guid: 099481194a62b074697f0cd8a3ea4a0d, type: 2}, normalizedMoment: 0.5, prefab: {fileID: 4597154924099188772, guid: 481caf0e7343d764dba79817acde3862, type: 3}, localOffset: {x: 0.6, y: 0, z: 0}, lifetime: 1}
-  - {clip: {fileID: 7400000, guid: 62a2a8ed12eb3c140b2772250a3c0978, type: 2}, normalizedMoment: 0.5, prefab: {fileID: 4597154924099188772, guid: 481caf0e7343d764dba79817acde3862, type: 3}, localOffset: {x: 0.6, y: 0, z: 0}, lifetime: 1}
-  - {clip: {fileID: 7400000, guid: 20c1c82456c7a6647bf37a254cce4407, type: 2}, normalizedMoment: 0.5, prefab: {fileID: 4597154924099188772, guid: 481caf0e7343d764dba79817acde3862, type: 3}, localOffset: {x: 0.6, y: 0, z: 0}, lifetime: 1}
 --- !u!1 &1118799010
 GameObject:
   m_ObjectHideFlags: 0
@@ -8449,14 +8431,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
   masterDeck:
-  - {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
+  - {fileID: 11400000, guid: c4667d9a62d90be4bae9bf9f29001edf, type: 2}
   - {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
   - {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
   - {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
-  - {fileID: 11400000, guid: d4db3cd6807e6ea4fa9d6f9538a1afd4, type: 2}
-  - {fileID: 11400000, guid: 089ca909d7be96c44bf68c97d245cdb5, type: 2}
-  - {fileID: 11400000, guid: bc45ba74374bfbf438824a88660a3142, type: 2}
-  - {fileID: 11400000, guid: 2997a4689915a57448b5fd7add001b66, type: 2}
   handLimit: 4
   drawPile:
   - {fileID: 11400000, guid: 0c6ca0636dce3d443b7efaaf95c90a81, type: 2}
@@ -9458,31 +9436,17 @@ MonoBehaviour:
   player: {fileID: 1986513407}
   enemySpawner: {fileID: 1627267079}
   cardEffects:
-  - card: {fileID: 11400000, guid: c624bca4ce2c0a940ad48f2cb3dfcf34, type: 2}
-    vfxPrefab: {fileID: 5915784643951298052, guid: e7f92ba49adac23429f9c61306aa66ac, type: 3}
-    target: 1
+  - card: {fileID: 11400000, guid: c4667d9a62d90be4bae9bf9f29001edf, type: 2}
+    vfxPrefab: {fileID: 75980824688728569, guid: 26f0bc2a0ebc436458b67daf01339939, type: 3}
+    target: 0
     offset: {x: 0, y: 0, z: 0}
     lifetime: 1
     repeatCount: 1
     repeatDelay: 0
-  - card: {fileID: 11400000, guid: 7e954c6bfa2ba1a41a2125a46326f57c, type: 2}
-    vfxPrefab: {fileID: 6797414937601817783, guid: 783f54fb23faace448cc129ea94268d5, type: 3}
+  - card: {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
+    vfxPrefab: {fileID: 6573353546844586021, guid: a49a2971bae0614468bf1c96983a4fcd, type: 3}
     target: 0
-    offset: {x: 0, y: -0.5, z: 0}
-    lifetime: 1
-    repeatCount: 1
-    repeatDelay: 0
-  - card: {fileID: 11400000, guid: 416c9773eb0015549b302c044d07b07b, type: 2}
-    vfxPrefab: {fileID: 6210940545064433372, guid: 7a9e0bcd6c3592a4c81a0f8140ebbb10, type: 3}
-    target: 0
-    offset: {x: 0, y: -0.5, z: 0}
-    lifetime: 1
-    repeatCount: 1
-    repeatDelay: 0
-  - card: {fileID: 11400000, guid: 416c9773eb0015549b302c044d07b07b, type: 2}
-    vfxPrefab: {fileID: 260131359082720835, guid: 6d98e45caa3b512479a841b6855118c4, type: 3}
-    target: 1
-    offset: {x: 0, y: -0.5, z: 0}
+    offset: {x: 0, y: 0, z: 0}
     lifetime: 1
     repeatCount: 1
     repeatDelay: 0
@@ -9638,7 +9602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1986513407
 Transform:
   m_ObjectHideFlags: 0
@@ -9763,12 +9727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b9b0bad118bd14eb42263ad23128e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoCombatVFXSyncPRO.AutoCombatVFXSync
-  animator: {fileID: 1986513409}
-  anchor: {fileID: 1986513407}
-  facingRoot: {fileID: 1986513407}
-  flipWithFacing: 1
-  cues:
-  - {clip: {fileID: 7400000, guid: 97ce0098dd90ec540bf645103f016784, type: 2}, normalizedMoment: 0.5, prefab: {fileID: 4597154924099188772, guid: 481caf0e7343d764dba79817acde3862, type: 3}, localOffset: {x: 0.6, y: 0, z: 0}, lifetime: 1}
 --- !u!1 &2028379807
 GameObject:
   m_ObjectHideFlags: 0
@@ -10311,7 +10269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6776426483649785816, guid: e7d85221def78274a819b605c2c1a240, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7322940329175976648, guid: e7d85221def78274a819b605c2c1a240, type: 3}
       propertyPath: m_IsActive
