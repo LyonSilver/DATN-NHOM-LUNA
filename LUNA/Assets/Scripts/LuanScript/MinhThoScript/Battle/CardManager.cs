@@ -11,6 +11,9 @@ public class CardManager : MonoBehaviour
     public CardEffectManager cardEffectManager;
     public BattleStateMachine battleStateMachine;
 
+    [Header("Rage Manager")]
+    [SerializeField] private RageManager rageManager;
+
     [Header("Turn Controller")]
     [SerializeField]
     private OneCardTurnController oneCardTurnController;
@@ -70,7 +73,10 @@ public class CardManager : MonoBehaviour
 
     public void OnCardClicked(CardInputHandler clickedCard)
     {
-        Debug.Log("[CARD MANAGER] OnCardClicked được gọi!", this);
+        Debug.Log(
+            "[CARD MANAGER] OnCardClicked được gọi!",
+            this
+        );
 
         if (clickedCard == null || !CanUseCard())
             return;
@@ -88,7 +94,8 @@ public class CardManager : MonoBehaviour
         CardData card = cardUI.cardData;
 
         Debug.Log(
-            "[CARD MANAGER] Card được chọn: " + card.cardName
+            "[CARD MANAGER] Card được chọn: " +
+            card.cardName
         );
 
         // Kiểm tra Enemy nếu là Attack Card.
@@ -100,15 +107,7 @@ public class CardManager : MonoBehaviour
             return;
         }
 
-        // Kiểm tra Mana.
-        if (!turnManager.CanAfford(card))
-        {
-            Debug.Log(
-                "CardManager: Không đủ Mana để dùng " +
-                card.cardName
-            );
-            return;
-        }
+        // Không kiểm tra Mana nữa.
 
         // Tìm CardDissolveUI.
         CardDissolveUI dissolve =
@@ -150,14 +149,6 @@ public class CardManager : MonoBehaviour
     private bool CanUseCard()
     {
         bool missingReference = false;
-
-        if (turnManager == null)
-        {
-            Debug.LogError(
-                "CardManager: Thiếu TurnManager!"
-            );
-            missingReference = true;
-        }
 
         if (handManager == null)
         {
@@ -207,6 +198,14 @@ public class CardManager : MonoBehaviour
             missingReference = true;
         }
 
+        if (rageManager == null)
+        {
+            Debug.LogError(
+                "CardManager: Thiếu RageManager!"
+            );
+            missingReference = true;
+        }
+
         if (missingReference)
             return false;
 
@@ -243,28 +242,19 @@ public class CardManager : MonoBehaviour
             yield return new WaitForSeconds(useDelay);
 
         if (!IsCardValid(card, cardUI) ||
-            !oneCardTurnController.CanUseCard() ||
-            !turnManager.CanAfford(card))
+            !oneCardTurnController.CanUseCard())
         {
             CancelCardUse(dissolve);
             yield break;
         }
 
         // =====================================
-        // 2. SPEND ENERGY
+        // 2. CARD DISSOLVE
         // =====================================
 
-        if (!turnManager.SpendEnergy(card.cost))
-        {
-            CancelCardUse(dissolve);
-            yield break;
-        }
-
-        // =====================================
-        // 3. CARD DISSOLVE
-        // =====================================
-
-        Debug.Log("[CARD MANAGER] CARD DISSOLVE: BẮT ĐẦU");
+        Debug.Log(
+            "[CARD MANAGER] CARD DISSOLVE: BẮT ĐẦU"
+        );
 
         yield return dissolve.PlayDissolve();
 
@@ -275,25 +265,23 @@ public class CardManager : MonoBehaviour
 
         if (!dissolve.LastPlaySucceeded)
         {
-            RefundEnergy(card);
             CancelCardUse(dissolve);
             yield break;
         }
 
         // =====================================
-        // 4. VALIDATE AGAIN
+        // 3. VALIDATE AGAIN
         // =====================================
 
         if (!IsCardValid(card, cardUI) ||
             !oneCardTurnController.CanUseCard())
         {
-            RefundEnergy(card);
             CancelCardUse(dissolve);
             yield break;
         }
 
         // =====================================
-        // 5. START CINEMATIC
+        // 4. START CINEMATIC
         // =====================================
 
         Debug.Log(
@@ -309,13 +297,11 @@ public class CardManager : MonoBehaviour
                 "[CARD MANAGER] Không thể khởi chạy Cinematic!"
             );
 
-            RefundEnergy(card);
             CancelCardUse(dissolve);
             yield break;
         }
 
-        // Chỉ đánh dấu đã sử dụng Card
-        // sau khi Cinematic chấp nhận chạy thành công.
+        // Đánh dấu Card đã được sử dụng.
         oneCardTurnController.NotifyCardStarted();
 
         Debug.Log(
@@ -323,7 +309,7 @@ public class CardManager : MonoBehaviour
         );
 
         // =====================================
-        // 6. WAIT FOR CINEMATIC
+        // 5. WAIT FOR CINEMATIC
         // =====================================
 
         while (playerCardCinematic != null &&
@@ -337,12 +323,29 @@ public class CardManager : MonoBehaviour
         );
 
         // =====================================
-        // 7. REMOVE CARD FROM HAND
+        // 6. REMOVE CARD FROM HAND
         // =====================================
 
         ResetSelection();
 
         deckManager.PlayCard(card);
+
+        // =====================================
+        // 7. ADD RAGE
+        // =====================================
+
+        // Chỉ cộng Rage khi Card đã sử dụng
+        // và Cinematic hoàn tất.
+        if (rageManager != null)
+        {
+            rageManager.OnCardUsed();
+
+            Debug.Log(
+                "[CARD MANAGER] Rage hiện tại: " +
+                rageManager.CurrentRage + "/" +
+                rageManager.MaxRage
+            );
+        }
 
         // =====================================
         // 8. FLUSH PENDING DRAW
@@ -426,16 +429,8 @@ public class CardManager : MonoBehaviour
     }
 
     // =====================================
-    // REFUND / CANCEL
+    // CANCEL
     // =====================================
-
-    private void RefundEnergy(CardData card)
-    {
-        if (turnManager == null || card == null)
-            return;
-
-        turnManager.RecoverEnergy(card.cost);
-    }
 
     private void CancelCardUse(
         CardDissolveUI dissolve = null)

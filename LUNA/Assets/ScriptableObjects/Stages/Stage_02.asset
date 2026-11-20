@@ -17,7 +17,8 @@ MonoBehaviour:
   order: 2
   requiredPlayerLevel: 2
   isBossStage: 0
-  sceneToLoad: Battle
+  sceneToLoad: LV2
+  enemyIndices: 0000000001000000
   rewardCoin: 150
   rewardExp: 250
   description: 

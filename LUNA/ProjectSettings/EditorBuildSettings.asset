@@ -42,7 +42,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ChaosCardSelectHero.unity
     guid: 13890eb8e4da8c74aa178e8d50ec4cd0
   - enabled: 1
-    path: Assets/Scenes/TutorialScene.unity
+    path: Assets/Scenes/LV1.unity
     guid: 01b6125cbee747f4cacf0ed056924e38
   - enabled: 1
     path: Assets/Scenes/SettingsScene.unity
@@ -53,6 +53,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CutsceneStory.unity
     guid: 8b8bdea753cca874a92c30a59456ba67
+  - enabled: 1
+    path: Assets/Scenes/LV2.unity
+    guid: 453eaf82e23dfa2429e01cb10ce8265e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
