@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,171 +6,238 @@ using UnityEngine;
 
 public class CardSkillVFX : MonoBehaviour
 {
-    public enum EffectTarget { Player, Enemy }
+    public enum EffectTarget
+    {
+        Player,
+        Enemy
+    }
 
     [Serializable]
     public class CardVFXData
     {
         [Header("Card")]
         public CardData card;
+
         [Header("VFX Prefab")]
         public GameObject vfxPrefab;
-        [Range(0f, 100f)] public float chance = 100f;
-        [Min(0f)] public float startDelay = 0f;
-        public bool flipWithTarget = false;
+
         [Header("Spawn Target")]
         public EffectTarget target;
+
         [Header("Position")]
         public Vector3 offset = new Vector3(0f, 1f, 0f);
-        [Header("Duration")]
-        [Min(0.1f)] public float lifetime = 1.5f;
-        [Header("Repeat - Double Strike")]
-        [Min(1)] public int repeatCount = 1;
-        [Min(0f)] public float repeatDelay = 0.2f;
 
-        [Header("Follow Target")]
-        public bool followTarget = true;
-        public bool particlesFollowTarget = true;
-        [Header("Visual")]
-        public Vector3 scaleMultiplier = Vector3.one;
-        public bool overrideSorting = false;
-        public string sortingLayerName = "Default";
-        public int sortingOrder = 10;
+        [Header("Duration")]
+        [Min(0.1f)]
+        public float lifetime = 1.5f;
+
+        [Header("Repeat - Double Strike")]
+        [Min(1)]
+        public int repeatCount = 1;
+
+        [Min(0f)]
+        public float repeatDelay = 0.2f;
     }
 
     [Header("References")]
     [SerializeField] private Transform player;
     [SerializeField] private EnemySpawner enemySpawner;
-    [Header("Optional VFX Anchors")]
-    [SerializeField] private Transform playerVFXAnchor;
-    [SerializeField] private Transform enemyVFXAnchor;
+
     [Header("Card Effects")]
-    [SerializeField] private List<CardVFXData> cardEffects = new List<CardVFXData>();
+    [SerializeField]
+    private List<CardVFXData> cardEffects =
+        new List<CardVFXData>();
+
+    // =====================================
+    // PLAY CARD EFFECT
+    // =====================================
 
     public void PlayCardVFX(CardData card)
     {
-        if (card == null) return;
-        bool found = false;
-        if (cardEffects == null) return;
+        if (card == null)
+            return;
+
+        CardVFXData effect = FindEffect(card);
+
+        if (effect == null)
+        {
+            Debug.LogWarning(
+                "CardSkillVFX: Chưa cấu hình VFX cho " +
+                card.cardName
+            );
+            return;
+        }
+
+        if (effect.vfxPrefab == null)
+        {
+            Debug.LogWarning(
+                "CardSkillVFX: Chưa gán VFX Prefab cho " +
+                card.cardName
+            );
+            return;
+        }
+
+        Transform target = GetTarget(effect.target);
+
+        if (target == null)
+        {
+            Debug.LogWarning(
+                "CardSkillVFX: Không tìm thấy mục tiêu VFX!"
+            );
+            return;
+        }
+
+        // Ghi lại vị trí ngay khi Card tác động.
+        Vector3 spawnPosition =
+            target.position + effect.offset;
+
+        StartCoroutine(
+            PlayEffectSequence(effect, spawnPosition)
+        );
+    }
+
+    // =====================================
+    // FIND CARD VFX
+    // =====================================
+
+    private CardVFXData FindEffect(CardData card)
+    {
         foreach (CardVFXData effect in cardEffects)
         {
-            if (effect == null || effect.card == null) continue;
-            if (effect.card != card &&
-                (string.IsNullOrEmpty(card.cardID) || effect.card.cardID != card.cardID))
+            if (effect == null || effect.card == null)
                 continue;
-            found = true;
-            if (effect.vfxPrefab == null)
+
+            // So sánh ScriptableObject CardData.
+            if (effect.card == card)
+                return effect;
+
+            // Hỗ trợ trường hợp CardData được clone.
+            if (!string.IsNullOrEmpty(card.cardID) &&
+                effect.card.cardID == card.cardID)
             {
-                Debug.LogWarning("CardSkillVFX: Missing prefab for " + card.cardName, this);
-                continue;
+                return effect;
             }
-            Transform target = GetTarget(effect.target);
-            if (target == null)
-            {
-                Debug.LogWarning("CardSkillVFX: Missing target for " + card.cardName, this);
-                continue;
-            }
-            if (UnityEngine.Random.value * 100f <= Mathf.Clamp(effect.chance, 0f, 100f))
-                StartCoroutine(PlayEffectSequence(effect, target));
         }
-        if (!found) Debug.LogWarning("CardSkillVFX: No VFX mapping for " + card.cardName, this);
+
+        return null;
     }
+
+    // =====================================
+    // GET PLAYER / ENEMY TARGET
+    // =====================================
 
     private Transform GetTarget(EffectTarget target)
     {
         if (target == EffectTarget.Player)
-            return playerVFXAnchor != null ? playerVFXAnchor : player;
-        if (enemySpawner == null) return null;
-        EnemyHealth enemy = enemySpawner.GetCurrentEnemyHealth();
-        if (enemy == null || enemy.IsDead) return null;
-        if (enemyVFXAnchor != null && enemyVFXAnchor.IsChildOf(enemy.transform))
-            return enemyVFXAnchor;
+        {
+            return player;
+        }
+
+        if (enemySpawner == null)
+            return null;
+
+        EnemyHealth enemy =
+            enemySpawner.GetCurrentEnemyHealth();
+
+        if (enemy == null || enemy.IsDead)
+            return null;
+
         return enemy.transform;
     }
 
-    private IEnumerator PlayEffectSequence(CardVFXData effect, Transform target)
+    // =====================================
+    // PLAY EFFECT SEQUENCE
+    // =====================================
+
+    private IEnumerator PlayEffectSequence(
+        CardVFXData effect,
+        Vector3 spawnPosition)
     {
-        if (effect.startDelay > 0f) yield return new WaitForSeconds(effect.startDelay);
-        int count = Mathf.Max(1, effect.repeatCount);
+        int count = Mathf.Max(
+            1,
+            effect.repeatCount
+        );
+
         for (int i = 0; i < count; i++)
         {
-            if (target == null) yield break;
-            SpawnVFX(effect, target);
-            if (i < count - 1 && effect.repeatDelay > 0f)
-                yield return new WaitForSeconds(effect.repeatDelay);
+            SpawnVFX(effect, spawnPosition);
+
+            if (i < count - 1 &&
+                effect.repeatDelay > 0f)
+            {
+                yield return new WaitForSeconds(
+                    effect.repeatDelay
+                );
+            }
         }
     }
 
-    private void SpawnVFX(CardVFXData effect, Transform target)
-    {
-        if (effect.vfxPrefab == null || target == null) return;
-        GameObject instance;
-        if (effect.followTarget)
-        {
-            instance = Instantiate(effect.vfxPrefab, target);
-            instance.transform.localPosition = effect.offset;
-            instance.transform.localRotation = effect.vfxPrefab.transform.localRotation;
-            instance.transform.localScale = Vector3.Scale(effect.vfxPrefab.transform.localScale, effect.scaleMultiplier);
-        }
-        else
-        {
-            instance = Instantiate(effect.vfxPrefab,
-                target.position + effect.offset,
-                effect.vfxPrefab.transform.rotation);
-            instance.transform.localScale = Vector3.Scale(effect.vfxPrefab.transform.localScale, effect.scaleMultiplier);
-        }
+    // =====================================
+    // SPAWN VFX
+    // =====================================
 
-        if (effect.flipWithTarget)
-        {
-            SpriteRenderer targetSprite = target.GetComponentInChildren<SpriteRenderer>();
-            if (targetSprite != null && targetSprite.flipX)
-            {
-                Vector3 local = instance.transform.localScale;
-                local.x *= -1f;
-                instance.transform.localScale = local;
-            }
-        }
-        instance.name = effect.vfxPrefab.name + "_Runtime";
+    private void SpawnVFX(
+        CardVFXData effect,
+        Vector3 spawnPosition)
+    {
+        GameObject instance = Instantiate(
+            effect.vfxPrefab,
+            spawnPosition,
+            effect.vfxPrefab.transform.rotation
+        );
+
+        instance.name =
+            effect.vfxPrefab.name + "_Runtime";
+
         instance.SetActive(true);
 
-        ParticleSystem[] particles = instance.GetComponentsInChildren<ParticleSystem>(true);
+        // Nếu là ParticleSystem, phát hiệu ứng.
+        ParticleSystem[] particles =
+            instance.GetComponentsInChildren<ParticleSystem>(
+                true
+            );
+
         foreach (ParticleSystem particle in particles)
         {
-            if (particle == null) continue;
+            if (particle == null)
+                continue;
+
             particle.gameObject.SetActive(true);
-            if (effect.followTarget && effect.particlesFollowTarget)
-            {
-                var main = particle.main;
-                main.simulationSpace = ParticleSystemSimulationSpace.Local;
-            }
-            particle.Play(true);
+            particle.Play();
         }
 
-        if (effect.overrideSorting)
-        {
-            foreach (ParticleSystemRenderer renderer in instance.GetComponentsInChildren<ParticleSystemRenderer>(true))
-            {
-                renderer.sortingLayerName = effect.sortingLayerName;
-                renderer.sortingOrder = effect.sortingOrder;
-            }
-            foreach (SpriteRenderer renderer in instance.GetComponentsInChildren<SpriteRenderer>(true))
-            {
-                renderer.sortingLayerName = effect.sortingLayerName;
-                renderer.sortingOrder = effect.sortingOrder;
-            }
-        }
-        Destroy(instance, Mathf.Max(0.1f, effect.lifetime));
-        Debug.Log("CardSkillVFX: Spawn " + effect.vfxPrefab.name, this);
+        // Nếu là Prefab Animator / Sprite Animation,
+        // Animator sẽ tự chạy khi GameObject Active.
+
+        Destroy(
+            instance,
+            Mathf.Max(0.1f, effect.lifetime)
+        );
+
+        Debug.Log(
+            "CardSkillVFX: Spawn " +
+            effect.vfxPrefab.name
+        );
     }
+
+    // =====================================
+    // TEST IN UNITY
+    // =====================================
 
     [ContextMenu("Test First Card VFX")]
     private void TestFirstCardVFX()
     {
-        if (cardEffects == null || cardEffects.Count == 0 || cardEffects[0] == null || cardEffects[0].card == null)
+        if (cardEffects.Count == 0)
         {
-            Debug.LogWarning("CardSkillVFX: Chưa cấu hình Card đầu tiên!", this);
+            Debug.LogWarning(
+                "CardSkillVFX: Danh sách Card Effects đang trống!"
+            );
             return;
         }
-        PlayCardVFX(cardEffects[0].card);
+
+        if (cardEffects[0].card != null)
+        {
+            PlayCardVFX(cardEffects[0].card);
+        }
     }
 }
