@@ -996,6 +996,8 @@ MonoBehaviour:
   nalaAnimator: {fileID: 1447691764}
   ultimateTrigger: Ulti
   battleStateMachine: {fileID: 1355644609}
+  arrowRain: {fileID: 1379073899}
+  hideNalaAfterUltimate: 1
 --- !u!4 &183605017
 Transform:
   m_ObjectHideFlags: 0
@@ -1004,12 +1006,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183605015}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 797051195}
+  m_Father: {fileID: 559721219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206061690
 GameObject:
@@ -2374,6 +2376,40 @@ RectTransform:
   m_AnchoredPosition: {x: 457, y: 374}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &559721218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 559721219}
+  m_Layer: 0
+  m_Name: NPC
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &559721219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559721218}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2063403355}
+  - {fileID: 183605017}
+  - {fileID: 1379073900}
+  m_Father: {fileID: 797051195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &561411401
 GameObject:
   m_ObjectHideFlags: 0
@@ -3568,8 +3604,7 @@ Transform:
   - {fileID: 1643766956}
   - {fileID: 1396972448}
   - {fileID: 1096906028}
-  - {fileID: 2063403355}
-  - {fileID: 183605017}
+  - {fileID: 559721219}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &812132576
@@ -6125,7 +6160,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 16.64, y: 9.45}
+  m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6832,6 +6867,55 @@ MonoBehaviour:
   battleStateMachine: {fileID: 1355644609}
   endButton: {fileID: 610902573}
   cardManager: {fileID: 1156692241}
+--- !u!1 &1379073898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1379073900}
+  - component: {fileID: 1379073899}
+  m_Layer: 0
+  m_Name: ArrowRainManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1379073899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379073898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df132654890c8c44a8ed946d034fee8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NalaArrowRain
+  enemySpawner: {fileID: 1627267079}
+  hitCount: 8
+  damagePerHit: 5
+  hitInterval: 0.2
+  rainDelay: 0.5
+--- !u!4 &1379073900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379073898}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 559721219}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1385496571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8937,10 +9021,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
   - {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
   - {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
-  - {fileID: 11400000, guid: d4db3cd6807e6ea4fa9d6f9538a1afd4, type: 2}
-  - {fileID: 11400000, guid: 089ca909d7be96c44bf68c97d245cdb5, type: 2}
-  - {fileID: 11400000, guid: bc45ba74374bfbf438824a88660a3142, type: 2}
-  - {fileID: 11400000, guid: 2997a4689915a57448b5fd7add001b66, type: 2}
   handLimit: 4
   drawPile:
   - {fileID: 11400000, guid: 0c6ca0636dce3d443b7efaaf95c90a81, type: 2}
@@ -9942,25 +10022,32 @@ MonoBehaviour:
   player: {fileID: 3181238564660939870}
   enemySpawner: {fileID: 1627267079}
   cardEffects:
-  - card: {fileID: 11400000, guid: c624bca4ce2c0a940ad48f2cb3dfcf34, type: 2}
-    vfxPrefab: {fileID: 5915784643951298052, guid: e7f92ba49adac23429f9c61306aa66ac, type: 3}
+  - card: {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
+    vfxPrefab: {fileID: 6873065645289754794, guid: 57500e96cc8dcc24485dab3b1ab1f72e, type: 3}
     target: 1
     offset: {x: 0, y: 0, z: 0}
-    lifetime: 1
+    lifetime: 2
+    repeatCount: 0
+    repeatDelay: 0
+  - card: {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
+    vfxPrefab: {fileID: 6573353546844586021, guid: a49a2971bae0614468bf1c96983a4fcd, type: 3}
+    target: 1
+    offset: {x: 0, y: 0, z: 0}
+    lifetime: 2
     repeatCount: 1
     repeatDelay: 0
-  - card: {fileID: 11400000, guid: 7e954c6bfa2ba1a41a2125a46326f57c, type: 2}
-    vfxPrefab: {fileID: 6797414937601817783, guid: 783f54fb23faace448cc129ea94268d5, type: 3}
-    target: 0
-    offset: {x: 0, y: -0.5, z: 0}
-    lifetime: 1
+  - card: {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
+    vfxPrefab: {fileID: 6001568865225179585, guid: d909f158072e1fe41893fc95f71aeb98, type: 3}
+    target: 1
+    offset: {x: 0, y: 0, z: 0}
+    lifetime: 2
     repeatCount: 1
     repeatDelay: 0
-  - card: {fileID: 11400000, guid: 416c9773eb0015549b302c044d07b07b, type: 2}
-    vfxPrefab: {fileID: 6210940545064433372, guid: 7a9e0bcd6c3592a4c81a0f8140ebbb10, type: 3}
-    target: 0
-    offset: {x: 0, y: -0.5, z: 0}
-    lifetime: 1
+  - card: {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
+    vfxPrefab: {fileID: 75980824688728569, guid: 26f0bc2a0ebc436458b67daf01339939, type: 3}
+    target: 1
+    offset: {x: 0, y: 0, z: 0}
+    lifetime: 2
     repeatCount: 1
     repeatDelay: 0
 --- !u!4 &1973355015
@@ -10344,12 +10431,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063403353}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 797051195}
+  m_Father: {fileID: 559721219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2065975765
 GameObject:
@@ -10882,7 +10969,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.25, y: 1.36}
+  m_Size: {x: 1.25, y: 1.62}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

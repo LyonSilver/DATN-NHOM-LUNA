@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class NalaAnimationEvents : MonoBehaviour
 {
+    [Header("Ultimate Controller")]
     [SerializeField]
     private NalaUltimateController ultimateController;
 

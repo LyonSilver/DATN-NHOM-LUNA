@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,14 +18,34 @@ public class NalaUltimateController : MonoBehaviour
     [Header("Turn")]
     [SerializeField] private BattleStateMachine battleStateMachine;
 
+    [Header("Arrow Rain")]
+    [SerializeField] private NalaArrowRain arrowRain;
+
+    [Header("Settings")]
+    [SerializeField] private bool hideNalaAfterUltimate = true;
+
     private bool isUsingUltimate = false;
+    private bool animationFinished = false;
+    private bool effectTriggered = false;
+
+    public bool IsUsingUltimate => isUsingUltimate;
+
+    // =====================================
+    // START
+    // =====================================
 
     private void Start()
     {
-        // Nala ở hậu tuyến khi bắt đầu trận
+        // Nala ở hậu tuyến khi bắt đầu trận.
         if (nala != null)
+        {
             nala.SetActive(false);
+        }
     }
+
+    // =====================================
+    // UPDATE
+    // =====================================
 
     private void Update()
     {
@@ -37,53 +58,153 @@ public class NalaUltimateController : MonoBehaviour
         }
     }
 
+    // =====================================
+    // ACTIVATE ULTIMATE
+    // =====================================
+
     public void ActivateUltimate()
     {
         if (isUsingUltimate)
             return;
 
-        if (rageManager == null || nala == null ||
-            nalaAnimator == null || battleStateMachine == null)
+        if (Time.timeScale <= 0f)
             return;
 
-        // Chỉ dùng Ultimate trong Player Turn
-        if (!battleStateMachine.IsPlayerTurn())
+        if (rageManager == null ||
+            nala == null ||
+            nalaAnimator == null ||
+            battleStateMachine == null ||
+            arrowRain == null)
+        {
+            Debug.LogWarning(
+                "[NALA ULTIMATE] Thiếu Reference!"
+            );
             return;
+        }
 
+        // Chỉ sử dụng trong Player Turn.
+        if (!battleStateMachine.IsPlayerTurn() ||
+            battleStateMachine.IsBattleFinished())
+        {
+            return;
+        }
+
+        // Kiểm tra Rage.
         if (!rageManager.IsRageFull)
+        {
+            Debug.Log(
+                "[NALA ULTIMATE] Rage chưa đầy!"
+            );
+            return;
+        }
+
+        // Không kích hoạt khi mưa tên đang chạy.
+        if (arrowRain.IsAttacking)
             return;
 
-        // Tiêu hao Rage
+        // Tiêu hao toàn bộ Rage.
         if (!rageManager.UseRage())
             return;
 
         isUsingUltimate = true;
+        animationFinished = false;
+        effectTriggered = false;
 
-        // Triệu hồi Nala
+        // Triệu hồi Nala.
         nala.SetActive(true);
 
-        // Chạy animation Ultimate
+        // Reset Trigger cũ.
+        nalaAnimator.ResetTrigger(ultimateTrigger);
+
+        // Chạy animation Ultimate.
         nalaAnimator.SetTrigger(ultimateTrigger);
 
-        Debug.Log("Nala sử dụng Ultimate!");
+        Debug.Log(
+            "[NALA ULTIMATE] Nala xuất hiện và sử dụng Ultimate!"
+        );
     }
 
-    // Animation Event: thời điểm Ultimate gây hiệu ứng
+    // =====================================
+    // ANIMATION EVENT - ARROW RAIN
+    // =====================================
+
     public void OnUltimateEffect()
     {
-        Debug.Log("Nala Ultimate gây hiệu ứng!");
+        if (!isUsingUltimate)
+            return;
 
-        // Gọi hệ thống gây sát thương tại đây
+        // Tránh Animation Event gọi nhiều lần.
+        if (effectTriggered)
+            return;
+
+        if (arrowRain == null)
+            return;
+
+        effectTriggered = true;
+
+        Debug.Log(
+            "[NALA ULTIMATE] Bắt đầu mưa tên!"
+        );
+
+        arrowRain.StartArrowRain();
     }
 
-    // Animation Event: khi Nala hoàn thành Ultimate
+    // =====================================
+    // ANIMATION EVENT - FINISH
+    // =====================================
+
     public void OnUltimateFinished()
     {
+        if (!isUsingUltimate)
+            return;
+
+        animationFinished = true;
+
+        StartCoroutine(WaitForUltimateFinish());
+    }
+
+    // =====================================
+    // WAIT FOR ARROW RAIN
+    // =====================================
+
+    private IEnumerator WaitForUltimateFinish()
+    {
+        // Đợi animation kết thúc.
+        if (!animationFinished)
+            yield break;
+
+        // Nếu chưa kích hoạt hiệu ứng,
+        // không được kết thúc Ultimate.
+        if (!effectTriggered)
+        {
+            Debug.LogWarning(
+                "[NALA ULTIMATE] Chưa gọi OnUltimateEffect!"
+            );
+            yield break;
+        }
+
+        // Đợi mưa tên gây sát thương xong.
+        while (arrowRain != null &&
+               arrowRain.IsAttacking)
+        {
+            yield return null;
+        }
+
+        // =====================================
+        // HIDE NALA
+        // =====================================
+
+        if (hideNalaAfterUltimate && nala != null)
+        {
+            nala.SetActive(false);
+        }
+
         isUsingUltimate = false;
+        animationFinished = false;
+        effectTriggered = false;
 
-        // Nala lui về hậu tuyến
-        nala.SetActive(false);
-
-        Debug.Log("Nala đã trở về hậu tuyến!");
+        Debug.Log(
+            "[NALA ULTIMATE] Hoàn thành! Nala trở về hậu tuyến."
+        );
     }
 }
