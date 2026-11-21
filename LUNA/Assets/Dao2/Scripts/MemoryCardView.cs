@@ -16,8 +16,13 @@ public class MemoryCardView : MonoBehaviour
     [SerializeField] private Image frontImage;
     [SerializeField] private Image backImage;
 
+    [Header("Selection Effect")]
+    [SerializeField] private Sprite selectedBackSprite;
+
     private LostMemoriesManager gameManager;
-    private Color originalColor = Color.white;
+
+    // Lưu sprite mặt sau ban đầu để khôi phục khi bỏ chọn.
+    private Sprite originalBackSprite;
 
     public MemoryCardKind Kind { get; private set; }
     public int PairId { get; private set; }
@@ -31,6 +36,10 @@ public class MemoryCardView : MonoBehaviour
         !IsFaceUp &&
         !IsMatched;
 
+    // ==========================================
+    // UNITY LIFECYCLE
+    // ==========================================
+
     private void Awake()
     {
         if (cardButton == null)
@@ -38,12 +47,37 @@ public class MemoryCardView : MonoBehaviour
 
         if (cardButton == null)
         {
-            Debug.LogError($"[{name}] Missing Button component.");
+            Debug.LogError(
+                $"[{name}] Không tìm thấy Button Component."
+            );
             return;
         }
 
-        if (cardButton.targetGraphic != null)
-            originalColor = cardButton.targetGraphic.color;
+        // Lưu sprite mặt sau ban đầu.
+        if (backImage != null)
+            originalBackSprite = backImage.sprite;
+
+        // Kiểm tra các Image cần thiết.
+        if (frontImage == null)
+        {
+            Debug.LogError(
+                $"[{name}] Chưa gán Front Image."
+            );
+        }
+
+        if (backImage == null)
+        {
+            Debug.LogError(
+                $"[{name}] Chưa gán Back Image."
+            );
+        }
+
+        if (selectedBackSprite == null)
+        {
+            Debug.LogWarning(
+                $"[{name}] Chưa gán Selected Back Sprite."
+            );
+        }
     }
 
     // ==========================================
@@ -67,21 +101,24 @@ public class MemoryCardView : MonoBehaviour
         IsMatched = false;
         IsSelected = false;
 
+        // Gán hình mặt trước.
         if (frontImage != null)
         {
             frontImage.sprite = faceSprite;
             frontImage.gameObject.SetActive(false);
         }
 
+        // Khôi phục mặt sau và ẩn hiệu ứng chọn.
+        ResetSelectionVisual();
+
         if (backImage != null)
             backImage.gameObject.SetActive(true);
-
-        ResetSelectionVisual();
 
         if (cardButton != null)
         {
             cardButton.onClick.RemoveListener(HandleClick);
             cardButton.onClick.AddListener(HandleClick);
+
             cardButton.interactable = false;
         }
     }
@@ -117,12 +154,18 @@ public class MemoryCardView : MonoBehaviour
 
         IsSelected = selected;
 
-        if (cardButton != null &&
-            cardButton.targetGraphic != null)
+        if (backImage == null)
+            return;
+
+        if (selected && selectedBackSprite != null)
         {
-            cardButton.targetGraphic.color = selected
-                ? new Color(0.65f, 0.9f, 1f, 1f)
-                : originalColor;
+            // Hiển thị khung phát sáng khi chọn thẻ.
+            backImage.sprite = selectedBackSprite;
+        }
+        else
+        {
+            // Khôi phục hình mặt sau ban đầu.
+            backImage.sprite = originalBackSprite;
         }
     }
 
@@ -130,11 +173,8 @@ public class MemoryCardView : MonoBehaviour
     {
         IsSelected = false;
 
-        if (cardButton != null &&
-            cardButton.targetGraphic != null)
-        {
-            cardButton.targetGraphic.color = originalColor;
-        }
+        if (backImage != null)
+            backImage.sprite = originalBackSprite;
     }
 
     // ==========================================
@@ -148,6 +188,7 @@ public class MemoryCardView : MonoBehaviour
 
         IsFaceUp = true;
 
+        // Xóa hiệu ứng chọn trước khi lật.
         ResetSelectionVisual();
 
         if (frontImage != null)
@@ -164,6 +205,7 @@ public class MemoryCardView : MonoBehaviour
 
         IsFaceUp = false;
 
+        // Khôi phục mặt sau bình thường.
         ResetSelectionVisual();
 
         if (frontImage != null)
@@ -194,7 +236,7 @@ public class MemoryCardView : MonoBehaviour
             backImage.gameObject.SetActive(false);
     }
 
-    // Called when a bomb destroys a completed pair.
+    // Được gọi khi bom phá hủy một cặp đã hoàn thành.
     public void ResetMatchedByBomb()
     {
         IsMatched = false;
@@ -228,6 +270,10 @@ public class MemoryCardView : MonoBehaviour
             !IsFaceUp &&
             gameObject.activeInHierarchy;
     }
+
+    // ==========================================
+    // CLEANUP
+    // ==========================================
 
     private void OnDestroy()
     {

@@ -31,7 +31,7 @@ public class LostMemoriesManager : MonoBehaviour
     [SerializeField] private Sprite flipButtonSprite;
 
     [Header("GAME RULES")]
-    [SerializeField] private int startingTurns = 6;
+    [SerializeField] private int startingTurns = 12;
     [SerializeField] private int pairsToWin = 3;
     [SerializeField] private int rewardCoins = 600;
 
@@ -59,7 +59,7 @@ public class LostMemoriesManager : MonoBehaviour
     [Header("SCENE NAVIGATION")]
     [SerializeField] private string returnSceneName;
 
-    // Cards currently selected by the player.
+    // Danh sách các thẻ người chơi đang chọn.
     private readonly List<MemoryCardView> selectedCards =
         new List<MemoryCardView>();
 
@@ -119,7 +119,7 @@ public class LostMemoriesManager : MonoBehaviour
         if (cardSlots == null || cardSlots.Length != 12)
         {
             Debug.LogError(
-                "Lost Memories requires exactly 12 card slots."
+                "Lost Memories yêu cầu chính xác 12 ô thẻ."
             );
             return false;
         }
@@ -128,7 +128,7 @@ public class LostMemoriesManager : MonoBehaviour
             normalCardSprites.Length < 4)
         {
             Debug.LogError(
-                "At least 4 normal card sprites are required."
+                "Cần ít nhất 4 hình ảnh thẻ thường."
             );
             return false;
         }
@@ -136,13 +136,13 @@ public class LostMemoriesManager : MonoBehaviour
         if (loseTurnTrapSprite == null ||
             bombTrapSprite == null)
         {
-            Debug.LogError("Trap card sprites are missing.");
+            Debug.LogError("Chưa gán hình ảnh cho các thẻ bẫy.");
             return false;
         }
 
         if (mainActionButton == null)
         {
-            Debug.LogError("Main Action Button is missing.");
+            Debug.LogError("Chưa gán nút hành động chính.");
             return false;
         }
 
@@ -150,7 +150,7 @@ public class LostMemoriesManager : MonoBehaviour
         {
             if (card == null)
             {
-                Debug.LogError("One or more Card Slots are missing.");
+                Debug.LogError("Có một hoặc nhiều ô thẻ chưa được gán.");
                 return false;
             }
         }
@@ -158,14 +158,14 @@ public class LostMemoriesManager : MonoBehaviour
         if (loseTurnTrapCount + bombTrapCount != 4)
         {
             Debug.LogError(
-                "There must be exactly 4 trap cards."
+                "Phải có chính xác 4 thẻ bẫy."
             );
             return false;
         }
 
         if (startingTurns <= 0 || pairsToWin <= 0)
         {
-            Debug.LogError("Game rules must be greater than zero.");
+            Debug.LogError("Các thông số luật chơi phải lớn hơn 0.");
             return false;
         }
 
@@ -196,7 +196,7 @@ public class LostMemoriesManager : MonoBehaviour
         SetAllCardsSelectable(false);
 
         UpdateHUD();
-        SetStatus("Press Start to begin.");
+        SetStatus("Nhấn Bắt đầu để chơi.");
     }
 
     // ==========================================
@@ -252,7 +252,7 @@ public class LostMemoriesManager : MonoBehaviour
         SetAllCardsSelectable(true);
 
         UpdateHUD();
-        SetStatus("Select two cards, then press Flip.");
+        SetStatus("Chọn 2 thẻ, sau đó nhấn Lật Thẻ.");
     }
 
     // ==========================================
@@ -263,7 +263,7 @@ public class LostMemoriesManager : MonoBehaviour
     {
         List<CardSetup> deck = new List<CardSetup>();
 
-        // 4 pairs = 8 normal cards.
+        // 4 cặp = 8 thẻ thường.
         for (int pairId = 0; pairId < 4; pairId++)
         {
             for (int i = 0; i < 2; i++)
@@ -277,7 +277,7 @@ public class LostMemoriesManager : MonoBehaviour
             }
         }
 
-        // Lose Turn traps.
+        // Thẻ mất lượt.
         for (int i = 0; i < loseTurnTrapCount; i++)
         {
             deck.Add(new CardSetup
@@ -288,7 +288,7 @@ public class LostMemoriesManager : MonoBehaviour
             });
         }
 
-        // Bomb traps.
+        // Thẻ bom.
         for (int i = 0; i < bombTrapCount; i++)
         {
             deck.Add(new CardSetup
@@ -338,20 +338,20 @@ public class LostMemoriesManager : MonoBehaviour
         if (card == null || !card.CanSelect)
             return;
 
-        // Click again to deselect.
+        // Nhấn lại thẻ đã chọn để bỏ chọn.
         if (selectedCards.Contains(card))
         {
             selectedCards.Remove(card);
             card.SetSelected(false);
 
             SetStatus(
-                $"Selected: {selectedCards.Count}/2"
+                $"Đã chọn: {selectedCards.Count}/2"
             );
 
             return;
         }
 
-        // Select first or second card.
+        // Chọn thẻ thứ nhất hoặc thứ hai.
         if (selectedCards.Count < 2)
         {
             selectedCards.Add(card);
@@ -359,7 +359,7 @@ public class LostMemoriesManager : MonoBehaviour
         }
         else
         {
-            // Replace the second selected card.
+            // Nếu chọn thẻ thứ ba, thay thế thẻ thứ hai.
             MemoryCardView oldCard = selectedCards[1];
 
             oldCard.SetSelected(false);
@@ -368,7 +368,7 @@ public class LostMemoriesManager : MonoBehaviour
             card.SetSelected(true);
         }
 
-        SetStatus($"Selected: {selectedCards.Count}/2");
+        SetStatus($"Đã chọn: {selectedCards.Count}/2");
     }
 
     // ==========================================
@@ -379,7 +379,7 @@ public class LostMemoriesManager : MonoBehaviour
     {
         if (selectedCards.Count != 2)
         {
-            SetStatus("Please select two cards first.");
+            SetStatus("Vui lòng chọn đủ 2 thẻ trước.");
             return;
         }
 
@@ -390,7 +390,7 @@ public class LostMemoriesManager : MonoBehaviour
             !first.CanSelect || !second.CanSelect)
         {
             selectedCards.Clear();
-            SetStatus("Invalid card selection.");
+            SetStatus("Lựa chọn thẻ không hợp lệ.");
             return;
         }
 
@@ -412,11 +412,11 @@ public class LostMemoriesManager : MonoBehaviour
         MemoryCardView first,
         MemoryCardView second)
     {
-        // Reveal both selected cards.
+        // Lật hai thẻ đã chọn.
         first.RevealCard();
         second.RevealCard();
 
-        // Every confirmed pair costs one base turn.
+        // Mỗi lần xác nhận hai thẻ sẽ mất một lượt cơ bản.
         turnsRemaining--;
 
         UpdateHUD();
@@ -448,28 +448,28 @@ public class LostMemoriesManager : MonoBehaviour
         }
         else
         {
-            SetStatus("The memories do not match!");
+            SetStatus("Hai ký ức không trùng khớp!");
 
             yield return new WaitForSeconds(revealDuration);
 
             first.HideCard();
             second.HideCard();
 
-            ShuffleUnmatchedCards();
+           // ShuffleUnmatchedCards();
         }
 
         selectedCards.Clear();
 
         UpdateHUD();
 
-        // Victory check.
+        // Kiểm tra chiến thắng.
         if (matchedPairCount >= pairsToWin)
         {
             EndGame(true);
             yield break;
         }
 
-        // Defeat check.
+        // Kiểm tra thất bại.
         if (turnsRemaining <= 0)
         {
             EndGame(false);
@@ -480,7 +480,7 @@ public class LostMemoriesManager : MonoBehaviour
 
         SetAllCardsSelectable(true);
 
-        SetStatus("Select two cards, then press Flip.");
+        SetStatus("Chọn 2 thẻ, sau đó nhấn Lật Thẻ.");
     }
 
     // ==========================================
@@ -492,7 +492,7 @@ public class LostMemoriesManager : MonoBehaviour
         MemoryCardView second,
         int trapCount)
     {
-        // The first selected trap determines the effect.
+        // Thẻ bẫy được chọn trước sẽ quyết định hiệu ứng.
         MemoryCardView firstTrap =
             first.Kind != MemoryCardKind.Element
                 ? first
@@ -501,10 +501,10 @@ public class LostMemoriesManager : MonoBehaviour
         int multiplier = trapCount == 2 ? 2 : 1;
 
         if (trapCount == 2)
-            SetStatus("DOUBLE TRAP!");
+            SetStatus("BẪY KÉP!");
 
         // --------------------------------------
-        // LOSE TURN TRAP
+        // THẺ MẤT LƯỢT
         // --------------------------------------
 
         if (firstTrap.Kind == MemoryCardKind.LoseTurnTrap)
@@ -515,22 +515,21 @@ public class LostMemoriesManager : MonoBehaviour
 
             SetStatus(
                 multiplier == 2
-                    ? "Double Lose Turn! -2 extra turns."
-                    : "Lose Turn! -1 extra turn."
+                    ? "Mất lượt kép! Trừ thêm 2 lượt."
+                    : "Mất lượt! Trừ thêm 1 lượt."
             );
         }
 
         // --------------------------------------
-        // BOMB TRAP
+        // THẺ BOM
         // --------------------------------------
 
         else if (firstTrap.Kind == MemoryCardKind.BombTrap)
         {
-            // Double Bomb or Bomb + Lose Turn
-            // when Bomb was selected first.
+            // Hai thẻ bom hoặc bom được chọn trước thẻ mất lượt.
             if (multiplier == 2)
             {
-                SetStatus("Double Bomb! Instant defeat!");
+                SetStatus("Hai thẻ bom! Bạn đã thất bại!");
 
                 yield return new WaitForSeconds(revealDuration);
 
@@ -541,14 +540,13 @@ public class LostMemoriesManager : MonoBehaviour
                 yield break;
             }
 
-            // Single Bomb:
-            // Destroy one previously completed pair.
+            // Bom đơn: phá hủy một cặp đã hoàn thành trước đó.
             bool destroyedPair = DestroyRandomMatchedPair();
 
             if (!destroyedPair)
             {
                 SetStatus(
-                    "Bomb! No completed pair! Instant defeat!"
+                    "Bom phát nổ! Bạn chưa có cặp thẻ hoàn thành và đã thất bại!"
                 );
 
                 yield return new WaitForSeconds(revealDuration);
@@ -561,7 +559,7 @@ public class LostMemoriesManager : MonoBehaviour
             }
 
             SetStatus(
-                "Bomb! One completed pair was destroyed!"
+                "Bom phát nổ! Một cặp thẻ đã ghép bị phá hủy!"
             );
         }
 
@@ -570,8 +568,8 @@ public class LostMemoriesManager : MonoBehaviour
         first.HideCard();
         second.HideCard();
 
-        // Shuffle all unfinished cards,
-        // including the pair destroyed by the bomb.
+        // Xáo trộn các thẻ chưa hoàn thành,
+        // bao gồm cả cặp vừa bị bom phá hủy.
         ShuffleUnmatchedCards();
     }
 
@@ -588,7 +586,7 @@ public class LostMemoriesManager : MonoBehaviour
 
         matchedPairCount++;
 
-        SetStatus("Memory restored!");
+        SetStatus("Bạn đã khôi phục một ký ức!");
     }
 
     // ==========================================
@@ -624,7 +622,7 @@ public class LostMemoriesManager : MonoBehaviour
                 validPairIds.Add(pair.Key);
         }
 
-        // No completed pair to destroy.
+        // Không có cặp nào đã hoàn thành để phá hủy.
         if (validPairIds.Count == 0)
             return false;
 
@@ -635,7 +633,7 @@ public class LostMemoriesManager : MonoBehaviour
         List<MemoryCardView> destroyedPair =
             pairs[selectedPairId];
 
-        // Return both cards to unfinished state.
+        // Đưa cả hai thẻ trở lại trạng thái chưa hoàn thành.
         foreach (MemoryCardView card in destroyedPair)
         {
             card.ResetMatchedByBomb();
@@ -660,7 +658,7 @@ public class LostMemoriesManager : MonoBehaviour
         List<CardSetup> movableData =
             new List<CardSetup>();
 
-        // Collect only unfinished cards.
+        // Chỉ thu thập các thẻ chưa hoàn thành.
         foreach (MemoryCardView card in cardSlots)
         {
             if (card == null || card.IsMatched)
@@ -676,10 +674,10 @@ public class LostMemoriesManager : MonoBehaviour
             });
         }
 
-        // Shuffle their data.
+        // Xáo trộn dữ liệu thẻ.
         ShuffleDeck(movableData);
 
-        // Redistribute data only among unfinished slots.
+        // Phân phối lại dữ liệu vào các vị trí chưa hoàn thành.
         for (int i = 0; i < movableCards.Count; i++)
         {
             MemoryCardView card = movableCards[i];
@@ -694,7 +692,7 @@ public class LostMemoriesManager : MonoBehaviour
             card.HideCard();
         }
 
-        // Matched cards are never modified here.
+        // Các thẻ đã ghép thành công không bị thay đổi.
     }
 
     private Sprite GetCardSprite(
@@ -710,7 +708,7 @@ public class LostMemoriesManager : MonoBehaviour
                     return normalCardSprites[pairId];
                 }
 
-                Debug.LogError($"Invalid PairId: {pairId}");
+                Debug.LogError($"PairId không hợp lệ: {pairId}");
                 return null;
 
             case MemoryCardKind.LoseTurnTrap:
@@ -740,11 +738,11 @@ public class LostMemoriesManager : MonoBehaviour
     private void UpdateHUD()
     {
         if (turnsText != null)
-            turnsText.text = $"Turns: {turnsRemaining}";
+            turnsText.text = $"Lượt còn lại: {turnsRemaining}";
 
         if (pairsText != null)
             pairsText.text =
-                $"Pairs: {matchedPairCount}/{pairsToWin}";
+                $"Số cặp: {matchedPairCount}/{pairsToWin}";
     }
 
     private void SetStatus(string message)
@@ -788,11 +786,11 @@ public class LostMemoriesManager : MonoBehaviour
     private void ShowVictoryResult()
     {
         if (resultTitleText != null)
-            resultTitleText.text = "VICTORY!";
+            resultTitleText.text = "CHIẾN THẮNG!";
 
         if (resultDescriptionText != null)
             resultDescriptionText.text =
-                "You restored the lost memories!";
+                "Hơn mỗi con Bot:) \nBạn đã khôi phục được ký ức!";
 
         if (rewardText != null)
         {
@@ -805,14 +803,14 @@ public class LostMemoriesManager : MonoBehaviour
                     MainCoinWallet.Instance.AddCoins(rewardCoins);
                     rewardGranted = true;
 
-                    rewardText.text = $"+{rewardCoins} Coins";
+                    rewardText.text = $"+{rewardCoins} Xu";
                 }
                 else
                 {
-                    rewardText.text = "Reward unavailable.";
+                    rewardText.text = "Không thể nhận phần thưởng.";
 
                     Debug.LogError(
-                        "MainCoinWallet.Instance is missing."
+                        "Không tìm thấy MainCoinWallet.Instance."
                     );
                 }
             }
@@ -822,11 +820,11 @@ public class LostMemoriesManager : MonoBehaviour
     private void ShowDefeatResult()
     {
         if (resultTitleText != null)
-            resultTitleText.text = "DEFEAT";
+            resultTitleText.text = "THẤT BẠI";
 
         if (resultDescriptionText != null)
             resultDescriptionText.text =
-                "The memories remain frozen...";
+                "Thua cả con Bot:) \nNhững ký ức vẫn còn bị đóng băng...";
 
         if (rewardText != null)
             rewardText.gameObject.SetActive(false);
@@ -852,7 +850,7 @@ public class LostMemoriesManager : MonoBehaviour
         if (string.IsNullOrWhiteSpace(returnSceneName))
         {
             Debug.LogWarning(
-                "Return Scene Name is not assigned."
+                "Chưa thiết lập tên Scene quay về."
             );
             return;
         }
