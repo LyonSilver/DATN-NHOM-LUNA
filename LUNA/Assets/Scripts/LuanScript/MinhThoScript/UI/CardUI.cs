@@ -8,7 +8,7 @@ public class CardUI : MonoBehaviour
     [Header("Dữ liệu Card hiện tại (Chỉ để xem, không chỉnh sửa trực tiếp)")]
     public CardData cardData;
 
-    [Header("Thư viện hiển thị (12 art, icon loại thẻ, Material 5 phương hệ)")]
+    [Header("Thư viện hiển thị (18 art, icon loại thẻ, Material 5 phương hệ)")]
     public CardVisualLibrary visualLibrary;
 
     [Header("Frame / Background")]
@@ -19,10 +19,10 @@ public class CardUI : MonoBehaviour
     public Image typeLabelImage;
 
     [Header("Khung đổi màu bằng Shader theo phương hệ")]
-    [Tooltip("Từng Image riêng lẻ: khung loại thẻ (BannerType), ruy băng tên (TypeLabel)...")]
+    [Tooltip("Từng Image riêng lẻ: BannerType, TypeLabel...")]
     public Image[] frameTintImageTargets;
 
-    [Tooltip("Object chứa nhiều Image con (ví dụ OutlineDecor): mọi Image bên trong đều được nhuộm.")]
+    [Tooltip("Object chứa nhiều Image con: Mọi Image bên trong đều được nhuộm.")]
     public Transform[] frameTintGroupTargets;
 
     [Header("Text")]
@@ -33,6 +33,8 @@ public class CardUI : MonoBehaviour
 
     [Header("Artwork")]
     public Image artworkImage;
+    [Tooltip("Tắt = Giữ nguyên màu artwork. Bật = nhuộm artwork theo phương hệ bằng shader.")]
+    public bool tintArtworkByElement = false;
 
     [Header("State Overlays")]
     public GameObject hoverHighlight;
@@ -166,17 +168,17 @@ public class CardUI : MonoBehaviour
 
         if (shownTier != CardTier.None && visualLibrary != null)
         {
-            Sprite libraryArt = visualLibrary.GetArt(cardData.cardType, shownTier);
-            if (libraryArt != null) art = libraryArt;
+            Sprite libraryArt = visualLibrary.GetArt(cardData.cardType, shownElement, shownTier);            if (libraryArt != null) art = libraryArt;
         }
 
         artworkImage.sprite = art;
         artworkImage.enabled = art != null;
 
-        // Thẻ có phương hệ: dùng Material đổi màu. Thẻ không hệ: trả về Material gốc của prefab.
+        // Mặc định KHÔNG nhuộm Artwork: luôn dùng Material gốc của prefab.
+        // Chỉ nhuộm khi bật tintArtworkByElement.
         Material elementMaterial = null;
 
-        if (shownElement != CardElement.None && visualLibrary != null)
+        if (tintArtworkByElement && shownElement != CardElement.None && visualLibrary != null)
         {
             elementMaterial = visualLibrary.GetElementMaterial(shownElement);
         }
@@ -250,10 +252,12 @@ public class CardUI : MonoBehaviour
                 return new Color32(196, 90, 40, 255);
             case CardType.Defense:
                 return new Color32(45, 130, 180, 255);
-            case CardType.Effect:
-                return new Color32(70, 150, 70, 255);
-            case CardType.Support:
-                return new Color32(60, 170, 165, 255);
+            case CardType.Heal:
+                return new Color32(60, 170, 80, 255);
+            case CardType.Poison:
+                return new Color32(130, 60, 170, 255);
+            case CardType.Focus:
+                return new Color32(210, 175, 60, 255);
             case CardType.Chaos:
                 return new Color32(210, 175, 60, 255);
             default:

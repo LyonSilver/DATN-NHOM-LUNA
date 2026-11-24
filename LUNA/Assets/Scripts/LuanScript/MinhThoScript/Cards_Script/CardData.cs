@@ -6,16 +6,18 @@ using UnityEngine.Serialization;
 
 public enum CardEffectType
 {
-    Damage,       // 0
-    Shield,       // 1
-    Heal,         // 2
-    Poison,       // 3  
-    FocusTiming,  // 4
-    DoubleHit,    // 5
-    ChaosDraw,    // 6
-    ApplyStatus,  // 7 
-    DrawCard,     // 8  
-    Cleanse       // 9  
+    Damage,          // 0
+    Shield,          // 1
+    Heal,            // 2
+    Poison,          // 3
+    FocusTiming,     // 4
+    DoubleHit,       // 5
+    ChaosDraw,       // 6 
+    ApplyStatus,     // 7
+    DrawCard,        // 8
+    Cleanse,         // 9
+
+    ChaosRandomCard  // 10 - Chaos random thẻ cùng hệ, cùng cấp
 }
 
 public enum StatusEffectType
