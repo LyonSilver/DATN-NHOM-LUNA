@@ -2786,7 +2786,7 @@ MonoBehaviour:
   dashDuration: 0.5
   returnDuration: 0.4
   stoppingDistance: 3
-  returnToOriginalPositionAfterAttack: 1
+  returnToOriginalPositionAfterAttack: 0
   runningParameter: IsRunning
   attackTrigger: Attack
   healTrigger: 
@@ -5310,10 +5310,10 @@ MonoBehaviour:
   deckManager: {fileID: 1781653175}
   cardEffectManager: {fileID: 206061691}
   battleStateMachine: {fileID: 1355644609}
-  rageManager: {fileID: 2063403354}
-  nalaUltimateController: {fileID: 183605016}
+  rageManager: {fileID: 0}
+  nalaUltimateController: {fileID: 0}
   oneCardTurnController: {fileID: 1356499571}
-  playerCardCinematic: {fileID: 631719111}
+  playerCardCinematic: {fileID: 0}
   enemySpawner: {fileID: 1627267079}
   useDelay: 0.5
   selectedCard: {fileID: 0}
@@ -6165,7 +6165,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 19.2, y: 10.8}
+  m_Size: {x: 16.64, y: 9.45}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6872,7 +6872,7 @@ MonoBehaviour:
   battleStateMachine: {fileID: 1355644609}
   endButton: {fileID: 610902573}
   cardManager: {fileID: 1156692241}
-  nalaUltimateController: {fileID: 183605016}
+  nalaUltimateController: {fileID: 0}
 --- !u!1 &1379073898
 GameObject:
   m_ObjectHideFlags: 0
