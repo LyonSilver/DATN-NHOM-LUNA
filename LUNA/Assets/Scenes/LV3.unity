@@ -996,8 +996,11 @@ MonoBehaviour:
   nalaAnimator: {fileID: 1447691764}
   ultimateTrigger: Ulti
   battleStateMachine: {fileID: 1355644609}
+  oneCardTurnController: {fileID: 1356499571}
+  cardManager: {fileID: 1156692241}
+  endButton: {fileID: 610902573}
+  enemySpawner: {fileID: 1627267079}
   arrowRain: {fileID: 1379073899}
-  hideNalaAfterUltimate: 1
 --- !u!4 &183605017
 Transform:
   m_ObjectHideFlags: 0
@@ -2633,6 +2636,7 @@ MonoBehaviour:
   deckManager: {fileID: 1781653175}
   cardManager: {fileID: 1156692241}
   playerCardCinematic: {fileID: 631719111}
+  nalaUltimateController: {fileID: 0}
   turnManager: {fileID: 793561025}
   battleStateMachine: {fileID: 1355644609}
   playerStatusController: {fileID: 206061692}
@@ -5307,6 +5311,7 @@ MonoBehaviour:
   cardEffectManager: {fileID: 206061691}
   battleStateMachine: {fileID: 1355644609}
   rageManager: {fileID: 2063403354}
+  nalaUltimateController: {fileID: 183605016}
   oneCardTurnController: {fileID: 1356499571}
   playerCardCinematic: {fileID: 631719111}
   enemySpawner: {fileID: 1627267079}
@@ -6867,6 +6872,7 @@ MonoBehaviour:
   battleStateMachine: {fileID: 1355644609}
   endButton: {fileID: 610902573}
   cardManager: {fileID: 1156692241}
+  nalaUltimateController: {fileID: 183605016}
 --- !u!1 &1379073898
 GameObject:
   m_ObjectHideFlags: 0
@@ -7170,7 +7176,7 @@ Transform:
   m_GameObject: {fileID: 1447691763}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.38, y: 0, z: 0}
+  m_LocalPosition: {x: -8.38, y: -0.58, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7189,7 +7195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NalaAnimationEvents
   ultimateController: {fileID: 183605016}
-  effectPrefab: {fileID: 6573353546844586021, guid: a49a2971bae0614468bf1c96983a4fcd, type: 3}
+  effectPrefab: {fileID: 7706310959782504990, guid: eeaadc220dc76444b9b0cd6b44b0c2b6, type: 3}
   effectSpawnPoint: {fileID: 2127675099}
   effectLifetime: 3
   effectOffset: {x: 0, y: 0, z: 0}
