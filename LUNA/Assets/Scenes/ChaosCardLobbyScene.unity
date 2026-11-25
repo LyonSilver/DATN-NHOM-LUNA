@@ -1971,6 +1971,7 @@ GameObject:
   - component: {fileID: 883423831}
   - component: {fileID: 883423833}
   - component: {fileID: 883423834}
+  - component: {fileID: 883423835}
   m_Layer: 0
   m_Name: BackgroundPanel
   m_TagString: Untagged
@@ -2034,6 +2035,23 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &883423835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883423830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a89e4947f8f95469ab50f5f4c75176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WinterScene.WinterSnowGenerator
+  snowflakeTexture: {fileID: 2800000, guid: b497d55a1ee5c3a4488a6a30a1e77db1, type: 3}
+  maxParticles: 350
+  fallSpeed: 1.8
+  windStrength: 0.6
+  spawnAreaSize: {x: 20, y: 12}
 --- !u!1 &894427086
 GameObject:
   m_ObjectHideFlags: 0
