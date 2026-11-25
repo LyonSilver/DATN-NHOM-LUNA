@@ -14,6 +14,10 @@ public class CardManager : MonoBehaviour
     [Header("Rage Manager")]
     [SerializeField] private RageManager rageManager;
 
+    [Header("NPC Ultimate")]
+    [SerializeField]
+    private NalaUltimateController nalaUltimateController;
+
     [Header("Turn Controller")]
     [SerializeField]
     private OneCardTurnController oneCardTurnController;
@@ -48,6 +52,12 @@ public class CardManager : MonoBehaviour
             playerCardCinematic =
                 FindFirstObjectByType<PlayerCardCinematic>();
         }
+
+        if (nalaUltimateController == null)
+        {
+            nalaUltimateController =
+                FindFirstObjectByType<NalaUltimateController>();
+        }
     }
 
     private void OnEnable()
@@ -65,6 +75,24 @@ public class CardManager : MonoBehaviour
 
         isUsingCard = false;
         selectedCard = null;
+    }
+
+    // =====================================
+    // CHECK NPC ULTIMATE
+    // =====================================
+
+    private bool IsNPCUsingUltimate()
+    {
+        return nalaUltimateController != null &&
+               nalaUltimateController.IsUsingUltimate;
+    }
+
+    // Kiểm tra Player có thể dùng Ultimate không.
+    public bool CanStartUltimate()
+    {
+        return CanUseCard() &&
+               HasLivingEnemy() &&
+               !playerCardCinematic.IsPlaying;
     }
 
     // =====================================
@@ -88,6 +116,7 @@ public class CardManager : MonoBehaviour
             Debug.LogWarning(
                 "CardManager: CardData không hợp lệ!"
             );
+
             return;
         }
 
@@ -104,10 +133,9 @@ public class CardManager : MonoBehaviour
             Debug.LogWarning(
                 "CardManager: Không có Enemy để tấn công!"
             );
+
             return;
         }
-
-        // Không kiểm tra Mana nữa.
 
         // Tìm CardDissolveUI.
         CardDissolveUI dissolve =
@@ -124,13 +152,14 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu CardDissolveUI!"
             );
+
             return;
         }
 
         if (dissolve.IsPlaying)
             return;
 
-        // Khóa click Card ngay lập tức.
+        // Khóa sử dụng Card ngay lập tức.
         isUsingCard = true;
 
         selectedCard = cardUI;
@@ -155,6 +184,7 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu HandManager!"
             );
+
             missingReference = true;
         }
 
@@ -163,6 +193,7 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu DeckManager!"
             );
+
             missingReference = true;
         }
 
@@ -171,6 +202,7 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu CardEffectManager!"
             );
+
             missingReference = true;
         }
 
@@ -179,6 +211,7 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu BattleStateMachine!"
             );
+
             missingReference = true;
         }
 
@@ -187,6 +220,7 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu OneCardTurnController!"
             );
+
             missingReference = true;
         }
 
@@ -195,6 +229,7 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu PlayerCardCinematic!"
             );
+
             missingReference = true;
         }
 
@@ -203,6 +238,7 @@ public class CardManager : MonoBehaviour
             Debug.LogError(
                 "CardManager: Thiếu RageManager!"
             );
+
             missingReference = true;
         }
 
@@ -210,6 +246,19 @@ public class CardManager : MonoBehaviour
             return false;
 
         if (Time.timeScale <= 0f || isUsingCard)
+            return false;
+
+        // Không cho sử dụng Card khi NPC đang Ultimate.
+        if (IsNPCUsingUltimate())
+        {
+            Debug.Log(
+                "[CARD MANAGER] NPC đang sử dụng Ultimate!"
+            );
+
+            return false;
+        }
+
+        if (playerCardCinematic.IsPlaying)
             return false;
 
         if (!battleStateMachine.IsPlayerTurn() ||
@@ -252,16 +301,7 @@ public class CardManager : MonoBehaviour
         // 2. CARD DISSOLVE
         // =====================================
 
-        Debug.Log(
-            "[CARD MANAGER] CARD DISSOLVE: BẮT ĐẦU"
-        );
-
         yield return dissolve.PlayDissolve();
-
-        Debug.Log(
-            "[CARD MANAGER] CARD DISSOLVE: KẾT THÚC | Success = " +
-            dissolve.LastPlaySucceeded
-        );
 
         if (!dissolve.LastPlaySucceeded)
         {
@@ -284,29 +324,21 @@ public class CardManager : MonoBehaviour
         // 4. START CINEMATIC
         // =====================================
 
-        Debug.Log(
-            "[CARD MANAGER] Đang gọi PlayerCardCinematic.PlayCard()"
-        );
-
         bool cinematicStarted =
             playerCardCinematic.PlayCard(card);
 
         if (!cinematicStarted)
         {
             Debug.LogError(
-                "[CARD MANAGER] Không thể khởi chạy Cinematic!"
+                "[CARD MANAGER] Không thể chạy Cinematic!"
             );
 
             CancelCardUse(dissolve);
             yield break;
         }
 
-        // Đánh dấu Card đã được sử dụng.
+        // Đánh dấu đã sử dụng Card trong lượt.
         oneCardTurnController.NotifyCardStarted();
-
-        Debug.Log(
-            "[CARD MANAGER] Cinematic đã bắt đầu!"
-        );
 
         // =====================================
         // 5. WAIT FOR CINEMATIC
@@ -317,10 +349,6 @@ public class CardManager : MonoBehaviour
         {
             yield return null;
         }
-
-        Debug.Log(
-            "[CARD MANAGER] Cinematic hoàn tất!"
-        );
 
         // =====================================
         // 6. REMOVE CARD FROM HAND
@@ -334,8 +362,6 @@ public class CardManager : MonoBehaviour
         // 7. ADD RAGE
         // =====================================
 
-        // Chỉ cộng Rage khi Card đã sử dụng
-        // và Cinematic hoàn tất.
         if (rageManager != null)
         {
             rageManager.OnCardUsed();
@@ -365,8 +391,7 @@ public class CardManager : MonoBehaviour
             ". Chuyển sang Enemy Turn."
         );
 
-        // Không gọi EndTurn tại đây.
-        // OneCardTurnController tự xử lý.
+        // OneCardTurnController tự xử lý chuyển lượt.
     }
 
     // =====================================
@@ -415,6 +440,10 @@ public class CardManager : MonoBehaviour
         if (card == null ||
             cardUI == null ||
             cardUI.cardData != card)
+            return false;
+
+        // Không cho dùng Card trong Ultimate.
+        if (IsNPCUsingUltimate())
             return false;
 
         if (battleStateMachine == null ||

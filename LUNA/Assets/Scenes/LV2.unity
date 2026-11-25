@@ -996,8 +996,11 @@ MonoBehaviour:
   nalaAnimator: {fileID: 1447691764}
   ultimateTrigger: Ulti
   battleStateMachine: {fileID: 1355644609}
+  oneCardTurnController: {fileID: 1356499571}
+  cardManager: {fileID: 1156692241}
+  endButton: {fileID: 610902573}
+  enemySpawner: {fileID: 1627267079}
   arrowRain: {fileID: 1379073899}
-  hideNalaAfterUltimate: 1
 --- !u!4 &183605017
 Transform:
   m_ObjectHideFlags: 0
@@ -2633,6 +2636,7 @@ MonoBehaviour:
   deckManager: {fileID: 1781653175}
   cardManager: {fileID: 1156692241}
   playerCardCinematic: {fileID: 631719111}
+  nalaUltimateController: {fileID: 183605016}
   turnManager: {fileID: 793561025}
   battleStateMachine: {fileID: 1355644609}
   playerStatusController: {fileID: 206061692}
@@ -2718,7 +2722,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1fc1c1147248cc24b8cc22b3cd765107, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7353ef6754763654c816a64ae56f8892, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5307,6 +5311,7 @@ MonoBehaviour:
   cardEffectManager: {fileID: 206061691}
   battleStateMachine: {fileID: 1355644609}
   rageManager: {fileID: 2063403354}
+  nalaUltimateController: {fileID: 183605016}
   oneCardTurnController: {fileID: 1356499571}
   playerCardCinematic: {fileID: 631719111}
   enemySpawner: {fileID: 1627267079}
@@ -6155,7 +6160,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 19d265df42bbbe141aca902fa4121f73, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 36ae5491e28d98d48972907539f0f2f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6867,6 +6872,7 @@ MonoBehaviour:
   battleStateMachine: {fileID: 1355644609}
   endButton: {fileID: 610902573}
   cardManager: {fileID: 1156692241}
+  nalaUltimateController: {fileID: 183605016}
 --- !u!1 &1379073898
 GameObject:
   m_ObjectHideFlags: 0
@@ -7170,7 +7176,7 @@ Transform:
   m_GameObject: {fileID: 1447691763}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.38, y: 0, z: 0}
+  m_LocalPosition: {x: -8.05, y: -1.49, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7189,7 +7195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NalaAnimationEvents
   ultimateController: {fileID: 183605016}
-  effectPrefab: {fileID: 6573353546844586021, guid: a49a2971bae0614468bf1c96983a4fcd, type: 3}
+  effectPrefab: {fileID: 7706310959782504990, guid: eeaadc220dc76444b9b0cd6b44b0c2b6, type: 3}
   effectSpawnPoint: {fileID: 2127675099}
   effectLifetime: 3
   effectOffset: {x: 0, y: 0, z: 0}
@@ -7962,7 +7968,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 803, y: 462}
-  m_SizeDelta: {x: 318.57, y: 300}
+  m_SizeDelta: {x: 250, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1629889129
 MonoBehaviour:
@@ -8028,7 +8034,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5f06c0c7fad535e4a87d1dc652ba7529, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acf9386f4b1b13146a9c9887d4e36e35, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9077,7 +9083,7 @@ Transform:
   m_GameObject: {fileID: 1805816408}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.43, y: 0, z: 0}
+  m_LocalPosition: {x: 5.43, y: -1.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10743,7 +10749,7 @@ Transform:
   m_GameObject: {fileID: 2127675098}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.43, y: 0, z: 0}
+  m_LocalPosition: {x: 5.43, y: -1.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10977,7 +10983,7 @@ Transform:
   m_GameObject: {fileID: 8214131140360273027}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.92, y: 0.58, z: 0}
+  m_LocalPosition: {x: -5.59, y: -0.91, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []

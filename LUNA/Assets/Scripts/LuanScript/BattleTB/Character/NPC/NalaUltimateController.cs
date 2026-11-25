@@ -15,37 +15,33 @@ public class NalaUltimateController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private string ultimateTrigger = "Ulti";
 
-    [Header("Turn")]
+    [Header("Turn Systems")]
     [SerializeField] private BattleStateMachine battleStateMachine;
+    [SerializeField] private OneCardTurnController oneCardTurnController;
+    [SerializeField] private CardManager cardManager;
+    [SerializeField] private EndButton endButton;
+
+    [Header("Enemy")]
+    [SerializeField] private EnemySpawner enemySpawner;
 
     [Header("Arrow Rain")]
     [SerializeField] private NalaArrowRain arrowRain;
 
-    [Header("Settings")]
-    [SerializeField] private bool hideNalaAfterUltimate = true;
-
-    private bool isUsingUltimate = false;
-    private bool animationFinished = false;
-    private bool effectTriggered = false;
+    private bool isUsingUltimate;
+    private bool effectTriggered;
+    private bool isFinishing;
 
     public bool IsUsingUltimate => isUsingUltimate;
 
     // =====================================
-    // START
+    // INITIALIZATION
     // =====================================
 
     private void Start()
     {
-        // Nala ở hậu tuyến khi bắt đầu trận.
         if (nala != null)
-        {
             nala.SetActive(false);
-        }
     }
-
-    // =====================================
-    // UPDATE
-    // =====================================
 
     private void Update()
     {
@@ -74,137 +70,155 @@ public class NalaUltimateController : MonoBehaviour
             nala == null ||
             nalaAnimator == null ||
             battleStateMachine == null ||
+            oneCardTurnController == null ||
+            cardManager == null ||
+            endButton == null ||
+            enemySpawner == null ||
             arrowRain == null)
         {
-            Debug.LogWarning(
-                "[NALA ULTIMATE] Thiếu Reference!"
+            Debug.LogError(
+                "[NALA] Thieu Reference!"
             );
+
             return;
         }
 
-        // Chỉ sử dụng trong Player Turn.
+        // Chi su dung trong Player Turn.
         if (!battleStateMachine.IsPlayerTurn() ||
             battleStateMachine.IsBattleFinished())
-        {
             return;
-        }
 
-        // Kiểm tra Rage.
-        if (!rageManager.IsRageFull)
-        {
-            Debug.Log(
-                "[NALA ULTIMATE] Rage chưa đầy!"
-            );
+        // Khong su dung khi dang chuyen luot.
+        if (endButton.IsResolvingTurn)
             return;
-        }
 
-        // Không kích hoạt khi mưa tên đang chạy.
+        // Kiem tra gioi han hanh dong.
+        if (!oneCardTurnController.CanUseUltimate())
+            return;
+
+        // Kiem tra Card va Cinematic.
+        if (!cardManager.CanStartUltimate())
+            return;
+
         if (arrowRain.IsAttacking)
             return;
 
-        // Tiêu hao toàn bộ Rage.
+        // Kiem tra Enemy.
+        EnemyHealth enemy =
+            enemySpawner.GetCurrentEnemyHealth();
+
+        if (enemy == null || enemy.IsDead)
+            return;
+
+        // Kiem tra Rage.
+        if (!rageManager.IsRageFull)
+            return;
+
+        // Tieu hao Rage.
         if (!rageManager.UseRage())
             return;
 
+        // Khoa Ultimate.
         isUsingUltimate = true;
-        animationFinished = false;
         effectTriggered = false;
+        isFinishing = false;
 
-        // Triệu hồi Nala.
+        // Danh dau Player da su dung hanh dong.
+        oneCardTurnController.NotifyUltimateStarted();
+
+        // Trieu hoi Nala.
         nala.SetActive(true);
 
-        // Reset Trigger cũ.
+        // Chay Animation Ultimate.
         nalaAnimator.ResetTrigger(ultimateTrigger);
-
-        // Chạy animation Ultimate.
         nalaAnimator.SetTrigger(ultimateTrigger);
 
         Debug.Log(
-            "[NALA ULTIMATE] Nala xuất hiện và sử dụng Ultimate!"
+            "[NALA] Bat dau Ultimate!"
         );
     }
 
     // =====================================
-    // ANIMATION EVENT - ARROW RAIN
+    // ANIMATION EVENT - DAMAGE
     // =====================================
 
     public void OnUltimateEffect()
     {
-        if (!isUsingUltimate)
-            return;
-
-        // Tránh Animation Event gọi nhiều lần.
-        if (effectTriggered)
-            return;
-
-        if (arrowRain == null)
+        if (!isUsingUltimate || effectTriggered)
             return;
 
         effectTriggered = true;
 
-        Debug.Log(
-            "[NALA ULTIMATE] Bắt đầu mưa tên!"
-        );
+        if (arrowRain != null)
+        {
+            arrowRain.StartArrowRain();
+        }
 
-        arrowRain.StartArrowRain();
+        Debug.Log(
+            "[NALA] Bat dau mua ten!"
+        );
     }
 
     // =====================================
-    // ANIMATION EVENT - FINISH
+    // ANIMATION EVENT - FINISHED
     // =====================================
 
     public void OnUltimateFinished()
     {
-        if (!isUsingUltimate)
+        if (!isUsingUltimate || isFinishing)
             return;
 
-        animationFinished = true;
+        isFinishing = true;
 
-        StartCoroutine(WaitForUltimateFinish());
+        Debug.Log(
+            "[NALA] Animation Ultimate ket thuc!"
+        );
+
+        StartCoroutine(
+            FinishUltimateRoutine()
+        );
     }
 
     // =====================================
-    // WAIT FOR ARROW RAIN
+    // FINISH ULTIMATE
     // =====================================
 
-    private IEnumerator WaitForUltimateFinish()
+    private IEnumerator FinishUltimateRoutine()
     {
-        // Đợi animation kết thúc.
-        if (!animationFinished)
-            yield break;
-
-        // Nếu chưa kích hoạt hiệu ứng,
-        // không được kết thúc Ultimate.
         if (!effectTriggered)
         {
             Debug.LogWarning(
-                "[NALA ULTIMATE] Chưa gọi OnUltimateEffect!"
+                "[NALA] Thieu Event OnUltimateEffect!"
             );
-            yield break;
         }
 
-        // Đợi mưa tên gây sát thương xong.
+        // Cho mua ten gay het sat thuong.
         while (arrowRain != null &&
                arrowRain.IsAttacking)
         {
             yield return null;
         }
 
-        // =====================================
-        // HIDE NALA
-        // =====================================
-
-        if (hideNalaAfterUltimate && nala != null)
-        {
+        // Nala tro ve hau tuyen.
+        if (nala != null)
             nala.SetActive(false);
-        }
 
-        isUsingUltimate = false;
-        animationFinished = false;
+        // Cho he thong cap nhat.
+        yield return null;
+
+        // Reset trang thai Ultimate.
         effectTriggered = false;
+        isFinishing = false;
+
+        // Thong bao Ultimate da hoan thanh
+        // thong qua trang thai IsUsingUltimate.
+        isUsingUltimate = false;
 
         Debug.Log(
-            "[NALA ULTIMATE] Hoàn thành! Nala trở về hậu tuyến."
+            "[NALA] Ultimate hoan thanh!"
         );
+
+        // KHONG goi EndTurn tai day.
+        // OneCardTurnController tu dong chuyen luot.
     }
 }

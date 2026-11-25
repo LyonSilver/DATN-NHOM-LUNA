@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50149f3b5aa6cba4a9c8fa103b12c011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  damage: 10
+  damage: 20
   animator: {fileID: 4545386051437969823}
   attackTrigger: Attack
   shieldTrigger: Shield
@@ -168,4 +168,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDashMovement
   dashDuration: 0.25
   returnDuration: 0.3
-  stoppingDistance: 1.5
+  stoppingDistance: 3

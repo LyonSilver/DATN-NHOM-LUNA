@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 5025590998613629541}
   - component: {fileID: 2816798476979474545}
   - component: {fileID: 5103193520543830773}
+  - component: {fileID: -5710760848392451461}
+  - component: {fileID: -6457163010297753620}
+  - component: {fileID: 920527417229454410}
   m_Layer: 0
   m_Name: GreenGoblem
   m_TagString: Untagged
@@ -114,3 +117,55 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5710760848392451461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147969075866415859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfdae745c68154946b49c64b4e223386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHP: 200
+  animator: {fileID: 5103193520543830773}
+  hurtTrigger: Hurt
+  deathTrigger: Death
+  deathAnimationClip: {fileID: 7400000, guid: f60c2cd7e821dd24785f63021eea8cb2, type: 2}
+  defaultDeathDuration: 1
+--- !u!114 &-6457163010297753620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147969075866415859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50149f3b5aa6cba4a9c8fa103b12c011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  damage: 10
+  animator: {fileID: 5103193520543830773}
+  attackTrigger: Attack
+  shieldTrigger: Shield
+  cardEffectManager: {fileID: 0}
+  skills: []
+  skillChance: 50
+--- !u!114 &920527417229454410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147969075866415859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f575aa2f6e5844949934ddcee787841f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDashMovement
+  dashDuration: 0.25
+  returnDuration: 0.3
+  stoppingDistance: 4

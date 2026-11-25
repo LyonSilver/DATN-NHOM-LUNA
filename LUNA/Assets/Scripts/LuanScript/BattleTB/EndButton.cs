@@ -13,6 +13,10 @@ public class EndButton : MonoBehaviour
     [SerializeField] private CardManager cardManager;
     [SerializeField] private PlayerCardCinematic playerCardCinematic;
 
+    [Header("NPC Ultimate")]
+    [SerializeField]
+    private NalaUltimateController nalaUltimateController;
+
     [Header("Turn")]
     [SerializeField] private TurnManager turnManager;
     [SerializeField] private BattleStateMachine battleStateMachine;
@@ -31,8 +35,25 @@ public class EndButton : MonoBehaviour
     [SerializeField] private float skipTurnDelay = 0.5f;
 
     private EnemyAttack enemyAttack;
+
     private bool isResolvingTurn;
     private bool isSkippingTurn;
+
+    public bool IsResolvingTurn =>
+        isResolvingTurn || isSkippingTurn;
+
+    // =====================================
+    // INITIALIZATION
+    // =====================================
+
+    private void Awake()
+    {
+        if (nalaUltimateController == null)
+        {
+            nalaUltimateController =
+                FindFirstObjectByType<NalaUltimateController>();
+        }
+    }
 
     // =====================================
     // END TURN BUTTON
@@ -75,24 +96,61 @@ public class EndButton : MonoBehaviour
             Debug.LogError(
                 "EndButton: Thiếu Battle Systems!"
             );
+
             return false;
         }
 
         if (isResolvingTurn || isSkippingTurn)
             return false;
 
+        if (Time.timeScale <= 0f)
+            return false;
+
         if (!battleStateMachine.IsPlayerTurn() ||
             battleStateMachine.IsBattleFinished())
             return false;
 
-        if (cardManager != null && cardManager.IsUsingCard)
+        // Không chuyển lượt khi đang dùng Card.
+        if (cardManager != null &&
+            cardManager.IsUsingCard)
             return false;
 
+        // Không chuyển lượt khi đang chạy Cinematic.
         if (playerCardCinematic != null &&
             playerCardCinematic.IsPlaying)
             return false;
 
+        // Không chuyển lượt khi NPC đang Ultimate.
+        if (nalaUltimateController != null &&
+            nalaUltimateController.IsUsingUltimate)
+        {
+            Debug.Log(
+                "[END TURN] NPC đang sử dụng Ultimate!"
+            );
+
+            return false;
+        }
+
+        // Kiểm tra Enemy còn sống.
+        if (!HasLivingEnemy())
+            return false;
+
         return true;
+    }
+
+    // =====================================
+    // CHECK LIVING ENEMY
+    // =====================================
+
+    private bool HasLivingEnemy()
+    {
+        if (enemySpawner == null)
+            return false;
+
+        EnemyHealth enemy =
+            enemySpawner.GetCurrentEnemyHealth();
+
+        return enemy != null && !enemy.IsDead;
     }
 
     // =====================================
@@ -111,6 +169,7 @@ public class EndButton : MonoBehaviour
             Debug.LogWarning(
                 "EndButton: Không lấy được Enemy Intent!"
             );
+
             return false;
         }
 
@@ -147,6 +206,12 @@ public class EndButton : MonoBehaviour
             return;
         }
 
+        if (!HasLivingEnemy())
+        {
+            isResolvingTurn = false;
+            return;
+        }
+
         if (enemyAttack == null ||
             enemyAttack != enemySpawner.GetCurrentEnemyAttack())
         {
@@ -158,8 +223,6 @@ public class EndButton : MonoBehaviour
             return;
         }
 
-        // Dùng chung một Coroutine cho
-        // Normal Attack và Skill.
         StartCoroutine(
             ResolveEnemyAction(enemyAttack, isAttack)
         );
@@ -204,16 +267,12 @@ public class EndButton : MonoBehaviour
         // 2. Thực hiện hành động.
         if (isAttack)
         {
-            // EnemyAttackBase tự phát Animation
-            // và xử lý Damage.
             actingEnemy.AttackWithoutTiming();
 
             Debug.Log("Enemy: Normal Attack!");
         }
         else
         {
-            // EnemySkillBase quản lý
-            // Animation và hiệu ứng Skill.
             actingEnemy.UseSkill();
 
             Debug.Log("Enemy: Use Skill!");
@@ -229,7 +288,8 @@ public class EndButton : MonoBehaviour
         );
 
         // 4. Quay về vị trí ban đầu.
-        if (useDash && movement != null &&
+        if (useDash &&
+            movement != null &&
             CanAct(actingEnemy))
         {
             yield return movement.ReturnToStart();
@@ -254,6 +314,12 @@ public class EndButton : MonoBehaviour
             return;
         }
 
+        if (!HasLivingEnemy())
+        {
+            isResolvingTurn = false;
+            return;
+        }
+
         // Player bị Stun / Freeze.
         if (playerStatusController != null &&
             playerStatusController.ConsumeSkippedTurn())
@@ -271,7 +337,7 @@ public class EndButton : MonoBehaviour
 
     private void CompletePlayerTurnTransition()
     {
-        if (!IsEnemyTurnValid())
+        if (!IsEnemyTurnValid() || !HasLivingEnemy())
         {
             isResolvingTurn = false;
             isSkippingTurn = false;
@@ -285,7 +351,7 @@ public class EndButton : MonoBehaviour
         if (deckManager != null)
             deckManager.InitializeDeck();
 
-        // Hồi Mana theo TurnManager.
+        // Bắt đầu lượt mới.
         if (turnManager != null)
             turnManager.StartTurn();
 
@@ -303,7 +369,9 @@ public class EndButton : MonoBehaviour
             );
         }
 
-        Debug.Log("========== PLAYER TURN ==========");
+        Debug.Log(
+            "========== PLAYER TURN =========="
+        );
     }
 
     // =====================================
@@ -322,7 +390,7 @@ public class EndButton : MonoBehaviour
             Mathf.Max(0f, skipTurnDelay)
         );
 
-        if (!IsEnemyTurnValid())
+        if (!IsEnemyTurnValid() || !HasLivingEnemy())
         {
             isSkippingTurn = false;
             isResolvingTurn = false;
@@ -342,14 +410,18 @@ public class EndButton : MonoBehaviour
             !enemyIntentManager.PrepareIntent())
         {
             isSkippingTurn = false;
+
             CompletePlayerTurnTransition();
+
             yield break;
         }
 
         if (!TryGetEnemyIntent(out bool isAttack))
         {
             isSkippingTurn = false;
+
             CompletePlayerTurnTransition();
+
             yield break;
         }
 
@@ -375,6 +447,7 @@ public class EndButton : MonoBehaviour
     private bool CanAct(EnemyAttack actingEnemy)
     {
         return IsEnemyTurnValid() &&
+               HasLivingEnemy() &&
                actingEnemy != null &&
                enemySpawner != null &&
                actingEnemy ==

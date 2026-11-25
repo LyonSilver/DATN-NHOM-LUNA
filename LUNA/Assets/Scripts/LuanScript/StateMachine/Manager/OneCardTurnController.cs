@@ -5,28 +5,40 @@ using UnityEngine;
 public class OneCardTurnController : MonoBehaviour
 {
     [Header("Battle Systems")]
-    [SerializeField]
-    private BattleStateMachine battleStateMachine;
-
+    [SerializeField] private BattleStateMachine battleStateMachine;
     [SerializeField] private EndButton endButton;
 
     [Header("Card System")]
     [SerializeField] private CardManager cardManager;
 
-    private bool cardUsedThisTurn;
+    [Header("NPC Ultimate")]
+    [SerializeField]
+    private NalaUltimateController nalaUltimateController;
+
+    private bool actionUsedThisTurn;
     private bool enteredEnemyTurn;
+
     private Coroutine endTurnCoroutine;
 
+    public bool ActionUsedThisTurn => actionUsedThisTurn;
+
     // =====================================
-    // CHECK CARD LIMIT
+    // CHECK ACTION LIMIT
     // =====================================
 
     public bool CanUseCard()
     {
-        return !cardUsedThisTurn &&
+        return !actionUsedThisTurn &&
                battleStateMachine != null &&
                battleStateMachine.IsPlayerTurn() &&
                !battleStateMachine.IsBattleFinished();
+    }
+
+    public bool CanUseUltimate()
+    {
+        return CanUseCard() &&
+               cardManager != null &&
+               !cardManager.IsUsingCard;
     }
 
     // =====================================
@@ -38,15 +50,43 @@ public class OneCardTurnController : MonoBehaviour
         if (!CanUseCard())
             return;
 
-        cardUsedThisTurn = true;
-        enteredEnemyTurn = false;
-
-        endTurnCoroutine = StartCoroutine(
-            WaitForCardAndEndTurn()
-        );
+        BeginPlayerAction();
 
         Debug.Log(
-            "OneCardTurn: Đã dùng 1 Card, khóa lượt!"
+            "[TURN] Da su dung Card, khoa luot!"
+        );
+    }
+
+    // =====================================
+    // ULTIMATE USED
+    // =====================================
+
+    public void NotifyUltimateStarted()
+    {
+        if (!CanUseUltimate())
+            return;
+
+        BeginPlayerAction();
+
+        Debug.Log(
+            "[TURN] Da su dung Ultimate, khoa luot!"
+        );
+    }
+
+    // =====================================
+    // BEGIN PLAYER ACTION
+    // =====================================
+
+    private void BeginPlayerAction()
+    {
+        actionUsedThisTurn = true;
+        enteredEnemyTurn = false;
+
+        if (endTurnCoroutine != null)
+            StopCoroutine(endTurnCoroutine);
+
+        endTurnCoroutine = StartCoroutine(
+            WaitForActionAndEndTurn()
         );
     }
 
@@ -54,17 +94,16 @@ public class OneCardTurnController : MonoBehaviour
     // AUTO END TURN
     // =====================================
 
-    private IEnumerator WaitForCardAndEndTurn()
+    private IEnumerator WaitForActionAndEndTurn()
     {
         yield return null;
 
-        // Chờ CardManager xử lý xong:
-        // Animation, Damage, VFX và Hand.
-        while (cardManager != null &&
-               cardManager.IsUsingCard)
+        // Cho Card hoac Ultimate hoan thanh.
+        while (IsPlayerActionRunning())
         {
             if (battleStateMachine == null ||
-                battleStateMachine.IsBattleFinished())
+                battleStateMachine.IsBattleFinished() ||
+                !battleStateMachine.IsPlayerTurn())
             {
                 endTurnCoroutine = null;
                 yield break;
@@ -73,11 +112,12 @@ public class OneCardTurnController : MonoBehaviour
             yield return null;
         }
 
-        // Nếu game đang Pause thì chưa chuyển lượt.
+        // Neu game dang Pause thi cho tiep.
         while (Time.timeScale <= 0f)
         {
             if (battleStateMachine == null ||
-                battleStateMachine.IsBattleFinished())
+                battleStateMachine.IsBattleFinished() ||
+                !battleStateMachine.IsPlayerTurn())
             {
                 endTurnCoroutine = null;
                 yield break;
@@ -86,8 +126,7 @@ public class OneCardTurnController : MonoBehaviour
             yield return null;
         }
 
-        // Nếu Card giết Enemy và hệ thống đã
-        // chuyển sang NextRound/Victory thì dừng.
+        // Neu Enemy chet va chuyen Round thi dung.
         if (battleStateMachine == null ||
             !battleStateMachine.IsPlayerTurn() ||
             battleStateMachine.IsBattleFinished())
@@ -99,22 +138,53 @@ public class OneCardTurnController : MonoBehaviour
         if (endButton == null)
         {
             Debug.LogError(
-                "OneCardTurn: Chưa gán EndButton!"
+                "[TURN] Chua gan EndButton!"
             );
+
             endTurnCoroutine = null;
             yield break;
         }
 
-        // Gọi logic Enemy Turn hiện có.
+        Debug.Log(
+            "[TURN] Player hoan thanh hanh dong!"
+        );
+
+        // Dung chung logic chuyen luot.
         endButton.EndTurn();
 
-        if (battleStateMachine.CurrentState ==
-            BattleStateMachine.BattleState.EnemyTurn)
+        if (battleStateMachine.IsEnemyTurn())
         {
             enteredEnemyTurn = true;
+
+            Debug.Log(
+                "[TURN] Chuyen sang Enemy Turn!"
+            );
+        }
+        else
+        {
+            Debug.LogWarning(
+                "[TURN] EndTurn chua chuyen sang Enemy Turn!"
+            );
         }
 
         endTurnCoroutine = null;
+    }
+
+    // =====================================
+    // CHECK RUNNING ACTION
+    // =====================================
+
+    private bool IsPlayerActionRunning()
+    {
+        bool isUsingCard =
+            cardManager != null &&
+            cardManager.IsUsingCard;
+
+        bool isUsingUltimate =
+            nalaUltimateController != null &&
+            nalaUltimateController.IsUsingUltimate;
+
+        return isUsingCard || isUsingUltimate;
     }
 
     // =====================================
@@ -123,34 +193,38 @@ public class OneCardTurnController : MonoBehaviour
 
     private void Update()
     {
-        if (!cardUsedThisTurn ||
+        if (!actionUsedThisTurn ||
             battleStateMachine == null)
             return;
 
         var state = battleStateMachine.CurrentState;
 
-        // Enemy đã bị hạ, game chuyển Round mới.
+        // Enemy chet va chuyen Round.
         if (state == BattleStateMachine.BattleState.NextRound)
         {
-            ResetCardLimit();
+            ResetActionLimit();
             return;
         }
 
-        // Đánh dấu đã vào Enemy Turn.
+        // Danh dau da vao Enemy Turn.
         if (state == BattleStateMachine.BattleState.EnemyTurn)
         {
             enteredEnemyTurn = true;
         }
 
-        // Chỉ mở khóa khi Enemy Turn đã kết thúc.
+        // Enemy hoan thanh hanh dong.
         if (enteredEnemyTurn &&
             battleStateMachine.IsPlayerTurn())
         {
-            ResetCardLimit();
+            ResetActionLimit();
         }
     }
 
-    private void ResetCardLimit()
+    // =====================================
+    // RESET ACTION
+    // =====================================
+
+    private void ResetActionLimit()
     {
         if (endTurnCoroutine != null)
         {
@@ -158,11 +232,11 @@ public class OneCardTurnController : MonoBehaviour
             endTurnCoroutine = null;
         }
 
-        cardUsedThisTurn = false;
+        actionUsedThisTurn = false;
         enteredEnemyTurn = false;
 
         Debug.Log(
-            "OneCardTurn: Player được dùng Card mới!"
+            "[TURN] Player duoc su dung hanh dong moi!"
         );
     }
 
