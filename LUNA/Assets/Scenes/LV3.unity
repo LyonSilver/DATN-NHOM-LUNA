@@ -9894,28 +9894,28 @@ MonoBehaviour:
   enemySpawner: {fileID: 1627267079}
   cardEffects:
   - card: {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
-    vfxPrefab: {fileID: 6873065645289754794, guid: 57500e96cc8dcc24485dab3b1ab1f72e, type: 3}
+    vfxPrefab: {fileID: 2835823161985731209, guid: 741b33587fd54c14f9f1c553551bae03, type: 3}
     target: 1
     offset: {x: 0, y: 0, z: 0}
     lifetime: 2
     repeatCount: 0
     repeatDelay: 0
   - card: {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
-    vfxPrefab: {fileID: 6573353546844586021, guid: a49a2971bae0614468bf1c96983a4fcd, type: 3}
+    vfxPrefab: {fileID: 3846064240023003333, guid: dc581cdc87251a049aed8445107b8a0a, type: 3}
     target: 1
     offset: {x: 0, y: 0, z: 0}
     lifetime: 2
     repeatCount: 1
     repeatDelay: 0
   - card: {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
-    vfxPrefab: {fileID: 6001568865225179585, guid: d909f158072e1fe41893fc95f71aeb98, type: 3}
+    vfxPrefab: {fileID: 3846064240023003333, guid: dc581cdc87251a049aed8445107b8a0a, type: 3}
     target: 1
     offset: {x: 0, y: 0, z: 0}
     lifetime: 2
     repeatCount: 1
     repeatDelay: 0
   - card: {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
-    vfxPrefab: {fileID: 75980824688728569, guid: 26f0bc2a0ebc436458b67daf01339939, type: 3}
+    vfxPrefab: {fileID: 8793995271210803475, guid: 6cb3310ee47a3c541b8d41aec7153e64, type: 3}
     target: 1
     offset: {x: 0, y: 0, z: 0}
     lifetime: 2
