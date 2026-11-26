@@ -1,0 +1,2 @@
+using UnityEngine;using UnityEngine.UI;
+namespace BackendPRO {public class LoginPanel:MonoBehaviour {public GameAuth auth;public InputField email,password;public Text status;void OnEnable(){auth.Status+=Show;}void OnDisable(){auth.Status-=Show;}void Show(string s){status.text=s;}public void Login()=>auth.Login(email.text,password.text);public void Register()=>auth.Register(email.text,password.text);public void Load()=>auth.LoadPlayer();public void Logout()=>auth.Logout();}}
