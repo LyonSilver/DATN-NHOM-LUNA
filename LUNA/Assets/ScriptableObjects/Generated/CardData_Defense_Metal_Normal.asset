@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CardData_Defense_Metal_Normal
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: defense_metal_normal
-  cardName: Block
+  cardName: Iron Guard
   cardType: 1
   rarity: 0
   cost: 1
@@ -31,7 +31,7 @@ MonoBehaviour:
   baseValue: 0
   extraValue: 0
   purchaseType: 0
-  moneyCost: 0
-  gemCost: 0
+  moneyCost: 100
+  gemCost: 5
   quantityLimit: 3
   cardSprite: {fileID: 0}

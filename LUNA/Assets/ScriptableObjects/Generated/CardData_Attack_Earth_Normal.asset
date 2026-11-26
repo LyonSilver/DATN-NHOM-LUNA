@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: CardData_Attack_Earth_Normal
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: attack_earth_normal
-  cardName: Strike
+  cardName: Terra Strike
   cardType: 0
   rarity: 0
   cost: 1
   element: 5
   tier: 1
-  description: 'Deal 8 Earth damage.
-
-    Strong vs Water.'
+  description: Deal 8 Earth damage.
   artwork: {fileID: 21300000, guid: b316578020cf74a44bb99b6b5ea97b1b, type: 3}
   typeIcon: {fileID: 21300000, guid: befe0c2e8bf4b684ab98acbecf0affbb, type: 3}
   effectType: 0
@@ -33,7 +31,7 @@ MonoBehaviour:
   baseValue: 0
   extraValue: 0
   purchaseType: 0
-  moneyCost: 0
-  gemCost: 0
+  moneyCost: 100
+  gemCost: 5
   quantityLimit: 3
   cardSprite: {fileID: 0}

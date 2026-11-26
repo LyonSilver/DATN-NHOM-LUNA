@@ -13,19 +13,17 @@ MonoBehaviour:
   m_Name: CardData_Attack_Fire_High
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: attack_fire_high
-  cardName: Fierce Blow
+  cardName: Ember Heavy
   cardType: 0
   rarity: 1
   cost: 2
   element: 1
   tier: 2
-  description: 'Deal 16 Fire damage.
-
-    Strong vs Metal.'
+  description: Deal 15 Fire damage.
   artwork: {fileID: 21300000, guid: ad2435365c7cf5947bfd2968d78b725b, type: 3}
   typeIcon: {fileID: 21300000, guid: 259872b4eeacb9746ada4cd7d3c92793, type: 3}
   effectType: 0
-  baseDamage: 16
+  baseDamage: 15
   shieldValue: 0
   healValue: 0
   statusEffect: 0
@@ -33,7 +31,7 @@ MonoBehaviour:
   baseValue: 0
   extraValue: 0
   purchaseType: 0
-  moneyCost: 0
-  gemCost: 0
+  moneyCost: 250
+  gemCost: 12
   quantityLimit: 3
   cardSprite: {fileID: 0}

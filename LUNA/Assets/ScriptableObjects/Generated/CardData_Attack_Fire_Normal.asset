@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: CardData_Attack_Fire_Normal
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: attack_fire_normal
-  cardName: Strike
+  cardName: Ember Strike
   cardType: 0
   rarity: 0
   cost: 1
   element: 1
   tier: 1
-  description: 'Deal 8 Fire damage.
-
-    Strong vs Metal.'
+  description: Deal 8 Fire damage.
   artwork: {fileID: 21300000, guid: b316578020cf74a44bb99b6b5ea97b1b, type: 3}
   typeIcon: {fileID: 21300000, guid: 259872b4eeacb9746ada4cd7d3c92793, type: 3}
   effectType: 0
@@ -33,7 +31,7 @@ MonoBehaviour:
   baseValue: 0
   extraValue: 0
   purchaseType: 0
-  moneyCost: 0
-  gemCost: 0
+  moneyCost: 100
+  gemCost: 5
   quantityLimit: 3
   cardSprite: {fileID: 0}

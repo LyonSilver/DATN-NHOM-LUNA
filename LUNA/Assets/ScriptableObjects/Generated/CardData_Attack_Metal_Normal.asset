@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: CardData_Attack_Metal_Normal
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardID: attack_metal_normal
-  cardName: Strike
+  cardName: Iron Strike
   cardType: 0
   rarity: 0
   cost: 1
   element: 3
   tier: 1
-  description: 'Deal 8 Metal damage.
-
-    Strong vs Wood.'
+  description: Deal 8 Metal damage.
   artwork: {fileID: 21300000, guid: b316578020cf74a44bb99b6b5ea97b1b, type: 3}
   typeIcon: {fileID: 21300000, guid: 0ae73ad656bfcf0489654285424e9b07, type: 3}
   effectType: 0
@@ -33,7 +31,7 @@ MonoBehaviour:
   baseValue: 0
   extraValue: 0
   purchaseType: 0
-  moneyCost: 0
-  gemCost: 0
+  moneyCost: 100
+  gemCost: 5
   quantityLimit: 3
   cardSprite: {fileID: 0}
