@@ -5310,10 +5310,10 @@ MonoBehaviour:
   deckManager: {fileID: 1781653175}
   cardEffectManager: {fileID: 206061691}
   battleStateMachine: {fileID: 1355644609}
-  rageManager: {fileID: 0}
-  nalaUltimateController: {fileID: 0}
+  rageManager: {fileID: 2063403354}
+  nalaUltimateController: {fileID: 183605016}
   oneCardTurnController: {fileID: 1356499571}
-  playerCardCinematic: {fileID: 0}
+  playerCardCinematic: {fileID: 631719111}
   enemySpawner: {fileID: 1627267079}
   useDelay: 0.5
   selectedCard: {fileID: 0}
@@ -6872,7 +6872,7 @@ MonoBehaviour:
   battleStateMachine: {fileID: 1355644609}
   endButton: {fileID: 610902573}
   cardManager: {fileID: 1156692241}
-  nalaUltimateController: {fileID: 0}
+  nalaUltimateController: {fileID: 183605016}
 --- !u!1 &1379073898
 GameObject:
   m_ObjectHideFlags: 0
