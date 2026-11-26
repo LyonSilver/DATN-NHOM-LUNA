@@ -30,7 +30,7 @@ MonoBehaviour:
   statusDuration: 0
   baseValue: 0
   extraValue: 50
-  purchaseType: 0
+  purchaseType: 2
   moneyCost: 500
   gemCost: 25
   quantityLimit: 1
