@@ -20,15 +20,6 @@ public class CardEffectManager : MonoBehaviour
     private const int POISON_STATUS = 1;
     private const int BREAK_STATUS = 2;
 
-    public enum TimingGrade
-    {
-        None,
-        Miss,
-        Good,
-        Great,
-        Perfect
-    }
-
     // =====================================
     // PLAYER STATUS
     // =====================================
@@ -66,7 +57,6 @@ public class CardEffectManager : MonoBehaviour
     // =====================================
 
     [Header("Card Settings")]
-    [SerializeField] private int slashGoodBonus = 2;
     [SerializeField] private int poisonDamagePerTurn = 2;
 
     [Range(0f, 100f)]
@@ -88,9 +78,6 @@ public class CardEffectManager : MonoBehaviour
 
     private int focusBonus;
     private int pendingDrawCards;
-
-    private TimingGrade firstTiming = TimingGrade.None;
-    private TimingGrade secondTiming = TimingGrade.None;
 
     // =====================================
     // EVENTS / PROPERTIES
@@ -216,13 +203,6 @@ public class CardEffectManager : MonoBehaviour
         if (isAttackCard && !CanDamageEnemy())
             return;
 
-        // Lấy Timing cho lần sử dụng Card này.
-        TimingGrade timing1 = firstTiming;
-        TimingGrade timing2 = secondTiming;
-
-        firstTiming = TimingGrade.None;
-        secondTiming = TimingGrade.None;
-
         // Focus áp dụng cho Card tiếp theo.
         if (effect != FOCUS)
             focusBonus = 0;
@@ -244,7 +224,7 @@ public class CardEffectManager : MonoBehaviour
         switch (effect)
         {
             case DAMAGE:
-                ApplyDamageWithTiming(card, timing1);
+                ApplyDamage(card);
                 break;
 
             case SHIELD:
@@ -256,7 +236,7 @@ public class CardEffectManager : MonoBehaviour
                 break;
 
             case POISON:
-                ApplyPoison(card, timing1);
+                ApplyPoison(card);
                 break;
 
             case FOCUS:
@@ -264,7 +244,7 @@ public class CardEffectManager : MonoBehaviour
                 break;
 
             case MULTI_HIT:
-                ApplyMultiHit(card, timing1, timing2);
+                ApplyMultiHit(card);
                 break;
 
             case DRAW:
@@ -285,73 +265,27 @@ public class CardEffectManager : MonoBehaviour
 
     public void ApplyDamage(CardData card)
     {
-        ApplyDamageWithTiming(card, TimingGrade.None);
-    }
-
-    private void ApplyDamageWithTiming(
-        CardData card,
-        TimingGrade timing)
-    {
         if (card == null || !CanDamageEnemy())
             return;
 
-        int damage = Mathf.Max(0, card.baseDamage);
-
-        // SLASH: GOOD trở lên +2 Damage.
-        if (card.cardID == "slash" &&
-            IsGoodOrBetter(timing))
-        {
-            damage += slashGoodBonus;
-        }
-
-        DealEnemyDamage(
-            CalculateTimingDamage(damage, timing)
-        );
-
-        // HEAVY HIT: PERFECT gây Break.
-        if (card.cardID == "heavy_hit" &&
-            timing == TimingGrade.Perfect &&
-            (int)card.statusEffect == BREAK_STATUS &&
-            CanDamageEnemy())
-        {
-            ApplyBreak(
-                Mathf.Max(1, card.statusDuration)
-            );
-        }
+        DealEnemyDamage(Mathf.Max(0, card.baseDamage));
     }
 
     // =====================================
     // DOUBLE STRIKE
     // =====================================
 
-    private void ApplyMultiHit(
-        CardData card,
-        TimingGrade timing1,
-        TimingGrade timing2)
+    private void ApplyMultiHit(CardData card)
     {
         if (card == null || !CanDamageEnemy())
             return;
 
         int hitCount = Mathf.Max(1, card.extraValue);
-
         for (int i = 0; i < hitCount; i++)
         {
             if (!CanDamageEnemy())
                 break;
-
-            TimingGrade timing = TimingGrade.None;
-
-            if (i == 0)
-                timing = timing1;
-            else if (i == 1)
-                timing = timing2;
-
-            int damage = CalculateTimingDamage(
-                card.baseDamage,
-                timing
-            );
-
-            DealEnemyDamage(damage);
+            DealEnemyDamage(Mathf.Max(0, card.baseDamage));
         }
     }
 
@@ -359,19 +293,12 @@ public class CardEffectManager : MonoBehaviour
     // POISON DART
     // =====================================
 
-    private void ApplyPoison(
-        CardData card,
-        TimingGrade timing)
+    private void ApplyPoison(CardData card)
     {
         if (card == null || !CanDamageEnemy())
             return;
 
-        int damage = CalculateTimingDamage(
-            card.baseDamage,
-            timing
-        );
-
-        DealEnemyDamage(damage);
+        DealEnemyDamage(Mathf.Max(0, card.baseDamage));
 
         if (!CanDamageEnemy())
             return;
@@ -527,52 +454,6 @@ public class CardEffectManager : MonoBehaviour
             Debug.LogWarning(
                 "Chưa kết nối DeckManager để rút Card!"
             );
-    }
-
-    // =====================================
-    // TIMING
-    // =====================================
-
-    public void SetNextCardTiming(
-        TimingGrade first,
-        TimingGrade second = TimingGrade.None)
-    {
-        firstTiming = first;
-        secondTiming = second;
-    }
-
-    private bool IsGoodOrBetter(TimingGrade timing)
-    {
-        return timing == TimingGrade.Good ||
-               timing == TimingGrade.Great ||
-               timing == TimingGrade.Perfect;
-    }
-
-    private int CalculateTimingDamage(
-        int damage,
-        TimingGrade timing)
-    {
-        float multiplier = 1f;
-
-        switch (timing)
-        {
-            case TimingGrade.Miss:
-                multiplier = 0.5f;
-                break;
-
-            case TimingGrade.Great:
-                multiplier = 1.25f;
-                break;
-
-            case TimingGrade.Perfect:
-                multiplier = 1.5f;
-                break;
-        }
-
-        return Mathf.Max(
-            0,
-            Mathf.RoundToInt(damage * multiplier)
-        );
     }
 
     // =====================================
