@@ -34,10 +34,10 @@ MonoBehaviour:
   extraValue: 0
   vfxPrefab: {fileID: 2835823161985731209, guid: 741b33587fd54c14f9f1c553551bae03, type: 3}
   vfxTarget: 1
-  vfxOffset: {x: 0, y: 1, z: 0}
+  vfxOffset: {x: 0, y: 0, z: 0}
   vfxLifetime: 1.5
   vfxRepeatCount: 1
-  vfxRepeatDelay: 0.2
+  vfxRepeatDelay: 2
   purchaseType: 0
   moneyCost: 0
   gemCost: 0

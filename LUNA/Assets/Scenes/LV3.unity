@@ -8891,7 +8891,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
   - {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
   - {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
-  - {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
+  - {fileID: 11400000, guid: c4667d9a62d90be4bae9bf9f29001edf, type: 2}
   handLimit: 4
   drawPile:
   - {fileID: 11400000, guid: 0c6ca0636dce3d443b7efaaf95c90a81, type: 2}
@@ -9892,35 +9892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardSkillVFX
   player: {fileID: 3181238564660939870}
   enemySpawner: {fileID: 1627267079}
-  cardEffects:
-  - card: {fileID: 11400000, guid: c307c2889a7bfd74aad56423cf9e2777, type: 2}
-    vfxPrefab: {fileID: 2835823161985731209, guid: 741b33587fd54c14f9f1c553551bae03, type: 3}
-    target: 1
-    offset: {x: 0, y: 0, z: 0}
-    lifetime: 2
-    repeatCount: 0
-    repeatDelay: 0
-  - card: {fileID: 11400000, guid: 1af33d7fcf9d31c41825cc44dd2fa9d5, type: 2}
-    vfxPrefab: {fileID: 3846064240023003333, guid: dc581cdc87251a049aed8445107b8a0a, type: 3}
-    target: 1
-    offset: {x: 0, y: 0, z: 0}
-    lifetime: 2
-    repeatCount: 1
-    repeatDelay: 0
-  - card: {fileID: 11400000, guid: 11f7ba9cfbe01274babff3ac6fe401d3, type: 2}
-    vfxPrefab: {fileID: 3846064240023003333, guid: dc581cdc87251a049aed8445107b8a0a, type: 3}
-    target: 1
-    offset: {x: 0, y: 0, z: 0}
-    lifetime: 2
-    repeatCount: 1
-    repeatDelay: 0
-  - card: {fileID: 11400000, guid: b6c431ede6b443b4f9ca360d7207e0b9, type: 2}
-    vfxPrefab: {fileID: 8793995271210803475, guid: 6cb3310ee47a3c541b8d41aec7153e64, type: 3}
-    target: 1
-    offset: {x: 0, y: 0, z: 0}
-    lifetime: 2
-    repeatCount: 1
-    repeatDelay: 0
+  cardEffectManager: {fileID: 206061691}
 --- !u!4 &1973355015
 Transform:
   m_ObjectHideFlags: 0

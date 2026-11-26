@@ -21,12 +21,12 @@ public enum CardEffectType
 
 public enum StatusEffectType
 {
-    None,    // 0
-    Poison,  // 1
-    Break,   // 2
-    Burn,    // 3
-    Weak,    // 4
-    Stun     // 5
+    None,
+    Poison,
+    Break,
+    Burn,
+    Weak,
+    Stun
 }
 
 public enum CardRarity
@@ -61,13 +61,19 @@ public enum PurchaseType
 public class CardData : ScriptableObject
 {
     // =====================================
-    // VFX TARGET
+    // VFX ENUM
     // =====================================
 
     public enum VFXTarget
     {
         Player,
         Enemy
+    }
+
+    public enum VFXDurationType
+    {
+        Timed,
+        UntilShieldBroken
     }
 
     // =====================================
@@ -136,16 +142,31 @@ public class CardData : ScriptableObject
     [Tooltip("Đối tượng xuất hiện hiệu ứng.")]
     public VFXTarget vfxTarget = VFXTarget.Enemy;
 
+    [Tooltip("Timed: Hủy theo thời gian. UntilShieldBroken: Hủy khi Shield bằng 0.")]
+    public VFXDurationType vfxDurationType =
+        VFXDurationType.Timed;
+
     [Tooltip("Vị trí hiệu ứng so với mục tiêu.")]
     public Vector3 vfxOffset = new Vector3(0f, 1f, 0f);
 
-    [Tooltip("Thời gian tồn tại của hiệu ứng.")]
+    // =====================================
+    // VFX SCALE - MỚI
+    // =====================================
+
+    [Tooltip("Kích thước hiệu ứng VFX theo trục X, Y, Z.")]
+    public Vector3 vfxScale = Vector3.one;
+
+    [Tooltip("Thời gian tồn tại. Chỉ sử dụng với chế độ Timed.")]
     [Min(0.1f)]
     public float vfxLifetime = 1.5f;
 
+    // =====================================
+    // VFX REPEAT
+    // =====================================
+
     [Header("VFX Repeat")]
 
-    [Tooltip("Số lần xuất hiện hiệu ứng.")]
+    [Tooltip("Số lần xuất hiện hiệu ứng. Chỉ sử dụng với Timed.")]
     [Min(1)]
     public int vfxRepeatCount = 1;
 
@@ -171,7 +192,6 @@ public class CardData : ScriptableObject
     [FormerlySerializedAs("maxQuantity")]
     public Quantity quantityLimit = Quantity.Max3;
 
-    // Tương thích với các script Inventory và Shop cũ.
     public int maxQuantity => (int)quantityLimit;
 
     // =====================================
@@ -195,6 +215,13 @@ public class CardData : ScriptableObject
         vfxLifetime = Mathf.Max(0.1f, vfxLifetime);
         vfxRepeatCount = Mathf.Max(1, vfxRepeatCount);
         vfxRepeatDelay = Mathf.Max(0f, vfxRepeatDelay);
+
+        // VFX Shield luôn xuất hiện trên Player.
+        if (vfxDurationType ==
+            VFXDurationType.UntilShieldBroken)
+        {
+            vfxTarget = VFXTarget.Player;
+        }
     }
 
     // =====================================

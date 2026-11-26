@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8990582753859598624}
   - component: {fileID: 716012182631978588}
   - component: {fileID: 253641759174271103}
-  - component: {fileID: 8978917404736028535}
   m_Layer: 0
   m_Name: pipo-btleffect208_480
   m_TagString: Untagged
@@ -115,16 +114,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8978917404736028535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75980824688728569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8f4e2c17485624da5880833c43f895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VFXLifetime
-  seconds: 1.3333334
