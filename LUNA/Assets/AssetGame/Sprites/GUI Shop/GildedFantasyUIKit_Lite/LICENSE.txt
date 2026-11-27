@@ -1,0 +1,20 @@
+GILDED FANTASY UI KIT — LICENSE (plain language)
+
+You CAN:
+- Use these assets in any number of your own games, apps and videos, personal or commercial, including games that earn money (Robux, in-app purchases, ads, sales).
+- Modify them (recolor, resize, edit, combine) for use inside your own projects.
+- Use them in games made for a client, as part of the finished product.
+- Use them on a team: everyone working on the same project may use them.
+
+You CANNOT:
+- Resell, sub-license, share or give away the assets themselves, original or modified, alone or inside another asset pack, UI kit, template, free model or marketplace listing.
+- Upload the assets to a public library or marketplace where others can reuse them as standalone assets (for example public Roblox Creator Store images/models).
+- Use the assets to train, fine-tune or evaluate machine-learning or generative-AI models.
+- Claim you created the original artwork.
+
+Credit is not required but is appreciated.
+
+The assets are provided "as is" without warranty. The seller is not liable for any damages arising from their use.
+Fonts shown in preview images are not included.
+
+This is a plain-language license, not legal advice.

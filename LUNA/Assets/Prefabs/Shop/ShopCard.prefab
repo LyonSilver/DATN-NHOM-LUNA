@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6348268109029980476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 380
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 650
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618658961025079876, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997509876283000121, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      propertyPath: m_Name
+      value: ShopCard
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2016009220808969566, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+    - {fileID: 3703788853780002169, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2997509876283000121, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3186593856072741088}
+    - targetCorrespondingSourceObject: {fileID: 2997509876283000121, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7060090612197852371}
+  m_SourcePrefab: {fileID: 100100000, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+--- !u!1 &8178782579114048517 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2997509876283000121, guid: d8681dc224a721547aaa5806a6aaa81d, type: 3}
+  m_PrefabInstance: {fileID: 6348268109029980476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3186593856072741088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8178782579114048517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37fbcd2df647584394e91fc6296277c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardInputHandler
+  collapsedHeight: 0
+  animationDuration: 0.15
+--- !u!114 &-7060090612197852371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8178782579114048517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f61b87e4929dd499726eb9cd2c462d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDissolveUI
+  dissolveMaterial: {fileID: 0}
+  dissolveProperty: _Dissolve
+  dissolveDuration: 0.6
+  startValue: 0
+  endValue: 1
+  startOffset: {x: 0, y: -0.5, z: 0}
+  endOffset: {x: 0, y: 1.1, z: 0}
+  fadeOtherGraphics: 1
+  otherGraphicsFadeEnd: 0.65
